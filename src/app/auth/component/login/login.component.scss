@@ -1,0 +1,108 @@
+$input_field-width: 20rem;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+        font-size: 2.5rem;
+
+        span {
+            color: #C3343A;
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        gap: 1rem;
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+
+            input {
+                width: $input_field-width;
+                background-color: #fff;
+                border: 1px solid #c4c4c4;
+                padding: 0.7rem 3rem 0.7rem 0.7rem;
+                border-radius: 0.5rem;
+                outline: #c4c4c4;
+
+                &:active,
+                &:focus {
+                    outline: 1px solid black;
+                }
+            }
+
+            .input {
+                display: flex;
+                position: relative;
+                width: get($input_field-width + 0.5rem);
+
+                fa-icon {
+                    position: absolute;
+                    right: 1rem;
+                    top: 0.7rem;
+                }
+            }
+        }
+
+        .form-field+.form-action{
+            margin-top: 1rem;
+        }
+
+        .form-action {
+            display: flex;
+            justify-content: center;
+            width: inherit;
+
+            button {
+                background-color: #C3343A;
+                width: 24rem;
+                border: none;
+
+                border-radius: 0.5rem;
+                padding-block: 1rem;
+                color: #fff;
+                font-weight: 700;
+            }
+        }
+        .form-password-action{
+            display: flex;
+            justify-content: flex-end;
+            width: 83%;
+        }
+        .terms_and_condition{
+            width: 90%;
+            text-align: center;
+        }
+    }
+}
+@media (max-width: 475px){
+    .container{
+        .title{
+            font-size: 1.5rem;
+        }
+        form{
+            width: 20rem;
+            .form-field{
+               width: 20rem;
+               input{
+                width: 16rem;
+               }
+               .input{
+                width: 100%;
+               }
+            }
+            .form-action{
+                width: 20rem;
+            }
+        }
+    }
+}

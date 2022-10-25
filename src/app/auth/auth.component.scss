@@ -1,0 +1,33 @@
+.container{
+    background-image: url('../../assets/images/auth/background.png');
+    background-size: cover;
+    // background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .logo{
+        width: 40rem;
+        position: absolute;
+        top: 3rem;
+        img{
+            width: inherit;
+            object-fit: cover;
+        }
+    }
+    .main-content{
+        width: max-content;
+        
+        
+    }
+}
+
+@media (max-width: 475px){
+    .container{
+        .logo{
+            width: 20rem;
+        }
+    }
+}
