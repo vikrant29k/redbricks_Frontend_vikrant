@@ -6,6 +6,12 @@ const Routing: Routes = [
         loadChildren: () => {
             return import('./dashboard/dashboard.module').then((m) => m.DashboardModule);
         }
+    },
+    {
+        path: 'new-proposal',
+        loadChildren: () => {
+            return import('./new-proposal/new-proposal.module').then((m) => m.NewProposalModule);
+        }
     }
 ]
 

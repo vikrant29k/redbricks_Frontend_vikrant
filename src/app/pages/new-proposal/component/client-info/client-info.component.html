@@ -1,0 +1,108 @@
+<div class="container">
+    <div class="id">
+        <div class="card">
+            <p>ID: </p>
+            <p>{{proposalId || 'lask2342kfjalsdf94312'}}</p>
+        </div>
+    </div>
+    <div class="main-content">
+        <form [formGroup]="clientInfoForm">
+            <!-- Sales Team -->
+            <mat-form-field appearance="fill">
+                <mat-label>Sales Team</mat-label>
+                <mat-select formControlName="salesTeam">
+                    <mat-option value="Hello">Hello</mat-option>
+                    <mat-option value="Hello1">Hello1</mat-option>
+                    <mat-option value="Hello2">Hello2</mat-option>
+                    <mat-option value="Hello3">Hello3</mat-option>
+                </mat-select>
+                <mat-error>Sales Team is required</mat-error>
+            </mat-form-field>
+            <!-- Sales Head -->
+            <mat-form-field appearance="fill">
+                <mat-label>Sales Head</mat-label>
+                <mat-select formControlName="salesHead">
+                    <mat-option value="Hello">Hello</mat-option>
+                    <mat-option value="Hello1">Hello1</mat-option>
+                    <mat-option value="Hello2">Hello2</mat-option>
+                    <mat-option value="Hello3">Hello3</mat-option>
+                </mat-select>
+                <mat-error>Sales Head is required</mat-error>
+            </mat-form-field>
+            <!-- Location -->
+            <mat-form-field appearance="fill">
+                <mat-label>Location</mat-label>
+                <mat-select formControlName="location">
+                    <mat-option value="Hello">Hello</mat-option>
+                    <mat-option value="Hello1">Hello1</mat-option>
+                    <mat-option value="Hello2">Hello2</mat-option>
+                    <mat-option value="Hello3">Hello3</mat-option>
+                </mat-select>
+                <mat-error>Location is required</mat-error>
+            </mat-form-field>
+            <!-- Center -->
+            <mat-form-field appearance="fill">
+                <mat-label>Center</mat-label>
+                <mat-select formControlName="center">
+                    <mat-option value="Hello">Hello</mat-option>
+                    <mat-option value="Hello1">Hello1</mat-option>
+                    <mat-option value="Hello2">Hello2</mat-option>
+                    <mat-option value="Hello3">Hello3</mat-option>
+                </mat-select>
+                <mat-error>Center is required</mat-error>
+            </mat-form-field>
+            <!-- SPOC Name -->
+            <mat-form-field appearance="fill">
+                <mat-label>SPOC Name</mat-label>
+                <mat-select formControlName="spocName">
+                    <mat-option value="Hello">Hello</mat-option>
+                    <mat-option value="Hello1">Hello1</mat-option>
+                    <mat-option value="Hello2">Hello2</mat-option>
+                    <mat-option value="Hello3">Hello3</mat-option>
+                </mat-select>
+                <mat-error>SPOC Name is required</mat-error>
+            </mat-form-field>
+            <!-- Client Name -->
+            <mat-form-field appearance="fill">
+                <mat-label>Client Name</mat-label>
+                <mat-select formControlName="clientName">
+                    <mat-option value="Hello">Hello</mat-option>
+                    <mat-option value="Hello1">Hello1</mat-option>
+                    <mat-option value="Hello2">Hello2</mat-option>
+                    <mat-option value="Hello3">Hello3</mat-option>
+                </mat-select>
+                <mat-error>Client Name is required</mat-error>
+            </mat-form-field>
+            <!-- Broker Type -->
+            <mat-form-field appearance="fill">
+                <mat-label>Broker Type</mat-label>
+                <mat-select formControlName="brokerType">
+                    <mat-option value="Hello">Hello</mat-option>
+                    <mat-option value="Hello1">Hello1</mat-option>
+                    <mat-option value="Hello2">Hello2</mat-option>
+                    <mat-option value="Hello3">Hello3</mat-option>
+                </mat-select>
+                <mat-error>Broker Type is required</mat-error>
+            </mat-form-field>
+            <!-- Broker Category -->
+            <mat-form-field appearance="fill">
+                <mat-label>Broker Categroy</mat-label>
+                <mat-select formControlName="brokerCategory">
+                    <mat-option value="Hello">Hello</mat-option>
+                    <mat-option value="Hello1">Hello1</mat-option>
+                    <mat-option value="Hello2">Hello2</mat-option>
+                    <mat-option value="other">Other</mat-option>
+                </mat-select>
+                <mat-error>Broker Category is required</mat-error>
+            </mat-form-field>
+            <!-- Broker Category Other -->
+            <mat-form-field appearance="fill" *ngIf="clientInfoForm.get('brokerCategory')?.value === 'other'">
+                <mat-label>Brokery Category Other</mat-label>
+                <input type="text" matInput formControlName="brokerCategoryOther">
+            </mat-form-field>
+            <div class="form-action">
+                <button type="submit" mat-raised-button color="primary">Save & Next <mat-icon>play_arrow</mat-icon></button>
+            </div>
+        </form>
+    </div>
+</div>
