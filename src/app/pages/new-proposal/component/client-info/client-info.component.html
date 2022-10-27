@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="main-content">
-        <form [formGroup]="clientInfoForm">
+        <form [formGroup]="clientInfoForm" (ngSubmit)="onSubmit()">
             <!-- Sales Team -->
             <mat-form-field appearance="fill">
                 <mat-label>Sales Team</mat-label>

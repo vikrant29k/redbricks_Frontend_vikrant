@@ -12,14 +12,14 @@ export class NewProposalClientInfoComponent {
 
     clientInfoForm = new FormGroup({
         'salesTeam': new FormControl('', Validators.required),
-        'salesHead': new FormControl('',Validators.required),
-        'location': new FormControl('',Validators.required),
-        'center': new FormControl('',Validators.required),
-        'brokerType': new FormControl('',Validators.required),
-        'brokerCategory': new FormControl('',Validators.required),
-        'brokerCategoryOther': new FormControl('',Validators.required),
-        'spocName': new FormControl('',Validators.required),
-        'clientName': new FormControl('')
+        'salesHead': new FormControl('', Validators.required),
+        'location': new FormControl('', Validators.required),
+        'center': new FormControl('', Validators.required),
+        'spocName': new FormControl('', Validators.required),
+        'clientName': new FormControl('', Validators.required),
+        'brokerType': new FormControl('', Validators.required),
+        'brokerCategory': new FormControl('', Validators.required),
+        'brokerCategoryOther': new FormControl('')
     });
 
     constructor(
@@ -28,6 +28,6 @@ export class NewProposalClientInfoComponent {
 
     onSubmit = () => {
         console.log(this.clientInfoForm.value);
-        this.router.navigate(['/new-proposal','requirementInfo']);
+        this.router.navigate(['/new-proposal', 'requirement-info']);
     }
 }
