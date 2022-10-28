@@ -29,6 +29,37 @@ $custom-primary-palette: (
     A700: #fff,
   )
 );
+$custom-accent-palette: (
+  50: #7D7E80,
+  100: #7D7E80,
+  200: #7D7E80,
+  300: #7D7E80,
+  400: #7D7E80,
+  500: #7D7E80,
+  600: #7D7E80,
+  700: #7D7E80,
+  800: #7D7E80,
+  900: #7D7E80,
+  A100: #7D7E80,
+  A200: #7D7E80,
+  A400: #7D7E80,
+  A700: #7D7E80,
+  contrast: (50: #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #000,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #000,
+    A200: #fff,
+    A400: #fff,
+    A700: #fff,
+  )
+);
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
@@ -43,7 +74,7 @@ $custom-primary-palette: (
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $Redbricks_Frontend-primary: mat.define-palette($custom-primary-palette);
-$Redbricks_Frontend-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$Redbricks_Frontend-accent: mat.define-palette($custom-accent-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $Redbricks_Frontend-warn: mat.define-palette(mat.$red-palette);
@@ -62,6 +93,7 @@ $Redbricks_Frontend-theme: mat.define-light-theme((color: (primary: $Redbricks_F
 
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap');
+@import "./assets/scss/main/main-custom-angular-material.scss";
 
 html,
 body {
