@@ -1,0 +1,66 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #FDDEDE;
+    min-height: 100vh;
+    gap: 1rem;
+
+
+    .id {
+        display: flex;
+        justify-content: flex-start;
+        width: inherit;
+        padding-block-start: 1rem;
+    }
+
+    .card {
+        background-color: #FFFFFF;
+        border-radius: 2rem;
+        padding: 0rem 1rem;
+        margin-inline-start: 2rem;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 35rem;
+        height: 15rem;
+        button{
+            background-color: #C3343A;
+            border: none;
+            color: white;
+            font-size: medium;
+            width: 70%;
+            padding: 10px 20px;
+            border-radius: 0.5rem;
+        }
+        span{
+            color: #C3343A;
+        }
+    }
+.form-action{
+    width: 100%;
+    text-align: right;
+    margin-top: 5rem;
+    button{
+        background-color: #C3343A;
+        border: none;
+        color: white;
+      margin: 10px 14px;
+      height: 2rem;
+     font-size: medium;
+     display: inline-flex;
+     align-content: center;
+      
+        border-radius: 0.5rem;
+    }
+    mat-icon{
+        overflow: hidden;
+        font-size: 20px;
+    }
+}
+}

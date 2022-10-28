@@ -6,11 +6,12 @@ import { NewProposalRequirementInfoComponent } from "./component/requirement-inf
 import { NewProposalMaterialModule } from "./module/material/new-proposal-material.module";
 import { NewProposalRoutingModule } from "./module/routing/new-proposal-routing.module";
 import { NewProposalComponent } from "./new-proposal.component";
-
+import { ConflictComponent } from "./component/conflict/conflict.component";
 @NgModule({
     declarations: [
         NewProposalComponent,
         NewProposalClientInfoComponent,
+        ConflictComponent,
         NewProposalRequirementInfoComponent
     ],
     imports: [

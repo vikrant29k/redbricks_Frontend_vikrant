@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-
+import { Router } from "@angular/router";
 @Component({
     selector: 'new-proposal-requirement-info',
     templateUrl: './requirement-info.component.html',
@@ -30,8 +30,12 @@ export class NewProposalRequirementInfoComponent {
         'compactor': new FormControl('')
     })
 
+    constructor(
+        private router: Router
+    ) { }
     onSubmit = () => {
         console.log(this.requirementInfoForm.value);
+        this.router.navigate(['/new-proposal', 'conflict']);
     }
 
     selectOnlyOneCheckBox = (control: string, value: string) => {

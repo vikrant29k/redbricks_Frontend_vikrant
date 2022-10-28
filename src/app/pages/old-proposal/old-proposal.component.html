@@ -1,5 +1,6 @@
 <div class="container">
     <div class="main-content">
+        <form formGroup="clientInfoForm" ngSubmit="onSubmit()">
        <div class="card">  
         <div>
         <p>The unique identification of your proposal is:</p>
@@ -8,20 +9,21 @@
         <div>
         <p>Do you wish to escalate the proposal for closure?</p>
         <div>     
-            <input class="yesno" type="button" value="Yes">
-            <input class="yesno" type="button" value="No">
+           <button class="yesno">Yes</button>
+           <button class="yesno">No</button>
         </div>
     </div>
 
     <div>
         <div class="otpdiv"><p>If Yes,</p></div>
-        <input class="otp" type="button" value="Generate OTP for closure">
-        <input class="otp" type="button" value="Enter OTP for closure">
+        <button class="otp" >Generate OTP for closure</button>
+        <button class="otp" >Enter OTP for closure</button>
     </div>
         <div>
-        <input class="offer" type="button" value="Final Offer Amount">
-        <input class="offer" type="button" value="Re-Generate Proposal">
+        <button class="offer" >Final Offer Amount</button>
+        <button class="offer"  >Re-Generate Proposal</button>
     </div>
     </div>
+</form>
     </div>
 </div>
