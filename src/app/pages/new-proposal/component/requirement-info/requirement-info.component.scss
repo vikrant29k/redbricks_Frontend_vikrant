@@ -52,11 +52,12 @@
 
     .main-content {
         display: flex;
+        width: inherit;
 
         form {
             display: flex;
             flex-direction: column;
-            width: 100%;
+            width: inherit;
             gap: 1rem;
 
             .form {
@@ -210,8 +211,8 @@
             .form-action {
                 display: flex;
                 justify-content: flex-end;
-
-                width: 100vw;
+                margin-bottom: 1rem;
+                width: inherit;
 
                 button {
                     font-size: 1.1rem;

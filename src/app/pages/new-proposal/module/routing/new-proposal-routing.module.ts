@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { NewProposalClientInfoComponent } from "../../component/client-info/client-info.component";
 import { NewProposalRequirementInfoComponent } from "../../component/requirement-info/requirement-info.component";
+import { NewProposalSpaceAvailabilityComponent } from "../../component/space availability/space-availability.component";
 import { NewProposalComponent } from "../../new-proposal.component";
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
             {
                 path: 'requirement-info',
                 component: NewProposalRequirementInfoComponent
+            },
+            {
+                path: 'space-availability',
+                component: NewProposalSpaceAvailabilityComponent
             }
         ]
     }
