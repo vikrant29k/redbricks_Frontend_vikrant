@@ -4,63 +4,80 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-color: #FDDEDE;
+    background-image: url('../../../../../assets/images/dashboard/dashboard-background.png');
+    background-size: cover;
+    background-position: center;
     min-height: 100vh;
-    gap: 1rem;
-
-
-    .id {
-        display: flex;
-        justify-content: flex-start;
-        width: inherit;
-        padding-block-start: 1rem;
-    }
 
     .card {
-        background-color: #FFFFFF;
+        width:53rem;
+        height: 20rem;
+        background-color: #ffffff;
         border-radius: 2rem;
         padding: 0rem 1rem;
         margin-inline-start: 2rem;
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
+        align-content: center;
         flex-direction: column;
+        flex-wrap: nowrap;
         align-items: center;
         gap: 1rem;
-        width: 35rem;
-        height: 15rem;
-        button{
-            background-color: #C3343A;
-            border: none;
-            color: white;
-            font-size: medium;
-            width: 70%;
-            padding: 10px 20px;
-            border-radius: 0.5rem;
-        }
-        span{
-            color: #C3343A;
-        }
+        color: #ffffff;
+        font-weight: 600;
     }
-.form-action{
-    width: 100%;
-    text-align: right;
-    margin-top: 5rem;
-    button{
+    .otp{
+        width: 15.8rem;
         background-color: #C3343A;
+        color: #ffffff;
+        box-sizing: border-box;
+        position: relative;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        outline: none;
         border: none;
-        color: white;
-      margin: 10px 14px;
-      height: 2rem;
-     font-size: medium;
-     display: inline-flex;
-     align-content: center;
-      
-        border-radius: 0.5rem;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        display: inline-block;
+        white-space: nowrap;
+        text-decoration: none;
+        vertical-align: baseline;
+        text-align: center;
+        margin: 0;
+        min-width: 64px;
+        line-height: 36px;
+        padding: 0 16px;
+        border-radius: 4px;
+        overflow: visible;
+        font-size: medium;
+        transform: translate3d(0, 0, 0);
     }
-    mat-icon{
-        overflow: hidden;
-        font-size: 20px;
+    .otp::placeholder{
+        color: #ffffff;
+        font-size: medium;
     }
-}
-}
+   
+    
+        .form-action{
+            width: 100%;
+            text-align: right;
+            margin-top: 5rem;
+            button{
+                background-color: #C3343A;
+                border: none;
+                color: white;
+              margin: 10px 14px;
+              
+             font-size: medium;
+             display: inline-flex;
+             align-content: center;
+             
+                border-radius: 0.5rem;
+            }
+            mat-icon{
+                overflow: hidden;
+                font-size: 20px;
+            }
+        }
+        
+    }        
