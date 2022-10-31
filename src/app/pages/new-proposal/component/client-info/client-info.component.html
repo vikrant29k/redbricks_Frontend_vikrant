@@ -33,10 +33,9 @@
             <mat-form-field appearance="fill">
                 <mat-label>Location</mat-label>
                 <mat-select formControlName="location">
-                    <mat-option value="Hello">Hello</mat-option>
-                    <mat-option value="Hello1">Hello1</mat-option>
-                    <mat-option value="Hello2">Hello2</mat-option>
-                    <mat-option value="Hello3">Hello3</mat-option>
+                    <ng-container *ngFor="let location of locations">
+                        <mat-option [value]="location">{{location}}</mat-option>
+                    </ng-container>
                 </mat-select>
                 <mat-error>Location is required</mat-error>
             </mat-form-field>
@@ -44,10 +43,9 @@
             <mat-form-field appearance="fill">
                 <mat-label>Center</mat-label>
                 <mat-select formControlName="center">
-                    <mat-option value="Hello">Hello</mat-option>
-                    <mat-option value="Hello1">Hello1</mat-option>
-                    <mat-option value="Hello2">Hello2</mat-option>
-                    <mat-option value="Hello3">Hello3</mat-option>
+                    <ng-container *ngFor="let center of centers">
+                        <mat-option [value]="center">{{center}}</mat-option>
+                    </ng-container>
                 </mat-select>
                 <mat-error>Center is required</mat-error>
             </mat-form-field>

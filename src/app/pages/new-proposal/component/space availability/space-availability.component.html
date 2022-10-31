@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="main-content">
+        <div class="space-availability">
+            <p>The Space is Available/Not-Available</p>
+        </div>
+        <form [formGroup]="proposalExtraDetailForm" (ngSubmit)="onSubmit()">
+            <div class="consolidated-manner">
+                <p>Not Available in Consolidated manner. Do you wish to proceed?</p>
+                <div class="consolidated-manner__action">
+                    <button type="button" mat-raised-button color="primary">Yes</button>
+                    <button type="button" mat-raised-button color="primary">No</button>
+                </div>
+            </div>
+            <div class="extra-proposal-details">
+                <div class="extra-proposal-details__top">
+                    <div class="extra-proposal-details__top-left">
+                        <div class="extra-proposal-details__top-left__fields">
+                            <p>Tenure:</p>
+                            <mat-form-field appearance="fill">
+                                <mat-label>In Months</mat-label>
+                                <input type="number" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="extra-proposal-details__top-left__fields">
+                            <p>Lock In:</p>
+                            <mat-form-field appearance="fill">
+                                <mat-label>In Months</mat-label>
+                                <input type="number" matInput>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="extra-proposal-details__top-right">
+                        <div class="extra-proposal-details__top-right__fields">
+                            <p>Any Non-Standard Requirement</p>
+                            <button type="button" mat-raised-button [color]="nonStandardRequirement ? 'primary':'accent'" (click)="nonStandardRequirement = !nonStandardRequirement">Yes</button>
+                            <button type="button" mat-raised-button [color]="nonStandardRequirement ? 'accent':'primary'" (click)="nonStandardRequirement = !nonStandardRequirement">No</button>
+                        </div>
+                        <ng-container *ngIf="nonStandardRequirement">
+                            <div class="extra-proposal-details__top-right__fields">
+                                <p>If Yes,</p>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Notes to be Included in Proposal</mat-label>
+                                    <input type="text" matInput>
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="extra-proposal-details__bottom">
+                    <button type="button" mat-raised-button color="primary">Serviced</button>
+                    <button type="button" mat-raised-button color="primary">Non Serviced</button>
+                </div>
+            </div>
+            <div class="form-action">
+                <button type="submit" mat-raised-button color="primary" (click)="openDialog()">Generate Layout</button>
+                <button type="submit" mat-raised-button color="primary">Generate Proposal</button>
+            </div>
+        </form>
+    </div>
+</div>
