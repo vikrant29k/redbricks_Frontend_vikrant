@@ -1,35 +1,34 @@
 <div class="container">
 
     <div class="main-content">
-        <div *ngIf="2>1; else elseBlock">
-                <div class="card">  
-                    <button type="submit" mat-raised-button color="primary">Generate OTP to De-Registere</button>
-                    
-                        <!-- <mat-label>Enter OTP to De-Registere</mat-label> -->
-                        <input type="text" class="otp" placeholder="Enter OTP to De-Registere"  >
-                    
-                    
-                </div>
-                
+        <div *ngIf="conflict; else elseBlock">
+            <div class="card">
+                <button type="submit" mat-raised-button color="primary">Generate OTP to De-Registere</button>
+
+                <!-- <mat-label>Enter OTP to De-Registere</mat-label> -->
+                <input type="text" class="otp" placeholder="Enter OTP to De-Registere">
+
+
+            </div>
+
         </div>
-        <ng-template #elseBlock><div class="card">  
-            <span> 
-             No Conflict found. Please proceed to register Broker & to next stage
-                   
-                 </span>
+        <ng-template #elseBlock>
+            <div class="card">
+                <span>
+                    No Conflict found. Please proceed to register Broker & to next stage
+
+                </span>
             </div>
         </ng-template>
-                
-        </div>
-           
-                
-        <div class="form-action">
-            <button type="submit" mat-raised-button color="primary">Register Broker</button>
-            <button type="submit" mat-raised-button color="primary">Next 
+
+    </div>
+
+
+    <div class="form-action">
+        <button type="submit" mat-raised-button color="primary" (click)="registerBroker()">Register Broker <mat-icon>
+                play_arrow</mat-icon></button>
+        <!-- <button type="submit" mat-raised-button color="primary">Next 
                 <mat-icon>play_arrow</mat-icon>
-            </button>
-       </div>
+            </button> -->
+    </div>
 </div>
-
-
-

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-conflict',
@@ -8,9 +9,17 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 })
 export class ConflictComponent implements OnInit {
 
-  constructor() { }
+  conflict: boolean = true;
+
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  registerBroker = () => {
+    this.router.navigate(['/new-proposal','space-availability'])
   }
 
 }

@@ -25,6 +25,10 @@ const routes: Routes = [
                 component: NewProposalRequirementInfoComponent
             },
             {
+                path: 'space-availability',
+                component: NewProposalSpaceAvailabilityComponent
+            },
+            {
                 path: 'conflict',
                 component: ConflictComponent
             }

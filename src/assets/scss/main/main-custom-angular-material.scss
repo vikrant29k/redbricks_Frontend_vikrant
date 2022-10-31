@@ -1,7 +1,7 @@
 @import "../new-proposal/client-info/custom-angular-material.scss";
 @import "../new-proposal/requirement-info/custom-angular-material.scss";
 
-// @import "../new-proposal/conflict/conflict-angular-material.scss";
+@import "../new-proposal/conflict/conflict-angular-material.scss";
 
 @import "../new-proposal/space-availability/custom-angular-material.scss";
 
@@ -15,11 +15,10 @@ new-proposal-requirement-info{
 }
 
 
-// new-proposal-conflict{
-//     @include custom-conflict-info_angular-material();
-// }
+new-proposal-conflict{
+    @include custom-conflict-info_angular-material();
+}
 
 new-proposal-space-availability{
     @include custom_space-availability_angular-material();
 }
-
