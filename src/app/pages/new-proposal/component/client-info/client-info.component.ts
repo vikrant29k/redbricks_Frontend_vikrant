@@ -15,6 +15,16 @@ export class NewProposalClientInfoComponent implements OnInit{
     locations = new Set<string>();
     centers = new Set<string>();
 
+    category: any;
+    IPC: any = ['JLL', 'CBRE', 'C & W', 'KF', 'Colliers', 'Savills', 'other'];
+    Non_IPC: any = ['CityInfo', 'EHRPCL', 'other'];
+
+    // brokerCategory = {
+    //     'IPC': ['JLL', 'CBRE', 'C & W', 'KF', 'Colliers', 'Savills', 'other'],
+    //     'Non-IPC': ['CityInfo', 'EHRPCL', 'other']
+    // }
+
+
     clientInfoForm = new FormGroup<any>({
         'salesTeam': new FormControl('', Validators.required),
         'salesHead': new FormControl('', Validators.required),
@@ -77,6 +87,11 @@ export class NewProposalClientInfoComponent implements OnInit{
     watchValueChangesInForm = () => {
         this.clientInfoForm.get('location')?.valueChanges.subscribe(() => {
             this.getCentersInLocation();
+        })
+        let brokerType = this.clientInfoForm.get('brokerType');
+        brokerType?.valueChanges.subscribe(() => {
+            let value = brokerType?.value
+            
         })
     }
 

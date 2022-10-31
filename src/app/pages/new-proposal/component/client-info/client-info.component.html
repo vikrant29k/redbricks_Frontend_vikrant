@@ -11,10 +11,8 @@
             <mat-form-field appearance="fill">
                 <mat-label>Sales Team</mat-label>
                 <mat-select formControlName="salesTeam">
-                    <mat-option value="Hello">Hello</mat-option>
-                    <mat-option value="Hello1">Hello1</mat-option>
-                    <mat-option value="Hello2">Hello2</mat-option>
-                    <mat-option value="Hello3">Hello3</mat-option>
+                    <mat-option value="Ashish">Ashish</mat-option>
+                    <mat-option value="Sayali">Sayali</mat-option>
                 </mat-select>
                 <mat-error>Sales Team is required</mat-error>
             </mat-form-field>
@@ -22,10 +20,8 @@
             <mat-form-field appearance="fill">
                 <mat-label>Sales Head</mat-label>
                 <mat-select formControlName="salesHead">
-                    <mat-option value="Hello">Hello</mat-option>
-                    <mat-option value="Hello1">Hello1</mat-option>
-                    <mat-option value="Hello2">Hello2</mat-option>
-                    <mat-option value="Hello3">Hello3</mat-option>
+                    <mat-option value="Vikrant">Vikrant</mat-option>
+                    <mat-option value="Rahul">Rahul</mat-option>
                 </mat-select>
                 <mat-error>Sales Head is required</mat-error>
             </mat-form-field>
@@ -53,10 +49,8 @@
             <mat-form-field appearance="fill">
                 <mat-label>SPOC Name</mat-label>
                 <mat-select formControlName="spocName">
-                    <mat-option value="Hello">Hello</mat-option>
-                    <mat-option value="Hello1">Hello1</mat-option>
-                    <mat-option value="Hello2">Hello2</mat-option>
-                    <mat-option value="Hello3">Hello3</mat-option>
+                    <mat-option value="Sandesh">Sandesh</mat-option>
+                    <mat-option value="Dhiraj">Dhiraj</mat-option>
                 </mat-select>
                 <mat-error>SPOC Name is required</mat-error>
             </mat-form-field>
@@ -64,10 +58,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Client Name</mat-label>
                 <mat-select formControlName="clientName">
-                    <mat-option value="Hello">Hello</mat-option>
-                    <mat-option value="Hello1">Hello1</mat-option>
-                    <mat-option value="Hello2">Hello2</mat-option>
-                    <mat-option value="Hello3">Hello3</mat-option>
+                    <mat-option value="Manprit">Manprit</mat-option>
                 </mat-select>
                 <mat-error>Client Name is required</mat-error>
             </mat-form-field>
@@ -75,10 +66,8 @@
             <mat-form-field appearance="fill">
                 <mat-label>Broker Type</mat-label>
                 <mat-select formControlName="brokerType">
-                    <mat-option value="Hello">Hello</mat-option>
-                    <mat-option value="Hello1">Hello1</mat-option>
-                    <mat-option value="Hello2">Hello2</mat-option>
-                    <mat-option value="Hello3">Hello3</mat-option>
+                    <mat-option value="IPC">IPC</mat-option>
+                    <mat-option value="Non-IPC">Non-IPC</mat-option>
                 </mat-select>
                 <mat-error>Broker Type is required</mat-error>
             </mat-form-field>
@@ -86,10 +75,20 @@
             <mat-form-field appearance="fill">
                 <mat-label>Broker Categroy</mat-label>
                 <mat-select formControlName="brokerCategory">
-                    <mat-option value="Hello">Hello</mat-option>
+                    <ng-container *ngIf="clientInfoForm.get('brokerType')?.value === 'IPC'">
+                        <ng-container *ngFor="let category of IPC">
+                            <mat-option [value]="category">{{category}}</mat-option>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="clientInfoForm.get('brokerType')?.value === 'Non-IPC'">
+                        <ng-container *ngFor="let category of Non_IPC">
+                            <mat-option [value]="category">{{category}}</mat-option>
+                        </ng-container>
+                    </ng-container>
+                    <!-- <mat-option value="Hello">Hello</mat-option>
                     <mat-option value="Hello1">Hello1</mat-option>
                     <mat-option value="Hello2">Hello2</mat-option>
-                    <mat-option value="other">Other</mat-option>
+                    <mat-option value="other">Other</mat-option> -->
                 </mat-select>
                 <mat-error>Broker Category is required</mat-error>
             </mat-form-field>

@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { PDFProgressData } from "ng2-pdf-viewer";
 import { ProposalService } from "src/app/service/proposal/proposal.service";
+import { environment } from "src/environments/environment";
 
 export interface DialogData {
     proposalId: string,
@@ -15,6 +16,8 @@ export interface DialogData {
     styleUrls: ['./layout-preview.component.scss']
 })
 export class NewProposalLayoutPreviewComponent implements OnInit {
+
+    baseUrl: string = environment.baseUrl + 'proposal/';
 
     pdfUrl: any = "https://redbricks-server.herokuapp.com/proposal/layout/salarpuria/200/left";
     isPdfLoaded: boolean = false;
@@ -57,6 +60,6 @@ export class NewProposalLayoutPreviewComponent implements OnInit {
     }
 
     getLayout = () => {
-        this.pdfUrl = `http://localhost:3000/proposal/layout/${this.data.proposalId}/${this.data.selectFrom}`;
+        this.pdfUrl = `${this.baseUrl}layout/${this.data.proposalId}/${this.data.selectFrom}`;
     }
 }
