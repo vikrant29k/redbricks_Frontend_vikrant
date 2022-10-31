@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
-
 @Component({
   selector: 'app-conflict',
   templateUrl: './conflict.component.html',
   styleUrls: ['./conflict.component.scss']
 })
 export class ConflictComponent implements OnInit {
+
 
   conflict: boolean = true;
   proposalId!: string;
@@ -41,4 +41,6 @@ export class ConflictComponent implements OnInit {
     this.router.navigate(['/new-proposal','space-availability', this.proposalId])
   }
 
+
+  
 }
