@@ -1,0 +1,15 @@
+@import "../new-proposal/client-info/custom-angular-material.scss";
+@import "../new-proposal/requirement-info/custom-angular-material.scss";
+@import "../new-proposal/space-availability/custom-angular-material.scss";
+
+new-proposal-client-info {
+    @include custom_client-info_angular-material();
+}
+
+new-proposal-requirement-info{
+    @include custom_requirement-info_angular-material();
+}
+
+new-proposal-space-availability{
+    @include custom_space-availability_angular-material();
+}

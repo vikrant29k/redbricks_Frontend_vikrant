@@ -1,0 +1,101 @@
+@mixin custom_requirement-info_angular-material {
+
+    .mat-form-field-appearance-fill {
+        font-size: 1.1rem;
+
+        .mat-form-field-wrapper {
+            padding-bottom: 0rem;
+        }
+
+        .mat-form-field-flex {
+            background-color: #fff;
+            border-radius: 0.5rem !important;
+            height: 3rem;
+            align-items: center;
+        }
+
+        .mat-form-field-underline::before {
+            background-color: rgba(255, 255, 255, 0.42);
+        }
+
+
+
+        .mat-form-field-label {
+            span {
+                color: #C3343A;
+            }
+        }
+
+        .mat-select-arrow {
+            color: #C3343A;
+        }
+
+        .mat-form-field-underline {
+            display: none;
+        }
+
+        mat-label {
+            color: #C3343A;
+            font-weight: 600;
+        }
+
+        .mat-select-value-text {
+            color: #C3343A;
+        }
+
+        .mat-input-element {
+            color: #C3343A;
+        }
+    }
+
+    .mat-form-field {
+        &.mat-form-field-invalid {
+            .mat-form-field-label {
+                .mat-form-field-required-marker {
+                    color: #C3343A;
+                }
+            }
+        }
+
+        .mat-select {
+            &.mat-select-invalid {
+                .mat-select-arrow {
+                    color: #C3343A;
+                }
+            }
+        }
+    }
+
+    .with-input {
+        .mat-form-field-flex {
+            height: 2rem;
+        }
+
+        .mat-radio-outer-circle {
+            border-color: #fff;
+        }
+
+        .mat-radio-button {
+            &.mat-primary {
+                &.mat-radio-checked {
+                    .mat-radio-inner-circle {
+                        background-color: #fff;
+                    }
+
+                    .mat-radio-outer-circle {
+                        border-color: #fff;
+                    }
+                }
+            }
+        }
+
+        .mat-radio-button {
+            &.mat-primary {
+                .mat-radio-inner-circle {
+                    background-color: #fff;
+                }
+            }
+        }
+
+    }
+}
