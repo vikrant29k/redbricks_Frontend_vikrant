@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { LocationService } from "src/app/service/location.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AuthenticationService } from "src/app/service/authentication/authentication.service";
+import { LocationService } from "src/app/service/location/location.service";
+import { ProposalService } from "src/app/service/proposal/proposal.service";
 
 @Component({
     selector: 'new-proposal-client-info',
@@ -9,7 +11,7 @@ import { LocationService } from "src/app/service/location.service";
     styleUrls: ['./client-info.component.scss']
 })
 export class NewProposalClientInfoComponent implements OnInit{
-    proposalId: any;
+    proposalId!: string;
     locations = new Set<string>();
     centers = new Set<string>();
 
@@ -27,13 +29,29 @@ export class NewProposalClientInfoComponent implements OnInit{
 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
         private locationService: LocationService,
-        private cd: ChangeDetectorRef
+        private proposalService: ProposalService,
+        private authService: AuthenticationService
     ) { }
 
+
+
     onSubmit = () => {
-        console.log(this.clientInfoForm.value);
-        this.router.navigate(['/new-proposal', 'requirement-info']);
+        if (this.clientInfoForm.invalid) {
+            return;
+        }
+        this.proposalService.addClientInfo(this.clientInfoForm.value, this.proposalId).subscribe({
+            next: (result: any) => {
+                if (result.Message === "Client Info added Successfully!") {
+                    this.router.navigate(['/new-proposal', 'requirement-info', this.proposalId]);
+                }
+            },
+            error: (err: any) => {
+                this.authService.handleAuthError(err);
+            }
+        })
+        
     }
 
     getAllLocation = () => {
@@ -63,6 +81,7 @@ export class NewProposalClientInfoComponent implements OnInit{
     }
 
     ngOnInit(): void {
+        this.proposalId = this.getProposalId();
         this.getAllLocation();
         this.getCentersInLocation();
         this.watchValueChangesInForm();
@@ -77,5 +96,9 @@ export class NewProposalClientInfoComponent implements OnInit{
             'location': location,
             'center': center
         });
+    }
+
+    getProposalId = (): string => {
+        return this.route.snapshot.params['proposalId'];
     }
 }

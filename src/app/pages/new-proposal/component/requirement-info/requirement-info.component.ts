@@ -1,12 +1,15 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Route, Router } from "@angular/router";
+import { AuthenticationService } from "src/app/service/authentication/authentication.service";
+import { ProposalService } from "src/app/service/proposal/proposal.service";
+import Swal from "sweetalert2";
 @Component({
     selector: 'new-proposal-requirement-info',
     templateUrl: './requirement-info.component.html',
     styleUrls: ['./requirement-info.component.scss']
 })
-export class NewProposalRequirementInfoComponent {
+export class NewProposalRequirementInfoComponent implements OnInit {
     proposalId: string = 'lasdfoawefalsdfalskdf';
 
     requirementInfoForm = new FormGroup({
@@ -31,11 +34,31 @@ export class NewProposalRequirementInfoComponent {
     })
 
     constructor(
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute,
+        private proposalService: ProposalService,
+        private authService: AuthenticationService
     ) { }
+
+    ngOnInit(): void {
+        this.proposalId = this.getProposaId();
+    }
+
     onSubmit = () => {
-        console.log(this.requirementInfoForm.value);
-        this.router.navigate(['/new-proposal', 'conflict']);
+        this.proposalService.addRequirement(this.requirementInfoForm.value, this.proposalId).subscribe({
+            next: (result: any) => {
+                if (result.Message === "Requirement added Successfully!") {
+                    this.router.navigate(['/new-proposal', 'conflict',this.proposalId]);
+                }
+            },
+            error: (err: any) => {
+                this.authService.handleAuthError(err);
+            }
+        })
+    }
+
+    getProposaId = () => {
+        return this.route.snapshot.params['proposalId'];
     }
 
     selectOnlyOneCheckBox = (control: string, value: string) => {

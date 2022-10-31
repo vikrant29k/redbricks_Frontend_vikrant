@@ -2,9 +2,10 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { PDFProgressData } from "ng2-pdf-viewer";
+import { ProposalService } from "src/app/service/proposal/proposal.service";
 
 export interface DialogData {
-    noOfSeats: string,
+    proposalId: string,
     selectFrom: string
 }
 
@@ -20,15 +21,16 @@ export class NewProposalLayoutPreviewComponent implements OnInit {
 
     constructor(
         public dialogRef: MatDialogRef<NewProposalLayoutPreviewComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: DialogData
+        @Inject(MAT_DIALOG_DATA) public data: DialogData,
+        private proposalService: ProposalService
     ) { }
 
     ngOnInit(): void {
-        // this.getPdf();
+        this.getLayout();
     }
 
     pageInitialized = (e: any) => {
-        console.log('page-initialized', e);
+        // this.isPdfLoaded = false;
     }
 
     pageRendered = (e: any) => {
@@ -52,5 +54,9 @@ export class NewProposalLayoutPreviewComponent implements OnInit {
     changePdf = () => {
         let { noOfSeats, selectFrom } = this.selectedNoOfSeat.value;
         this.pdfUrl = `https://redbricks-server.herokuapp.com/proposal/layout/salarpuria/${noOfSeats}/${selectFrom}`;
+    }
+
+    getLayout = () => {
+        this.pdfUrl = `http://localhost:3000/proposal/layout/${this.data.proposalId}/${this.data.selectFrom}`;
     }
 }

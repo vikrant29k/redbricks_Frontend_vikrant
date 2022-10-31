@@ -17,19 +17,19 @@ const routes: Routes = [
                 pathMatch: 'full'
             },
             {
-                path: 'client-info',
+                path: 'client-info/:proposalId',
                 component: NewProposalClientInfoComponent
             },
             {
-                path: 'requirement-info',
+                path: 'requirement-info/:proposalId',
                 component: NewProposalRequirementInfoComponent
             },
             {
-                path: 'space-availability',
+                path: 'space-availability/:proposalId',
                 component: NewProposalSpaceAvailabilityComponent
             },
             {
-                path: 'conflict',
+                path: 'conflict/:proposalId',
                 component: ConflictComponent
             }
         ]

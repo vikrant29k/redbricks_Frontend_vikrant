@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { LocationService } from "src/app/service/location.service";
+import { AuthenticationService } from "src/app/service/authentication/authentication.service";
+import { LocationService } from "src/app/service/location/location.service";
+import { ProposalService } from "src/app/service/proposal/proposal.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -15,7 +17,8 @@ export class LocationLocationDetailComponent implements OnInit {
 
     constructor(
         private locationService: LocationService,
-        private route: ActivatedRoute,
+        private proposalService: ProposalService,
+        private authService: AuthenticationService,
         private router: Router
     ) { }
 
@@ -46,6 +49,16 @@ export class LocationLocationDetailComponent implements OnInit {
     }
 
     initiateProposal = () => {
-        this.router.navigate(['/new-proposal','client-info'])
+        this.proposalService.initializeProposal().subscribe({
+            next: (result: any) => {
+                if (result.Message === "Proposal Initiated Successfully") {
+                    this.router.navigate(['/new-proposal/add', this.location, result.Id]);
+                    this.router.navigate(['/new-proposal', 'client-info',result.Id]);
+                }
+            },
+            error: (err: any) => {
+                this.authService.handleAuthError(err);
+            }
+        });
     }
 }
