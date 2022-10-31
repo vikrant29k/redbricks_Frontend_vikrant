@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NewProposalClientInfoComponent } from "./component/client-info/client-info.component";
 import { NewProposalRequirementInfoComponent } from "./component/requirement-info/requirement-info.component";
-import { NewProposalSpaceAvailabilityComponent } from "./component/space availability/space-availability.component";
+import { NewProposalSpaceAvailabilityComponent } from "./component/space-availability/space-availability.component";
 import { NewProposalMaterialModule } from "./module/material/new-proposal-material.module";
 import { NewProposalRoutingModule } from "./module/routing/new-proposal-routing.module";
 import { NewProposalComponent } from "./new-proposal.component";
@@ -20,8 +20,7 @@ import { NewProposalLayoutPreviewComponent } from "./component/layout-preview/la
         NewProposalClientInfoComponent,
 
         ConflictComponent,
-        NewProposalRequirementInfoComponent
-
+        NewProposalRequirementInfoComponent,
         NewProposalRequirementInfoComponent,
         NewProposalSpaceAvailabilityComponent,
         NewProposalLayoutPreviewComponent

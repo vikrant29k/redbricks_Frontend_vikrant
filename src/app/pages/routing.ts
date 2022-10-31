@@ -18,7 +18,8 @@ const Routing: Routes = [
         path:'old-proposal',
         loadChildren: () => {
             return import('./old-proposal/old-proposal.module').then((m) => m.OldProposalModule);
-},
+}
+    },
 {
         path: 'location',
         loadChildren: () => {
