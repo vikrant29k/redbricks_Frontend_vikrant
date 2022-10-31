@@ -7,16 +7,25 @@ import { NewProposalSpaceAvailabilityComponent } from "./component/space availab
 import { NewProposalMaterialModule } from "./module/material/new-proposal-material.module";
 import { NewProposalRoutingModule } from "./module/routing/new-proposal-routing.module";
 import { NewProposalComponent } from "./new-proposal.component";
+
+import { ConflictComponent } from "./component/conflict/conflict.component";
+
 import { PdfViewerModule } from "ng2-pdf-viewer";
 import { NewProposalLayoutPreviewComponent } from "./component/layout-preview/layout-preview.component";
+
 
 @NgModule({
     declarations: [
         NewProposalComponent,
         NewProposalClientInfoComponent,
+
+        ConflictComponent,
+        NewProposalRequirementInfoComponent
+
         NewProposalRequirementInfoComponent,
         NewProposalSpaceAvailabilityComponent,
         NewProposalLayoutPreviewComponent
+
     ],
     imports: [
         CommonModule,

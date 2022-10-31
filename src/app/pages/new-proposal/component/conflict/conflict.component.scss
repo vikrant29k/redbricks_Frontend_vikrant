@@ -1,0 +1,83 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-image: url('../../../../../assets/images/dashboard/dashboard-background.png');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+
+    .card {
+        width:53rem;
+        height: 20rem;
+        background-color: #ffffff;
+        border-radius: 2rem;
+        padding: 0rem 1rem;
+        margin-inline-start: 2rem;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 1rem;
+        color: #ffffff;
+        font-weight: 600;
+    }
+    .otp{
+        width: 15.8rem;
+        background-color: #C3343A;
+        color: #ffffff;
+        box-sizing: border-box;
+        position: relative;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        display: inline-block;
+        white-space: nowrap;
+        text-decoration: none;
+        vertical-align: baseline;
+        text-align: center;
+        margin: 0;
+        min-width: 64px;
+        line-height: 36px;
+        padding: 0 16px;
+        border-radius: 4px;
+        overflow: visible;
+        font-size: medium;
+        transform: translate3d(0, 0, 0);
+    }
+    .otp::placeholder{
+        color: #ffffff;
+        font-size: medium;
+    }
+   
+    
+        .form-action{
+            width: 100%;
+            text-align: right;
+            margin-top: 5rem;
+            button{
+                background-color: #C3343A;
+                border: none;
+                color: white;
+              margin: 10px 14px;
+              
+             font-size: medium;
+             display: inline-flex;
+             align-content: center;
+             
+                border-radius: 0.5rem;
+            }
+            mat-icon{
+                overflow: hidden;
+                font-size: 20px;
+            }
+        }
+        
+    }        

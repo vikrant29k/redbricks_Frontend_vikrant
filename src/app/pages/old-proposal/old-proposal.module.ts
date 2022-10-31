@@ -1,15 +1,20 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { OldProposalRoutingModule } from "../dashboard/module/routing/old-proposal-routing.module";
+import { Router } from "@angular/router";
+import { ReactiveFormsModule } from "@angular/forms";
 import { OldProposalComponent } from "./old-proposal.component";
-
+import { ClosureComponent } from "./component/conflict/closure.component";
+import { OldProposalRoutingModule } from "./module/routing/old-proposal-routing.module";
 @NgModule({
     declarations: [
-        OldProposalComponent
+        OldProposalComponent,
+        ClosureComponent,
+        
     ],
     imports: [
         CommonModule,
-       OldProposalRoutingModule
+       ReactiveFormsModule,
+     OldProposalRoutingModule
         
     ]
 })
