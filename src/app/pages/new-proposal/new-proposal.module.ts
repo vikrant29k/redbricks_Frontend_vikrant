@@ -10,6 +10,7 @@ import { NewProposalComponent } from "./new-proposal.component";
 import { PdfViewerModule } from "ng2-pdf-viewer";
 import { NewProposalLayoutPreviewComponent } from "./component/layout-preview/layout-preview.component";
 import { ConflictComponent } from "./component/conflict/conflict.component";
+import { NewProposalProposalPreviewComponent } from "./component/proposal-preview/proposal-preview.component";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ConflictComponent } from "./component/conflict/conflict.component";
         NewProposalRequirementInfoComponent,
         NewProposalSpaceAvailabilityComponent,
         NewProposalLayoutPreviewComponent,
-        ConflictComponent
+        ConflictComponent,
+        NewProposalProposalPreviewComponent
 
     ],
     imports: [

@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { NewProposalClientInfoComponent } from "../../component/client-info/client-info.component";
 import { ConflictComponent } from "../../component/conflict/conflict.component";
+import { NewProposalProposalPreviewComponent } from "../../component/proposal-preview/proposal-preview.component";
 import { NewProposalRequirementInfoComponent } from "../../component/requirement-info/requirement-info.component";
 import { NewProposalSpaceAvailabilityComponent } from "../../component/space-availability/space-availability.component";
 import { NewProposalComponent } from "../../new-proposal.component";
@@ -33,8 +34,8 @@ const routes: Routes = [
                 component: ConflictComponent
             },
             {
-                path:'space-availability',
-                component: NewProposalSpaceAvailabilityComponent
+                path: 'proposal-preview/:proposalId',
+                component: NewProposalProposalPreviewComponent
             }
         ]
     }

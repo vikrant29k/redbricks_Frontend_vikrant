@@ -7,8 +7,8 @@
             <div class="consolidated-manner">
                 <p>Not Available in Consolidated manner. Do you wish to proceed?</p>
                 <div class="consolidated-manner__action">
-                    <button type="button" mat-raised-button color="primary">Yes</button>
-                    <button type="button" mat-raised-button color="primary">No</button>
+                    <button type="button" mat-raised-button color="primary"[color]="isAcceptConsolidatedSeats ? 'primary':'accent'" (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats">Yes</button>
+                    <button type="button" mat-raised-button color="primary"[color]="isAcceptConsolidatedSeats ? 'accent':'primary'" (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats">No</button>
                 </div>
             </div>
             <div class="extra-proposal-details">
@@ -18,14 +18,14 @@
                             <p>Tenure:</p>
                             <mat-form-field appearance="fill">
                                 <mat-label>In Months</mat-label>
-                                <input type="number" matInput>
+                                <input type="number" matInput formControlName="Tenure">
                             </mat-form-field>
                         </div>
                         <div class="extra-proposal-details__top-left__fields">
                             <p>Lock In:</p>
                             <mat-form-field appearance="fill">
                                 <mat-label>In Months</mat-label>
-                                <input type="number" matInput>
+                                <input type="number" matInput formControlName="LockIn">
                             </mat-form-field>
                         </div>
                     </div>
@@ -40,15 +40,15 @@
                                 <p>If Yes,</p>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Notes to be Included in Proposal</mat-label>
-                                    <input type="text" matInput>
+                                    <input type="text" matInput formControlName="NonStandardRequirement">
                                 </mat-form-field>
                             </div>
                         </ng-container>
                     </div>
                 </div>
                 <div class="extra-proposal-details__bottom">
-                    <button type="button" mat-raised-button color="primary">Serviced</button>
-                    <button type="button" mat-raised-button color="primary">Non Serviced</button>
+                    <button type="button" mat-raised-button [color]="isServiced ? 'primary':'accent'" (click)="isServiced = !isServiced" value="yes" formControlName="Serviced">Serviced</button>
+                    <button type="button" mat-raised-button [color]="isServiced ? 'accent':'primary'" (click)="isServiced = !isServiced" value="no" formControlName="Serviced">Non Serviced</button>
                 </div>
             </div>
             <div class="form-action">

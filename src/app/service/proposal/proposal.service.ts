@@ -53,7 +53,7 @@ export class ProposalService {
     sendOtp = (mobileNo: string, Id: string) => {
         return this.http.post(this.baseUrl + 'send-otp/' + Id, { mobileNo: mobileNo }).pipe(
             this.toster.observe({
-                success: 'OTP send seccessfylly',
+                success: 'OTP send Successfully',
                 loading: 'Sending OTp...',
                 error: ({ error }) => `${error.Message}`
             })
@@ -63,7 +63,7 @@ export class ProposalService {
     verifyOtp = (OTP: any,Id: string) => {
         return this.http.post(this.baseUrl + 'verify-otp/' + Id, {OTP: OTP}).pipe(
             this.toster.observe({
-                success: 'OTP verified seccessfylly',
+                success: 'OTP verified Successfully',
                 loading: 'verifying OTP...',
                 error: ({ error }) => `${error.Message}`
             })
@@ -80,10 +80,10 @@ export class ProposalService {
         )
     }
 
-    generateProposal = (Id: string, selectFrom: string) => {
-        return this.http.get(this.baseUrl + 'generate/' + Id + '/' + selectFrom).pipe(
+    generateProposal = (Id: string, selectFrom: string, data: any) => {
+        return this.http.post(this.baseUrl + 'generate/' + Id + '/' + selectFrom, data ).pipe(
             this.toster.observe({
-                success: 'Proposal generated successfully',
+                success: 'Proposal generated Successfully',
                 loading: 'generating Proposal...',
                 error: ({ error }) => `${error.Message}`
             })

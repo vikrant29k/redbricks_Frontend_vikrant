@@ -18,12 +18,12 @@ export class LocationService {
         },
         {
             location: 'Pune',
-            center: 'Sivaji Nagar',
+            center: 'Shivaji Nagar',
             image: ['location-preview.png']
         },
         {
             location: 'Pune',
-            center: 'Koregao Park',
+            center: 'Koregaon Park',
             image: ['location-preview.png']
         },
         {
@@ -32,23 +32,18 @@ export class LocationService {
             image: ['location-preview.png']
         },
         {
-            location: 'Bangalor',
+            location: 'Bangalore',
             center: 'Salarpuria',
             image: ['location-preview.png']
         },
         {
-            location: 'Bangalor',
-            center: 'Kharadi',
+            location: 'Bangalore',
+            center: 'Indira Nagar',
             image: ['location-preview.png']
         },
         {
-            location: 'Delhi',
-            center: 'Kharadi',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Bangalor',
-            center: 'Beach',
+            location: 'Bangalore',
+            center: 'Frazer Town',
             image: ['location-preview.png']
         },
         {
@@ -58,12 +53,22 @@ export class LocationService {
         },
         {
             location: 'Mumbai',
-            center: 'Gurgao',
+            center: 'Boriwali',
+            image: ['location-preview.png']
+        },
+        {
+            location: 'Mumbai',
+            center: 'Panwale',
             image: ['location-preview.png']
         },
         {
             location: 'Delhi',
-            center: 'Gurgao',
+            center: 'Canode palace',
+            image: ['location-preview.png']
+        },
+        {
+            location: 'Delhi',
+            center: 'Mandoli',
             image: ['location-preview.png']
         }
     ]
