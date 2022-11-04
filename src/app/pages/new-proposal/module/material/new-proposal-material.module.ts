@@ -7,6 +7,8 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 const materials = [
     MatFormFieldModule,
@@ -16,7 +18,9 @@ const materials = [
     MatIconModule,
     MatRadioModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonToggleModule,
+    MatCheckboxModule
 ];
 
 @NgModule({

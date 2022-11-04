@@ -10,234 +10,215 @@
             <div class="form">
                 <div class="left">
                     <div class="section">
-                        <div class="field-card">
-                            <p>Workstations</p>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Size</mat-label>
-                                <mat-select formControlName="workstationSize">
-                                    <mat-option value="small">Small</mat-option>
-                                    <mat-option value="medium">Medium</mat-option>
-                                    <mat-option value="large">Large</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+                        <div class="field">
+                            <div class="field-card">
+                                <p>Workstations</p>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Size</mat-label>
+                                    <mat-select formControlName="workstationSize">
+                                        <mat-option value="small">Small</mat-option>
+                                        <mat-option value="medium">Medium</mat-option>
+                                        <mat-option value="large">Large</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="field-card-odd">
+                                <p>Workstation Number</p>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Number</mat-label>
+                                    <input type="number" min="0" matInput formControlName="workstationNumber">
+                                </mat-form-field>
+                            </div>
                         </div>
-                        <div class="field-card-odd">
-                            <p>Workstation Number</p>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Number</mat-label>
-                                <input type="number" matInput formControlName="workstationNumber">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="section">
-                        <div class="field-card">
-                            <p>Cabins</p>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Size</mat-label>
-                                <mat-select formControlName="cabinSize">
-                                    <mat-option value="small">Small</mat-option>
-                                    <mat-option value="medium">Medium</mat-option>
-                                    <mat-option value="large">Large</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="field-card-odd">
-                            <p>Cabins Number</p>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Number</mat-label>
-                                <input type="number" matInput formControlName="cabinNumber">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="section">
-                        <div class="field-card">
-                            <p>Meeting Rooms</p>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Size</mat-label>
-                                <mat-select formControlName="meetingRoomSize">
-                                    <mat-option value="small">Small</mat-option>
-                                    <mat-option value="medium">Medium</mat-option>
-                                    <mat-option value="large">Large</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="field-card-odd">
-                            <p>Meeting Rooms Number</p>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Number</mat-label>
-                                <input type="number" matInput formControlName="meetingRoomNumber">
-                            </mat-form-field>
+                        <div class="field">
+                            <div class="field-card">
+                                <p>Cabins</p>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Size</mat-label>
+                                    <mat-select formControlName="cabinSize">
+                                        <mat-option value="small">Small</mat-option>
+                                        <mat-option value="medium">Medium</mat-option>
+                                        <mat-option value="large">Large</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="field-card-odd">
+                                <p>Cabins Number</p>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Number</mat-label>
+                                    <input type="number" min="0" matInput formControlName="cabinNumber">
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
                     <div class="section">
-                        <div class="field-card">
-                            <p>Visitor Meeting Rooms</p>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Size</mat-label>
-                                <mat-select formControlName="visitorMeetingRoomSize">
-                                    <mat-option value="small">Small</mat-option>
-                                    <mat-option value="medium">Medium</mat-option>
-                                    <mat-option value="large">Large</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+                        <div class="field">
+                            <div class="field-card">
+                                <p>Meeting Rooms</p>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Size</mat-label>
+                                    <mat-select formControlName="meetingRoomSize">
+                                        <mat-option value="small">Small</mat-option>
+                                        <mat-option value="medium">Medium</mat-option>
+                                        <mat-option value="large">Large</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="field-card-odd">
+                                <p>Meeting Rooms Number</p>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Number</mat-label>
+                                    <input type="number" min="0" matInput formControlName="meetingRoomNumber">
+                                </mat-form-field>
+                            </div>
                         </div>
-                        <div class="field-card-odd">
-                            <p>Visitor Meeting Rooms Number</p>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Number</mat-label>
-                                <input type="number" matInput formControlName="visitorMeetingRoomNumber">
-                            </mat-form-field>
+                        <div class="field">
+                            <div class="field-card">
+                                <p>Visitor Meeting Rooms</p>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Size</mat-label>
+                                    <mat-select formControlName="visitorMeetingRoomSize">
+                                        <mat-option value="small">Small</mat-option>
+                                        <mat-option value="medium">Medium</mat-option>
+                                        <mat-option value="large">Large</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="field-card-odd">
+                                <p>Visitor Meeting Rooms Number</p>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Number</mat-label>
+                                    <input type="number" min="0" matInput formControlName="visitorMeetingRoomNumber">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="field">
+                            <div class="field-card">
+                                <p>Collab Area</p>
+                                <div class="sub-field-card__action-field">
+                                    <mat-radio-group formControlName="collabArea">
+                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
+                                        <mat-radio-button value="no" color="primary">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div class="field-card">
+                                <p>Dry Pantry</p>
+                                <div class="sub-field-card__action-field">
+                                    <mat-radio-group formControlName="dryPantry">
+                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
+                                        <mat-radio-button value="no" color="primary">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div class="field-card">
+                                <p>Reception</p>
+                                <div class="sub-field-card__action-field">
+                                    <mat-radio-group formControlName="Reception">
+                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
+                                        <mat-radio-button value="no" color="primary">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div class="field-card">
+                                <p>Store Room</p>
+                                <div class="sub-field-card__action-field">
+                                    <mat-radio-group formControlName="storeRoom">
+                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
+                                        <mat-radio-button value="no" color="primary">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="requirementInfoForm.get('storeRoom')?.value === 'yes'">
+                                <div class="field-card-odd">
+                                    <p>Store Room Number</p>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Number</mat-label>
+                                        <input type="number" min="0" matInput formControlName="storeRoomNumber">
+                                    </mat-form-field>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="field">
+                            <div class="field-card">
+                                <p>Mail Room</p>
+                                <div class="sub-field-card__action-field">
+                                    <mat-radio-group formControlName="mailRoom">
+                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
+                                        <mat-radio-button value="no" color="primary">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div class="field-card">
+                                <p>BMS Room</p>
+                                <div class="sub-field-card__action-field">
+                                    <mat-radio-group formControlName="bmsRoom">
+                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
+                                        <mat-radio-button value="no" color="primary">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div class="field-card">
+                                <p>Compactor</p>
+                                <div class="sub-field-card__action-field">
+                                    <mat-radio-group formControlName="compactor">
+                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
+                                        <mat-radio-button value="no" color="primary">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div class="field-card">
+                                <p>Cafeteria</p>
+                                <div class="sub-field-card__action-field">
+                                    <mat-radio-group formControlName="cafeteria">
+                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
+                                        <mat-radio-button value="no" color="primary">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="requirementInfoForm.get('cafeteria')?.value === 'yes'">
+                                <div class="field-card-odd">
+                                    <p>Cafeteria Number</p>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Number</mat-label>
+                                        <input type="number" min="0" matInput formControlName="cafeteriaNumber">
+                                    </mat-form-field>
+                                </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
                 <div class="right">
-                    <div class="section">
-                        <div class="sub-field-card">
-                            <div class="sub-field-card__image">
-                                <img src="assets/images/new-proposal/collab-area.png" alt="">
-                            </div>
-                            <div class="sub-field-card__action">
-                                <div class="sub-field-card__action-label">
-                                    <p>Collab Area</p>
-                                </div>
-                                <div class="sub-field-card__action-field">
-                                    <mat-radio-group formControlName="collabArea">
-                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
-                                        <mat-radio-button value="no" color="accent">No</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
+                    <div class="counter-card">
+                        <div class="counter">
+                            <div class="label">Total Inventory Booked</div>
+                            <div class="count">{{totalWorkstationBooked}}</div>
                         </div>
-                        <div class="sub-field-card">
-                            <div class="sub-field-card__image">
-                                <img src="assets/images/new-proposal/dry-pantry.png" alt="">
-                            </div>
-                            <div class="sub-field-card__action">
-                                <div class="sub-field-card__action-label">
-                                    <p>Dry Pantry</p>
-                                </div>
-                                <div class="sub-field-card__action-field">
-                                    <mat-radio-group formControlName="dryPantry">
-                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
-                                        <mat-radio-button value="no" color="accent">No</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
+                        <hr>
+                        <div class="counter">
+                            <div class="label">Total Inventory</div>
+                            <div class="count">{{totalWorkStationBalance}}</div>
                         </div>
                     </div>
-                    <div class="section">
-                        <div class="sub-field-card">
-                            <div class="sub-field-card__image">
-                                <img src="assets/images/new-proposal/store-room.png" alt="">
-                            </div>
-                            <div class="sub-field-card__action">
-                                <div class="sub-field-card__action-label">
-                                    <p>Store Room</p>
-                                </div>
-                                <div class="sub-field-card__action-field">
-                                    <mat-radio-group formControlName="storeRoom">
-                                        <div class="with-input">
-                                            <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
-                                            <input type="number" placeholder="no." formControlName="storeRoomNumber">
-                                        </div>
-                                        <mat-radio-button value="no" color="accent">No</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
+                    <div class="counter-card">
+                        <div class="counter">
+                            <div class="label">Total Inventory Selected</div>
+                            <div class="count">{{totalSelectedWorkstation}}</div>
                         </div>
-                        <div class="sub-field-card">
-                            <div class="sub-field-card__image">
-                                <img src="assets/images/new-proposal/cafeteria.png" alt="">
-                            </div>
-                            <div class="sub-field-card__action">
-                                <div class="sub-field-card__action-label">
-                                    <p>Cafeteria</p>
-                                </div>
-                                <div class="sub-field-card__action-field">
-                                    <mat-radio-group formControlName="cafeteria">
-                                        <div class="with-input">
-                                            <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
-                                            <input type="number" placeholder="no." formControlName="cafeteriaNumber">
-                                        </div>
-                                        <mat-radio-button value="no" color="accent">No</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section">
-                        <div class="sub-field-card">
-                            <div class="sub-field-card__image">
-                                <img src="assets/images/new-proposal/reception.png" alt="">
-                            </div>
-                            <div class="sub-field-card__action">
-                                <div class="sub-field-card__action-label">
-                                    <p>Reception</p>
-                                </div>
-                                <div class="sub-field-card__action-field">
-                                    <mat-radio-group formControlName="reception">
-                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
-                                        <mat-radio-button value="no" color="accent">No</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sub-field-card">
-                            <div class="sub-field-card__image">
-                                <img src="assets/images/new-proposal/mail-room.png" alt="">
-                            </div>
-                            <div class="sub-field-card__action">
-                                <div class="sub-field-card__action-label">
-                                    <p>Mail Room</p>
-                                </div>
-                                <div class="sub-field-card__action-field">
-                                    <mat-radio-group formControlName="mailRoom">
-                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
-                                        <mat-radio-button value="no" color="accent">No</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section">
-                        <div class="sub-field-card">
-                            <div class="sub-field-card__image">
-                                <img src="assets/images/new-proposal/bms-room.png" alt="">
-                            </div>
-                            <div class="sub-field-card__action">
-                                <div class="sub-field-card__action-label">
-                                    <p>BMS Room</p>
-                                </div>
-                                <div class="sub-field-card__action-field">
-                                    <mat-radio-group formControlName="bmsRoom">
-                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
-                                        <mat-radio-button value="no" color="accent">No</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sub-field-card">
-                            <div class="sub-field-card__image">
-                                <img src="assets/images/new-proposal/compactor.png" alt="">
-                            </div>
-                            <div class="sub-field-card__action">
-                                <div class="sub-field-card__action-label">
-                                    <p>Compactor</p>
-                                </div>
-                                <div class="sub-field-card__action-field">
-                                    <mat-radio-group formControlName="compactor">
-                                        <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
-                                        <mat-radio-button value="no" color="accent">No</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
+                        <hr>
+                        <div class="counter">
+                            <div class="label">Total Inventory Available</div>
+                            <div class="count">{{totalAvailableWorkstation}}</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="form-action">
                 <button type="button" mat-raised-button color="primary">Summarize requirement</button>
-                <button type="submit" mat-raised-button color="primary">Confirm requirement <mat-icon>play_arrow</mat-icon></button>
+                <button type="submit" mat-raised-button color="primary">Confirm requirement <mat-icon>play_arrow
+                    </mat-icon></button>
             </div>
         </form>
     </div>

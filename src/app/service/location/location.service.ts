@@ -32,17 +32,17 @@ export class LocationService {
             image: ['location-preview.png']
         },
         {
-            location: 'Bangalore',
+            location: 'Hydrabad',
             center: 'Salarpuria',
             image: ['location-preview.png']
         },
         {
-            location: 'Bangalore',
+            location: 'Hydrabad',
             center: 'Indira Nagar',
             image: ['location-preview.png']
         },
         {
-            location: 'Bangalore',
+            location: 'Hydrabad',
             center: 'Frazer Town',
             image: ['location-preview.png']
         },

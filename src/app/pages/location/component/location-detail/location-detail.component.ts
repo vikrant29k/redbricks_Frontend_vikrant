@@ -49,10 +49,15 @@ export class LocationLocationDetailComponent implements OnInit {
     }
 
     initiateProposal = () => {
-        this.proposalService.initializeProposal().subscribe({
+        let data = {
+            location: this.location,
+            center: this.center
+        }
+        console.log(data)
+        this.proposalService.initializeProposal(data).subscribe({
             next: (result: any) => {
                 if (result.Message === "Proposal Initiated Successfully") {
-                    this.router.navigate(['/new-proposal/add', this.location, result.Id]);
+                    // this.router.navigate(['/new-proposal/add', this.location, result.Id]);
                     this.router.navigate(['/new-proposal', 'client-info',result.Id]);
                 }
             },

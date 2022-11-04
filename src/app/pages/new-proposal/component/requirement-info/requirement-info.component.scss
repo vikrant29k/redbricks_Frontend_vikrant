@@ -17,6 +17,11 @@
     align-items: center;
 }
 
+@mixin flex__center-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .container {
     display: flex;
@@ -69,38 +74,68 @@
 
                 .left {
                     @include flex-column__center-center();
-                    gap: 5rem;
+                    gap: 1rem;
 
                     .section {
-                        @include flex-column__center-center();
-                        gap: 2rem;
+                        @include flex__center-center();
+                        align-items: flex-start;
+                        gap: 1rem;
 
-                        .field-card {
-                            background-color: #C3343A;
-                            @include field-card();
+                        .field {
+                            @include flex-column__center-center();
+                            gap: 1rem;
 
-                            mat-form-field {
-                                width: 10rem;
-                                padding-inline: 1rem;
-                                padding-block: 0.5rem;
+                            .field-card {
+                                background-color: #C3343A;
+                                @include field-card();
+
+                                mat-form-field {
+                                    width: 10rem;
+                                    padding-inline: 1rem;
+                                    padding-block: 0.5rem;
+                                }
+
+                                .sub-field-card__action-field {
+                                    display: flex;
+                                    justify-content: flex-end;
+                                    align-items: center;
+
+                                    mat-radio-group {
+                                        display: flex;
+                                        // flex-direction: column;
+                                        align-items: flex-start;
+
+                                        mat-radio-button {
+                                            &:nth-child(even) {
+                                                color: #ffffff;
+                                            }
+
+                                            color: #ffffff;
+                                            font-size: 1.1rem;
+                                            padding: 0.3rem 0.7rem;
+                                            border-radius: 0.5rem;
+                                        }
+
+                                    }
+                                }
+
                             }
 
-                        }
+                            .field-card-odd {
+                                @include field-card();
+                                background-color: #7D7E80;
 
-                        .field-card-odd {
-                            @include field-card();
-                            background-color: #7D7E80;
+                                mat-form-field {
+                                    width: 10rem;
+                                    padding-inline: 1rem;
+                                    padding-block: 0.5rem;
+                                }
 
-                            mat-form-field {
-                                width: 10rem;
-                                padding-inline: 1rem;
-                                padding-block: 0.5rem;
-                            }
-
-                            //removing up and down button on input type number
-                            input[type='number']::-webkit-outer-spin-button,
-                            input[type='number']::-webkit-inner-spin-button {
-                                appearance: none;
+                                //removing up and down button on input type number
+                                input[type='number']::-webkit-outer-spin-button,
+                                input[type='number']::-webkit-inner-spin-button {
+                                    appearance: none;
+                                }
                             }
                         }
                     }
@@ -109,102 +144,173 @@
                 .right {
                     @include flex-column__center-center();
                     gap: 2rem;
+                    border: 2px solid #C3343A;
+                    border-radius: 2rem;
+                    padding: 3rem;
 
-                    .section {
+                    .counter-card {
+                        width: 17rem;
+                        height: 17rem;
+                        border-radius: 100%;
+                        background-color: #fff;
+                        box-shadow: -4px 8px 17px 0px rgba(0, 0, 0, 0.1);
                         display: flex;
-                        flex-wrap: nowrap;
-                        gap: 5rem;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
 
-                        .sub-field-card {
-                            @include flex-column__center-center();
-                            gap: 0.5rem;
 
-                            .sub-field-card__image {
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                border-radius: 100%;
-                                width: 8rem;
-                                height: 8rem;
+                        .counter {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
 
-                                img {
-                                    width: inherit;
-                                    height: inherit;
-                                }
+                            .label {
+                                font-size: 1.2rem;
                             }
 
-                            .sub-field-card__action {
-                                display: flex;
-                                flex-wrap: nowrap;
-                                gap: 0.3rem;
-
-                                .sub-field-card__action-label {
-                                    font-size: 1.1rem;
-                                    font-weight: 500;
-
-                                    p {
-                                        margin-block: 0rem;
-                                    }
-
-                                }
-
-                                .sub-field-card__action-field {
-
-                                    mat-radio-group {
-                                        display: flex;
-                                        flex-direction: column;
-                                        align-items: flex-start;
-
-                                        mat-radio-button {
-                                            &:nth-child(even) {
-                                                color: #7D7E80;
-                                            }
-
-                                            color: #C3343A;
-                                            font-size: 1.1rem;
-                                            padding: 0.3rem 0.7rem;
-                                            border-radius: 0.5rem;
-                                        }
-
-                                        .with-input {
-                                            background-color: #C3343A;
-                                            color: #fff;
-                                            padding-block: 0.3rem;
-                                            padding-inline-end: 0.3rem;
-                                            border-radius: 0.5rem;
-                                            display: flex;
-
-                                            mat-radio-button {
-                                                color: #fff;
-                                            }
-
-                                            input {
-                                                width: 2rem;
-                                                border-radius: 0.5rem;
-                                                outline: none;
-                                                border: none;
-                                                padding: 0.2rem;
-                                                padding-inline-end: 0.5rem;
-                                                font-size: 1.1rem;
-                                                caret-color: #C3343A;
-                                                color: #C3343A;
-
-                                                &::placeholder{
-                                                    color: #C3343A;
-                                                }
-
-                                            }
-
-                                            input[type='number']::-webkit-outer-spin-button,
-                                            input[type='number']::-webkit-inner-spin-button {
-                                                appearance: none;
-                                            }
-                                        }
-                                    }
-                                }
+                            .count {
+                                font-size: 2rem;
+                                font-weight: 700;
                             }
                         }
+
+                        hr {
+                            width: 100%;
+                        }
                     }
+
+                    // .section {
+                    //     @include flex-column__center-center();
+                    //     gap: 2rem;
+
+                    //     .field-card {
+                    //         background-color: #C3343A;
+                    //         @include field-card();
+
+                    //         .sub-field-card__action-field {
+                    //             display: flex;
+                    //             justify-content: flex-end;
+                    //             align-items: center;
+
+                    //             mat-radio-group {
+                    //                 display: flex;
+                    //                 // flex-direction: column;
+                    //                 align-items: flex-start;
+
+                    //                 mat-radio-button {
+                    //                     &:nth-child(even) {
+                    //                         color: #ffffff;
+                    //                     }
+
+                    //                     color: #ffffff;
+                    //                     font-size: 1.1rem;
+                    //                     padding: 0.3rem 0.7rem;
+                    //                     border-radius: 0.5rem;
+                    //                 }
+
+                    //             }
+                    //         }
+
+
+                    //         mat-form-field {
+                    //             width: 4rem;
+                    //             padding-inline: 1rem;
+                    //             padding-block: 0.5rem;
+                    //         }
+                    //     }
+
+                    //     // .sub-field-card {
+                    //     //     @include flex-column__center-center();
+                    //     //     gap: 0.5rem;
+
+                    //     //     .sub-field-card__image {
+                    //     //         display: flex;
+                    //     //         justify-content: center;
+                    //     //         align-items: center;
+                    //     //         border-radius: 100%;
+                    //     //         width: 8rem;
+                    //     //         height: 8rem;
+
+                    //     //         img {
+                    //     //             width: inherit;
+                    //     //             height: inherit;
+                    //     //         }
+                    //     //     }
+
+                    //     //     .sub-field-card__action {
+                    //     //         display: flex;
+                    //     //         flex-wrap: nowrap;
+                    //     //         gap: 0.3rem;
+
+                    //     //         .sub-field-card__action-label {
+                    //     //             font-size: 1.1rem;
+                    //     //             font-weight: 500;
+
+                    //     //             p {
+                    //     //                 margin-block: 0rem;
+                    //     //             }
+
+                    //     //         }
+
+                    //     //         .sub-field-card__action-field {
+
+                    //     //             mat-radio-group {
+                    //     //                 display: flex;
+                    //     //                 flex-direction: column;
+                    //     //                 align-items: flex-start;
+
+                    //     //                 mat-radio-button {
+                    //     //                     &:nth-child(even) {
+                    //     //                         color: #7D7E80;
+                    //     //                     }
+
+                    //     //                     color: #C3343A;
+                    //     //                     font-size: 1.1rem;
+                    //     //                     padding: 0.3rem 0.7rem;
+                    //     //                     border-radius: 0.5rem;
+                    //     //                 }
+
+                    //     //                 .with-input {
+                    //     //                     background-color: #C3343A;
+                    //     //                     color: #fff;
+                    //     //                     padding-block: 0.3rem;
+                    //     //                     padding-inline-end: 0.3rem;
+                    //     //                     border-radius: 0.5rem;
+                    //     //                     display: flex;
+
+                    //     //                     mat-radio-button {
+                    //     //                         color: #fff;
+                    //     //                     }
+
+                    //     //                     input {
+                    //     //                         width: 2rem;
+                    //     //                         border-radius: 0.5rem;
+                    //     //                         outline: none;
+                    //     //                         border: none;
+                    //     //                         padding: 0.2rem;
+                    //     //                         padding-inline-end: 0.5rem;
+                    //     //                         font-size: 1.1rem;
+                    //     //                         caret-color: #C3343A;
+                    //     //                         color: #C3343A;
+
+                    //     //                         &::placeholder{
+                    //     //                             color: #C3343A;
+                    //     //                         }
+
+                    //     //                     }
+
+                    //     //                     input[type='number']::-webkit-outer-spin-button,
+                    //     //                     input[type='number']::-webkit-inner-spin-button {
+                    //     //                         appearance: none;
+                    //     //                     }
+                    //     //                 }
+                    //     //             }
+                    //     //         }
+                    //     //     }
+                    //     // }
+                    // }
                 }
             }
 
@@ -220,12 +326,32 @@
                     min-width: 10rem;
                     min-height: 3rem;
                     margin-inline-end: 2rem;
-                    &:last-child{
+
+                    &:last-child {
                         margin-inline-end: 5rem;
                     }
                 }
             }
         }
+    }
+
+}
+
+::ng-deep {
+    .mat-checkbox-checked {
+        &.mat-primary {
+            .mat-checkbox-background {
+                background-color: #fff;
+            }
+        }
+    }
+
+    .mat-checkbox-frame {
+        border-color: #fff;
+    }
+
+    .mat-checkbox-checkmark-path {
+        stroke: #C3343A !important;
     }
 
 }

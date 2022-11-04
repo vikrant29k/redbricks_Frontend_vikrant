@@ -17,9 +17,9 @@ export class ProposalService {
         private headerService: HeaderService
     ) { }
 
-    initializeProposal = () => {
+    initializeProposal = (data: any) => {
         let httpOptions = this.headerService.updateHeader();
-        return this.http.get(this.baseUrl + 'init', httpOptions).pipe(
+        return this.http.post(this.baseUrl + 'init',data, httpOptions).pipe(
             this.toster.observe({
                 success: 'Proposal Initialized',
                 loading: 'Initialzing Proposal...',

@@ -11,6 +11,10 @@ import Swal from "sweetalert2";
 })
 export class NewProposalRequirementInfoComponent implements OnInit {
     proposalId: string = 'lasdfoawefalsdfalskdf';
+    totalWorkStationBalance: any = 373;
+    totalWorkstationBooked: any = 0;
+    totalAvailableWorkstation: any = 373;
+    totalSelectedWorkstation: any = 0;
 
     requirementInfoForm = new FormGroup({
         'workstationSize': new FormControl(''),
@@ -21,7 +25,7 @@ export class NewProposalRequirementInfoComponent implements OnInit {
         'meetingRoomNumber': new FormControl(''),
         'visitorMeetingRoomSize': new FormControl(''),
         'visitorMeetingRoomNumber': new FormControl(''),
-        'collabArea': new FormControl(''),
+        'collabArea': new FormControl('no'),
         'dryPantry': new FormControl(''),
         'storeRoom': new FormControl(''),
         'storeRoomNumber': new FormControl(''),
@@ -42,6 +46,7 @@ export class NewProposalRequirementInfoComponent implements OnInit {
 
     ngOnInit(): void {
         this.proposalId = this.getProposaId();
+        this.watchFormValue();
     }
 
     onSubmit = () => {
@@ -59,6 +64,13 @@ export class NewProposalRequirementInfoComponent implements OnInit {
 
     getProposaId = () => {
         return this.route.snapshot.params['proposalId'];
+    }
+
+    watchFormValue = () => {
+        this.requirementInfoForm.valueChanges.subscribe(() => {
+            let value = this.requirementInfoForm.value;
+            this.totalSelectedWorkstation = Number(value.workstationNumber) + Number(value.cabinNumber) + Number(value.meetingRoomNumber) + Number(value.visitorMeetingRoomNumber);
+        })
     }
 
     selectOnlyOneCheckBox = (control: string, value: string) => {

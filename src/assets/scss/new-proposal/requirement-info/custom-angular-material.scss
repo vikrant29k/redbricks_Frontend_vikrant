@@ -66,36 +66,34 @@
         }
     }
 
-    .with-input {
-        .mat-form-field-flex {
-            height: 2rem;
-        }
+    .mat-form-field-flex {
+        height: 2rem;
+    }
 
-        .mat-radio-outer-circle {
-            border-color: #fff;
-        }
+    .mat-radio-outer-circle {
+        border-color: #fff;
+    }
 
-        .mat-radio-button {
-            &.mat-primary {
-                &.mat-radio-checked {
-                    .mat-radio-inner-circle {
-                        background-color: #fff;
-                    }
-
-                    .mat-radio-outer-circle {
-                        border-color: #fff;
-                    }
-                }
-            }
-        }
-
-        .mat-radio-button {
-            &.mat-primary {
+    .mat-radio-button {
+        &.mat-primary {
+            &.mat-radio-checked {
                 .mat-radio-inner-circle {
                     background-color: #fff;
                 }
+
+                .mat-radio-outer-circle {
+                    border-color: #fff;
+                }
             }
         }
-
     }
+
+    .mat-radio-button {
+        &.mat-primary {
+            .mat-radio-inner-circle {
+                background-color: #fff;
+            }
+        }
+    }
+
 }
