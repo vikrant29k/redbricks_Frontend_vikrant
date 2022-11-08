@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ProposalService } from "src/app/service/proposal/proposal.service";
@@ -16,13 +16,16 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     proposalId!: string;
     isServiced: boolean = false;
     isAcceptConsolidatedSeats: boolean = true;
+    selectFrom: "left" | "right" = 'left';
+    seatAvailability: boolean = true;
+    consolidatedSeats: boolean = false;
 
     proposalExtraDetailForm = new FormGroup({
         'consolidated': new FormControl(''),
-        'Tenure': new FormControl(''),
-        'LockIn': new FormControl(''),
+        'Tenure': new FormControl('',Validators.required),
+        'LockIn': new FormControl('',Validators.required),
         'NonStandardRequirement': new FormControl(''),
-        'Serviced': new FormControl('')
+        'Serviced': new FormControl('',Validators.required)
     });
 
     constructor(
@@ -37,6 +40,8 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.consolidatedSeats = this.proposalService.consolidatedSeats;
+        this.seatAvailability = this.proposalService.seatAvailability;
         this.proposalId = this.route.snapshot.params['proposalId'];
     }
 
@@ -44,7 +49,7 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
         const dialogRef = this.dialog.open(NewProposalLayoutPreviewComponent, {
             width: '800px',
             height: '566px',
-            data: { proposalId: this.proposalId, selectFrom: 'left' }
+            data: { proposalId: this.proposalId, selectFrom: this.selectFrom }
         });
 
         dialogRef.afterClosed().subscribe((result: any) => {
@@ -56,7 +61,10 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
         let serviced = this.isServiced ? 'yes' : 'no';
         let acceptConsolidatedSeats = this.isAcceptConsolidatedSeats ? 'yes' : 'no';
         this.proposalExtraDetailForm.patchValue({ consolidated: acceptConsolidatedSeats, Serviced: serviced });
-        this.proposalService.generateProposal(this.proposalId, 'left', this.proposalExtraDetailForm.value).subscribe({
+        if (this.proposalExtraDetailForm.invalid) {
+            return;
+        }
+        this.proposalService.generateProposal(this.proposalId, this.selectFrom, this.proposalExtraDetailForm.value).subscribe({
             next: (result: any) => {
                 if (result.Message === 'Proposal Generated Successfully') {
                     this.router.navigate(['/new-proposal','proposal-preview',this.proposalId]);

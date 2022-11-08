@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "src/app/service/authentication/authentication.service";
 import { LocationService } from "src/app/service/location/location.service";
 import { ProposalService } from "src/app/service/proposal/proposal.service";
+import Swal from "sweetalert2";
 
 @Component({
     selector: 'new-proposal-client-info',
@@ -51,9 +52,29 @@ export class NewProposalClientInfoComponent implements OnInit{
         if (this.clientInfoForm.invalid) {
             return;
         }
+        Swal.fire({
+            title: 'Initialized Proposal And Add Client Info',
+            text: 'Once you initialized proposal and added client Info it cannot be undone',
+            icon: 'question',
+            showConfirmButton: true,
+            confirmButtonText: 'Proceed',
+            confirmButtonColor: '#C3343A',
+            showCancelButton: true,
+            cancelButtonColor: '#7D7E80'
+        }).then((confirmation) => {
+            if (confirmation.isConfirmed) {
+                this.addClientInfo();
+            }
+        })
+        
+    }
+
+    addClientInfo = () => {
         this.proposalService.addClientInfo(this.clientInfoForm.value, this.proposalId).subscribe({
             next: (result: any) => {
                 if (result.Message === "Client Info added Successfully!") {
+                    this.proposalService.AvailableNoOfSeats = result.AvailableNoOfSeatsInLayout;
+                    this.proposalService.TotalNoOfSets = result.TotalNoOfSeatsInLayout;
                     this.router.navigate(['/new-proposal', 'requirement-info', this.proposalId]);
                 }
             },
@@ -61,7 +82,6 @@ export class NewProposalClientInfoComponent implements OnInit{
                 this.authService.handleAuthError(err);
             }
         })
-        
     }
 
     getAllLocation = () => {

@@ -10,6 +10,11 @@ import { HeaderService } from "../header/header.service";
 export class ProposalService { 
     
     baseUrl: string = environment.baseUrl + 'proposal/';
+    consolidatedSeats: boolean = false;
+    seatAvailability: boolean = true;
+    conflict: boolean = false;
+    AvailableNoOfSeats: number = 0;
+    TotalNoOfSets: number = 0;
 
     constructor(
         private http: HttpClient,
@@ -88,6 +93,16 @@ export class ProposalService {
                 error: ({ error }) => `${error.Message}`
             })
         )
+    }
+
+    getAllProposal = () => {
+        return this.http.get(this.baseUrl + 'getAll').pipe(
+            this.toster.observe({
+                success: 'All Old Proposal list Loaded successfully',
+                loading: 'Loading All Old proposal Data...',
+                error: ({ error }) => `${error.Message}`
+            })
+        );
     }
 
 }

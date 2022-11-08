@@ -1,14 +1,25 @@
 <div class="container">
     <div class="main-content">
         <div class="space-availability">
-            <p>The Space is Available/Not-Available</p>
+            <p>{{seatAvailability ? 'Space is Available': 'Space is Not-Available'}}</p>
         </div>
         <form [formGroup]="proposalExtraDetailForm" (ngSubmit)="onSubmit()">
+            <ng-container *ngIf="consolidatedSeats">
+                <div class="consolidated-manner">
+                    <p>Not Available in Consolidated manner. Do you wish to proceed?</p>
+                    <div class="consolidated-manner__action">
+                        <button type="button" mat-raised-button color="primary" [color]="isAcceptConsolidatedSeats ? 'primary':'accent'"
+                            (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats">Yes</button>
+                        <button type="button" mat-raised-button color="primary" [color]="isAcceptConsolidatedSeats ? 'accent':'primary'"
+                            (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats">No</button>
+                    </div>
+                </div>
+            </ng-container>
             <div class="consolidated-manner">
-                <p>Not Available in Consolidated manner. Do you wish to proceed?</p>
+                <p>From which side workstations should be selected?</p>
                 <div class="consolidated-manner__action">
-                    <button type="button" mat-raised-button color="primary"[color]="isAcceptConsolidatedSeats ? 'primary':'accent'" (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats">Yes</button>
-                    <button type="button" mat-raised-button color="primary"[color]="isAcceptConsolidatedSeats ? 'accent':'primary'" (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats">No</button>
+                    <button type="button" mat-raised-button color="primary"[color]="selectFrom === 'left' ? 'primary':'accent'" (click)="selectFrom = 'left'">Left</button>
+                    <button type="button" mat-raised-button color="primary"[color]="selectFrom === 'right' ? 'primary':'accent'" (click)="selectFrom = 'right'">Right</button>
                 </div>
             </div>
             <div class="extra-proposal-details">
@@ -52,8 +63,8 @@
                 </div>
             </div>
             <div class="form-action">
-                <button type="submit" mat-raised-button color="primary" (click)="openDialog()">Generate Layout</button>
-                <button type="submit" mat-raised-button color="primary" (click)="generateProposal()">Generate Proposal</button>
+                <button type="submit" mat-raised-button color="primary" (click)="openDialog()" [disabled]="!seatAvailability">Generate Layout</button>
+                <button type="submit" mat-raised-button color="primary" (click)="generateProposal()" [disabled]="!seatAvailability">Generate Proposal</button>
             </div>
         </form>
     </div>

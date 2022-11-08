@@ -57,9 +57,7 @@
             <!-- Client Name -->
             <mat-form-field appearance="fill">
                 <mat-label>Client Name</mat-label>
-                <mat-select formControlName="clientName">
-                    <mat-option value="Manprit">Manprit</mat-option>
-                </mat-select>
+                <input type="text" matInput formControlName="clientName" autocomplete="off">
                 <mat-error>Client Name is required</mat-error>
             </mat-form-field>
             <!-- Broker Type -->
@@ -95,7 +93,7 @@
             <!-- Broker Category Other -->
             <mat-form-field appearance="fill" *ngIf="clientInfoForm.get('brokerCategory')?.value === 'other'">
                 <mat-label>Brokery Category Other</mat-label>
-                <input type="text" matInput formControlName="brokerCategoryOther">
+                <input type="text" matInput formControlName="brokerCategoryOther" autocomplete="off">
             </mat-form-field>
             <div class="form-action">
                 <button type="submit" mat-raised-button color="primary" >Save & Next <mat-icon>play_arrow</mat-icon></button>

@@ -13,7 +13,7 @@ const Routing: Routes = [
             return import('./new-proposal/new-proposal.module').then((m) => m.NewProposalModule);
         }
     },
-     {
+    {
         path: 'location',
         loadChildren: () => {
             return import('./location/location.module').then((m) => m.LocationModule);
@@ -24,10 +24,13 @@ const Routing: Routes = [
         loadChildren: () => {
             return import('./old-proposal/old-proposal.module').then((m) => m.OldProposalModule);
         }
-     }
-
-    
-
+    },
+    {
+        path: 'log',
+        loadChildren: () => {
+            return import('./log/log.module').then((m) => m.LogModule);
+        }
+    }
 ]
 
 

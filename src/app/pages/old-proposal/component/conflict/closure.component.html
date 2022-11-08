@@ -2,9 +2,9 @@
     <div class="main-content">
         <form  ngSubmit="onSubmit()">
        <div class="card">  
-        <div>
+        <div [formGroup]="closerForm">
         <p>The unique identification of your proposal is:</p>
-        <input class="uid" type="text" value="XXXXXXXXXX" disabled>
+        <input class="uid" type="text"  formControlName="proposalId">
     </div>
         <div>
         <p>Do you wish to escalate the proposal for closure?</p>

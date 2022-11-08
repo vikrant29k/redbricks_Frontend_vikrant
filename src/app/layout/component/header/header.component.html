@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="icon" (click)="menuOpen = !menuOpen" matRipple>
+        <mat-icon>{{menuOpen ? 'close': 'menu'}}</mat-icon>
+    </div>
+    <div class="sub-icon" [ngClass]="menuOpen ? 'home-icon': ''" (click)="menuOpen = !menuOpen" matRipple routerLink="/" matTooltip="Home" matTooltipPosition="left" matTooltipShowDelay="500">
+        <mat-icon>home</mat-icon>
+    </div>
+    <div class="sub-icon" [ngClass]="menuOpen ? 'person-icon': ''" (click)="menuOpen = !menuOpen" matRipple routerLink="/" matTooltip="Profile" matTooltipPosition="left" matTooltipShowDelay="500">
+        <mat-icon>person</mat-icon>
+    </div>
+    <div class="sub-icon" [ngClass]="menuOpen ? 'log-icon': ''" (click)="menuOpen = !menuOpen" matRipple routerLink="/log" matTooltip="Logs" matTooltipPosition="left" matTooltipShowDelay="500">
+        <mat-icon>description</mat-icon>
+    </div>
+    <div class="sub-icon" [ngClass]="menuOpen ? 'logout-icon': ''" (click)="menuOpen = !menuOpen" matRipple routerLink="/" matTooltip="Logout" matTooltipPosition="left" matTooltipShowDelay="500">
+        <mat-icon>logout</mat-icon>
+    </div>
+</div>

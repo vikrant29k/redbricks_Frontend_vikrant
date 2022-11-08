@@ -10,7 +10,7 @@ import { ProposalService } from 'src/app/service/proposal/proposal.service';
 export class ConflictComponent implements OnInit {
 
 
-  conflict: boolean = true;
+  conflict: boolean = false;
   proposalId!: string;
 
   otp = new FormControl('');
@@ -22,6 +22,7 @@ export class ConflictComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.conflict = this.proposalService.conflict;
     this.proposalId = this.route.snapshot.params['proposalId'];
   }
 

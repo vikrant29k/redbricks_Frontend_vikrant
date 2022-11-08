@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-closure',
@@ -8,9 +9,19 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 })
 export class ClosureComponent implements OnInit {
 
-  constructor() { }
+  closerForm = new FormGroup({
+    'proposalId': new FormControl('')
+  })
+
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    let Id = this.route.snapshot.params['Id'];
+    this.closerForm.patchValue({
+      proposalId: Id
+    })
   }
 
 }

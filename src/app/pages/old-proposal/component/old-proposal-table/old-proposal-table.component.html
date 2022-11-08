@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="main-content">
+        <div class="title">
+            <h1>Old Proposal List</h1>
+            <div class="filter">
+                <mat-form-field appearance="standard">
+                    <input matInput (keyup)="applyFilter($event)" autocomplete="off" placeholder="Filter" #input>
+                </mat-form-field>
+                <!-- <button mat-raised-button type="button" (click)="openDialog()">
+                                    Add User
+                                </button> -->
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table mat-table [dataSource]="dataSource" matSort class="w-100">
+                <ng-container matColumnDef="proposalId">
+                    <th mat-header-cell *matHeaderCellDef> Proposal Id </th>
+                    <td mat-cell *matCellDef="let row">{{ row._id }}</td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="logMessage">
+                    <th mat-header-cell *matHeaderCellDef> Log Message</th>
+                    <td mat-cell *matCellDef="let row"> {{row.logMessage }} </td>
+                </ng-container> -->
+                <!-- <ng-container matColumnDef="clientName">
+                    <th mat-header-cell *matHeaderCellDef>Client Name</th>
+                    <td mat-cell *matCellDef="let row"> {{row.clientName}} </td>
+                </ng-container> -->
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef> Date </th>
+                    <td mat-cell *matCellDef="let row"> {{(row.createdAt).split('T')[0]}} </td>
+                </ng-container>
+                <ng-container matColumnDef="esclateToCloser">
+                    <th mat-header-cell *matHeaderCellDef> Esclate for Closure </th>
+                    <td mat-cell *matCellDef="let row"><button mat-raised-button
+                            (click)="esclateToCloser(row._id)" [disabled]="row.proposalGenerated === 'no'">Esclate For Closure</button></td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let row"><button mat-raised-button
+                            (click)="viewDetails(row._id)" [disabled]="row.proposalGenerated === 'no'">View Details</button></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="8">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" aria-label="Select page of users"></mat-paginator>
+    </div>
+</div>

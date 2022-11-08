@@ -45,6 +45,8 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.totalWorkStationBalance = this.proposalService.TotalNoOfSets;
+        this.totalAvailableWorkstation = this.proposalService.AvailableNoOfSeats;
         this.proposalId = this.getProposaId();
         this.watchFormValue();
     }
@@ -53,6 +55,9 @@ export class NewProposalRequirementInfoComponent implements OnInit {
         this.proposalService.addRequirement(this.requirementInfoForm.value, this.proposalId).subscribe({
             next: (result: any) => {
                 if (result.Message === "Requirement added Successfully!") {
+                    this.proposalService.consolidatedSeats = result.consolidatedSeats;
+                    this.proposalService.seatAvailability = result.seatsAvailability;
+                    this.proposalService.conflict = result.conflict;
                     this.router.navigate(['/new-proposal', 'conflict',this.proposalId]);
                 }
             },
