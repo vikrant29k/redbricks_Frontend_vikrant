@@ -49,7 +49,7 @@ export class ProposalService {
         return this.http.post(this.baseUrl + 'addRequirement/' + id, requirementData, httpOptions).pipe(
             this.toster.observe({
                 success: 'Requirement Saved Successfully',
-                loading: 'Saving requirement...',
+                loading: 'Saving Requirement...',
                 error: ({ error }) => `${error.Message}`
             })
         );
@@ -59,7 +59,7 @@ export class ProposalService {
         return this.http.post(this.baseUrl + 'send-otp/' + Id, { mobileNo: mobileNo }).pipe(
             this.toster.observe({
                 success: 'OTP send Successfully',
-                loading: 'Sending OTp...',
+                loading: 'Sending OTP...',
                 error: ({ error }) => `${error.Message}`
             })
         )
@@ -69,7 +69,7 @@ export class ProposalService {
         return this.http.post(this.baseUrl + 'verify-otp/' + Id, {OTP: OTP}).pipe(
             this.toster.observe({
                 success: 'OTP verified Successfully',
-                loading: 'verifying OTP...',
+                loading: 'Verifying OTP...',
                 error: ({ error }) => `${error.Message}`
             })
         )
@@ -79,7 +79,7 @@ export class ProposalService {
         return this.http.get(this.baseUrl + 'layout/' + Id + '/' + selectFrom).pipe(
             this.toster.observe({
                 success: 'Layout Preview generated successfully',
-                loading: 'generating Layut...',
+                loading: 'Generating Layout...',
                 error: ({ error }) => `${error.Message}`
             })
         )
@@ -89,7 +89,7 @@ export class ProposalService {
         return this.http.post(this.baseUrl + 'generate/' + Id + '/' + selectFrom, data ).pipe(
             this.toster.observe({
                 success: 'Proposal generated Successfully',
-                loading: 'generating Proposal...',
+                loading: 'Generating Proposal...',
                 error: ({ error }) => `${error.Message}`
             })
         )
@@ -99,7 +99,7 @@ export class ProposalService {
         return this.http.get(this.baseUrl + 'getAll').pipe(
             this.toster.observe({
                 success: 'All Old Proposal list Loaded successfully',
-                loading: 'Loading All Old proposal Data...',
+                loading: 'Loading All Old Proposal Data...',
                 error: ({ error }) => `${error.Message}`
             })
         );
