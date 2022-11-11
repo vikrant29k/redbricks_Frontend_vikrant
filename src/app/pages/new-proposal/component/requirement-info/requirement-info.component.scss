@@ -336,22 +336,3 @@
     }
 
 }
-
-::ng-deep {
-    .mat-checkbox-checked {
-        &.mat-primary {
-            .mat-checkbox-background {
-                background-color: #fff;
-            }
-        }
-    }
-
-    .mat-checkbox-frame {
-        border-color: #fff;
-    }
-
-    .mat-checkbox-checkmark-path {
-        stroke: #C3343A !important;
-    }
-
-}

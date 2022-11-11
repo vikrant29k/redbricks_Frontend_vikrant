@@ -5,6 +5,7 @@ import { AuthForgotPasswordComponent } from "./component/forgot-passwod/forgot-p
 import { AuthLoginComponent } from "./component/login/login.component";
 import { AuthRoutingModule } from "./module/routing/auth-routing.module";
 import {FontAwesomeModule } from "@fortawesome/angular-fontawesome"
+import { ReactiveFormsModule } from "@angular/forms"
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import {FontAwesomeModule } from "@fortawesome/angular-fontawesome"
     imports: [
         CommonModule,
         AuthRoutingModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        ReactiveFormsModule
     ],
     exports: []
 })

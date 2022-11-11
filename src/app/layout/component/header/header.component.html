@@ -11,7 +11,7 @@
     <div class="sub-icon" [ngClass]="menuOpen ? 'log-icon': ''" (click)="menuOpen = !menuOpen" matRipple routerLink="/log" matTooltip="Logs" matTooltipPosition="left" matTooltipShowDelay="500">
         <mat-icon>description</mat-icon>
     </div>
-    <div class="sub-icon" [ngClass]="menuOpen ? 'logout-icon': ''" (click)="menuOpen = !menuOpen" matRipple routerLink="/" matTooltip="Logout" matTooltipPosition="left" matTooltipShowDelay="500">
+    <div class="sub-icon" [ngClass]="menuOpen ? 'logout-icon': ''" (click)="menuOpen = !menuOpen" matRipple (click)="logOut()" matTooltip="Logout" matTooltipPosition="left" matTooltipShowDelay="500">
         <mat-icon>logout</mat-icon>
     </div>
 </div>

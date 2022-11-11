@@ -13,6 +13,10 @@
         height: inherit;
         width: inherit;
 
+        .invisible {
+            visibility: hidden;
+        }
+
         pdf-viewer {
             width: 100%;
             min-height: 100vh;

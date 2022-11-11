@@ -4,15 +4,15 @@
             <span>RED BRICKS</span>
         </p>
     </div>
-    <form >
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
         <div class="form-field">
             <label>Email</label>
-            <input type="text" >
+            <input type="text" formControlName="userName">
         </div >
         <div class="form-field">
             <label>Password</label>
             <div class="input">
-                <input type="text">
+                <input type="text" formControlName="password">
                 <fa-icon [icon]="visibility"></fa-icon>
             </div>
         </div >
