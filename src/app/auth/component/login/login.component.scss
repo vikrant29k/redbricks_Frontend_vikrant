@@ -45,11 +45,16 @@ $input_field-width: 20rem;
                 position: relative;
                 width: get($input_field-width + 0.5rem);
 
-                fa-icon {
+                mat-icon {
                     position: absolute;
                     right: 1rem;
                     top: 0.7rem;
+                    cursor: pointer;
                 }
+            }
+
+            mat-error{
+                font-size: 0.9rem;
             }
         }
 
@@ -63,14 +68,14 @@ $input_field-width: 20rem;
             width: inherit;
 
             button {
-                background-color: #C3343A;
+                // background-color: #C3343A;
                 width: 24rem;
-                border: none;
+                // border: none;
 
-                border-radius: 0.5rem;
-                padding-block: 1rem;
-                color: #fff;
-                font-weight: 700;
+                // border-radius: 0.5rem;
+                // padding-block: 1rem;
+                // color: #fff;
+                // font-weight: 700;
             }
         }
         .form-password-action{

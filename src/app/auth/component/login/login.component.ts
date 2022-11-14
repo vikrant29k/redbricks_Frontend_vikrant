@@ -1,9 +1,8 @@
 import { OnInit } from "@angular/core";
 import { Component } from "@angular/core";
-import { faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons"
 import { Router } from "@angular/router";
 import { AuthenticationService } from "src/app/service/authentication/authentication.service";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import Swal from "sweetalert2";
 
 @Component({
@@ -12,8 +11,8 @@ import Swal from "sweetalert2";
     styleUrls: ['./login.component.scss']
 })
 export class AuthLoginComponent implements OnInit{
-    visibility = faEye;
-    visibility_off = faEyeSlash;
+
+    showPassword: boolean = false;
 
     forceLogin: boolean = false;
 
@@ -27,8 +26,8 @@ export class AuthLoginComponent implements OnInit{
     }
 
     loginForm = new FormGroup({
-        'userName': new FormControl(''),
-        'password': new FormControl('')
+        'userName': new FormControl('', [Validators.required, Validators.email]),
+        'password': new FormControl('', Validators.required)
     });
 
     get userName() {
@@ -39,6 +38,9 @@ export class AuthLoginComponent implements OnInit{
     }
 
     onSubmit = async () => {
+        if (this.loginForm.invalid) {
+            return;
+        }
         let loginData = { ...this.loginForm.value, forceLogin: this.forceLogin };
         (await this.AuthService.login(loginData)).subscribe({
             next: (result: any) => {

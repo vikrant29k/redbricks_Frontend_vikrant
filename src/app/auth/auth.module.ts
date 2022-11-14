@@ -4,8 +4,8 @@ import { AuthComponent } from "./auth.component";
 import { AuthForgotPasswordComponent } from "./component/forgot-passwod/forgot-password.component";
 import { AuthLoginComponent } from "./component/login/login.component";
 import { AuthRoutingModule } from "./module/routing/auth-routing.module";
-import {FontAwesomeModule } from "@fortawesome/angular-fontawesome"
 import { ReactiveFormsModule } from "@angular/forms"
+import { AuthMaterialModule } from "./module/material/auth-material.module";
 
 @NgModule({
     declarations: [
@@ -16,8 +16,8 @@ import { ReactiveFormsModule } from "@angular/forms"
     imports: [
         CommonModule,
         AuthRoutingModule,
-        FontAwesomeModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AuthMaterialModule
     ],
     exports: []
 })
