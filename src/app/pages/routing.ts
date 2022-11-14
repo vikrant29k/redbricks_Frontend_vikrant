@@ -30,6 +30,12 @@ const Routing: Routes = [
         loadChildren: () => {
             return import('./log/log.module').then((m) => m.LogModule);
         }
+    },
+    {
+        path: 'profile',
+        loadChildren: () => {
+            return import('./profile/profile.module').then((m) => m.ProfileModule);
+        }
     }
 ]
 
