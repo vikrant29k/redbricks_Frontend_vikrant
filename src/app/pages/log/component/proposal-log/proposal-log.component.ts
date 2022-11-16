@@ -147,6 +147,6 @@ updatetable = () =>{
     }
 
     viewDetails = (Id: string) => {
-        this.router.navigate(['/new-proposal', 'proposal-preview', Id]);
+        this.router.navigate(['/sales','new-proposal', 'proposal-preview', Id]);
     }
 }

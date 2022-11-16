@@ -39,7 +39,7 @@ export class ConflictComponent implements OnInit {
   }
 
   registerBroker = () => {
-    this.router.navigate(['/new-proposal','space-availability', this.proposalId])
+    this.router.navigate(['/sales','new-proposal','space-availability', this.proposalId])
   }
 
 

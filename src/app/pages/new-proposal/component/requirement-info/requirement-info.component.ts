@@ -58,7 +58,7 @@ export class NewProposalRequirementInfoComponent implements OnInit {
                     this.proposalService.consolidatedSeats = result.consolidatedSeats;
                     this.proposalService.seatAvailability = result.seatsAvailability;
                     this.proposalService.conflict = result.conflict;
-                    this.router.navigate(['/new-proposal', 'conflict',this.proposalId]);
+                    this.router.navigate(['/sales','new-proposal', 'conflict',this.proposalId]);
                 }
             },
             error: (err: any) => {

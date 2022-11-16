@@ -58,7 +58,7 @@ export class LocationLocationDetailComponent implements OnInit {
             next: (result: any) => {
                 if (result.Message === "Proposal Initiated Successfully") {
                     // this.router.navigate(['/new-proposal/add', this.location, result.Id]);
-                    this.router.navigate(['/new-proposal', 'client-info',result.Id]);
+                    this.router.navigate(['/sales','new-proposal', 'client-info',result.Id]);
                 }
             },
             error: (err: any) => {

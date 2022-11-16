@@ -35,6 +35,6 @@ export class LocationCenterComponent implements OnInit {
 
     onCenterSelected = (center: any) => {
         this.locationService.selectedCenter = center;
-        this.router.navigate(['/location/','location-detail']);
+        this.router.navigate(['/sales','location','location-detail']);
     }
 }
