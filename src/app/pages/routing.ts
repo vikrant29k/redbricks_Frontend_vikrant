@@ -30,6 +30,12 @@ const Routing: Routes = [
         loadChildren: () => {
             return import('./log/log.module').then((m) => m.LogModule);
         }
+    },
+    {
+        path: 'users',
+        loadChildren: () => {
+            return import('./users/users.module').then((m) => m.UsersModule);
+        }
     }
 ]
 

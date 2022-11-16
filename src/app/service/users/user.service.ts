@@ -10,7 +10,6 @@ import { LocalStorageService } from '../localstorage/localstrage.service';
   providedIn: 'root'
 })
 export class UserService {
-
   userIdToUpdate: any;
 
   private baseUrl: string = environment.baseUrl + 'user/';
