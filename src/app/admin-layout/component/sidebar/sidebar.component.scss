@@ -1,27 +1,115 @@
-mat-drawer-container {
-    height: 100vh;
+.container {
+    height: 100%;
+    background-color: #FDDEDE;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 
-    mat-drawer{
-        width: 20rem;
-    }
-
-    .container {
-        position: fixed;
-        top: 2rem;
-        left: 2rem;
-
-        .icon {
+    .header {
+        .logo {
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
-            border-radius: 100%;
-            background-color: #C3343A;
-            color: #fff;
-            font-size: 1.1rem;
-            z-index: 1;
-            cursor: pointer;
+            padding-block: 1rem;
+
+            img {
+                height: 2.5rem;
+            }
         }
     }
 
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: all 0.3s ease-in-out;
+
+            .title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+
+                .main {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-inline-start: 1rem;
+                    gap: 1rem;
+
+                    .title-icon {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        mat-icon {
+                            font-size: 2rem;
+                            width: 2rem;
+                            height: 2rem
+                        }
+                    }
+
+                    .title-text {
+                        @extend .title-icon;
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                    }
+                }
+
+                .expansion-icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding-inline: 1rem;
+                    transition: transform 0.3s ease-in-out;
+
+                    mat-icon {
+                        font-size: 2rem;
+                        width: 2rem;
+                        height: 2rem
+                    }
+                }
+
+                &:hover{
+                    background-color: #C3343A;
+                    color: #fff;
+                }
+
+                &.active{
+                    background-color: #C3343A;
+                    color: #fff;
+                }
+
+                &:focus-visible{
+                    outline: none;
+                }
+
+                &.expanded{
+                    background-color: #C3343A;
+                    color: #fff;
+
+                    .expansion-icon{
+
+                        transform: rotate(180deg);
+                    }
+                }
+
+            }
+
+            .sub-section{
+                transition: all 0.3s ease-in-out;
+                .title{
+                    .title-icon{
+                        padding-inline-start: 1rem;
+                    }
+                }
+            }
+        }
+    }
 }
