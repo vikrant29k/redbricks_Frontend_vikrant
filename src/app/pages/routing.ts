@@ -32,9 +32,17 @@ const Routing: Routes = [
         }
     },
     {
+
+        path: 'users',
+        loadChildren: () => {
+            return import('./users/users.module').then((m) => m.UsersModule);
+}
+},
+{
         path: 'profile',
         loadChildren: () => {
             return import('./profile/profile.module').then((m) => m.ProfileModule);
+
         }
     }
 ]

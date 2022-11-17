@@ -1,4 +1,9 @@
 <div class="container">
+    <div class="back">
+    <button class="icon" (click)="Back()">
+        <mat-icon>keyboard_backspace</mat-icon>
+    </button>
+</div>
     <div class="icon" (click)="menuOpen = !menuOpen" matRipple>
         <mat-icon>{{menuOpen ? 'close': 'menu'}}</mat-icon>
     </div>

@@ -1,7 +1,12 @@
 .container {
-    position: relative;
 
+    position: relative;
+.back{
+    position: fixed;
+    left: 1rem;
+}
     .icon {
+        border: none;
         display: flex;
         justify-content: center;
         align-items: center;
