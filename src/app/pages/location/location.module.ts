@@ -6,13 +6,17 @@ import { LocationLocationComponent } from "./component/location/location.compone
 import { LocationComponent } from "./location.component";
 import { LocationMaterialModule } from "./module/material/location-material.module";
 import { LocationRoutingModule } from "./module/routing/location-routing.module";
-
+import { AddLocationComponent } from './component/add-location/add-location.component';
+import { LocationListComponent } from './component/location-list/location-list.component';
+import { LocationListService } from "src/app/service/location-list/location-list.service";
 @NgModule({
     declarations: [
         LocationComponent,
         LocationLocationComponent,
         LocationCenterComponent,
-        LocationLocationDetailComponent
+        LocationLocationDetailComponent,
+        AddLocationComponent,
+        LocationListComponent
     ],
     imports: [
         CommonModule,
