@@ -8,11 +8,11 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSelectModule } from "@angular/material/select";
 import { MatDialogModule } from "@angular/material/dialog";
-import { FileUploadModule } from 'primeng/fileupload';
+
 const material = [
     MatTableModule,
     MatInputModule,
-    FileUploadModule,
+   
     MatPaginatorModule,
     MatSortModule,
     MatButtonModule,
