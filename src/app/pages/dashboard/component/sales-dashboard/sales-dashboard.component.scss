@@ -1,0 +1,65 @@
+@mixin flex_center_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    @include flex_center_center();
+    background-image: url('../../../../../assets/images/dashboard/dashboard-background.png');
+    background-size: cover;
+    min-height: 100vh;
+
+    .main-content {
+        @include flex_center_center();
+        gap: 1rem;
+
+        .card {
+            @include flex_center_center();
+            width: 20rem;
+            height: 20rem;
+
+            img {
+                width: inherit;
+                object-fit: cover;
+            }
+
+            &.sphere {
+                @include flex_center_center();
+                font-size: 4rem;
+                text-align: center;
+                color: #ffffff;
+                border-radius: 100%;
+                cursor: pointer;
+
+
+                &.old-proposal {
+                    background-color: #8B8C8D;
+                }
+
+                &.new-proposal {
+                    background-color: #C3343A;
+                }
+            }
+
+
+        }
+    }
+}
+
+@media (max-width: 475px) {
+    .container {
+        .main-content {
+            flex-wrap: wrap;
+
+            .card {
+                width: 13rem;
+                height: 13rem;
+
+                &.sphere {
+                    font-size: 2.5rem;
+                }
+            }
+        }
+    }
+}

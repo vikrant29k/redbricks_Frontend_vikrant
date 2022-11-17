@@ -61,10 +61,10 @@ export class OldProposalTableComponent implements OnInit {
 
     esclateToCloser = (Id: string) => {
         // old - proposal / closure / asdfas
-        this.router.navigate(['/old-proposal', 'closure', Id]);
+        this.router.navigate(['/sales','old-proposal', 'closure', Id]);
     }
 
     viewDetails = (Id: string) => {
-        this.router.navigate(['/new-proposal', 'proposal-preview', Id]);
+        this.router.navigate(['/sales','new-proposal', 'proposal-preview', Id]);
     }
 }

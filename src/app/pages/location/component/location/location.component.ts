@@ -30,6 +30,6 @@ export class LocationLocationComponent implements OnInit {
 
     onLocationSelected = (location: any) => {
         this.locationService.selectedLocation = location;
-        this.router.navigate(['/location', 'center'])
+        this.router.navigate(['/sales','location', 'center'])
     }
 }

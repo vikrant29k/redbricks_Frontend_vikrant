@@ -75,7 +75,7 @@ export class NewProposalClientInfoComponent implements OnInit{
                 if (result.Message === "Client Info added Successfully!") {
                     this.proposalService.AvailableNoOfSeats = result.AvailableNoOfSeatsInLayout;
                     this.proposalService.TotalNoOfSets = result.TotalNoOfSeatsInLayout;
-                    this.router.navigate(['/new-proposal', 'requirement-info', this.proposalId]);
+                    this.router.navigate(['/sales','new-proposal', 'requirement-info', this.proposalId]);
                 }
             },
             error: (err: any) => {

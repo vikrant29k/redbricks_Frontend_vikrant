@@ -64,8 +64,7 @@ export class AuthenticationService {
             showConfirmButton: false
         })
         localStorage.removeItem('auth-token');
-        localStorage.removeItem('userName');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth']);
     }
 
     handleAuthError = (err: any) => {
