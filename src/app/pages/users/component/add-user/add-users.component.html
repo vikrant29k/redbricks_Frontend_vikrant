@@ -1,65 +1,72 @@
 <div class="container">
-  <div class="title">
-    <p>Add User</p>
-  </div>
-  <form (ngSubmit)="submit()" class="form-group">
-    <div class="card">
-      <mat-form-field appearance="outline">
-        <mat-label>First Name</mat-label>
-        <input matInput placeholder="First Name" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Last Name" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Mobile Number</mat-label>
-        <input matInput placeholder="Mobile Number" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Date of birth</mat-label>
-        <input matInput placeholder="Date of birth" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Designation</mat-label>
-        <input matInput placeholder="Designation" />
-      </mat-form-field>
-      <!-- <mat-form-field appearance="outline"  >
-      <mat-label>Aadhaar Number</mat-label>
-      <input matInput placeholder="Aadhaar Number" />
-    </mat-form-field> -->
-      <!-- <mat-form-field appearance="outline"  >
-      <mat-label>Pan Number</mat-label>
-      <input matInput placeholder="Pan Number" />
-    </mat-form-field> -->
-      <mat-form-field appearance="outline">
-        <mat-label>Role</mat-label>
-        <mat-select matNativeControl placeholder="Role">
-          <mat-option value="Role1">Sales</mat-option>
-          <mat-option value="Role2">Sales Head</mat-option>
-          <mat-option value="Role3">Admin</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Residential Address</mat-label>
-        <input matInput placeholder="Residential Address" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Pin Code</mat-label>
-        <input matInput placeholder="Pin Code" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input matInput placeholder="Username" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" />
-      </mat-form-field>
-      <div class="buttons">
-        <button mat-button>Cancel</button>
-        <button mat-button>Add User</button>
-      </div>
+  <div class="main-content">
+    <div class="title">
+      <h1>Add Profile</h1>
     </div>
-  </form>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input type="text" matInput formControlName="firstName" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input type="text" matInput formControlName="lastName" autocomplete="off">
+        </mat-form-field>
+      </section>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Mobile No</mat-label>
+          <input type="tel" maxlength="10" matInput formControlName="mobileNo" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateOfBirth"  autocomplete="off">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </section>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Designation</mat-label>
+          <input type="text" matInput formControlName="designation"  autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="role" autocomplete="off">
+            <mat-option value="sales">Sales</mat-option>
+            <mat-option value="salesHead">Sales Head</mat-option>
+            <mat-option value="admin">Admin</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input type="text" matInput formControlName="userName" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="primary">
+          <mat-label>Password</mat-label>
+          <input [type]="showPassword ? 'text': 'password'" matInput formControlName="password" autocomplete="off">
+          <mat-icon matSuffix (click)="showPassword = !showPassword">{{showPassword ?
+            'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-form-field>
+      </section>
+      <ng-container *ngIf="userForm.get('salesHead')">
+        <section>
+          <mat-form-field appearance="outline">
+            <mat-label>Sales Head</mat-label>
+            <mat-select formControlName="salesHead" autocomplete="off">
+              <mat-option value="Vikrant">Vikrant</mat-option>
+              <mat-option value="Rahul">Rahul</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </section>
+      </ng-container>
+      <div class="form-action">
+        <button type="reset" color="primary" mat-raised-button>cancel</button>
+        <button type="submit" color="primary" mat-raised-button>Save</button>
+      </div>
+    </form>
+  </div>
 </div>
