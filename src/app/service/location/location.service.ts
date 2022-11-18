@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { HeaderService } from "../header/header.service";
+import { HotToastService } from "@ngneat/hot-toast";
 
 @Injectable({
     providedIn: 'root'
@@ -12,11 +13,11 @@ export class LocationService {
 
     selectedLocation!: string;
     selectedCenter!: string;
-    headerService: any;
 
     constructor(
-        private header: HeaderService,
-        private http: HttpClient
+        private headerService: HeaderService,
+        private http: HttpClient,
+        private toster: HotToastService
     ) { }
 
     getAllLocation = () => {
@@ -26,17 +27,35 @@ export class LocationService {
 
     addLocation = (data: any) => {
         let httpOptions = this.headerService.updateHeader();
-        return this.http.post(this.baseUrl + 'create', data, httpOptions);
+        return this.http.post(this.baseUrl + 'create', data, httpOptions).pipe(
+            this.toster.observe({
+                success: 'Location Added Successfully',
+                loading: 'Adding location...',
+                error: ({ error }) => `${error.Message}`
+            })
+        );
     }
 
     updateLocation = (data: any) => {
         let httpOptions = this.headerService.updateHeader();
-        return this.http.post(this.baseUrl + 'update', data, httpOptions);
+        return this.http.post(this.baseUrl + 'update', data, httpOptions).pipe(
+            this.toster.observe({
+                success: 'Location Updated Successfully',
+                loading: 'Updating location...',
+                error: ({ error }) => `${error.Message}`
+            })
+        );
     }
 
     deleteLocation = (id: string) => {
         let httpOptions = this.headerService.updateHeader();
-        return this.http.delete(this.baseUrl + 'delete/' + id, httpOptions);
+        return this.http.delete(this.baseUrl + 'delete/' + id, httpOptions).pipe(
+            this.toster.observe({
+                success: 'Location Deleted Successfully',
+                loading: 'Deleting location...',
+                error: ({ error }) => `${error.Message}`
+            })
+        );
     }
 
     getLocationById = (id: string) => {

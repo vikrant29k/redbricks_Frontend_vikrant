@@ -22,7 +22,7 @@
               <p>Upload JSON File</p>
             </div>
           </button>
-          <input type="file" accept="application/json" hidden #uploadJson>
+          <input type="file" accept="application/json" onchange="jsonUploadHandler($event)" hidden #uploadJson>
         </div>
         <div class="form-field">
           <button type="button" mat-raised-button (click)="layoutImage.click()" color="primary">
@@ -31,7 +31,7 @@
               <p>Upload Layout Image</p>
             </div>
           </button>
-          <input type="file" accept="image/png" hidden #layoutImage>
+          <input type="file" accept="image/png" onchange="layoutImageUploadHandler($event)" hidden #layoutImage>
         </div>
       </section>
       <section>

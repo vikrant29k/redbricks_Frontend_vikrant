@@ -143,18 +143,18 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   editUser(id: any) {
     this.editMode = true;
     this.userService.userIdToUpdate = id;
-    this.openDialog();
+    // this.openDialog();
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(AddUsersComponent, {
-      panelClass: 'customDialog',
-      data: { editMode: this.editMode }
-    });
+  // openDialog() {
+  //   const dialogRef = this.dialog.open(AddUsersComponent, {
+  //     panelClass: 'customDialog',
+  //     data: { editMode: this.editMode }
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.editMode = false;
-      this.getAllUsers();
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     this.editMode = false;
+  //     this.getAllUsers();
+  //   });
+  // }
 }
