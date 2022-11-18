@@ -15,15 +15,33 @@ export class AdminLayoutSidebarComponent {
     // menuOpen: boolean = false;
 
     logExpanded: boolean = false;
+    userExpanded: boolean = false;
+    locationExpanded: boolean = false;
 
     expandAccording = (title?: string) => {
         switch (title) {
             case 'log':
                 this.logExpanded = !this.logExpanded;
+                this.userExpanded = false;
+                this.locationExpanded = false;
+                break;
+            
+            case 'user':
+                this.userExpanded = !this.userExpanded;
+                this.logExpanded = false;
+                this.locationExpanded = false;
+                break;
+            
+            case 'location':
+                this.locationExpanded = !this.locationExpanded;
+                this.logExpanded = false;
+                this.userExpanded = false;
                 break;
         
             default:
                 this.logExpanded = false;
+                this.userExpanded = false;
+                this.locationExpanded = false;
                 this.drawerClicked.emit();
                 break;
         }

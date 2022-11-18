@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="section">
-            <div class="title" routerLink="/admin/users/" routerLinkActive="active" (click)="expandAccording()">
+            <div class="title" [ngClass]="userExpanded ? 'expanded': ''" (click)="expandAccording('user')">
                 <div class="main">
                     <div class="title-icon">
                         <mat-icon fontSet="material-icons-round">people</mat-icon>
@@ -39,10 +39,75 @@
                         <p>User</p>
                     </div>
                 </div>
-                <!-- <div class="expansion-icon">
+                <div class="expansion-icon">
                     <mat-icon>expand_more</mat-icon>
-                </div> -->
+                </div>
             </div>
+            <ng-container *ngIf="userExpanded">
+                <div class="sub-section">
+                    <div class="title" routerLink="/admin/users/user-list" routerLinkActive="active" (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">view_list</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>User List</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title" routerLink="/admin/users/add-users" routerLinkActive="active"
+                        (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">person_add</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Add User</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="section">
+            <div class="title" [ngClass]="locationExpanded ? 'expanded': ''" (click)="expandAccording('location')">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">location_on</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>Location</p>
+                    </div>
+                </div>
+                <div class="expansion-icon">
+                    <mat-icon>expand_more</mat-icon>
+                </div>
+            </div>
+            <ng-container *ngIf="locationExpanded">
+                <div class="sub-section">
+                    <div class="title" routerLink="/admin/location/location-list" routerLinkActive="active" (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">map</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Location List</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title" routerLink="/admin/location/add-location" routerLinkActive="active"
+                        (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">add_location_alt</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Add Location</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
         </div>
         <div class="section">
             <div class="title" [ngClass]="logExpanded ? 'expanded': ''" (click)="expandAccording('log')">

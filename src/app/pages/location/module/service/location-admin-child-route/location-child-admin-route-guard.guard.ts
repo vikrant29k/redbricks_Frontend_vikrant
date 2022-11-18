@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree, Rout
 import { Observable } from "rxjs";
 
 @Injectable()
-export class DashboardChildRouteGuard implements CanActivate {
+export class LocationAdminChildRouteGuard implements CanActivate {
 
     constructor(
         private router: Router
@@ -14,7 +14,7 @@ export class DashboardChildRouteGuard implements CanActivate {
         if (currentRoute === 'admin') {
             return true;
         }
-        this.router.navigate(['/sales/sales-dashboard']);
+        this.router.navigate(['/sales/location']);
         return false;
 
     }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl,FormBuilder } from '@angular/forms';
-import { FloatLabelType } from '@angular/material/form-field';
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
 
 
 @Component({
@@ -9,20 +8,40 @@ import { FloatLabelType } from '@angular/material/form-field';
   styleUrls: ['./add-location.component.scss']
 })
 export class AddLocationComponent implements OnInit {
-  hideRequiredControl = new FormControl(false);
-  floatLabelControl = new FormControl('always' as FloatLabelType);
- 
-
+  
+  
   constructor() {}
+  
+  locationForm = new FormGroup({
+    'location': new FormControl(''),
+    'center': new FormControl(''),
+    'imageLinks': new FormArray([]),
+    'videoLinks': new FormArray([]),
+  })
 
-  getFloatLabelValue(): FloatLabelType {
-    return this.floatLabelControl.value || 'always';
+  get imageLinks() {
+    return (this.locationForm.get('imageLinks') as FormArray).controls;
   }
-  submit(){
-    console.log("submitted");
+
+  get videoLinks() {
+    return (this.locationForm.get('videoLinks') as FormArray).controls;
   }
+
+  onAdd(controlName: string) {
+    const control = new FormControl(null);
+    (<FormArray>this.locationForm.get(controlName)).push(control);
+  }
+  onRemove(controlName:string, controlIndex: number){
+    (<FormArray>this.locationForm.get(controlName)).removeAt(controlIndex);
+  }
+  
 
   ngOnInit(): void {
     
+  }
+
+  onSubmit = () => {
+    console.log(this.locationForm.value)
+
   }
 }

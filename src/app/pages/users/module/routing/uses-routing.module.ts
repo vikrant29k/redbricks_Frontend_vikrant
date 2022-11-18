@@ -10,7 +10,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'add-users',
+                redirectTo: 'user-list',
                 pathMatch: 'full'
             },
             {

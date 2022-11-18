@@ -30,6 +30,12 @@ const AdminRouting: Routes = [
         loadChildren: () => {
             return import('./profile/profile.module').then((m) => m.ProfileModule);
         }
+    },
+    {
+        path: 'users',
+        loadChildren: () => {
+            return import('./users/users.module').then((m) => m.UsersModule);
+        }
     }
 ];
 
