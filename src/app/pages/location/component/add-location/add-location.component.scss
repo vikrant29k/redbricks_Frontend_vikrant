@@ -1,65 +1,170 @@
-@mixin for-desktop {
-    @media (max-width: 1315px) {
-      @content;
-    }
-  }
-  .container {
-    font-size: 1.1rem;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+
+  .main-content {
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    background-color: #ececec;
-    @include for-desktop() {
-      font-size: 1rem;
-    }
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 2rem;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.3);
+    width: 60rem;
+
     .title {
-      width: 48rem;
-      text-align: left;
-      color: #c3343a;
-    }
-    .card {
-      width: 60rem;
-      height: 35rem;
-      display: flex;
-      background-color: rgba(255, 255, 255, 0.656);
-      border-radius: 2.5rem;
-      box-shadow: 0 10px 9px rgb(0 0 0 / 19%), 0 5px 14px rgb(0 0 0 / 10%);
-      flex-wrap: wrap;
-      justify-content: space-around;
-      align-content: center;
-      align-items: center;
-      @include for-desktop() {
-        // padding: 2rem;
-        width: 50rem;
-        height: 30rem;
-      }
-  
-      mat-form-field {
-        width: 40%;
-      }
-    }
-    .buttons {
       width: 100%;
-  
       display: flex;
-  
-      flex-wrap: wrap;
-      justify-content: space-around;
-      align-content: center;
+      justify-content: space-between;
       align-items: center;
-      button {
-        background-color: #c3343a;
-        color: white;
-        width: 20%;
+      width: inherit;
+    }
+
+    form{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: inherit;
+
+      section{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: inherit;
+
+        mat-form-field{
+          width: 20rem;
+        }
+
+        .form-field{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+
+
+          mat-form-field{
+
+            mat-icon{
+              padding-inline-start: 1rem;
+              cursor: pointer;
+            }
+          }
+
+        }
+
+        button{
+          width: 20rem;
+          margin-bottom: 1rem;
+          .button_content {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 1rem;
+          
+            }
+        }
+        
+      }
+
+      .form-action{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: inherit;
+        gap: 5rem;
+
+        button{
+          width: 15rem;
+
+        }
       }
     }
+
   }
-  
-  ::ng-deep .mat-form-field-wrapper {
-    @include for-desktop() {
-      padding-bottom: 0.5rem !important;
-    }
-  }
- 
+}
+
+
+
+
+
+
+
+
+
+// @mixin for-desktop {
+//   @media (max-width: 1315px) {
+//     @content;
+//   }
+// }
+
+// .container {
+//   font-size: 1.1rem;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   min-height: 100vh;
+//   background-color: #ececec;
+
+//   @include for-desktop() {
+//     font-size: 1rem;
+//   }
+
+//   .title {
+//     width: 48rem;
+//     text-align: left;
+//     color: #c3343a;
+//   }
+
+//   .card {
+//     width: 60rem;
+//     height: 35rem;
+//     display: flex;
+//     background-color: rgba(255, 255, 255, 0.656);
+//     border-radius: 2.5rem;
+//     box-shadow: 0 10px 9px rgb(0 0 0 / 19%), 0 5px 14px rgb(0 0 0 / 10%);
+//     flex-wrap: wrap;
+//     justify-content: space-around;
+//     align-content: center;
+//     align-items: center;
+
+//     @include for-desktop() {
+//       // padding: 2rem;
+//       width: 50rem;
+//       height: 30rem;
+//     }
+
+//     mat-form-field {
+//       width: 40%;
+//     }
+//   }
+
+//   .buttons {
+//     width: 100%;
+
+//     display: flex;
+
+//     flex-wrap: wrap;
+//     justify-content: space-around;
+//     align-content: center;
+//     align-items: center;
+
+//     button {
+//       background-color: #c3343a;
+//       color: white;
+//       width: 20%;
+//     }
+//   }
+// }
+
+// ::ng-deep .mat-form-field-wrapper {
+//   @include for-desktop() {
+//     padding-bottom: 0.5rem !important;
+//   }
+// }

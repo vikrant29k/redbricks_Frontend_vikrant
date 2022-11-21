@@ -12,26 +12,32 @@ import Swal from "sweetalert2";
 })
 export class LocationLocationDetailComponent implements OnInit {
 
-    location: any;
-    center: any;
+    // location: any;
+    // center: any;
+    centerData: any = {};
 
     constructor(
         private locationService: LocationService,
         private proposalService: ProposalService,
         private authService: AuthenticationService,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ) { }
 
-    getCenterData = () => {
-        this.location = this.locationService.selectedLocation;
-        this.center = this.locationService.selectedCenter;
+    getCenterData = (centerId: string) => {
+        this.locationService.getLocationById(centerId).subscribe({
+            next: (result: any) => {
+                this.centerData = {...result};
+            }
+        })
     }
 
     ngOnInit(): void {
-        this.getCenterData();
+        let centerId = this.route.snapshot.params['Id'];
+        this.getCenterData(centerId);
     }
 
-    addProposal = () => {
+    addProposal = (centerId: string) => {
         Swal.fire({
             title: 'Initialized Proposal',
             text: 'Once you initialized proposal it cannot be undone',
@@ -43,20 +49,17 @@ export class LocationLocationDetailComponent implements OnInit {
             cancelButtonColor: '#7D7E80'
         }).then((confirmation) => {
             if (confirmation.isConfirmed) {
-                this.initiateProposal();
+                this.initiateProposal(centerId);
             }
         })
     }
 
-    initiateProposal = () => {
-        let data = {
-            location: this.location,
-            center: this.center
-        }
-        console.log(data)
-        this.proposalService.initializeProposal(data).subscribe({
+    initiateProposal = (centerId: string) => {
+        this.proposalService.initializeProposal(centerId).subscribe({
             next: (result: any) => {
                 if (result.Message === "Proposal Initiated Successfully") {
+                    this.locationService.selectedLocation = this.centerData.location;
+                    this.locationService.selectedCenter = this.centerData.center;
                     // this.router.navigate(['/new-proposal/add', this.location, result.Id]);
                     this.router.navigate(['/sales','new-proposal', 'client-info',result.Id]);
                 }

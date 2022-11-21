@@ -10,11 +10,15 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'add-users',
+                redirectTo: 'user-list',
                 pathMatch: 'full'
             },
             {
                 path: 'add-users',
+                component: AddUsersComponent
+            },
+            {
+                path: 'add-users/:id',
                 component: AddUsersComponent
             },
             {

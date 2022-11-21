@@ -6,6 +6,7 @@ import { NewProposalProposalPreviewComponent } from "../../component/proposal-pr
 import { NewProposalRequirementInfoComponent } from "../../component/requirement-info/requirement-info.component";
 import { NewProposalSpaceAvailabilityComponent } from "../../component/space-availability/space-availability.component";
 import { NewProposalComponent } from "../../new-proposal.component";
+import { NewProposalAdminChildRouteGuard } from "../service/new-proposal-admin-child-route-guard/new-proposal-admin-route-guard.guard";
 
 const routes: Routes = [
     {
@@ -19,18 +20,22 @@ const routes: Routes = [
             },
             {
                 path: 'client-info/:proposalId',
+                canActivate: [NewProposalAdminChildRouteGuard],
                 component: NewProposalClientInfoComponent
             },
             {
                 path: 'requirement-info/:proposalId',
+                canActivate: [NewProposalAdminChildRouteGuard],
                 component: NewProposalRequirementInfoComponent
             },
             {
                 path: 'space-availability/:proposalId',
+                canActivate: [NewProposalAdminChildRouteGuard],
                 component: NewProposalSpaceAvailabilityComponent
             },
             {
                 path: 'conflict/:proposalId',
+                canActivate: [NewProposalAdminChildRouteGuard],
                 component: ConflictComponent
             },
             {

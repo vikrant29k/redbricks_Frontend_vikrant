@@ -1,0 +1,19 @@
+.back {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+
+    .icon {
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 100%;
+        background-color: #C3343A;
+        color: #fff;
+        font-size: 1.1rem;
+        z-index: 1;
+        cursor: pointer;
+    }
+}

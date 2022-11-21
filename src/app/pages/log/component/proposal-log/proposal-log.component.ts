@@ -130,6 +130,7 @@ updatetable = () =>{
     getAllLogs = (filter:string='all') => {
         this.logService.getAllLogs().subscribe({
             next: (result: any) => {
+                result.reverse();
                 let a =this.displayAllData(result);
                 // console.log(result);
                 this.logData=[...a];
@@ -147,6 +148,12 @@ updatetable = () =>{
     }
 
     viewDetails = (Id: string) => {
-        this.router.navigate(['/sales','new-proposal', 'proposal-preview', Id]);
+        let currentRoute = this.router.url.split('/')[1];
+        if (currentRoute === 'sales') {
+            this.router.navigate(['/sales', 'new-proposal', 'proposal-preview', Id]);
+        }
+        else {
+            this.router.navigate(['/admin', 'new-proposal', 'proposal-preview', Id]);
+        }
     }
 }

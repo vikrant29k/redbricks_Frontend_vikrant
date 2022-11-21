@@ -20,6 +20,12 @@ const AdminRouting: Routes = [
         }
     },
     {
+        path: 'new-proposal',
+        loadChildren: () => {
+            return import('./new-proposal/new-proposal.module').then((m) => m.NewProposalModule);
+        }
+    },
+    {
         path: 'log',
         loadChildren: () => {
             return import('./log/log.module').then((m) => m.LogModule);
@@ -29,6 +35,12 @@ const AdminRouting: Routes = [
         path: 'profile',
         loadChildren: () => {
             return import('./profile/profile.module').then((m) => m.ProfileModule);
+        }
+    },
+    {
+        path: 'users',
+        loadChildren: () => {
+            return import('./users/users.module').then((m) => m.UsersModule);
         }
     }
 ];

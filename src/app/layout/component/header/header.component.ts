@@ -1,23 +1,25 @@
 import { Component } from "@angular/core";
 import { AuthenticationService } from "src/app/service/authentication/authentication.service";
-import { Router } from "@angular/router";
+import { Router, RouterStateSnapshot } from "@angular/router";
 import { NavigationService } from "src/app/service/navigation service/navigation.service";
+import { DoCheck } from "@angular/core";
+import { ChangeDetectorRef } from "@angular/core";
 @Component({
     selector: 'layout-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
-export class LayoutHeaderComponent {
+export class LayoutHeaderComponent implements DoCheck{
 
     menuOpen: boolean = false;
+    hideBackButton: boolean = false;
 
     constructor(
         private authService: AuthenticationService,
         private router: Router,
-        private navigate: NavigationService
+        private navigate: NavigationService,
     ) { }
-    Back(){
-        this.navigate.goBack();
+    ngDoCheck(): void {
     }
     logOut = () => {
         this.authService.logOut().subscribe((result: any) => {

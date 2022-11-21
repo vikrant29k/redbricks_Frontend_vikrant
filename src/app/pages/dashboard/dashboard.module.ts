@@ -4,7 +4,8 @@ import { DashboardAdminDashboard } from "./component/admin-dashboard/admin-dashb
 import { DashboardSalesDashboardComponent } from "./component/sales-dashboard/sales-dashboard.component";
 import { DashboardComponent } from "./dashboard.component";
 import { DashboardRoutingModule } from "./module/routing/dashboard-routing.module";
-import { DashboardChildRouteGuard } from "./module/service/dashboard-child-route-guard.service";
+import { DashboardAdminChildRouteGuard } from "./module/service/dashboard-admin-child-route/dashboard-admin-child-route-guard.guard";
+import { DashboardSalesChildRouteGuard } from "./module/service/dashboard-sales-child-route/dashboard-sales-child-route.guard";
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { DashboardChildRouteGuard } from "./module/service/dashboard-child-route
         DashboardRoutingModule
     ],
     providers: [
-        DashboardChildRouteGuard
+        DashboardAdminChildRouteGuard,
+        DashboardSalesChildRouteGuard
     ]
 })
 export class DashboardModule {}

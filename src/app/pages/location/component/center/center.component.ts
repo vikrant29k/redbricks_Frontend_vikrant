@@ -9,7 +9,8 @@ import { LocationService } from "src/app/service/location/location.service";
 })
 export class LocationCenterComponent implements OnInit {
 
-    centers = new Set();
+    // centers = new Set();
+    centers!: any;
     location: any;
 
     constructor(
@@ -19,22 +20,27 @@ export class LocationCenterComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.getCenter();
+        let locationName = this.route.snapshot.params['location'];
+        this.getCenter(locationName);
     }
 
-    getCenter = () => {
-        this.location = this.locationService.selectedLocation;
-        if (this.location) {
-            this.locationService.locationData.forEach((location) => {
-                if (location.location === this.location) {
-                    this.centers.add(location.center);
-                }
-            })
-        }
+    getCenter = (locationName: string) => {
+        // this.location = this.locationService.selectedLocation;
+        // if (this.location) {
+        //     this.locationService.locationData.forEach((location) => {
+        //         if (location.location === this.location) {
+        //             this.centers.add(location.center);
+        //         }
+        //     })
+        // }
+        this.locationService.getCentersInLocation(locationName).subscribe({
+            next: (result: any) => {
+                this.centers = [...result];
+            }
+        })
     }
 
-    onCenterSelected = (center: any) => {
-        this.locationService.selectedCenter = center;
-        this.router.navigate(['/sales','location','location-detail']);
+    onCenterSelected = (centerId: any) => {
+        this.router.navigate(['/sales','location','location-detail',centerId]);
     }
 }

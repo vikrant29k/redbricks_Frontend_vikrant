@@ -67,7 +67,7 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
         this.proposalService.generateProposal(this.proposalId, this.selectFrom, this.proposalExtraDetailForm.value).subscribe({
             next: (result: any) => {
                 if (result.Message === 'Proposal Generated Successfully') {
-                    this.router.navigate(['/sales','new-proposal','proposal-preview',this.proposalId]);
+                    this.router.navigate(['/sales','sales-dashboard']);
                 }
             },
             error: (err: any) => {

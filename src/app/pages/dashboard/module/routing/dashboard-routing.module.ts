@@ -3,7 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { DashboardAdminDashboard } from "../../component/admin-dashboard/admin-dashboard.component";
 import { DashboardSalesDashboardComponent } from "../../component/sales-dashboard/sales-dashboard.component";
 import { DashboardComponent } from "../../dashboard.component";
-import { DashboardChildRouteGuard } from "../service/dashboard-child-route-guard.service";
+import { DashboardAdminChildRouteGuard } from "../service/dashboard-admin-child-route/dashboard-admin-child-route-guard.guard";
+import { DashboardSalesChildRouteGuard } from "../service/dashboard-sales-child-route/dashboard-sales-child-route.guard";
 
 const routes: Routes = [
     {
@@ -17,11 +18,12 @@ const routes: Routes = [
             },
             {
                 path: 'sales-dashboard',
+                canActivate: [DashboardSalesChildRouteGuard],
                 component: DashboardSalesDashboardComponent
             },
             {
                 path: 'admin-dashboard',
-                canActivate: [DashboardChildRouteGuard],
+                canActivate: [DashboardAdminChildRouteGuard],
                 component: DashboardAdminDashboard
             }
         ]

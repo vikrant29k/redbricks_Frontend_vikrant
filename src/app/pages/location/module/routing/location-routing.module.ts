@@ -6,6 +6,8 @@ import { LocationLocationDetailComponent } from "../../component/location-detail
 import { LocationListComponent } from "../../component/location-list/location-list.component";
 import { LocationLocationComponent } from "../../component/location/location.component";
 import { LocationComponent } from "../../location.component";
+import { LocationAdminChildRouteGuard } from "../service/location-admin-child-route/location-child-admin-route-guard.guard";
+import { LocationSalesChildRouteGuard } from "../service/location-sales-child-route/location-sales-child-route.guard";
 
 const routes: Routes = [
     {
@@ -19,22 +21,26 @@ const routes: Routes = [
             },
             {
                 path: 'location',
+                canActivate: [LocationSalesChildRouteGuard],
                 component: LocationLocationComponent
             },
             {
-                path: 'center',
+                path: 'center/:location',
+                canActivate: [LocationSalesChildRouteGuard],
                 component: LocationCenterComponent
             },
             {
-                path: 'location-detail',
+                path: 'location-detail/:Id',
                 component: LocationLocationDetailComponent
             },
             {
                 path: 'location-list',
+                canActivate: [LocationAdminChildRouteGuard],
                 component: LocationListComponent
             },
             {
                 path: 'add-location',
+                canActivate: [LocationAdminChildRouteGuard],
                 component: AddLocationComponent
             }
         ]

@@ -1,46 +1,85 @@
 <div class="container">
-  <div class="title">
-    <p>Add Location</p>
-  </div>
-  <form (ngSubmit)="submit()" class="form-group">
-    <div class="card">
-      <mat-form-field appearance="outline">
-        <mat-label>City</mat-label>
-        <input matInput placeholder="City" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>State</mat-label>
-        <input matInput placeholder="State" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Area</mat-label>
-        <input matInput placeholder="Area" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Locality</mat-label>
-        <input matInput placeholder="Locality" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Dimension</mat-label>
-        <input matInput placeholder="Dimension" />
-      </mat-form-field>
-      <mat-form-field appearance="outline"  >
-      <mat-label>Address</mat-label>
-      <input matInput placeholder="Address" />
-    </mat-form-field>
-  
-      <mat-form-field appearance="outline">
-        <mat-label>Pin Code</mat-label>
-        <input matInput placeholder="Pin Code" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Select Image</mat-label>
-       <input matInput placeholder="choose image"/>
-      </mat-form-field>
-      <div class="buttons">
-        <button mat-button>Cancel</button>
-        <button mat-button>Add Location</button>
-      </div>
+  <div class="main-content">
+    <div class="title">
+      <h1>Add Location</h1>
     </div>
-  </form>
+    <form [formGroup]="locationForm" (ngSubmit)="onSubmit()" class="form-group">
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Location</mat-label>
+          <input type="text" matInput formControlName="location">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Center</mat-label>
+          <input type="text" matInput formControlName="center">
+        </mat-form-field>
+      </section>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Available workstation number</mat-label>
+          <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="availableNoOfWorkstation">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Total workstation number</mat-label>
+          <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="totalNoOfWorkstation">
+        </mat-form-field>
+      </section>
+      <section>
+        <div class="form-field">
+          <button type="button" mat-raised-button (click)="uploadJson.click()" color="primary">
+            <div class="button_content">
+              <mat-icon fontSet="material-icons-round">data_object</mat-icon>
+              <p>Upload JSON File</p>
+            </div>
+          </button>
+          <input type="file" accept="application/json" (change)="jsonUploadHandler($event)" hidden #uploadJson>
+        </div>
+        <div class="form-field">
+          <button type="button" mat-raised-button (click)="layoutImage.click()" color="primary">
+            <div class="button_content">
+              <mat-icon fontSet="material-icons-round">add_photo_alternate</mat-icon>
+              <p>Upload Layout Image</p>
+            </div>
+          </button>
+          <input type="file" accept="image/png" (change)="layoutImageUploadHandler($event)" hidden #layoutImage>
+        </div>
+      </section>
+      <section>
+        <div class="form-field">
+          <button type="button" mat-raised-button (click)="onAdd('imageLinks')" color="primary">
+            <div class="button_content">
+              <mat-icon fontSet="material-icons-round">link</mat-icon>
+              <p>Add Image Link</p>
+            </div>
+          </button>
+          <ng-container formArrayName="imageLinks" *ngFor="let control of imageLinks; let i = index">
+            <mat-form-field appearance="outline">
+              <mat-label>Image Link {{i+1}}</mat-label>
+              <input type="text" matInput formControlName="{{i}}">
+              <mat-icon matSuffix (click)="onRemove('imageLinks',i)">delete</mat-icon>
+            </mat-form-field>
+          </ng-container>
+        </div>
+        <div class="form-field">
+          <button type="button" mat-raised-button (click)="onAdd('videoLinks')" color="primary">
+            <div class="button_content">
+              <mat-icon fontSet="material-icons-round">link</mat-icon>
+              <p>Add Video Link</p>
+            </div>
+          </button>
+          <ng-container formArrayName="videoLinks" *ngFor="let control of videoLinks; let i = index">
+            <mat-form-field appearance="outline">
+              <mat-label>Video Link {{i+1}}</mat-label>
+              <input type="text" matInput formControlName="{{i}}">
+              <mat-icon matSuffix (click)="onRemove('videoLinks',i)">delete</mat-icon>
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </section>
+      <div class="form-action">
+        <button type="reset" mat-raised-button color="primary">Cancel</button>
+        <button type="submit" mat-raised-button color="primary">Add Location</button>
+      </div>
+    </form>
+  </div>
 </div>
