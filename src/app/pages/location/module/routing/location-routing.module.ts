@@ -25,13 +25,12 @@ const routes: Routes = [
                 component: LocationLocationComponent
             },
             {
-                path: 'center',
+                path: 'center/:location',
                 canActivate: [LocationSalesChildRouteGuard],
                 component: LocationCenterComponent
             },
             {
-                path: 'location-detail',
-                canActivate: [LocationSalesChildRouteGuard],
+                path: 'location-detail/:Id',
                 component: LocationLocationDetailComponent
             },
             {

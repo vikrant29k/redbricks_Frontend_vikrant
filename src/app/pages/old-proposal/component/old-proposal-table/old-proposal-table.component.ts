@@ -48,6 +48,7 @@ export class OldProposalTableComponent implements OnInit {
     getAllProposal = () => {
         this.proposalService.getAllProposal().subscribe({
             next: (result: any) => {
+                result = result.reverse();
                 this.tableDataSource(result);
             }
         })
@@ -56,7 +57,7 @@ export class OldProposalTableComponent implements OnInit {
     tableDataSource = (data: any) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.Paginator;
-        this.table.renderRows();
+        // this.table.renderRows();
     }
 
     esclateToCloser = (Id: string) => {

@@ -26,7 +26,7 @@
                                 <p>Workstation Number</p>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Number</mat-label>
-                                    <input type="number" min="0" matInput formControlName="workstationNumber">
+                                    <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="workstationNumber">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                 <p>Cabins Number</p>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Number</mat-label>
-                                    <input type="number" min="0" matInput formControlName="cabinNumber">
+                                    <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="cabinNumber">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                                 <p>Meeting Rooms Number</p>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Number</mat-label>
-                                    <input type="number" min="0" matInput formControlName="meetingRoomNumber">
+                                    <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="meetingRoomNumber">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                                 <p>Visitor Meeting Rooms Number</p>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Number</mat-label>
-                                    <input type="number" min="0" matInput formControlName="visitorMeetingRoomNumber">
+                                    <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="visitorMeetingRoomNumber">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                                     <p>Store Room Number</p>
                                     <mat-form-field appearance="fill">
                                         <mat-label>Number</mat-label>
-                                        <input type="number" min="0" matInput formControlName="storeRoomNumber">
+                                        <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="storeRoomNumber">
                                     </mat-form-field>
                                 </div>
                             </ng-container>
@@ -183,7 +183,7 @@
                                     <p>Cafeteria Number</p>
                                     <mat-form-field appearance="fill">
                                         <mat-label>Number</mat-label>
-                                        <input type="number" min="0" matInput formControlName="cafeteriaNumber">
+                                        <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="cafeteriaNumber">
                                     </mat-form-field>
                                 </div>
                             </ng-container>

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="main-content">
     <div class="title">
-      <h1>Add Profile</h1>
+      <h1>{{editMode ? 'Edit User':'Add User'}}</h1>
     </div>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
       <section>
@@ -35,7 +35,7 @@
           <mat-label>Role</mat-label>
           <mat-select formControlName="role" autocomplete="off">
             <mat-option value="sales">Sales</mat-option>
-            <mat-option value="salesHead">Sales Head</mat-option>
+            <mat-option value="sales head">Sales Head</mat-option>
             <mat-option value="admin">Admin</mat-option>
           </mat-select>
         </mat-form-field>
@@ -57,14 +57,20 @@
           <mat-form-field appearance="outline">
             <mat-label>Sales Head</mat-label>
             <mat-select formControlName="salesHead" autocomplete="off">
-              <mat-option value="Vikrant">Vikrant</mat-option>
-              <mat-option value="Rahul">Rahul</mat-option>
+              <ng-container *ngFor="let salesHead of salesHeads">
+                <mat-option [value]="salesHead._id">{{salesHead.firstName + ' ' + salesHead.lastName}}</mat-option>
+              </ng-container>
             </mat-select>
           </mat-form-field>
         </section>
       </ng-container>
       <div class="form-action">
-        <button type="reset" color="primary" mat-raised-button>cancel</button>
+        <ng-container *ngIf="!editMode; else cancelEditModeBtn">
+          <button type="reset" color="primary" mat-raised-button>cancel</button>
+        </ng-container>
+        <ng-template #cancelEditModeBtn>
+          <button type="button" (click)="cancelEditMode()" color="primary" mat-raised-button>cancel</button>
+        </ng-template>
         <button type="submit" color="primary" mat-raised-button>Save</button>
       </div>
     </form>

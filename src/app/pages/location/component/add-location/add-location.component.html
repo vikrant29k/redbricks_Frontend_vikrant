@@ -15,6 +15,16 @@
         </mat-form-field>
       </section>
       <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Available workstation number</mat-label>
+          <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="availableNoOfWorkstation">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Total workstation number</mat-label>
+          <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="totalNoOfWorkstation">
+        </mat-form-field>
+      </section>
+      <section>
         <div class="form-field">
           <button type="button" mat-raised-button (click)="uploadJson.click()" color="primary">
             <div class="button_content">
@@ -22,7 +32,7 @@
               <p>Upload JSON File</p>
             </div>
           </button>
-          <input type="file" accept="application/json" onchange="jsonUploadHandler($event)" hidden #uploadJson>
+          <input type="file" accept="application/json" (change)="jsonUploadHandler($event)" hidden #uploadJson>
         </div>
         <div class="form-field">
           <button type="button" mat-raised-button (click)="layoutImage.click()" color="primary">
@@ -31,7 +41,7 @@
               <p>Upload Layout Image</p>
             </div>
           </button>
-          <input type="file" accept="image/png" onchange="layoutImageUploadHandler($event)" hidden #layoutImage>
+          <input type="file" accept="image/png" (change)="layoutImageUploadHandler($event)" hidden #layoutImage>
         </div>
       </section>
       <section>
@@ -57,7 +67,7 @@
               <p>Add Video Link</p>
             </div>
           </button>
-          <ng-container formArrayName="imageLinks" *ngFor="let control of videoLinks; let i = index">
+          <ng-container formArrayName="videoLinks" *ngFor="let control of videoLinks; let i = index">
             <mat-form-field appearance="outline">
               <mat-label>Video Link {{i+1}}</mat-label>
               <input type="text" matInput formControlName="{{i}}">

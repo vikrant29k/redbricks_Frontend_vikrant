@@ -1,10 +1,10 @@
 <div class="container">
     <div class="main-content">
         <div class="location-pointer">
-            <ng-container *ngFor="let city of centers">
-                <div class="icon" (click)="onCenterSelected(city)">
+            <ng-container *ngFor="let center of centers">
+                <div class="icon" (click)="onCenterSelected(center._id)">
                     <ng-container [ngTemplateOutlet]="locationIcon"></ng-container>
-                    <p>{{city}}</p>
+                    <p>{{center.center}}</p>
                 </div>
                 <!-- <div class="icon"></div> -->
             </ng-container>

@@ -1,11 +1,16 @@
 import { Injectable } from "@angular/core";
 import jwtDecode from "jwt-decode";
+import { Router } from "@angular/router";
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class JWTService {
+
+    constructor(
+        private router: Router
+    ){}
 
     private getToken = () => {
         let token: string = `${localStorage.getItem('auth-token')}`;
@@ -19,6 +24,11 @@ export class JWTService {
     }
 
     getUserRole = () => {
-        return this.decodeToken().role;
+        if (this.decodeToken().role) {
+            return this.decodeToken().role;
+        }
+        else {
+            this.router.navigate(['/auth']);
+        }
     }
 }

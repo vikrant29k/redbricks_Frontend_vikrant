@@ -9,9 +9,9 @@ import { LocationService } from "src/app/service/location/location.service";
 })
 export class LocationLocationComponent implements OnInit {
 
-    locations = new Set();
-    cities: string[] = ['Pune', 'Mumbai', 'Kolkata', 'Delhi', 'Kota', 'Banglore', 'Chandigad'];
-    iconColor: string[] = ['red', 'blue', 'yellow', 'pink', 'green', 'black'];
+    locations!: string[];
+    // cities: string[] = ['Pune', 'Mumbai', 'Kolkata', 'Delhi', 'Kota', 'Banglore', 'Chandigad'];
+    // iconColor: string[] = ['red', 'blue', 'yellow', 'pink', 'green', 'black'];
 
     constructor(
         private locationService: LocationService,
@@ -23,13 +23,18 @@ export class LocationLocationComponent implements OnInit {
     }
 
     getLocation = () => {
-        this.locationService.locationData.forEach((location) => {
-            this.locations.add(location.location);
+        // this.locationService.locationData.forEach((location) => {
+        //     this.locations.add(location.location);
+        // })
+        this.locationService.getLocationList().subscribe({
+            next: (result: any) => {
+                this.locations = [...result]
+            }
         })
     }
 
     onLocationSelected = (location: any) => {
-        this.locationService.selectedLocation = location;
-        this.router.navigate(['/sales','location', 'center'])
+        // this.locationService.selectedLocation = location;
+        this.router.navigate(['/sales','location', 'center',location])
     }
 }

@@ -20,6 +20,12 @@ const AdminRouting: Routes = [
         }
     },
     {
+        path: 'new-proposal',
+        loadChildren: () => {
+            return import('./new-proposal/new-proposal.module').then((m) => m.NewProposalModule);
+        }
+    },
+    {
         path: 'log',
         loadChildren: () => {
             return import('./log/log.module').then((m) => m.LogModule);

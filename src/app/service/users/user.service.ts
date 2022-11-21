@@ -57,4 +57,9 @@ export class UserService {
     return this.http.get(this.baseUrl + 'getById/' + id, httpOptions);
   }
 
+  getSalesHead = () => {
+    let httpOptions = this.headerService.updateHeader();
+    return this.http.get(this.baseUrl + 'getSalesHead', httpOptions);
+  }
+
 }

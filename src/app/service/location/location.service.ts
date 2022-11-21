@@ -22,7 +22,13 @@ export class LocationService {
 
     getAllLocation = () => {
         let httpOptions = this.headerService.updateHeader();
-        return this.http.get(this.baseUrl + 'getAll', httpOptions);
+        return this.http.get(this.baseUrl + 'getAll', httpOptions).pipe(
+            this.toster.observe({
+                success: 'All location data loaded successfully',
+                loading: 'Loading location data...',
+                error: ({ error }) => `${error.Message}`
+            })
+        );
     }
 
     addLocation = (data: any) => {
@@ -61,6 +67,28 @@ export class LocationService {
     getLocationById = (id: string) => {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getById/' + id, httpOptions);
+    }
+
+    getLocationList = () => {
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.get(this.baseUrl + 'getLocationList', httpOptions).pipe(
+            this.toster.observe({
+                success: 'Location-list loaded successfully',
+                loading: 'Getting Location-list...',
+                error: ({ error }) => `${error.Message}`
+            })
+        );
+    }
+
+    getCentersInLocation = (location: string) => {
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.get(this.baseUrl + 'getCentersInLocation/' + location, httpOptions).pipe(
+            this.toster.observe({
+                success: 'Centers loaded successfully',
+                loading: 'Loading centers...',
+                error: ({ error }) => `${error.Message}`
+            })
+        );
     }
 
 

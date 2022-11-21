@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { LocationService } from 'src/app/service/location/location.service';
 import { Router } from "@angular/router";
@@ -24,9 +24,11 @@ export class AddLocationComponent implements OnInit {
     private router: Router
   ) {}
   
-  locationForm = new FormGroup({
-    'location': new FormControl(''),
-    'center': new FormControl(''),
+  locationForm = new FormGroup<any>({
+    'location': new FormControl('',Validators.required),
+    'center': new FormControl('', Validators.required),
+    'totalNoOfWorkstation': new FormControl('', Validators.required),
+    'availableNoOfWorkstation': new FormControl('', Validators.required),
     'imageLinks': new FormArray([]),
     'videoLinks': new FormArray([]),
   })
@@ -50,7 +52,7 @@ export class AddLocationComponent implements OnInit {
   }
 
   onAdd(controlName: string) {
-    const control = new FormControl(null);
+    const control = new FormControl(null,Validators.required);
     (<FormArray>this.locationForm.get(controlName)).push(control);
   }
   onRemove(controlName:string, controlIndex: number){
@@ -58,15 +60,25 @@ export class AddLocationComponent implements OnInit {
   }
 
   appentFormData = ():FormData => {
-    let formData!: FormData;
+    let formData: FormData = new FormData;
+    for (let key of Object.keys(this.locationForm.value)) {
+      if (Array.isArray(this.locationForm.get(key)?.value)) {
+        let temp: any =[];
+        (this.locationForm.get(key)?.value).forEach((element: string, index: number) => {
+          temp = [...temp, [index, element]];
+        })
+        temp = Object.fromEntries(temp);
+        formData.append(key, JSON.stringify(temp));
+      }
+      else {
+        formData.append(key, this.locationForm.get(key)?.value);
+      }
+    }
     if (this.jsonUploaded) {
       formData.append('jsonFile', this.JSONFile);
     }
     if (this.layoutImageUploaded) {
       formData.append('layoutImage', this.layoutImage);
-    }
-    for (let key of Object.keys(this.locationForm.value)) {
-      formData.append(key, this.locationForm.get(key)?.value);
     }
 
     return formData;
@@ -82,7 +94,7 @@ export class AddLocationComponent implements OnInit {
     if (this.locationForm.invalid) {
       return;
     }
-    else if (this.jsonUploaded && this.layoutImageUploaded) {
+    else if (!this.jsonUploaded && !this.layoutImageUploaded) {
       Swal.fire({
         title: 'File Upload Require!',
         icon: 'error',

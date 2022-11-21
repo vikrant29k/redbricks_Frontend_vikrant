@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
-import { LocationListService } from 'src/app/service/location-list/location-list.service';
+import { LocationService } from 'src/app/service/location/location.service';
 
 export interface LocationData {
   _id: any,
@@ -28,7 +28,7 @@ export class LocationListComponent implements OnInit {
   height!: string;
   Locations: any;
   editMode: boolean = false;
-  displayedColumns: string[] = ['city', 'state', 'area', 'dimension', 'edit', 'delete'];
+  displayedColumns: string[] = ['location', 'center', 'availableNoOfWorkstation', 'totalNoOfWorkstation', 'edit', 'delete'];
   dataSource!: MatTableDataSource<LocationData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -37,7 +37,7 @@ export class LocationListComponent implements OnInit {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private locationService: LocationListService,
+    private locationService: LocationService,
     private authService: AuthenticationService
   ) { }
   
@@ -72,8 +72,8 @@ export class LocationListComponent implements OnInit {
   }
 
   editLoction(id: any) {
-    this.locationService.locationIdToUpdate = id;
-    this.editMode = true;
+    // this.locationService.locationIdToUpdate = id;
+    // this.editMode = true;
     // this.openDialog();
   }
 

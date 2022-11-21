@@ -1,13 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/service/users/user.service';
-import { AddUsersComponent } from '../add-user/add-users.component';
 import Swal from 'sweetalert2';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
+import { Router } from "@angular/router";
 
 export interface UserData {
   _id?: any,
@@ -75,11 +73,10 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private dialog: MatDialog,
-    private http: HttpClient,
     private cd: ChangeDetectorRef,
     private userService: UserService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private router: Router
   ) {
 
   }
@@ -99,10 +96,9 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   }
   getAllUsers() {
     this.userService.getAllUser().subscribe({
-      next: (result) => {
+      next: (result: any) => {
+        result.reverse();
         this.Users = result;
-        console.log(result);
-        console.log(this.Users)
         this.tableDataSource(this.Users);
       },
       error: (err: any) => {
@@ -141,6 +137,20 @@ export class UsersListComponent implements OnInit, AfterViewInit {
   }
 
   editUser(id: any) {
+    Swal.fire({
+      title: 'Edit Confirm!',
+      text: 'Are you sure you want to Edit this User Data?',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Yes! Proceed',
+      confirmButtonColor: '#C3343A'
+    }).then((confirmation) => {
+      if (confirmation.isConfirmed) {
+        this.router.navigate(['/admin','users','add-users',id])
+      }
+    })
     this.editMode = true;
     this.userService.userIdToUpdate = id;
     // this.openDialog();
