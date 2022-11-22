@@ -37,6 +37,10 @@
         @include flex-column();
         width: 15rem;
         height: 15rem;
+        @include for-desktop(){
+            width: 13rem;
+            height: 13rem;
+        }
         cursor: pointer;
 
         svg {
