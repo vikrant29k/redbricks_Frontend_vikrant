@@ -5,11 +5,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { LogService } from "src/app/service/log/log.service";
 import { Router } from "@angular/router";
-import { HttpClient } from '@angular/common/http';
-import { all } from "macaddress";
-import { Pipe, PipeTransform } from '@angular/core';
 
-import { FormControl,FormGroup } from "@angular/forms";
 export interface ProposalLogData {
     _id: any;
     proposalId: string;
@@ -38,7 +34,7 @@ arr = this.logService.getAllLogs().subscribe;
     constructor(
         private logService: LogService,
         private router: Router,
-        private http: HttpClient
+     
     ) { }
     
     ngOnInit(): void {
@@ -58,19 +54,7 @@ arr = this.logService.getAllLogs().subscribe;
         return false;
       }
     }
-// readntransform(){
-//    // let data;
-//     this.http.get('https://redbricks-server.herokuapp.com/logs/proposal-log').subscribe((res:any)=>{
-//        let a = res.map((d:any) => {
-//         let data = d;
-//         data = {...data,expired: this.getExpiredOrNot(data.createdAt)};
-//         return data;
-//        });
 
-//     });
-   
-
-// }
 
 updatetable = () =>{
 
