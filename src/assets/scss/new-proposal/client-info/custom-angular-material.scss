@@ -1,10 +1,15 @@
+@mixin  for-desktop {
+    @media (max-width:1440px) {
+        @content;
+    }
+}
 @mixin custom_client-info_angular-material {
     .mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
         background-color:#C3343A !important;
     }
     .mat-form-field-appearance-fill {
             font-size: 1.1rem;
-          
+        
             .mat-form-field-flex {
                 background-color: #C3343A;
                 border-radius: 0.5rem !important;
@@ -34,6 +39,9 @@
             mat-label {
                 color: #fff;
                 font-weight: 600;
+                @include for-desktop(){
+                    font-weight: 500;
+                }
             }
     
             .mat-select-value-text {

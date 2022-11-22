@@ -18,7 +18,7 @@ export class LogService {
     getAllLogs = () => {
         return this.http.get(this.baseUrl + 'proposal-log').pipe(
             this.toster.observe({
-                success: 'All Log Data loaded Successfully',
+                success: 'All Log Data Loaded Successfully',
                 loading: 'Loading All Log data...',
                 error: ({ error }) => `${error.Message}`
             })

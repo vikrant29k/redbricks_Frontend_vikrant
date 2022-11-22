@@ -1,3 +1,9 @@
+@mixin for-desktop {
+    @media (max-width:1440px) {
+        @content;
+    }
+}
+
 @mixin flex_center_center {
     display: flex;
     justify-content: center;
@@ -17,6 +23,7 @@
 
         .title {
             width: 100%;
+            font-size: 1rem;
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -40,7 +47,10 @@
             border-radius: 100%;
             background-color: #fff;
             padding: 3rem;
-
+            @include for-desktop(){
+                width: 7rem;
+                height: 7rem;
+            }
             img{
                 width: inherit;
                 height: inherit;
@@ -50,11 +60,16 @@
         .form-container{
             @include flex_center_center();
             width: 55rem;
+           
             padding: 3rem 1rem;
             border-radius: 5rem;
             background-color: #fff;
             box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-
+            @include for-desktop(){
+                width: 43rem;
+                padding: 1.5rem 1rem;
+                border-radius: 4rem
+            }
             form{
                 @include flex_center_center();
                 @include flex-column();
@@ -64,10 +79,14 @@
                     @include flex_center_center();
                     justify-content: space-around;
                     width: inherit;
-
+                    @include for-desktop(){
+                        width: 39rem;        
+                    }
                     mat-form-field{
                         width: 20rem;
-
+                        @include for-desktop(){
+                            width: 17rem;        
+                        }
                         mat-icon{
                             padding-inline-start: 0.5rem;
                             color: #bdbdbd;
@@ -95,6 +114,9 @@
 
         .avatar + .form-container{
             margin-top: 2rem;
+            @include for-desktop(){
+           margin-top: 1rem;
+            }
         }
 
     }

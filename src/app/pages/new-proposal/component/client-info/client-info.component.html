@@ -38,11 +38,7 @@
             <!-- Center -->
             <mat-form-field appearance="fill" >
                 <mat-label>Center</mat-label>
-                <mat-select formControlName="center" [disabled]="true">
-                    <ng-container *ngFor="let center of centers">
-                        <mat-option [value]="center">{{center}}</mat-option>
-                    </ng-container>
-                </mat-select>
+                <input type="text" matInput formControlName="center" [disabled]="true" autocomplete="off">
                 <mat-error>Center is required</mat-error>
             </mat-form-field>
             <!-- SPOC Name -->

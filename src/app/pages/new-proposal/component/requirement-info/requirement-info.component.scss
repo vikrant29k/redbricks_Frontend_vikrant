@@ -1,3 +1,8 @@
+@mixin for-desktop {
+    @media (max-width:1440px) {
+        @content;
+    }
+}
 @mixin field-card {
     display: flex;
     justify-content: space-between;
@@ -8,7 +13,12 @@
     color: #fff;
     font-size: 1.1rem;
     font-weight: 600;
+    @include for-desktop(){
+        font-size: 1rem;
+        font-weight: 500;
+    }
 }
+
 
 @mixin flex-column__center-center {
     display: flex;
@@ -53,6 +63,11 @@
         gap: 1rem;
         color: #ffffff;
         font-weight: 600;
+        @include for-desktop(){
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
     }
 
     .main-content {
@@ -71,10 +86,18 @@
                 justify-content: center;
                 align-items: center;
                 gap: 5rem;
+                @include for-desktop(){
+                    gap:1rem;
+                    margin-top: 1rem
+                }
+
 
                 .left {
                     @include flex-column__center-center();
                     gap: 1rem;
+                    @include for-desktop(){
+                        width: 70%;
+                    }
 
                     .section {
                         @include flex__center-center();
@@ -112,6 +135,9 @@
 
                                             color: #ffffff;
                                             font-size: 1.1rem;
+                                            @include for-desktop(){
+                                                font-size: 1rem;
+                                            }
                                             padding: 0.3rem 0.7rem;
                                             border-radius: 0.5rem;
                                         }
@@ -147,10 +173,19 @@
                     border: 2px solid #C3343A;
                     border-radius: 2rem;
                     padding: 3rem;
+                    @include for-desktop(){
+                        width: 16%;
+                        padding: 1.5rem 3rem;
+                    }
 
                     .counter-card {
                         width: 17rem;
                         height: 17rem;
+                        @include for-desktop(){
+                            width: 16rem;
+                            height: 16rem;
+                        }
+    
                         border-radius: 100%;
                         background-color: #fff;
                         box-shadow: -4px 8px 17px 0px rgba(0, 0, 0, 0.1);
@@ -168,11 +203,19 @@
 
                             .label {
                                 font-size: 1.2rem;
+                                @include for-desktop(){
+                                    font-size: 1rem;
+                                }
+            
                             }
 
                             .count {
                                 font-size: 2rem;
                                 font-weight: 700;
+                                @include for-desktop(){
+                                    font-size: 1.6rem;
+                                    font-weight: 600;
+                                }
                             }
                         }
 
@@ -323,6 +366,10 @@
                 button {
                     font-size: 1.1rem;
                     font-weight: 600;
+                    @include for-desktop(){
+                        font-size: 1rem;
+                        font-weight: 500;
+                    }
                     min-width: 10rem;
                     min-height: 3rem;
                     margin-inline-end: 2rem;

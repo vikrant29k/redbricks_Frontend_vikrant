@@ -1,7 +1,7 @@
 <div class="container">
     <div class="main-content">
         <div class="space-availability">
-            <p>{{seatAvailability ? 'Space is Available': 'Space is Not-Available'}}</p>
+            <p>{{seatAvailability ? 'Space Available': 'Space Not-Available'}}</p>
         </div>
         <form [formGroup]="proposalExtraDetailForm" (ngSubmit)="onSubmit()">
             <ng-container *ngIf="consolidatedSeats">

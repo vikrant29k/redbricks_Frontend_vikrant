@@ -1,3 +1,9 @@
+@mixin for-desktop {
+    @media (max-width:1440px) {
+        @content;
+    }
+}
+
 .container{
     display: flex;
     justify-content: center;
@@ -23,6 +29,9 @@
     .image{
         background-image: url('../../../assets/images/profile/profile-background.png');
         height: 50vh;
+        @include for-desktop(){
+            height: 47vh;
+        }
         background-size: cover;
         background-position: top right;
 

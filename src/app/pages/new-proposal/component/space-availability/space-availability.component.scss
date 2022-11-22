@@ -1,3 +1,8 @@
+@mixin for-desktop {
+    @media (max-width: 1440px) {
+        @content;  
+    }
+}
 @mixin flex-column {
     flex-direction: column;
 }
@@ -24,7 +29,10 @@
         box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
         width: 65rem;
         padding-block: 2rem;
-
+        @include for-desktop(){
+            width: 50rem;
+            padding-block: 1rem;
+        }
         .space-availability {
             margin-top: 1rem;
             display: flex;
@@ -36,6 +44,11 @@
             padding: 0.5rem 3rem;
             border-radius: 1rem;
             font-weight: 600;
+            @include for-desktop(){
+                margin-top: 0.5rem;
+                font-weight: 500;
+                
+            }
         }
 
         form {
@@ -48,10 +61,17 @@
                 @include flex-column();
                 color: #8B8C8D;
                 font-size: 1.5rem;
-
+                @include for-desktop(){
+                   font-size: 1.2rem;
+                   font-weight: 500;
+                   
+                }
                 .consolidated-manner__action {
                     @include flex_center-center();
                     gap: 2rem;
+                    @include for-desktop(){
+                        gap: 1rem;
+                    }
 
                     button {
                         width: 6rem;
@@ -66,6 +86,9 @@
                 @include flex-column();
                 gap: 3rem;
                 font-size: 1.3rem;
+                @include for-desktop(){
+                    font-size: 1rem
+                }
 
                 .extra-proposal-details__top {
                     @include flex_center-center();
@@ -79,7 +102,13 @@
                         .extra-proposal-details__top-left__fields {
                             @include flex_center-center();
                             gap: 1rem;
-
+                            
+                            mat-label{
+                                font-weight: 600;
+                                @include for-desktop(){
+                                    font-weight: 300;
+                                }
+                            }
                             p {
                                 margin-block: 0rem;
                             }
@@ -102,11 +131,19 @@
                             width: 100%;
                             gap: 1rem;
                             height: 4.15rem;
-
+                            mat-label{
+                                font-weight: 600;
+                                @include for-desktop(){
+                                    font-weight: 300;
+                                }
+                            }
                             &:nth-child(2) {
 
                                 p {
                                     width: 5rem;
+                                    @include for-desktop(){
+                                        width: 4rem;
+                                    }
                                 }
 
                                 mat-form-field {
@@ -144,6 +181,10 @@
                     width: 15rem;
                     height: 3rem;
                     font-size: 1.1rem;
+                    @include for-desktop(){
+                        font-size: 1rem;
+                        width: 13rem;
+                    }
                 }
             }
         }

@@ -24,8 +24,8 @@ export class LocationService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getAll', httpOptions).pipe(
             this.toster.observe({
-                success: 'All location data loaded successfully',
-                loading: 'Loading location data...',
+                success: 'All Location Data Loaded successfully',
+                loading: 'Loading Location Data...',
                 error: ({ error }) => `${error.Message}`
             })
         );
@@ -58,7 +58,7 @@ export class LocationService {
         return this.http.delete(this.baseUrl + 'delete/' + id, httpOptions).pipe(
             this.toster.observe({
                 success: 'Location Deleted Successfully',
-                loading: 'Deleting location...',
+                loading: 'Deleting Location...',
                 error: ({ error }) => `${error.Message}`
             })
         );
@@ -73,7 +73,7 @@ export class LocationService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getLocationList', httpOptions).pipe(
             this.toster.observe({
-                success: 'Location-list loaded successfully',
+                success: 'Location-list Loaded Successfully',
                 loading: 'Getting Location-list...',
                 error: ({ error }) => `${error.Message}`
             })
@@ -84,8 +84,8 @@ export class LocationService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getCentersInLocation/' + location, httpOptions).pipe(
             this.toster.observe({
-                success: 'Centers loaded successfully',
-                loading: 'Loading centers...',
+                success: 'Centers Loaded Successfully',
+                loading: 'Loading Centers...',
                 error: ({ error }) => `${error.Message}`
             })
         );
