@@ -20,25 +20,22 @@
             <mat-form-field appearance="fill">
                 <mat-label>Sales Head</mat-label>
                 <mat-select formControlName="salesHead">
-                    <mat-option value="Vikrant">Vikrant</mat-option>
-                    <mat-option value="Rahul">Rahul</mat-option>
+                    <ng-container *ngFor="let salesHead of salesHeads">
+                        <mat-option [value]="salesHead._id">{{salesHead.firstName + ' ' + salesHead.lastName}}</mat-option>
+                    </ng-container>
                 </mat-select>
                 <mat-error>Sales Head is required</mat-error>
             </mat-form-field>
             <!-- Location -->
             <mat-form-field appearance="fill">
                 <mat-label>Location</mat-label>
-                <mat-select formControlName="location" [disabled]="true">
-                    <ng-container *ngFor="let location of locations">
-                        <mat-option [value]="location">{{location}}</mat-option>
-                    </ng-container>
-                </mat-select>
+                <input type="text" matInput formControlName="location" autocomplete="off" [disabled]="true">
                 <mat-error>Location is required</mat-error>
             </mat-form-field>
             <!-- Center -->
-            <mat-form-field appearance="fill" >
+            <mat-form-field appearance="fill">
                 <mat-label>Center</mat-label>
-                <input type="text" matInput formControlName="center" [disabled]="true" autocomplete="off">
+                <input type="text" matInput formControlName="center" autocomplete="off" [disabled]="true">
                 <mat-error>Center is required</mat-error>
             </mat-form-field>
             <!-- SPOC Name -->
@@ -92,7 +89,8 @@
                 <input type="text" matInput formControlName="brokerCategoryOther" autocomplete="off">
             </mat-form-field>
             <div class="form-action">
-                <button type="submit" mat-raised-button color="primary" >Save & Next <mat-icon>play_arrow</mat-icon></button>
+                <button type="submit" mat-raised-button color="primary">Save & Next <mat-icon>play_arrow</mat-icon>
+                    </button>
             </div>
         </form>
     </div>

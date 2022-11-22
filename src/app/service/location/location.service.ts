@@ -42,9 +42,9 @@ export class LocationService {
         );
     }
 
-    updateLocation = (data: any) => {
+    updateLocation = (Id: string,data: any) => {
         let httpOptions = this.headerService.updateHeader();
-        return this.http.post(this.baseUrl + 'update', data, httpOptions).pipe(
+        return this.http.post(this.baseUrl + 'update/'+ Id, data, httpOptions).pipe(
             this.toster.observe({
                 success: 'Location Updated Successfully',
                 loading: 'Updating location...',
@@ -66,7 +66,13 @@ export class LocationService {
 
     getLocationById = (id: string) => {
         let httpOptions = this.headerService.updateHeader();
-        return this.http.get(this.baseUrl + 'getById/' + id, httpOptions);
+        return this.http.get(this.baseUrl + 'getById/' + id, httpOptions).pipe(
+            this.toster.observe({
+                success: 'Location data loaded successfully',
+                loading: 'Getting Location data...',
+                error: ({ error }) => `${error.Message}`
+            })
+        );
     }
 
     getLocationList = () => {
@@ -90,6 +96,7 @@ export class LocationService {
             })
         );
     }
+
 
 
 

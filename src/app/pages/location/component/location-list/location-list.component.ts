@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { LocationService } from 'src/app/service/location/location.service';
+import { Router } from "@angular/router";
+import Swal from 'sweetalert2';
 
 export interface LocationData {
   _id: any,
@@ -38,7 +40,8 @@ export class LocationListComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private locationService: LocationService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private router: Router
   ) { }
   
   tableDataSource(data: LocationData[] | undefined) {
@@ -61,18 +64,30 @@ export class LocationListComponent implements OnInit {
   }
 
   deleteLocation(id: string) {
-    this.locationService.deleteLocation(id).subscribe({
-      next: () => {
-        this.getAllLocations();
-      },
-      error: (err:any) => {
-        this.authService.handleAuthError(err);
+    Swal.fire({
+      title: 'Delete Location',
+      text: 'Are you sure you want to delete this location?',
+      icon: 'question',
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: 'Delete',
+      confirmButtonColor: '#C3343A'
+    }).then((confirmation) => {
+      if (confirmation.isConfirmed) {
+        this.locationService.deleteLocation(id).subscribe({
+          next: () => {
+            this.getAllLocations();
+          },
+          error: (err: any) => {
+            this.authService.handleAuthError(err);
+          }
+        })
       }
     })
   }
 
-  editLoction(id: any) {
-    // this.locationService.locationIdToUpdate = id;
+  editLocation(id: any) {
+    this.router.navigate(['/admin','location','edit-location',id])
     // this.editMode = true;
     // this.openDialog();
   }

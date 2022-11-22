@@ -27,7 +27,7 @@ export class ProposalService {
         return this.http.get(this.baseUrl + 'init/'+ data, httpOptions).pipe(
             this.toster.observe({
                 success: 'Proposal Initialized',
-                loading: 'Initialzing Proposal...',
+                loading: 'Initializing Proposal...',
                 error: ({ error }) => `${error.Message}`
             })
         );
@@ -56,7 +56,8 @@ export class ProposalService {
     }
 
     sendOtp = (mobileNo: string, Id: string) => {
-        return this.http.post(this.baseUrl + 'send-otp/' + Id, { mobileNo: mobileNo }).pipe(
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.post(this.baseUrl + 'send-otp/' + Id, { mobileNo: mobileNo },httpOptions).pipe(
             this.toster.observe({
                 success: 'OTP Send Successfully',
                 loading: 'Sending OTP...',
@@ -65,8 +66,9 @@ export class ProposalService {
         )
     }
 
-    verifyOtp = (OTP: any,Id: string) => {
-        return this.http.post(this.baseUrl + 'verify-otp/' + Id, {OTP: OTP}).pipe(
+    verifyOtp = (OTP: any, Id: string) => {
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.post(this.baseUrl + 'verify-otp/' + Id, {OTP: OTP},httpOptions).pipe(
             this.toster.observe({
                 success: 'OTP Verified Successfully',
                 loading: 'Verifying OTP...',
@@ -76,7 +78,8 @@ export class ProposalService {
     }
 
     generateLayout = (Id: string, selectFrom: string) => {
-        return this.http.get(this.baseUrl + 'layout/' + Id + '/' + selectFrom).pipe(
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.get(this.baseUrl + 'layout/' + Id + '/' + selectFrom, httpOptions).pipe(
             this.toster.observe({
                 success: 'Layout Preview Generated Successfully',
                 loading: 'Generating Layout...',
@@ -86,7 +89,8 @@ export class ProposalService {
     }
 
     generateProposal = (Id: string, selectFrom: string, data: any) => {
-        return this.http.post(this.baseUrl + 'generate/' + Id + '/' + selectFrom, data ).pipe(
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.post(this.baseUrl + 'generate/' + Id + '/' + selectFrom, data , httpOptions).pipe(
             this.toster.observe({
                 success: 'Proposal Generated Successfully',
                 loading: 'Generating Proposal...',
@@ -96,7 +100,8 @@ export class ProposalService {
     }
 
     getAllProposal = () => {
-        return this.http.get(this.baseUrl + 'getAll').pipe(
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.get(this.baseUrl + 'getAll', httpOptions).pipe(
             this.toster.observe({
                 success: 'All Old Proposal List Loaded successfully',
                 loading: 'Loading All Old Proposal Data...',

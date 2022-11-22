@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { LocationService } from 'src/app/service/location/location.service';
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,12 +16,15 @@ export class AddLocationComponent implements OnInit {
   layoutImage!: File;
   jsonUploaded: boolean = false;
   layoutImageUploaded: boolean = false;
+  editMode: boolean = false;
+  locationId!: string;
   
   
   constructor(
     private loactionService: LocationService,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
   
   locationForm = new FormGroup<any>({
@@ -87,14 +90,40 @@ export class AddLocationComponent implements OnInit {
   
 
   ngOnInit(): void {
-    
+    let ID = this.route.snapshot.params['Id'];
+    if (ID) {
+      this.locationId = ID;
+      this.editMode = true;
+      this.getLocationDataToUpdate(this.locationId);
+    }
+  }
+
+  getLocationDataToUpdate = (Id: string) => {
+    this.loactionService.getLocationById(Id).subscribe({
+      next: (result: any) => {
+        this.locationForm.patchValue({
+          'location': result.location,
+          'center': result.center,
+          'totalNoOfWorkstation': result.totalNoOfWorkstation,
+          'availableNoOfWorkstation': result.availableNoOfWorkstation
+        });
+        result.imageLinks.forEach((element: string, index: number) => {
+          this.onAdd('imageLinks');
+          this.imageLinks[index].patchValue(element);
+        });
+        result.videoLinks.forEach((element: string, index: number) => {
+          this.onAdd('videoLinks');
+          this.videoLinks[index].patchValue(element);
+        })
+      }
+    })
   }
 
   onSubmit = () => {
     if (this.locationForm.invalid) {
       return;
     }
-    else if (!this.jsonUploaded && !this.layoutImageUploaded) {
+    else if (!this.jsonUploaded && !this.layoutImageUploaded && !this.editMode) {
       Swal.fire({
         title: 'File Upload Require!',
         icon: 'error',
@@ -106,15 +135,26 @@ export class AddLocationComponent implements OnInit {
     }
     else {
       let formData: FormData = this.appentFormData();
-      this.loactionService.addLocation(formData).subscribe({
-        next: (result: any) => {
-          this.router.navigate(['/admin', 'location', 'location-list']);
-        },
-        error: (err: any) => {
-          this.authService.handleAuthError(err);
-        }
-      })
+      if (this.editMode) {
+        this.loactionService.updateLocation(this.locationId, formData).subscribe({
+          next: (result: any) => {
+            this.router.navigate(['/admin', 'location', 'location-list']);
+          },
+          error: (err: any) => {
+            this.authService.handleAuthError(err);
+          }
+        })
+      }
+      else {
+        this.loactionService.addLocation(formData).subscribe({
+          next: (result: any) => {
+            this.router.navigate(['/admin', 'location', 'location-list']);
+          },
+          error: (err: any) => {
+            this.authService.handleAuthError(err);
+          }
+        })
+      }
     }
-    
   }
 }
