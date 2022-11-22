@@ -6,6 +6,7 @@ import { LogMaterialMoudle } from "./module/material/log-material.module";
 import { LogRoutingModule } from "./module/routing/log-routing.component";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIcon, MatIconModule } from "@angular/material/icon";
+import { LogService } from "../../service/log/log.service";
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import { MatIcon, MatIconModule } from "@angular/material/icon";
         MatMenuModule,
         MatIconModule,
         
-    ]
+    ],
+    providers: [LogService]
 })
 export class LogModule {}

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "src/app/service/authentication/authentication.service";
 import { LocationService } from "src/app/service/location/location.service";
 import { ProposalService } from "src/app/service/proposal/proposal.service";
+import { UserService } from "src/app/service/users/user.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -15,6 +16,7 @@ export class NewProposalClientInfoComponent implements OnInit{
     proposalId!: string;
     locations = new Set<string>();
     centers = new Set<string>();
+    salesHeads: any[] = [];
 
     category: any;
     IPC: any = ['JLL', 'CBRE', 'C & W', 'KF', 'Colliers', 'Savills', 'other'];
@@ -43,7 +45,8 @@ export class NewProposalClientInfoComponent implements OnInit{
         private route: ActivatedRoute,
         private locationService: LocationService,
         private proposalService: ProposalService,
-        private authService: AuthenticationService
+        private authService: AuthenticationService,
+        private userService: UserService
     ) { }
 
 
@@ -54,7 +57,7 @@ export class NewProposalClientInfoComponent implements OnInit{
         }
         Swal.fire({
             title: 'Initialized Proposal And Add Client Info',
-            text: 'Once you initialized proposal and added client Info it cannot be undone',
+            text: 'Once you initialized proposal and added client Info it can\'t be undone',
             icon: 'question',
             showConfirmButton: true,
             confirmButtonText: 'Proceed',
@@ -104,6 +107,14 @@ export class NewProposalClientInfoComponent implements OnInit{
         // this.cd.detectChanges();
     }
 
+    getSalesHead = () => {
+        this.userService.getSalesHead().subscribe({
+            next: (result: any) => {
+                this.salesHeads = [...result];
+            }
+        })
+    }
+
     watchValueChangesInForm = () => {
         this.clientInfoForm.get('location')?.valueChanges.subscribe(() => {
             this.getCentersInLocation();
@@ -121,6 +132,7 @@ export class NewProposalClientInfoComponent implements OnInit{
         this.getCentersInLocation();
         this.watchValueChangesInForm();
         this.getLocationAndCenter();
+        this.getSalesHead();
     }
 
 

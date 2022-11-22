@@ -42,6 +42,11 @@ const routes: Routes = [
                 path: 'add-location',
                 canActivate: [LocationAdminChildRouteGuard],
                 component: AddLocationComponent
+            },
+            {
+                path: 'edit-location/:Id',
+                canActivate: [LocationAdminChildRouteGuard],
+                component: AddLocationComponent
             }
         ]
     }

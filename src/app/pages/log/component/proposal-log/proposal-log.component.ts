@@ -3,13 +3,9 @@ import { Component, OnInit } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTable, MatTableDataSource } from "@angular/material/table";
-import { LogService } from "src/app/service/log/log.service";
+import { LogService } from "../../../../service/log/log.service";
 import { Router } from "@angular/router";
-import { HttpClient } from '@angular/common/http';
-import { all } from "macaddress";
-import { Pipe, PipeTransform } from '@angular/core';
 
-import { FormControl,FormGroup } from "@angular/forms";
 export interface ProposalLogData {
     _id: any;
     proposalId: string;
@@ -34,11 +30,10 @@ export class LogProposalLog implements OnInit {
     @ViewChild(MatTable) table!: MatTable<ProposalLogData>;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
-arr = this.logService.getAllLogs().subscribe;
+// arr = this.logService.getAllLogs().subscribe;
     constructor(
         private logService: LogService,
-        private router: Router,
-        private http: HttpClient
+        private router: Router
     ) { }
     
     ngOnInit(): void {

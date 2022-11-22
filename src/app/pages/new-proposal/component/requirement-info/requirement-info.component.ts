@@ -17,24 +17,24 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     totalSelectedWorkstation: any = 0;
 
     requirementInfoForm = new FormGroup({
-        'workstationSize': new FormControl(''),
+        'workstationSize': new FormControl('small'),
         'workstationNumber': new FormControl(''),
-        'cabinSize': new FormControl(''),
+        'cabinSize': new FormControl('small'),
         'cabinNumber': new FormControl(''),
-        'meetingRoomSize': new FormControl(''),
+        'meetingRoomSize': new FormControl('small'),
         'meetingRoomNumber': new FormControl(''),
-        'visitorMeetingRoomSize': new FormControl(''),
+        'visitorMeetingRoomSize': new FormControl('small'),
         'visitorMeetingRoomNumber': new FormControl(''),
         'collabArea': new FormControl('no'),
-        'dryPantry': new FormControl(''),
-        'storeRoom': new FormControl(''),
+        'dryPantry': new FormControl('no'),
+        'storeRoom': new FormControl('no'),
         'storeRoomNumber': new FormControl(''),
-        'cafeteria': new FormControl(''),
+        'cafeteria': new FormControl('no'),
         'cafeteriaNumber': new FormControl(''),
-        'reception': new FormControl(''),
-        'mailRoom': new FormControl(''),
-        'bmsRoom': new FormControl(''),
-        'compactor': new FormControl('')
+        'reception': new FormControl('no'),
+        'mailRoom': new FormControl('no'),
+        'bmsRoom': new FormControl('no'),
+        'compactor': new FormControl('no')
     })
 
     constructor(
