@@ -1,3 +1,8 @@
+@mixin for-desktop {
+    @media (max-width: 1440px) {
+      @content;
+    }
+  } 
 @mixin flex_center_center {
     display: flex;
     justify-content: center;
@@ -18,10 +23,16 @@
             @include flex_center_center();
             width: 20rem;
             height: 20rem;
-
+            @include for-desktop() {
+                width: 17rem;
+                height: 17rem;
+              }
             img {
                 width: inherit;
                 object-fit: cover;
+                @include for-desktop(){
+                    width: 16rem;
+                }
             }
 
             &.sphere {
@@ -31,7 +42,9 @@
                 color: #ffffff;
                 border-radius: 100%;
                 cursor: pointer;
-
+                @include for-desktop(){
+                    font-size: 3rem;
+                }
 
                 &.old-proposal {
                     background-color: #8B8C8D;

@@ -1,8 +1,16 @@
+@mixin for-desktop {
+    @media (max-width:1440px) {
+        @content;
+    }
+}
 mat-drawer-container {
     height: 100vh;
 
     mat-drawer {
         width: 20rem;
+        @include for-desktop(){
+            width: 18rem;
+        }
     }
 
     .container {
