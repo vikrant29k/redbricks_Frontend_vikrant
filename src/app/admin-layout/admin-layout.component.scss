@@ -1,36 +1,35 @@
 @mixin for-desktop {
-    @media (max-width:1440px) {
-        @content;
-    }
+  @media (max-width: 1440px) {
+    @content;
+  }
 }
 mat-drawer-container {
-    height: 100vh;
+  height: 100vh;
 
-    mat-drawer {
-        width: 20rem;
-        @include for-desktop(){
-            width: 18rem;
-        }
+  mat-drawer {
+    width: 20rem;
+    @include for-desktop() {
+      width: 18rem;
     }
+  }
 
-    .container {
-        position: fixed;
-        top: 2rem;
-        left: 2rem;
-        z-index: 1;
+  .container {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 1;
 
-        .icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-            border-radius: 100%;
-            background-color: #C3343A;
-            color: #fff;
-            font-size: 1.1rem;
-            z-index: 1;
-            cursor: pointer;
-        }
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      border-radius: 100%;
+      background-color: #c3343a;
+      color: #fff;
+      font-size: 1.1rem;
+      z-index: 1;
+      cursor: pointer;
     }
-
+  }
 }

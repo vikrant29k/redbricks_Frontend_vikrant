@@ -1,130 +1,127 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
 @mixin flex_center_center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  font-size: 1.1rem;
+  justify-content: center;
+  align-items: center;
 }
-@mixin  inputs {
-    text-align:center;
-    box-sizing: border-box;
-    border: none;
-    background-color: #C3343A;
-
+@mixin inputs {
+  text-align: center;
+  box-sizing: border-box;
+  border: none;
+  background-color: #c3343a;
 }
-div{
-    text-align: center;
-    margin: 5px 0px ;
+div {
+  text-align: center;
+  font-size: 1.1rem;
 }
 .container {
+  @include flex_center_center();
+  background-image: url("../../../../../assets/images/dashboard/dashboard-background.png");
+  background-size: cover;
+  min-height: 100vh;
+  font-size: 1.1rem;
+
+  .main-content {
     @include flex_center_center();
-    background-image: url('../../../../../assets/images/dashboard/dashboard-background.png');
-    background-size: cover;
-    min-height: 100vh;
-   
-    .main-content {
-        @include flex_center_center();
-        gap: 1rem;
+    gap: 1rem;
+    font-size: 1.1rem;
+    .card {
+      @include flex_center_center();
+      width: 38rem;
+      height: 28rem;
+      font-size: 1.1rem;
+      background-color: rgba(255, 255, 255, 0.674);
+      border-radius: 2.5rem;
+      // border: 1px solid #707070;
+      border: none;
+      flex-direction: column;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
 
-        .card {
-            @include flex_center_center();
-            width: 38rem;
-            height: 28rem;
-            background-color: rgba(255, 255, 255, 0.656);
-            border-radius:2.5rem ;
-            border: 1px solid #707070;
-            flex-direction: column;
+      .uid {
+        @include inputs();
+        width: 20rem;
+        font-size: 1.1rem;
+        border-radius: 4rem;
+        padding: 12px 20px;
+        margin: 8px 0;
 
-            .uid{
-                @include inputs();
-                width: 20rem;
-                border-radius:4rem;
-                padding: 12px 20px;
-                margin: 8px 0;
-                
-                
-                color: #C4C4C4;
-            }
-            .yesno{
-                @include inputs();
-                width: 4.5rem;
-                border-radius:0.5rem;
-                padding: 5px 10px;
-                margin: 0px 10px;
-                
-                color: #ffffff;
-            }
-            .otp1{
-                @include inputs();
-
-                width: 50%;
-                border-radius:1rem;
-                padding: 12px 20px;
-                margin: 8px 10px;
-                
-                
-                color: #C4C4C4;
-            }
-            .otp{
-                width: 15.8rem;
-                background-color: #C3343A;
-                color: #ffffff;
-                box-sizing: border-box;
-                position: relative;
-                -webkit-user-select: none;
-                user-select: none;
-                cursor: pointer;
-                outline: none;
-                border: none;
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-                display: inline-block;
-                white-space: nowrap;
-                text-decoration: none;
-                vertical-align: baseline;
-                text-align: center;
-                margin: 5px 0px;
-                min-width: 64px;
-                line-height: 36px;
-                padding: 0 16px;
-                border-radius: 1rem;
-                overflow: visible;
-                font-size: medium;
-                transform: translate3d(0, 0, 0);
-            }
-            .otp::placeholder{
-                color: #ffffff;
-                font-size: medium;
-            }
-            .otpdiv{
-               
-                width: 16rem;
-                text-align: center;
-              
-            }
-            .otpbuttons{
-                width: 28rem;
-
-            }
-            .offer{
-                @include inputs();
-                border-radius:1rem;
-                width: 15rem;
-                padding: 12px 20px;
-                margin: 20px 10px;
-                color: #ffffff;
-            }
+        color: #c4c4c4;
+      }
+      .yesno {
+        @include inputs();
+        width: 4.5rem;
+        font-size: 1.1rem;
+        border-radius: 0.5rem;
+        padding: 5px 10px;
+        margin: 0px 10px;
+        color: #ffffff;
+      }
+      .otp1 {
+        @include inputs();
+        width: 50%;
+        border-radius: 1rem;
+        padding: 12px 20px;
+        margin: 8px 10px;
+        color: #c4c4c4;
+      }
+      .otp {
+        width: 15.8rem;
+        background-color: #c3343a;
+        color: #ffffff;
+        box-sizing: border-box;
+        border: none;
+        text-align: center;
+        margin: 5px 0px;
+        line-height: 36px;
+        padding: 0 16px;
+        border-radius: 0.3rem;
+        font-size: 1.1rem;
+        font-weight: 400;
+        @include for-desktop() {
+          font-size: 1rem;
         }
+      }
+      .otp::placeholder {
+        color: #ffffff;
+        font-size: 1.1rem;
+      }
+      .otpdiv {
+        width: 16rem;
+        text-align: center;
+      }
+      .otpbuttons {
+        width: 28rem;
+      }
+      .offer {
+        @include inputs();
+        // border-radius:1rem;
+        width: 15rem;
+        // padding: 12px 20px;
+        margin: 20px 10px;
+        font-size: 1.1rem;
+        color: #ffffff;
+        @include for-desktop() {
+          font-size: 1rem;
+        }
+      }
     }
-   
+  }
 }
 
 @media (max-width: 475px) {
-    .container {
-        .main-content {
-            flex-wrap: wrap;
+  .container {
+    .main-content {
+      flex-wrap: wrap;
 
-            .card {
-                width: 13rem;
-                height: 13rem;
-            }
-        }
+      .card {
+        width: 13rem;
+        height: 13rem;
+      }
     }
+  }
 }

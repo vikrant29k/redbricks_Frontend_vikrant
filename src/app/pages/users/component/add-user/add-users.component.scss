@@ -4,7 +4,6 @@
   align-items: center;
   min-height: 100vh;
 
-
   .main-content {
     display: flex;
     justify-content: center;
@@ -47,15 +46,12 @@
           justify-content: center;
           align-items: flex-start;
 
-
           mat-form-field {
-
             mat-icon {
               padding-inline-start: 1rem;
               cursor: pointer;
             }
           }
-
         }
 
         button {
@@ -67,10 +63,8 @@
             justify-content: center;
             align-items: center;
             gap: 1rem;
-
           }
         }
-
       }
 
       .form-action {
@@ -82,16 +76,11 @@
 
         button {
           width: 15rem;
-
         }
       }
     }
-
   }
 }
-
-
-
 
 // @mixin for-desktop {
 //   @media (max-width: 1440px) {

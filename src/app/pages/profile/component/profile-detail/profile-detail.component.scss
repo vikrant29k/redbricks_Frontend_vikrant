@@ -1,123 +1,120 @@
 @mixin for-desktop {
-    @media (max-width:1440px) {
-        @content;
-    }
+  @media (max-width: 1440px) {
+    @content;
+  }
 }
 
 @mixin flex_center_center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @mixin flex-column {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .container {
-    @include flex_center_center();
+  @include flex_center_center();
 
-    .main-content {
+  .main-content {
+    @include flex_center_center();
+    @include flex-column();
+
+    .title {
+      width: 100%;
+      font-size: 1rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1rem;
+
+      .edit-icon {
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 1;
+        }
+        mat-icon {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    .avatar {
+      width: 10rem;
+      height: 10rem;
+      border-radius: 100%;
+      background-color: #fff;
+      padding: 3rem;
+      @include for-desktop() {
+        width: 7rem;
+        height: 7rem;
+      }
+      img {
+        width: inherit;
+        height: inherit;
+      }
+    }
+
+    .form-container {
+      @include flex_center_center();
+      width: 55rem;
+
+      padding: 3rem 1rem;
+      border-radius: 5rem;
+      background-color: #fff;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+      @include for-desktop() {
+        width: 43rem;
+        padding: 1.5rem 1rem;
+        border-radius: 4rem;
+      }
+      form {
         @include flex_center_center();
         @include flex-column();
+        width: inherit;
 
-        .title {
-            width: 100%;
-            font-size: 1rem;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 1rem;
-
-            .edit-icon{
-                opacity: 0.5;
-                
-                &:hover{
-                    opacity: 1;
-                }
-                mat-icon{
-                    transform: scale(1.2);
-                }
+        .section {
+          @include flex_center_center();
+          justify-content: space-around;
+          width: inherit;
+          @include for-desktop() {
+            width: 39rem;
+          }
+          mat-form-field {
+            width: 20rem;
+            @include for-desktop() {
+              width: 17rem;
             }
+            mat-icon {
+              padding-inline-start: 0.5rem;
+              color: #bdbdbd;
+
+              &.active {
+                color: #757575;
+              }
+            }
+          }
         }
 
-        .avatar{
+        .form-action {
+          @include flex_center_center();
+          width: inherit;
+          gap: 5rem;
+          button {
             width: 10rem;
-            height: 10rem;
-            border-radius: 100%;
-            background-color: #fff;
-            padding: 3rem;
-            @include for-desktop(){
-                width: 7rem;
-                height: 7rem;
-            }
-            img{
-                width: inherit;
-                height: inherit;
-            }
+            padding: 0rem 2rem;
+          }
         }
-
-        .form-container{
-            @include flex_center_center();
-            width: 55rem;
-           
-            padding: 3rem 1rem;
-            border-radius: 5rem;
-            background-color: #fff;
-            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-            @include for-desktop(){
-                width: 43rem;
-                padding: 1.5rem 1rem;
-                border-radius: 4rem
-            }
-            form{
-                @include flex_center_center();
-                @include flex-column();
-                width: inherit;
-
-                .section{
-                    @include flex_center_center();
-                    justify-content: space-around;
-                    width: inherit;
-                    @include for-desktop(){
-                        width: 39rem;        
-                    }
-                    mat-form-field{
-                        width: 20rem;
-                        @include for-desktop(){
-                            width: 17rem;        
-                        }
-                        mat-icon{
-                            padding-inline-start: 0.5rem;
-                            color: #bdbdbd;
-
-                            &.active{
-                                color: #757575;
-                            }
-                        }
-                    }
-                }
-
-                .form-action{
-                    @include flex_center_center();
-                    width: inherit;
-                    gap: 5rem;
-                    button{
-                        width: 10rem;
-                        padding: 0rem 2rem;
-                    }
-
-                }
-
-            }
-        }
-
-        .avatar + .form-container{
-            margin-top: 2rem;
-            @include for-desktop(){
-           margin-top: 1rem;
-            }
-        }
-
+      }
     }
+
+    .avatar + .form-container {
+      margin-top: 2rem;
+      @include for-desktop() {
+        margin-top: 1rem;
+      }
+    }
+  }
 }
