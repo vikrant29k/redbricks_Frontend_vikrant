@@ -60,6 +60,7 @@ export class LocationLocationDetailComponent implements OnInit {
                 if (result.Message === "Proposal Initiated Successfully") {
                     this.locationService.selectedLocation = this.centerData.location;
                     this.locationService.selectedCenter = this.centerData.center;
+                    console.log(this.centerData);
                     // this.router.navigate(['/new-proposal/add', this.location, result.Id]);
                     this.router.navigate(['/sales','new-proposal', 'client-info',result.Id]);
                 }

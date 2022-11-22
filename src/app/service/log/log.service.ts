@@ -19,7 +19,7 @@ export class LogService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'proposal-log',httpOptions).pipe(
             this.toster.observe({
-                success: 'All Log Data loaded Successfully',
+                success: 'All Log Data Loaded Successfully',
                 loading: 'Loading All Log data...',
                 error: ({ error }) => `${error.Message}`
             })

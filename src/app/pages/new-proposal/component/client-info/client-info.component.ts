@@ -139,10 +139,12 @@ export class NewProposalClientInfoComponent implements OnInit{
     getLocationAndCenter = () => {
         let location = this.locationService.selectedLocation;
         let center = this.locationService.selectedCenter;
+        console.log(location,center)
         this.clientInfoForm.patchValue({
             'location': location,
             'center': center
         });
+        console.log(this.clientInfoForm.value)
     }
 
     getProposalId = (): string => {

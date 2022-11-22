@@ -34,7 +34,7 @@ export class UserService {
     let httpOptions = this.headerService.updateHeader();
     return this.http.post(this.baseUrl + 'create', data, httpOptions).pipe(
       this.toster.observe({
-        success: 'User created successfully',
+        success: 'User Created Successfully',
         loading: 'Creating User...',
         error: ({ error }) => `${error.Message}`
       })
@@ -45,7 +45,7 @@ export class UserService {
     let httpOptions = this.headerService.updateHeader();
     return this.http.delete(this.baseUrl + 'delete/' + id, httpOptions).pipe(
       this.toster.observe({
-        success: 'User deleted successfully',
+        success: 'User Deleted Successfully',
         loading: 'Deleting User...',
         error: ({ error }) => `${error.Message}`
       })

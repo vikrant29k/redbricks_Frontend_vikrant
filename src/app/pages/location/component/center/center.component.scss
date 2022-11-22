@@ -1,68 +1,72 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
 @mixin flex_center_center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @mixin flex-column {
-    flex-direction: column;
+  flex-direction: column;
 }
-
 
 .container {
+  @include flex_center_center();
+  min-height: 100vh;
+  width: 100%;
+  background-image: url("../../../../../assets/images/location/location-background.png");
+  background-size: cover;
+  background-position: center;
+  background-color: #fddede;
+
+  .main-content {
     @include flex_center_center();
-    min-height: 100vh;
-    width: 100%;
-    background-image: url('../../../../../assets/images/location/location-background.png');
-    background-size: cover;
-    background-position: center;
-    background-color: #FDDEDE;
+    width: inherit;
+    height: inherit;
 
-    .main-content {
+    .location-pointer {
+      @include flex_center_center();
+      flex-wrap: wrap;
+      width: 80rem;
+      gap: 2rem;
+
+      .icon {
         @include flex_center_center();
-        width: inherit;
-        height: inherit;
-
-        .location-pointer {
-            @include flex_center_center();
-            flex-wrap: wrap;
-            width: 80rem;
-            gap: 2rem;
-
-            .icon {
-                @include flex_center_center();
-                @include flex-column();
-                width: 15rem;
-                height: 15rem;
-                cursor: pointer;
-
-
-                svg {
-                    width: inherit;
-                    height: inherit;
-                }
-
-                p {
-                    color: #C3343A;
-                    font-size: 1.6rem;
-                    font-weight: 500;
-                    
-                }
-            }
-
-            // .icon+.icon {
-            //     margin-inline-start: 5rem;
-            // }
+        @include flex-column();
+        width: 15rem;
+        height: 15rem;
+        cursor: pointer;
+        @include for-desktop() {
+          width: 13rem;
+          height: 13rem;
         }
+
+        svg {
+          width: inherit;
+          height: inherit;
+        }
+
+        p {
+          color: #c3343a;
+          font-size: 1.6rem;
+          font-weight: 500;
+        }
+      }
+
+      // .icon+.icon {
+      //     margin-inline-start: 5rem;
+      // }
     }
+  }
 }
 
-
 .icon {
-
-    @for $i from 0 to 10 {
-        &:nth-child(#{$i}) {
-            fill: rgb(random(255), random(255), random(255));
-        }
+  @for $i from 0 to 10 {
+    &:nth-child(#{$i}) {
+      fill: rgb(random(255), random(255), random(255));
     }
+  }
 }

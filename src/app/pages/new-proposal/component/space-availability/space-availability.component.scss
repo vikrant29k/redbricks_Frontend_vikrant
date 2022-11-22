@@ -1,151 +1,185 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
 @mixin flex-column {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 @mixin flex_center-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
-    @include flex_center-center();
-    min-height: 100vh;
-    width: 100%;
-    background-color: #FDDEDE;
-    font-size: 1.1rem;
+  @include flex_center-center();
+  min-height: 100vh;
+  width: 100%;
+  background-color: #fddede;
+  font-size: 1.1rem;
 
-    .main-content {
+  .main-content {
+    @include flex_center-center();
+    @include flex-column();
+    gap: 1rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+    width: 65rem;
+    padding-block: 2rem;
+    @include for-desktop() {
+      width: 50rem;
+      padding-block: 1rem;
+    }
+    .space-availability {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #c3343a;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      padding: 0.5rem 3rem;
+      border-radius: 1rem;
+      font-weight: 600;
+      @include for-desktop() {
+        margin-top: 0.5rem;
+        font-weight: 500;
+      }
+    }
+
+    form {
+      @include flex_center-center();
+      @include flex-column();
+      gap: 1rem;
+
+      .consolidated-manner {
         @include flex_center-center();
         @include flex-column();
-        gap: 1rem;
-        background-color: #fff;
-        border-radius: 1rem;
-        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-        width: 65rem;
-        padding-block: 2rem;
+        color: #8b8c8d;
+        font-size: 1.5rem;
+        @include for-desktop() {
+          font-size: 1.2rem;
+          font-weight: 500;
+        }
+        .consolidated-manner__action {
+          @include flex_center-center();
+          gap: 2rem;
+          @include for-desktop() {
+            gap: 1rem;
+          }
 
-        .space-availability {
-            margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #C3343A;
-            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-            color: #fff;
-            padding: 0.5rem 3rem;
-            border-radius: 1rem;
-            font-weight: 600;
+          button {
+            width: 6rem;
+            height: 2.5rem;
+            font-size: 1.1rem;
+          }
+        }
+      }
+
+      .extra-proposal-details {
+        @include flex_center-center();
+        @include flex-column();
+        gap: 3rem;
+        font-size: 1.3rem;
+        @include for-desktop() {
+          font-size: 1rem;
         }
 
-        form {
+        .extra-proposal-details__top {
+          @include flex_center-center();
+          gap: 2rem;
+
+          .extra-proposal-details__top-left {
             @include flex_center-center();
             @include flex-column();
             gap: 1rem;
 
-            .consolidated-manner {
-                @include flex_center-center();
-                @include flex-column();
-                color: #8B8C8D;
-                font-size: 1.5rem;
+            .extra-proposal-details__top-left__fields {
+              @include flex_center-center();
+              gap: 1rem;
 
-                .consolidated-manner__action {
-                    @include flex_center-center();
-                    gap: 2rem;
-
-                    button {
-                        width: 6rem;
-                        height: 2.5rem;
-                        font-size: 1.1rem;
-                    }
+              mat-label {
+                font-weight: 600;
+                @include for-desktop() {
+                  font-weight: 300;
                 }
+              }
+              p {
+                margin-block: 0rem;
+              }
+
+              input[type="number"]::-webkit-outer-spin-button,
+              input[type="number"]::-webkit-inner-spin-button {
+                appearance: none;
+              }
+            }
+          }
+
+          .extra-proposal-details__top-right {
+            @include flex_center-center();
+            @include flex-column();
+            gap: 1rem;
+
+            .extra-proposal-details__top-right__fields {
+              @include flex_center-center();
+              width: 100%;
+              gap: 1rem;
+              height: 4.15rem;
+              mat-label {
+                font-weight: 600;
+                @include for-desktop() {
+                  font-weight: 300;
+                }
+              }
+              &:nth-child(2) {
+                p {
+                  width: 5rem;
+                  @include for-desktop() {
+                    width: 4rem;
+                  }
+                }
+
+                mat-form-field {
+                  width: 100%;
+                }
+              }
             }
 
-            .extra-proposal-details {
-                @include flex_center-center();
-                @include flex-column();
-                gap: 3rem;
-                font-size: 1.3rem;
-
-                .extra-proposal-details__top {
-                    @include flex_center-center();
-                    gap: 2rem;
-
-                    .extra-proposal-details__top-left {
-                        @include flex_center-center();
-                        @include flex-column();
-                        gap: 1rem;
-
-                        .extra-proposal-details__top-left__fields {
-                            @include flex_center-center();
-                            gap: 1rem;
-
-                            p {
-                                margin-block: 0rem;
-                            }
-
-                            input[type='number']::-webkit-outer-spin-button,
-                            input[type='number']::-webkit-inner-spin-button {
-                                appearance: none;
-                            }
-                        }
-                    }
-
-                    .extra-proposal-details__top-right {
-                        @include flex_center-center();
-                        @include flex-column();
-                        gap: 1rem;
-                        
-
-                        .extra-proposal-details__top-right__fields {
-                            @include flex_center-center();
-                            width: 100%;
-                            gap: 1rem;
-                            height: 4.15rem;
-
-                            &:nth-child(2) {
-
-                                p {
-                                    width: 5rem;
-                                }
-
-                                mat-form-field {
-                                    width: 100%;
-                                }
-                            }
-
-                        }
-
-                        &:last-child {
-                            align-items: flex-start;
-                        }
-
-                    }
-
-                }
-
-                .extra-proposal-details__bottom {
-                    @include flex_center-center();
-                    gap: 2rem;
-
-                    button {
-                        width: 10rem;
-                        height: 2.5rem
-                    }
-                }
+            &:last-child {
+              align-items: flex-start;
             }
-
-            .form-action {
-                @include flex_center-center();
-                margin-block: 1.5rem;
-                gap: 2rem;
-
-                button {
-                    width: 15rem;
-                    height: 3rem;
-                    font-size: 1.1rem;
-                }
-            }
+          }
         }
+
+        .extra-proposal-details__bottom {
+          @include flex_center-center();
+          gap: 2rem;
+
+          button {
+            width: 10rem;
+            height: 2.5rem;
+          }
+        }
+      }
+
+      .form-action {
+        @include flex_center-center();
+        margin-block: 1.5rem;
+        gap: 2rem;
+
+        button {
+          width: 15rem;
+          height: 3rem;
+          font-size: 1.1rem;
+          @include for-desktop() {
+            font-size: 1rem;
+            width: 13rem;
+          }
+        }
+      }
     }
+  }
 }

@@ -21,8 +21,8 @@ export class ProfileService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'get', httpOptions).pipe(
             this.toster.observe({
-                success: 'Profile data loaded successfully!',
-                loading: 'Loading profile data...',
+                success: 'Profile Data Loaded Successfully!',
+                loading: 'Loading Profile Data...',
                 error: ({ error }) => `${error.Message}`
             })
         );

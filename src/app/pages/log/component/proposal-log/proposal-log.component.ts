@@ -53,19 +53,7 @@ export class LogProposalLog implements OnInit {
         return false;
       }
     }
-// readntransform(){
-//    // let data;
-//     this.http.get('https://redbricks-server.herokuapp.com/logs/proposal-log').subscribe((res:any)=>{
-//        let a = res.map((d:any) => {
-//         let data = d;
-//         data = {...data,expired: this.getExpiredOrNot(data.createdAt)};
-//         return data;
-//        });
 
-//     });
-   
-
-// }
 
 updatetable = () =>{
 

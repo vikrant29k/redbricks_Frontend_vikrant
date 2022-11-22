@@ -1,9 +1,13 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-
 
   .main-content {
     display: flex;
@@ -13,9 +17,11 @@
     padding: 2rem;
     background-color: #fff;
     border-radius: 2rem;
-    box-shadow: 0px 3px 6px rgba(0,0,0,0.3);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
     width: 60rem;
-
+    @include for-desktop() {
+      width: 45rem;
+    }
     .title {
       width: 100%;
       display: flex;
@@ -24,81 +30,77 @@
       width: inherit;
     }
 
-    form{
+    form {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       width: inherit;
 
-      section{
+      section {
         display: flex;
         justify-content: space-around;
         align-items: center;
         width: inherit;
 
-        mat-form-field{
+        mat-form-field {
           width: 20rem;
+          @include for-desktop() {
+            width: 18rem;
+          }
         }
 
-        .form-field{
+        .form-field {
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: flex-start;
 
-
-          mat-form-field{
-
-            mat-icon{
+          mat-form-field {
+            mat-icon {
               padding-inline-start: 1rem;
               cursor: pointer;
             }
           }
-
         }
 
-        button{
+        button {
           width: 20rem;
+          @include for-desktop() {
+            width: 16rem;
+          }
           margin-bottom: 1rem;
           .button_content {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              gap: 1rem;
-          
-            }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+          }
         }
-        
       }
 
-      .form-action{
+      .form-action {
         display: flex;
         justify-content: center;
         align-items: center;
         width: inherit;
         gap: 5rem;
-
-        button{
+        @include for-desktop() {
+          gap: 9.5rem;
+        }
+        button {
           width: 15rem;
-
+          @include for-desktop() {
+            width: 13rem;
+          }
         }
       }
     }
-
   }
 }
 
-
-
-
-
-
-
-
-
 // @mixin for-desktop {
-//   @media (max-width: 1315px) {
+//   @media (max-width: 1440px) {
 //     @content;
 //   }
 // }
