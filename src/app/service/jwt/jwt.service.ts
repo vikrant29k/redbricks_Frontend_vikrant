@@ -28,6 +28,7 @@ export class JWTService {
             return this.decodeToken().role;
         }
         else {
+            localStorage.removeItem('auth-token');
             this.router.navigate(['/auth']);
         }
     }

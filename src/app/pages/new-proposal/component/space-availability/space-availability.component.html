@@ -29,14 +29,14 @@
                             <p>Tenure:</p>
                             <mat-form-field appearance="fill">
                                 <mat-label>In Months</mat-label>
-                                <input type="number" matInput formControlName="Tenure">
+                                <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="Tenure">
                             </mat-form-field>
                         </div>
                         <div class="extra-proposal-details__top-left__fields">
                             <p>Lock In:</p>
                             <mat-form-field appearance="fill">
                                 <mat-label>In Months</mat-label>
-                                <input type="number" matInput formControlName="LockIn">
+                                <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="LockIn">
                             </mat-form-field>
                         </div>
                     </div>

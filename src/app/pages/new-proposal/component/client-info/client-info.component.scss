@@ -101,10 +101,11 @@
                 font-weight: 600;
                 min-width: 10rem;
                 min-height: 3rem;
+                margin-block-end: 1rem;
                 @include for-desktop(){
                     font-size: 1rem;
                     font-weight: 500;
-                    margin-bottom: 1rem;
+                    
                 }
             }
         }

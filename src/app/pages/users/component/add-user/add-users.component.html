@@ -66,10 +66,10 @@
       </ng-container>
       <div class="form-action">
         <ng-container *ngIf="!editMode; else cancelEditModeBtn">
-          <button type="reset" color="primary" mat-raised-button>cancel</button>
+          <button type="reset" color="primary" mat-raised-button>Cancel</button>
         </ng-container>
         <ng-template #cancelEditModeBtn>
-          <button type="button" (click)="cancelEditMode()" color="primary" mat-raised-button>cancel</button>
+          <button type="button" (click)="cancelEditMode()" color="primary" mat-raised-button>Cancel</button>
         </ng-template>
         <button type="submit" color="primary" mat-raised-button>Save</button>
       </div>
