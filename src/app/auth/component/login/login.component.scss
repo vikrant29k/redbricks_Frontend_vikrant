@@ -1,3 +1,13 @@
+@mixin for-laptop-height-620 {
+    @media (max-height:600px) {
+        @content;
+    }
+}
+@mixin for-desktop {
+    @media (max-height:1440px) {
+        @content;
+    }
+}
 $input_field-width: 20rem;
 
 .container {
@@ -8,6 +18,9 @@ $input_field-width: 20rem;
 
     .title {
         font-size: 2.5rem;
+        @include for-laptop-height-620(){
+            font-size: 2rem;
+        }
 
         span {
             color: #C3343A;
@@ -19,13 +32,16 @@ $input_field-width: 20rem;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
         gap: 1rem;
+        @include for-laptop-height-620(){
+            gap: 0.6rem;
+       
+        }
 
         .form-field {
             display: flex;
             flex-direction: column;
-
+            
             input {
                 width: $input_field-width;
                 background-color: #fff;

@@ -1,3 +1,13 @@
+@mixin for-laptop-height-620 {
+    @media (max-height:620px) {
+        @content;
+    }
+}
+@mixin for-desktop {
+    @media (max-height:1440px) {
+        @content;
+    }
+}
 .container{
     background-image: url('../../assets/images/auth/auth-background.png');
     background-size: cover;
@@ -12,10 +22,19 @@
         width: 40rem;
         position: absolute;
         top: 3rem;
+        @include for-desktop(){
+            width: 35rem;
+        }
+        @include for-laptop-height-620(){
+         width: 30rem;
+         top:2rem;       
+        }
         img{
             width: inherit;
             object-fit: cover;
+           
         }
+
     }
     .main-content{
         width: max-content;
