@@ -68,8 +68,8 @@ export class LocationService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getById/' + id, httpOptions).pipe(
             this.toster.observe({
-                success: 'Location data loaded successfully',
-                loading: 'Getting Location data...',
+                success: 'Location Data Loaded Successfully',
+                loading: 'Getting Location Data...',
                 error: ({ error }) => `${error.Message}`
             })
         );

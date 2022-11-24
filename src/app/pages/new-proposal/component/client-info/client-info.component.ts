@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
     styleUrls: ['./client-info.component.scss']
 })
 export class NewProposalClientInfoComponent implements OnInit{
+    disabl = new FormControl({ value: null, disabled: true });
     proposalId!: string;
     locations = new Set<string>();
     centers = new Set<string>();
@@ -31,8 +32,8 @@ export class NewProposalClientInfoComponent implements OnInit{
     clientInfoForm = new FormGroup<any>({
         'salesTeam': new FormControl('', Validators.required),
         'salesHead': new FormControl('', Validators.required),
-        'location': new FormControl('', Validators.required),
-        'center': new FormControl('', Validators.required),
+        'location': new FormControl({value:'',disabled: true } ,Validators.required),
+        'center': new FormControl({value:'',disabled: true }, Validators.required),
         'spocName': new FormControl('', Validators.required),
         'clientName': new FormControl('', Validators.required),
         'brokerType': new FormControl('', Validators.required),

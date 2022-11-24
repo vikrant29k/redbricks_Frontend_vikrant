@@ -58,7 +58,7 @@ export class AuthenticationService {
     forceLogout = () => {
         Swal.fire({
             title: 'Forced Logout!',
-            text: 'you have logged in from another device. Please login again to continue using this device',
+            text: 'You have logged in from another device. Please login again to continue using this device',
             icon: 'warning',
             timer: 2000,
             showConfirmButton: false
