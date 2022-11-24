@@ -27,7 +27,7 @@ export class ProposalService {
         return this.http.get(this.baseUrl + 'init/'+ data, httpOptions).pipe(
             this.toster.observe({
                 success: 'Proposal Initialized',
-                loading: 'initializing Proposal...',
+                loading: 'Initializing Proposal...',
                 error: ({ error }) => `${error.Message}`
             })
         );

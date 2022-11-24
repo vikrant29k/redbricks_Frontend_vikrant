@@ -45,6 +45,7 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        (window as any).scrollTo(top);
         this.totalWorkStationBalance = this.proposalService.TotalNoOfSets;
         this.totalAvailableWorkstation = this.proposalService.AvailableNoOfSeats;
         this.proposalId = this.getProposaId();

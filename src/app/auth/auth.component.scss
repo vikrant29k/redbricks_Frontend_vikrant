@@ -43,7 +43,14 @@
     }
 }
 
-@media (max-width: 475px){
+@media (max-height: 500px ){
+    .container{
+        .logo{
+            width: 21rem;
+        }
+    }
+}
+@media (max-width: 475px ){
     .container{
         .logo{
             width: 20rem;

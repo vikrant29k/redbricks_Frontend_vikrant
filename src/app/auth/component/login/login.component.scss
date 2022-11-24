@@ -105,6 +105,28 @@ $input_field-width: 20rem;
         }
     }
 }
+@media (max-height: 500px){
+    .container{
+        .title{
+            font-size: 1.5rem;
+        }
+        form{
+            width: 20rem;
+            .form-field{
+               width: 20rem;
+               input{
+                width: 16rem;
+               }
+               .input{
+                width: 100%;
+               }
+            }
+            .form-action{
+                width: 20rem;
+            }
+        }
+    }
+}
 @media (max-width: 475px){
     .container{
         .title{
