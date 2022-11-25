@@ -32,8 +32,8 @@ export class NewProposalClientInfoComponent implements OnInit{
     clientInfoForm = new FormGroup<any>({
         'salesTeam': new FormControl('', Validators.required),
         'salesHead': new FormControl('', Validators.required),
-        'location': new FormControl({value:'',disabled: true } ,Validators.required),
-        'center': new FormControl({value:'',disabled: true }, Validators.required),
+        'location': new FormControl('',Validators.required),
+        'center': new FormControl('', Validators.required),
         'spocName': new FormControl('', Validators.required),
         'clientName': new FormControl('', Validators.required),
         'brokerType': new FormControl('', Validators.required),
