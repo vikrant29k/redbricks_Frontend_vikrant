@@ -29,13 +29,13 @@
             <!-- Location -->
             <mat-form-field appearance="fill">
                 <mat-label>Location</mat-label>
-                <input type="text" matInput formControlName="location" autocomplete="off" [disabled]="true">
+                <input type="text" matInput formControlName="location" autocomplete="off"  [disabled]="true" [readonly]="true">
                 <mat-error>Location is required</mat-error>
             </mat-form-field>
             <!-- Center -->
             <mat-form-field appearance="fill">
                 <mat-label>Center</mat-label>
-                <input type="text" matInput formControlName="center" autocomplete="off" [disabled]="true">
+                <input type="text" matInput formControlName="center" autocomplete="off" [disabled]="true" [readonly]="true">
                 <mat-error>Center is required</mat-error>
             </mat-form-field>
             <!-- SPOC Name -->
