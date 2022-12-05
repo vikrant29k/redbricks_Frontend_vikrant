@@ -1,3 +1,58 @@
 <div class="container">
+  <div class="title">
     <h1>Admin Dashboard</h1>
+  </div>
+
+  <div class="main-content">
+    <!-- Total Proposal Generated View  -->
+    <div>
+      <mat-card class="Proposal">
+        <span class="tabs">
+          <div>
+            <mat-icon class="done">check_circle_outline</mat-icon>
+            <p>Completed 100</p>
+          </div>
+          <div>
+            <mat-icon class="pending">access_time</mat-icon>
+            <p>In-progress 50</p>
+          </div>
+          <div>
+            <mat-icon class="cancel">block</mat-icon>
+            <p>
+              Expired <br />
+              10
+            </p>
+          </div>
+        </span>
+      </mat-card>
+    </div>
+    <!-- Locations and total cities -->
+
+    <div mat-card class="card-container">
+      <div class="card-wrapper" (click)="clickEvent()" *ngFor="let city_name of city" >
+        <app-admin-dashboard-expand [cardData]="city_name" ></app-admin-dashboard-expand>
+      </div>
+
+      <div >
+        <mat-card class="sales">
+          <div class="totals">
+            <mat-icon>people</mat-icon>
+        <p>Total Users: {{totalUser}}</p>
+      </div>
+        <div class="sales-persons" >
+        <h2>Sales Persons</h2>
+        <div class="sales-list" *ngFor="let high of users, let i=index" >
+          <!-- <div  *ngIf="high.totalProposal"> -->
+          <p [ngClass]="i==0?'font':''">{{i+1}}. {{high.userName}} - {{high.totalProposal}}</p>
+        <!-- </div> -->
+        </div>
+      </div>
+    </mat-card>
+      </div>
+    </div>
+
+
+  </div>
 </div>
+
+

@@ -1,6 +1,169 @@
-.container{
+
+.container {
+  // height: 100%;
+  background-color: #dad7d7;
+  .title {
+    h1 {
+      margin: 10px;
+      font-size: 2rem;
+      // text-shadow:2px 3px 2px #000000;
+    }
+    color: #c3343a;
+    padding-block: 0.1rem;
+    text-align: center;
+  }
+  .main-content {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    align-items: flex-start;
+
+    .card-container {
+      display: flex;
+
+      /* margin-inline-start: 1rem; */
+      padding-inline-start: 0rem;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      .card-wrapper {
+        border-radius: 6px;
+        margin: 0.6rem 1rem;
+        text-align: center;
+        font-size: 1rem;
+        p {
+          margin: 0;
+        }
+      }
+    }
+    .sales {
+      .totals{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        mat-icon{
+          height: 9rem;
+          width: 9rem;
+          font-size: 9rem ;
+        }
+        p{
+          margin: 0;
+          text-align: center;
+          width: 12rem;
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+      }
+      
+      display: flex;
+      
+      justify-content: space-evenly;
+      // jsustify-content: center;
+     
+      text-align: initial;
+      background-color: #c3343a;
+      color: white;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.484),
+        0 6px 15px 0 rgba(0, 0, 0, 0.19);
+      width: 56rem;
+      margin-block-start: 1rem;
+      .sales-persons {
+        width: 20rem;
+        text-align: center;
+        .sales-list{
+          margin-inline-start: 2rem;
+          text-align: initial;
+        }
+        // width: inherit;
+        p{
+          margin-block: 0.5rem;
+          font-size: 1.1rem;
+        }
+        .font{
+          font-weight: 800;
+          
+         
+        }
+      }
+    }
+    .Proposal {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 0.7rem 1.5rem;
+      margin-block-end: 1rem;
+      margin-inline: 4rem;
+      border-radius: 3rem;
+
+      // height: 10rem;
+      .tabs {
+        //   display: flex;
+        //   justify-content: space-evenly;
+        div {
+          text-align: center;
+          font-size: 1.2rem;
+          font-weight: 600;
+          height: 7rem;
+          width: 10rem;
+          padding-block: 2rem;
+          p {
+            margin: 0.5em;
+          }
+        }
+        mat-icon {
+          width: 5rem;
+          height: 5rem;
+          font-size: 5rem;
+          border: none;
+          border-radius: 50%;
+          // text-shadow: 1px 1px 3px rgba(5, 27, 227, 0.5);
+        }
+        .done {
+          color: rgb(14, 223, 14);
+          box-shadow: 0px 0px 26px 8px rgb(14 223 14);
+          text-shadow: 0px 0px 5px rgb(14 223 14);
+        }
+        :hover {
+          text-shadow: none;
+        }
+        .pending {
+          color: rgb(233, 191, 21);
+          box-shadow: 0px 0px 26px 8px rgb(233, 191, 21);
+          text-shadow: 0px 0px 5px rgb(233, 191, 21);
+        }
+        :hover {
+          text-shadow: none;
+        }
+        .cancel {
+          color: rgb(99, 99, 99);
+          text-shadow: 0px 0px 5px rgb(92, 91, 91);
+          box-shadow: 0px 0px 26px 8px rgb(85, 85, 85);
+        }
+        :hover {
+          text-shadow: none;
+        }
+      }
+    }
+  }
 }
+// scss for coumting numbers
+// @property --num {
+//   syntax: "<integer>";
+//   initial-value: 13;
+//   inherits: false;
+// }
+
+// .count {
+//   animation: counter 5s ease-in-out;
+//   counter-reset: num var(--num);
+//   font: 800 40px system-ui;
+//   padding: 2rem;
+// }
+// .count::after {
+//   content: counter(num);
+// }
+
+// @keyframes counter {
+//   from {
+//     --num: 0;
+//   }
+//   to {
+//     --num: 13;
+//   }
+// }
