@@ -1,8 +1,4 @@
-//
-.card-wrapper{
-width: 55rem;
-transition: none;
-}
+
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -18,29 +14,54 @@ transition: none;
   overflow: hidden;
   padding-inline: 1rem;
   width: 15rem;
+  max-width:100rem;
   max-height: 5.5rem;
-
-  transition: 500ms ease-in-out;
+// transition-property: max-height;
+// transition-property: width;
+  transition: 600ms ease-out;
   .subtitle{
-    margin-block-start: 1rem;
+      width: 34rem;
+      display: flex;
+      // flex-direction: column;
+      justify-content: space-around;
+      gap:1;
+    
     mat-card{
         margin-block: 1rem;
     }
   }
-.sub{
-    margin-block: 0.5rem;
-    max-height: 1rem;
+  .sub_card {
+    width: 55rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+  .sub {
+    margin: 1rem;
+    width: 14rem;
     overflow: hidden;
+    max-height: 25rem;
+    .center_title{
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    .sub_sub_card{
+        margin-block: 0.5rem;
+        background-color: #c3343a;
+        color: white;
+    }
+  }
 }
   &.expand {
     text-align: initial;
-    width: 55rem;
-    max-height: 25rem;
-    transition:  500ms ease-in-out;
+    width: 54rem;
+    max-height: 100rem;
+    transition:  600ms ease-in;
     .subtitle {
      margin-block-start: 0;
-     width: 55rem;
+     width: 54rem;
       display: flex;
+      // flex-direction: row;
       justify-content: space-around;
       gap:1;
       p {

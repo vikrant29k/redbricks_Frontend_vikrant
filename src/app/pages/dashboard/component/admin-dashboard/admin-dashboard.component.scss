@@ -1,6 +1,28 @@
+@mixin tooltip {
+  visibility: hidden;
+          // width: 120px;
+          background-color: #c3343a;
+          color: #fff;
+          text-align: center;
+          padding-block:0.5rem;
+          border-radius: 1rem;
+          // top:0rem;
+          left: 0rem;
 
+          /* Position the tooltip text - see examples below! */
+          position: absolute;
+          z-index: 1;
+}
+
+// @if $firsttime=="true" {
+//   .container{
+//     transition: 1s ease-in-out ;
+//   }
+// }
 .container {
   // height: 100%;
+  
+  box-sizing: border-box;
   background-color: #dad7d7;
   .title {
     h1 {
@@ -25,7 +47,8 @@
       justify-content: space-around;
       .card-wrapper {
         border-radius: 6px;
-        margin: 0.6rem 1rem;
+        margin: 0.5rem 0rem;
+        padding-inline-end: 1rem;
         text-align: center;
         font-size: 1rem;
         p {
@@ -39,22 +62,22 @@
         align-items: center;
         flex-direction: column;
         mat-icon{
-          height: 9rem;
-          width: 9rem;
-          font-size: 9rem ;
+          height: 8rem;
+          width: 8rem;
+          font-size: 8rem ;
         }
         p{
           margin: 0;
           text-align: center;
-          width: 12rem;
-          font-size: 1.5rem;
+          width: 10rem;
+          font-size: 1.3rem;
           font-weight: 600;
         }
       }
       
       display: flex;
       
-      justify-content: space-evenly;
+      justify-content: space-between;
       // jsustify-content: center;
      
       text-align: initial;
@@ -62,11 +85,17 @@
       color: white;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.484),
         0 6px 15px 0 rgba(0, 0, 0, 0.19);
-      width: 56rem;
-      margin-block-start: 1rem;
+      width: 57rem;
+      margin-inline: 0rem;
+      margin-block: 0.5rem;
+      
       .sales-persons {
-        width: 20rem;
-        text-align: center;
+        // width: 20rem;
+        // text-align: center;
+        h2{
+          font-size: 1.3rem;
+          margin-block: 0.2rem;
+        }
         .sales-list{
           margin-inline-start: 2rem;
           text-align: initial;
@@ -95,6 +124,16 @@
       .tabs {
         //   display: flex;
         //   justify-content: space-evenly;
+        .tooltiptext1 {
+          @include tooltip();
+         
+        }
+        .tooltiptext2 {
+          @include tooltip();
+        }
+        .tooltiptext3 {
+          @include tooltip();
+        }
         div {
           text-align: center;
           font-size: 1.2rem;
@@ -102,8 +141,10 @@
           height: 7rem;
           width: 10rem;
           padding-block: 2rem;
-          p {
-            margin: 0.5em;
+          .icon-text {
+            margin: 0.6rem;
+            padding: 0rem;
+            color: #c3343a;
           }
         }
         mat-icon {
@@ -119,15 +160,20 @@
           box-shadow: 0px 0px 26px 8px rgb(14 223 14);
           text-shadow: 0px 0px 5px rgb(14 223 14);
         }
-        :hover {
+        :hover .tooltiptext1{
+          visibility:visible;
+          top: 7.5rem;
           text-shadow: none;
+         
         }
         .pending {
           color: rgb(233, 191, 21);
           box-shadow: 0px 0px 26px 8px rgb(233, 191, 21);
           text-shadow: 0px 0px 5px rgb(233, 191, 21);
         }
-        :hover {
+        :hover .tooltiptext2{
+          visibility:visible;
+          top: 18.5rem;
           text-shadow: none;
         }
         .cancel {
@@ -135,8 +181,10 @@
           text-shadow: 0px 0px 5px rgb(92, 91, 91);
           box-shadow: 0px 0px 26px 8px rgb(85, 85, 85);
         }
-        :hover {
+        :hover .tooltiptext3{
           text-shadow: none;
+          visibility:visible;
+          top: 29.3rem;
         }
       }
     }

@@ -10,18 +10,18 @@
         <span class="tabs">
           <div>
             <mat-icon class="done">check_circle_outline</mat-icon>
-            <p>Completed 100</p>
+            <p class="tooltiptext1">Total Proposal Completed 100 </p>
+            <p class="icon-text">Completed 100</p>
           </div>
           <div>
             <mat-icon class="pending">access_time</mat-icon>
-            <p>In-progress 50</p>
+            <p class="tooltiptext2">Total Proposal Pending 50 </p>
+            <p class="icon-text">In-progress 50</p>
           </div>
           <div>
             <mat-icon class="cancel">block</mat-icon>
-            <p>
-              Expired <br />
-              10
-            </p>
+            <p class="tooltiptext3">Total Proposal Expired 10 </p>
+            <p class="icon-text"> Expired <br /> 10 </p>
           </div>
         </span>
       </mat-card>
@@ -29,30 +29,55 @@
     <!-- Locations and total cities -->
 
     <div mat-card class="card-container">
-      <div class="card-wrapper" (click)="clickEvent()" *ngFor="let city_name of city" >
-        <app-admin-dashboard-expand [cardData]="city_name" ></app-admin-dashboard-expand>
+      <div class="card-wrapper" (click)="clickEvent()" *ngFor="let city_name of city">
+        <app-admin-dashboard-expand [cardData]="city_name"></app-admin-dashboard-expand>
       </div>
-
-      <div >
+<!-- total users ----- Sales persons View -->
+      <div>
         <mat-card class="sales">
+          <!-- total users  -->
           <div class="totals">
             <mat-icon>people</mat-icon>
-        <p>Total Users: {{totalUser}}</p>
-      </div>
-        <div class="sales-persons" >
-        <h2>Sales Persons</h2>
-        <div class="sales-list" *ngFor="let high of users, let i=index" >
-          <!-- <div  *ngIf="high.totalProposal"> -->
-          <p [ngClass]="i==0?'font':''">{{i+1}}. {{high.userName}} - {{high.totalProposal}}</p>
-        <!-- </div> -->
-        </div>
-      </div>
-    </mat-card>
+            <p>Total Users: {{totalUser}}</p>
+          </div>
+          <!-- Sales Persons Lists -->
+          <div class="sales-persons" >
+            <h2>Top Sales Persons</h2>
+            <div class="sales-list"  *ngFor="let userData of users.slice(0,3); let i = index">
+              <!-- <div  *ngIf="userData.role==='sales'"> -->
+              <p [ngClass]="i === 0 ? 'font' : ''">
+                {{ i + 1 }}. {{ userData.userName }} {{ userData.lastName }} -
+                {{ userData.totalProposal }}
+              </p>
+              <!-- </div>  -->
+            </div>
+          </div>
+          <!-- IPC LISR ----- -->
+          <div class="sales-persons">
+            <h2>Top IPC</h2>
+            <div class="sales-list"  *ngFor="let userData of ipc_Users.slice(0, 3); let i = index">
+              <!-- <div  *ngIf="userData.totalProposal"> -->
+              <p [ngClass]="i == 0 ? 'font' : ''">
+                {{ i + 1 }}. {{ userData.userName }} {{ userData.lastName }} -
+                {{ userData.totalProposal }}
+              </p>
+              <!-- </div> -->
+            </div>
+          </div>
+          <!-- NON ipcc -->
+          <div class="sales-persons">
+            <h2>Top Non IPC</h2>
+            <div class="sales-list"  *ngFor="let userData of nonIpc_Users.slice(0, 3); let i = index">
+              <!-- <div  *ngIf="userData.totalProposal"> -->
+              <p [ngClass]="i == 0 ? 'font' : ''">
+                {{ i + 1 }}. {{ userData.userName }} {{ userData.lastName }} -
+                {{ userData.totalProposal }}
+              </p>
+              <!-- </div> -->
+            </div>
+          </div>
+        </mat-card>
       </div>
     </div>
-
-
   </div>
 </div>
-
-

@@ -119,6 +119,18 @@ export class DashboardAdminDashboard implements OnInit {
           totalSeat: 50,
           Center_Proposal: 60,
         },
+        {
+          center_name: 'BSB',
+          seatSelected: 30,
+          totalSeat: 50,
+          Center_Proposal: 60,
+        },
+        {
+          center_name: 'Pavilion',
+          seatSelected: 30,
+          totalSeat: 50,
+          Center_Proposal: 60,
+        }
       ],
     },
     {
@@ -141,12 +153,30 @@ export class DashboardAdminDashboard implements OnInit {
       ],
     },
   ];
- 
+  firsttime:any="true";
   users: any[] = [
-    { userName: 'Rahul K', totalProposal: 180 },
-    { userName: 'Atul S', totalProposal: 90 },
-    { userName: 'Manpreet T', totalProposal: 150 },
+    { userName: 'Rahul K', totalProposal: 180, role:"sales" },
+    { userName: 'Atul S', totalProposal: 190, role:"admin" },
+    { userName: 'Manpreet T', totalProposal: 150, role:"admin" },
+    { userName:'Varun', totalProposal:160, role:"sales" },
+    { userName: 'A K', totalProposal: 180, role:"sales" },
+    { userName: 'B S', totalProposal: 190, role:"sales" },
+    { userName: 'T G', totalProposal: 150, role:"admin" },
+    { userName:'Y N', totalProposal:160, role:"admin" },
+  ].sort((a, b) => b.totalProposal - a.totalProposal);
+  ipc_Users: any[] = [
+    { userName: 'C & W', totalProposal: 180 },
+    { userName: 'KF', totalProposal: 190 },
+    { userName: 'Colliers', totalProposal: 150 },
+    { userName:'Savills', totalProposal:160 },
+    { userName: 'CBRE', totalProposal: 170 },
+    { userName:'JLL', totalProposal:140 },
   ];
+  nonIpc_Users: any[] = [
+    { userName: 'CityInfo', totalProposal: 180 },
+    { userName: 'EHRPCL', totalProposal: 190 },
+  ];
+
   topUsers:any;
 
   ngOnInit(): void {
@@ -161,9 +191,19 @@ export class DashboardAdminDashboard implements OnInit {
       )
       .subscribe();
     this.getMax();
+    this.firsttime = localStorage.getItem("firsttime");
+
+    if (
+      localStorage.getItem("firsttime") == null ||
+      localStorage.getItem("firsttime") == undefined
+    ) {
+      this.firsttime = 'true';
+      localStorage.setItem("firsttime", "true");
+    } else localStorage.setItem("firsttime", "false");
   }
+  
   getMax() {
- this.topUsers = this.users.sort((a, b) => b.totalProposal - a.totalProposal);
+//  this.topUsers = this.users.sort((a, b) => b.totalProposal - a.totalProposal);
 
   }
 }
