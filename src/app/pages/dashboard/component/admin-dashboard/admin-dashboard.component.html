@@ -1,6 +1,6 @@
 <div class="container">
   <div class="title">
-    <h1>Admin Dashboard</h1>
+    <h1>{{ title }} Dashboard</h1>
   </div>
 
   <div class="main-content">
@@ -10,18 +10,21 @@
         <span class="tabs">
           <div>
             <mat-icon class="done">check_circle_outline</mat-icon>
-            <p class="tooltiptext1">Total Proposal Completed 100 </p>
+            <p class="tooltiptext1">Total Proposal Completed 100</p>
             <p class="icon-text">Completed 100</p>
           </div>
           <div>
             <mat-icon class="pending">access_time</mat-icon>
-            <p class="tooltiptext2">Total Proposal Pending 50 </p>
+            <p class="tooltiptext2">Total Proposal Pending 50</p>
             <p class="icon-text">In-progress 50</p>
           </div>
           <div>
             <mat-icon class="cancel">block</mat-icon>
-            <p class="tooltiptext3">Total Proposal Expired 10 </p>
-            <p class="icon-text"> Expired <br /> 10 </p>
+            <p class="tooltiptext3">Total Proposal Expired 10</p>
+            <p class="icon-text">
+              Expired <br />
+              10
+            </p>
           </div>
         </span>
       </mat-card>
@@ -32,52 +35,105 @@
       <div class="card-wrapper" (click)="clickEvent()" *ngFor="let city_name of city">
         <app-admin-dashboard-expand [cardData]="city_name"></app-admin-dashboard-expand>
       </div>
-<!-- total users ----- Sales persons View -->
-      <div>
-        <mat-card class="sales">
-          <!-- total users  -->
-          <div class="totals">
-            <mat-icon>people</mat-icon>
-            <p>Total Users: {{totalUser}}</p>
-          </div>
-          <!-- Sales Persons Lists -->
-          <div class="sales-persons" >
-            <h2>Top Sales Persons</h2>
-            <div class="sales-list"  *ngFor="let userData of users.slice(0,3); let i = index">
-              <!-- <div  *ngIf="userData.role==='sales'"> -->
-              <p [ngClass]="i === 0 ? 'font' : ''">
-                {{ i + 1 }}. {{ userData.userName }} {{ userData.lastName }} -
-                {{ userData.totalProposal }}
-              </p>
-              <!-- </div>  -->
-            </div>
-          </div>
-          <!-- IPC LISR ----- -->
-          <div class="sales-persons">
-            <h2>Top IPC</h2>
-            <div class="sales-list"  *ngFor="let userData of ipc_Users.slice(0, 3); let i = index">
-              <!-- <div  *ngIf="userData.totalProposal"> -->
-              <p [ngClass]="i == 0 ? 'font' : ''">
-                {{ i + 1 }}. {{ userData.userName }} {{ userData.lastName }} -
-                {{ userData.totalProposal }}
-              </p>
-              <!-- </div> -->
-            </div>
-          </div>
-          <!-- NON ipcc -->
-          <div class="sales-persons">
-            <h2>Top Non IPC</h2>
-            <div class="sales-list"  *ngFor="let userData of nonIpc_Users.slice(0, 3); let i = index">
-              <!-- <div  *ngIf="userData.totalProposal"> -->
-              <p [ngClass]="i == 0 ? 'font' : ''">
-                {{ i + 1 }}. {{ userData.userName }} {{ userData.lastName }} -
-                {{ userData.totalProposal }}
-              </p>
-              <!-- </div> -->
-            </div>
-          </div>
-        </mat-card>
+      <!-- total users ----- Sales persons View ------------- porposal view recent generated -->
+     
+      <!-- proposal views table -->
+
+      <div class="approval-lists">
+        <table mat-table [dataSource]="dataSource" class="tableclass">
+          <ng-container matColumnDef="salesPerson">
+            <th mat-header-cell *matHeaderCellDef>Sales Person</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.salesPerson.firstName }} {{element.salesPerson.lastName}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_id">
+            <th mat-header-cell *matHeaderCellDef>Proposal Id</th>
+            <td mat-cell *matCellDef="let element">{{ element._id }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="approve" >
+            <th mat-header-cell *matHeaderCellDef >Approval</th>
+            <td mat-cell *matCellDef="let element" >
+              <div class="approve_cancel">
+                <button mat-button (click)="changeStatus(element._id)" [ngClass]="element.status=='Pending'?'':'clicked'" >
+                  <span>{{element.status}}</span>
+                </button> 
+                <mat-icon (click)="deleteRow(element._id)">delete_sweep</mat-icon>
+              </div>
+              
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="view">
+            <th mat-header-cell *matHeaderCellDef style="width: 7rem;">View Details</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button>View</button>
+              
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row  @fadeOut  *matRowDef="let row; columns: displayedColumns" ></tr>
+        </table>
       </div>
+    </div>
+    <div class="sales-proposal">
+      <mat-card class="sales">
+        <!-- total users  -->
+        <div class="totals">
+          <!-- <mat-icon>people</mat-icon> -->
+          <p matTooltip="Total Users Availabel">
+            Total Users: {{ totalUser }}
+          </p>
+        </div>
+        <!-- Sales Persons Lists -->
+        <div class="sales-persons">
+          <h2>Top Sales Persons</h2>
+          <div class="sales-list" *ngFor="let userData of users; let i = index">
+            <!-- <div  *ngIf="userData.role==='sales'"> -->
+              <mat-card >
+               
+            <p [ngClass]="i === 0 ? 'font' : ''" >
+              {{ i + 1 }}. 
+            </p>
+            <p [ngClass]="i === 0 ? 'font' : ''" >
+              {{ userData.firstName }}  
+               {{userData.lastName.slice(0,1)}}.
+            </p>
+            
+            <p [ngClass]="i === 0 ? 'font' : ''">  {{ userData.totalProposalCount }}
+            </p>
+          </mat-card>
+            <!-- </div>  -->
+          </div>
+        </div>
+        <!-- IPC LIST ----- -->
+        <!-- <div class="sales-persons">
+          <h2>Top IPC</h2>
+          <div class="sales-list"  *ngFor="let userData of ipc_Users.slice(0, 3); let i = index"> -->
+        <!-- <div  *ngIf="userData.totalProposal"> -->
+        <!-- <p [ngClass]="i == 0 ? 'font' : ''">
+              {{ i + 1 }}. {{ userData.userName }} {{ userData.lastName }} -
+              {{ userData.totalProposal }}
+            </p> -->
+        <!-- </div> -->
+        <!-- </div>
+        </div> -->
+        <!-- NON ipcc -->
+        <!-- <div class="sales-persons">
+          <h2>Top Non IPC</h2>
+          <div class="sales-list"  *ngFor="let userData of nonIpc_Users.slice(0, 3); let i = index"> -->
+        <!-- <div  *ngIf="userData.totalProposal"> -->
+        <!-- <p [ngClass]="i == 0 ? 'font' : ''">
+              {{ i + 1 }}. {{ userData.userName }} {{ userData.lastName }} -
+              {{ userData.totalProposal }}
+            </p> -->
+        <!-- </div> -->
+        <!-- </div>
+        </div> -->
+      </mat-card>
+
     </div>
   </div>
 </div>

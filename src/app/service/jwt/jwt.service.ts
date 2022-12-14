@@ -25,7 +25,9 @@ export class JWTService {
 
     getUserRole = () => {
         if (this.decodeToken().role) {
+            // console.log(this.decodeToken().role);
             return this.decodeToken().role;
+            
         }
         else {
             localStorage.removeItem('auth-token');

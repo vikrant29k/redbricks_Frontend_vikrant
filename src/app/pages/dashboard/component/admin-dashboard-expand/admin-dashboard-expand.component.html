@@ -1,22 +1,22 @@
 <div [ngClass]="showMe?'card-wrapper':''">
 <mat-card class="card" (click)="clickHandler()" [ngClass]="showMe ? 'expand' : ''">
-  <h2><mat-icon>location_city</mat-icon> {{ cardData.name }}</h2>
+  <h2><mat-icon>location_city</mat-icon> {{ cardData.location }}</h2>
   <div class="subtitle">
-    <mat-card>
-      <p> <b> Total Seats: {{ cardData.select }}/{{ cardData.total }}</b></p>
+    <mat-card matTooltip="Selected Seat / Total Seats">
+      <p> <b> Total Seats: {{ cardData.totalNoOfWorkstation-cardData.availableNoOfWorkstation }}/{{ cardData.totalNoOfWorkstation }}</b></p>
     </mat-card>
     <mat-card>
-      <p> <b>Proposal Generated: {{ cardData.select }}</b></p>
+      <p> <b>Proposal Generated: {{ cardData.totalNoOfWorkstation}}</b></p>
     </mat-card>
   </div>
-  <div class="sub_card">
+  <div class="sub_card" > 
     <mat-card class="sub" *ngFor="let center of cardData.centers">
-      <span class="center_title">{{ center.center_name }}: </span>
+      <span class="center_title">{{ center.name}}: </span>
      <mat-card class="sub_sub_card">
-        <p><b>Total Seat Selected:</b> {{ center.seatSelected }}/{{ center.totalSeat }} </p>
+        <p><b>Total Seat Selected:</b> {{ center.totalNoOfWorkstation-center.availableNoOfWorkstation}}/{{ center.totalNoOfWorkstation }} </p>
     </mat-card>
       <mat-card class="sub_sub_card">
-        <p><b>Total Proposal Generated:</b> {{ center.Center_Proposal }}</p>
+        <p><b>Total Proposal Generated:</b> {{center.totalNoOfWorkstation }}</p>
       </mat-card>
     </mat-card>
   </div>

@@ -31,7 +31,7 @@
     }
   }
   .sub_card {
-    width: 55rem;
+    width: 40rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -54,12 +54,12 @@
 }
   &.expand {
     text-align: initial;
-    width: 54rem;
+    width: 40rem;
     max-height: 100rem;
     transition:  600ms ease-in;
     .subtitle {
      margin-block-start: 0;
-     width: 54rem;
+     width: 40rem;
       display: flex;
       // flex-direction: row;
       justify-content: space-around;
@@ -71,7 +71,7 @@
       }
     }
     .sub_card {
-        width: 55rem;
+        width: 40rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;

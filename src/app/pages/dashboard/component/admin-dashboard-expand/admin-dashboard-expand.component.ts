@@ -11,12 +11,13 @@ export class AdminDashboardExpandComponent implements OnInit {
   @Input() cardData: any;
   showMe: boolean=false;
  city:any;
+ centers:any;
  data:any;
   constructor(private city_val:DashboardAdminDashboard) { }
 
   ngOnInit(): void {
-    this.city = this.city_val.city 
- 
+    this.city = this.city_val.city ;
+    // this.centers=this.city_val.city.city_center;
   }
   clickHandler(){
     this.showMe = !this.showMe;

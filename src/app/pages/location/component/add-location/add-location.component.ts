@@ -4,7 +4,8 @@ import { AuthenticationService } from 'src/app/service/authentication/authentica
 import { LocationService } from 'src/app/service/location/location.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import Swal from 'sweetalert2';
-
+import { UserService } from 'src/app/service/users/user.service';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
@@ -18,17 +19,21 @@ export class AddLocationComponent implements OnInit {
   layoutImageUploaded: boolean = false;
   editMode: boolean = false;
   locationId!: string;
-  
+  userDataBeforeEdit: any;
+  salesHeads: any = [];
   
   constructor(
     private loactionService: LocationService,
     private authService: AuthenticationService,
     private router: Router,
-    private route: ActivatedRoute
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private cd: ChangeDetectorRef
   ) {}
   
   locationForm = new FormGroup<any>({
     'location': new FormControl('',Validators.required),
+    'salesHead':new FormControl('',Validators.required),
     'center': new FormControl('', Validators.required),
     'totalNoOfWorkstation': new FormControl('', Validators.required),
     'availableNoOfWorkstation': new FormControl('', Validators.required),
@@ -36,6 +41,19 @@ export class AddLocationComponent implements OnInit {
     'videoLinks': new FormArray([]),
   })
 
+  selectSalesHead(){
+    this.userService.getSalesHead().subscribe({
+      next: (result: any) => {
+        this.salesHeads = [...result];
+        this.locationForm.addControl('salesHead', new FormControl(''));
+        if (this.editMode) {
+          console.log(this.userDataBeforeEdit);
+          this.locationForm.get('salesHead')?.patchValue(this.userDataBeforeEdit.salesHead);
+          this.cd.detectChanges();
+        }
+      }
+    })
+  }
   get imageLinks() {
     return (this.locationForm.get('imageLinks') as FormArray).controls;
   }
@@ -96,6 +114,7 @@ export class AddLocationComponent implements OnInit {
       this.editMode = true;
       this.getLocationDataToUpdate(this.locationId);
     }
+    this.selectSalesHead();
   }
 
   getLocationDataToUpdate = (Id: string) => {

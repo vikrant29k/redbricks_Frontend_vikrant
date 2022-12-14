@@ -62,7 +62,7 @@ export class AuthLoginComponent implements OnInit{
     forcedLogin = () => {
         Swal.fire({
             title: 'Already Logged In!',
-            text: 'you have already logged In from another device. do you want to log out from previous device and continue loggin on this device ?',
+            text: 'You have already logged In from another device. do you want to log out from previous device and continue loggin on this device ?',
             icon: 'warning',
             confirmButtonText: 'Continue Log In',
             cancelButtonText: 'Cancel',

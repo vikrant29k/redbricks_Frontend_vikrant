@@ -11,6 +11,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from '@angular/material/expansion'
 import {MatTooltipModule}   from '@angular/material/tooltip'
+
 const material = [
     MatTableModule,
     MatInputModule,
@@ -19,6 +20,7 @@ const material = [
    MatCardModule,
     MatPaginatorModule,
     MatSortModule,
+ 
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,

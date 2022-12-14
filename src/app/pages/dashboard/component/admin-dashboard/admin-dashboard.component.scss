@@ -1,17 +1,13 @@
 @mixin tooltip {
   visibility: hidden;
-          // width: 120px;
-          background-color: #c3343a;
-          color: #fff;
-          text-align: center;
-          padding-block:0.5rem;
-          border-radius: 1rem;
-          // top:0rem;
-          left: 0rem;
-
-          /* Position the tooltip text - see examples below! */
-          position: absolute;
-          z-index: 1;
+  background-color: #c3343a;
+  color: #fff;
+  text-align: center;
+  padding-block: 0.5rem;
+  border-radius: 1rem;
+  left: 0rem;
+  position: absolute;
+  z-index: 1;
 }
 
 // @if $firsttime=="true" {
@@ -20,15 +16,13 @@
 //   }
 // }
 .container {
-  // height: 100%;
-  
   box-sizing: border-box;
   background-color: #dad7d7;
   .title {
     h1 {
+      text-transform: capitalize;
       margin: 10px;
       font-size: 2rem;
-      // text-shadow:2px 3px 2px #000000;
     }
     color: #c3343a;
     padding-block: 0.1rem;
@@ -40,11 +34,59 @@
 
     .card-container {
       display: flex;
-
-      /* margin-inline-start: 1rem; */
       padding-inline-start: 0rem;
       flex-wrap: wrap;
-      justify-content: space-around;
+      justify-content: center;
+      .approve_none{
+        transition: all 2s ease-in-out;
+        display: none;
+      }
+      .approval-lists {
+        display: flex;
+        justify-content: center;
+        // margin-inline-start: 1rem;
+        .tableclass {
+          width: 38rem;
+          border-radius: 6px;
+          overflow: hidden !important;
+          margin-block: 0.4rem;
+          background-color: #c3343a;
+          .approve_cancel{
+            display: flex;
+            align-items: center;
+            mat-icon{
+              cursor: pointer;
+              width: 2rem;
+              height: 2rem;
+              font-size: 2rem;
+              margin-inline-start: 0.5rem;
+            }
+          }
+          th {
+            text-align: center;
+            font-weight: 600;
+            color: rgb(255, 255, 255);
+            font-size: 1.1rem;
+            // width: 6rem;
+          }
+          td {
+            font-size: 1rem;
+            color: white;
+            text-align: center;
+            width: 10rem;
+            button {
+              background-color: white;
+              color: rgb(8, 7, 7);
+              width: 6rem;
+            }
+            .clicked{
+              background-color: rgb(12, 243, 12);
+              color: rgb(8, 7, 7);
+              width: 6rem;
+            }
+          }
+        }
+      }
       .card-wrapper {
         border-radius: 6px;
         margin: 0.5rem 0rem;
@@ -56,77 +98,82 @@
         }
       }
     }
-    .sales {
-      .totals{
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        mat-icon{
-          height: 8rem;
-          width: 8rem;
-          font-size: 8rem ;
-        }
-        p{
-          margin: 0;
-          text-align: center;
-          width: 10rem;
-          font-size: 1.3rem;
-          font-weight: 600;
-        }
-      }
-      
+    .sales-proposal {
       display: flex;
-      
+      // width: 57rem;
+      margin-inline: 1rem;
       justify-content: space-between;
-      // jsustify-content: center;
-     
-      text-align: initial;
-      background-color: #c3343a;
-      color: white;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.484),
-        0 6px 15px 0 rgba(0, 0, 0, 0.19);
-      width: 57rem;
-      margin-inline: 0rem;
-      margin-block: 0.5rem;
-      
-      .sales-persons {
-        // width: 20rem;
-        // text-align: center;
-        h2{
-          font-size: 1.3rem;
-          margin-block: 0.2rem;
+      .sales {
+        .totals {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          mat-icon {
+            height: 8rem;
+            width: 8rem;
+            font-size: 8rem;
+          }
+          p {
+            margin: 0;
+            text-align: center;
+            width: 10rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+          }
         }
-        .sales-list{
-          margin-inline-start: 2rem;
-          text-align: initial;
-        }
-        // width: inherit;
-        p{
-          margin-block: 0.5rem;
-          font-size: 1.1rem;
-        }
-        .font{
-          font-weight: 800;
-          
+
+        display: flex;
+        flex-direction: column;
+        text-align: initial;
+        background-color: #c3343a;
+        color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.484),
+          0 6px 15px 0 rgba(0, 0, 0, 0.19);
+        width: 13rem;
+        margin-inline: 0rem;
+        margin-block: 0.5rem;
+
+        .sales-persons {
+          h2 {
+            font-size: 1.3rem;
+            margin-block: 2rem 0.2rem;
+          }
+          .sales-list {
+            margin-inline: 1rem;
+            text-align: initial;
+            mat-card{
+              display: flex;
+              justify-content: space-between;
+              padding: 0.3rem 0.8rem;
+              margin-block: 0.5rem;
+             
+              p {
+                margin-block: 0.5rem;
+                // font-size: 1.1rem;
+              }
+            }
+          }
+
          
+          .font {
+            font-weight: 700;
+            color: #c3343a;
+          }
         }
       }
+
+      
     }
     .Proposal {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
       padding: 0.7rem 1.5rem;
       margin-block-end: 1rem;
-      margin-inline: 4rem;
+      margin-inline: 4rem 1rem;
       border-radius: 3rem;
-
-      // height: 10rem;
       .tabs {
-        //   display: flex;
-        //   justify-content: space-evenly;
         .tooltiptext1 {
           @include tooltip();
-         
         }
         .tooltiptext2 {
           @include tooltip();
@@ -153,26 +200,24 @@
           font-size: 5rem;
           border: none;
           border-radius: 50%;
-          // text-shadow: 1px 1px 3px rgba(5, 27, 227, 0.5);
         }
         .done {
           color: rgb(14, 223, 14);
           box-shadow: 0px 0px 26px 8px rgb(14 223 14);
           text-shadow: 0px 0px 5px rgb(14 223 14);
         }
-        :hover .tooltiptext1{
-          visibility:visible;
+        :hover .tooltiptext1 {
+          visibility: visible;
           top: 7.5rem;
           text-shadow: none;
-         
         }
         .pending {
           color: rgb(233, 191, 21);
           box-shadow: 0px 0px 26px 8px rgb(233, 191, 21);
           text-shadow: 0px 0px 5px rgb(233, 191, 21);
         }
-        :hover .tooltiptext2{
-          visibility:visible;
+        :hover .tooltiptext2 {
+          visibility: visible;
           top: 18.5rem;
           text-shadow: none;
         }
@@ -181,15 +226,16 @@
           text-shadow: 0px 0px 5px rgb(92, 91, 91);
           box-shadow: 0px 0px 26px 8px rgb(85, 85, 85);
         }
-        :hover .tooltiptext3{
+        :hover .tooltiptext3 {
           text-shadow: none;
-          visibility:visible;
+          visibility: visible;
           top: 29.3rem;
         }
       }
     }
   }
 }
+
 // scss for coumting numbers
 // @property --num {
 //   syntax: "<integer>";
