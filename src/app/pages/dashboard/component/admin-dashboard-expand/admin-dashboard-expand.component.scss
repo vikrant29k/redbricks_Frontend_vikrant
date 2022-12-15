@@ -1,0 +1,109 @@
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+    h2{
+      font-size: 1.5rem;
+      margin: 0;
+        mat-icon{
+            font-size: 1.6rem;
+            width: 23px;
+            height: 22px;
+        }
+    }
+  background-color: #c3343a;
+  color: white;
+  overflow: hidden;
+  padding-inline: 1rem;
+  width: 12rem;
+  max-width:100rem;
+  max-height: 5.5rem;
+// transition-property: max-height;
+// transition-property: width;
+  transition: 600ms ease-out;
+  .subtitle{
+      width: 34rem;
+      display: flex;
+      // flex-direction: column;
+      justify-content: space-between;
+      gap:1;
+    
+    mat-card{
+      margin-block: 0.5rem;
+      width: 12rem;
+      padding: 0;
+      padding-block: 1rem 0rem;
+    }
+  }
+  .sub_card {
+    width: 40rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+  .sub {
+    margin: 1rem;
+    width: 14rem;
+    overflow: hidden;
+    max-height: 25rem;
+    .center_title{
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    .sub_sub_card{
+        margin-block: 0.5rem;
+        background-color: #c3343a;
+        color: white;
+    }
+  }
+}
+  &.expand {
+    text-align: initial;
+    width: 40rem;
+    max-height: 100rem;
+    transition:  600ms ease-in;
+    .subtitle {
+      mat-card{
+        margin-block: 1rem;
+      width: 16rem;
+      padding:1rem;
+       padding-block: 1rem 1rem;
+    }
+     margin-block-start: 0;
+     width: 40rem;
+      display: flex;
+      // flex-direction: row;
+      justify-content: space-around;
+      gap:1;
+      p {
+        margin-block:0;
+        // margin-inline: 2rem;
+        font-size: 1.2rem;
+      }
+    }
+    .sub_card {
+        width: 40rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      overflow: hidden;
+      .sub {
+        margin: 1rem;
+        width: 14rem;
+        overflow: hidden;
+        max-height: 25rem;
+        .center_title{
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .sub_sub_card{
+            margin-block: 0.5rem;
+            background-color: #c3343a;
+            color: white;
+        }
+      }
+    }
+  }
+}
+
