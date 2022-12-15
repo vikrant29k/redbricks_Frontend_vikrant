@@ -55,7 +55,7 @@ export class DashboardAdminDashboard implements OnInit {
   dataSource:any;
   clk: boolean = false;
   changeColor: boolean = false;
-  displayedColumns: string[] = ['salesPerson', '_id', 'view', 'approve'];
+  displayedColumns: string[]=[];
   users:any;
   status: boolean = false;
  city:any;
@@ -64,20 +64,31 @@ export class DashboardAdminDashboard implements OnInit {
     this.status = !this.status;
   }
   ngOnInit(): void {
-    var a;
-    this.userservice
-      .getAllUser()
-      .pipe(
-        map((res: any) => {
-          a = res.length;
-          this.totalUser = a;
-          // console.log(this.totalUser);
-        })
-      )
-      .subscribe();
+    if(this.title==='sales head'){
+      // console.log(this.title);
+      this.displayedColumns= ['salesPerson', '_id', 'view', 'approve', 'delete'];
+
+    }else {
+      this.displayedColumns= ['salesPerson', '_id', 'view','delete' ];
+      // console.log(this.title,"admin")
+    }
+    this.totalUserNo();
     this.getDashoboardData();
   }
-
+  // total number of users 
+totalUserNo(){
+  var a;
+  this.userservice
+    .getAllUser()
+    .pipe(
+      map((res: any) => {
+        a = res.length;
+        this.totalUser = a;
+        // console.log(this.totalUser);
+      })
+    )
+    .subscribe();
+}
   // dashboard data get function
   getDashoboardData() {
     this.dashboardService.getUserData().subscribe((res) => {
@@ -94,7 +105,7 @@ export class DashboardAdminDashboard implements OnInit {
     });
     this.dashboardService.getRecentProposal().subscribe((res) => {
       this.dataSource=res;
-      // console.log('recent:', res);
+      console.log('recent:', this.dataSource);
     });
   }
   
@@ -109,7 +120,7 @@ export class DashboardAdminDashboard implements OnInit {
     this.clk = !this.clk;
     // console.log(saleslist);
     if (this.clk) {
-      const list = this.saleslist.map((res:any) => {
+      const list = this.dataSource.map((res:any) => {
         if (_id == res._id) {
           res.status = 'Approve';
           console.log(res);

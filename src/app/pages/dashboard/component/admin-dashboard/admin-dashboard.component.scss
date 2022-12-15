@@ -46,7 +46,7 @@
         justify-content: center;
         // margin-inline-start: 1rem;
         .tableclass {
-          width: 38rem;
+          width: 44rem;
           border-radius: 6px;
           overflow: hidden !important;
           margin-block: 0.4rem;
@@ -73,7 +73,7 @@
             font-size: 1rem;
             color: white;
             text-align: center;
-            width: 10rem;
+            // width: 10rem;
             button {
               background-color: white;
               color: rgb(8, 7, 7);
@@ -89,8 +89,8 @@
       }
       .card-wrapper {
         border-radius: 6px;
-        margin: 0.5rem 0rem;
-        padding-inline-end: 1rem;
+        margin: 0.5rem 0.5rem;
+        // padding-inline-end: 1rem;
         text-align: center;
         font-size: 1rem;
         p {

@@ -39,8 +39,7 @@ export class AddLocationComponent implements OnInit {
     'availableNoOfWorkstation': new FormControl('', Validators.required),
     'imageLinks': new FormArray([]),
     'videoLinks': new FormArray([]),
-  })
-
+  }) 
   selectSalesHead(){
     this.userService.getSalesHead().subscribe({
       next: (result: any) => {
