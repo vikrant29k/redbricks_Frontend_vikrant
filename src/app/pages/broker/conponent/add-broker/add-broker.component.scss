@@ -1,0 +1,110 @@
+@mixin for-desktop {
+    @media (max-width: 1440px) {
+        @content;
+    }
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    .main-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 2rem;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+        width: 60rem;
+
+        @include for-desktop() {
+            width: 45rem;
+        }
+
+        .title {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: inherit;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: inherit;
+
+            section {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: inherit;
+
+                mat-form-field {
+                    width: 20rem;
+
+                    @include for-desktop() {
+                        width: 18rem;
+                    }
+                }
+
+                .form-field {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+
+                    mat-form-field {
+                        mat-icon {
+                            padding-inline-start: 1rem;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                button {
+                    width: 20rem;
+
+                    @include for-desktop() {
+                        width: 16rem;
+                    }
+
+                    margin-bottom: 1rem;
+
+                    .button_content {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 1rem;
+                    }
+                }
+            }
+
+            .form-action {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: inherit;
+                gap: 5rem;
+
+                @include for-desktop() {
+                    gap: 9.5rem;
+                }
+
+                button {
+                    width: 15rem;
+
+                    @include for-desktop() {
+                        width: 13rem;
+                    }
+                }
+            }
+        }
+    }
+}
