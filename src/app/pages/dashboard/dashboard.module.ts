@@ -6,15 +6,20 @@ import { DashboardComponent } from "./dashboard.component";
 import { DashboardRoutingModule } from "./module/routing/dashboard-routing.module";
 import { DashboardAdminChildRouteGuard } from "./module/service/dashboard-admin-child-route/dashboard-admin-child-route-guard.guard";
 import { DashboardSalesChildRouteGuard } from "./module/service/dashboard-sales-child-route/dashboard-sales-child-route.guard";
-
+import { DashboardMaterialModule } from "./module/material/dashboard-material.module";
+import { AdminDashboardExpandComponent } from './component/admin-dashboard-expand/admin-dashboard-expand.component';
+// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 @NgModule({
     declarations: [
         DashboardComponent,
         DashboardSalesDashboardComponent,
-        DashboardAdminDashboard
+        DashboardAdminDashboard,
+        AdminDashboardExpandComponent
     ],
     imports: [
         CommonModule,
+        // BrowserAnimationsModule,
+        DashboardMaterialModule,
         DashboardRoutingModule
     ],
     providers: [

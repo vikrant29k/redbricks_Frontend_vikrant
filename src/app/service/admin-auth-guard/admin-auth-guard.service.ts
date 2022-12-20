@@ -8,7 +8,7 @@ import { JWTService } from "../jwt/jwt.service";
     providedIn: 'root'
 })
 export class AdminAuthGuardService implements CanActivate {
-
+user:any;
     constructor(
         private jwtService: JWTService,
         private router: Router
@@ -17,7 +17,8 @@ export class AdminAuthGuardService implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        if (this.jwtService.getUserRole() === 'admin') {
+        if (['admin', 'sales head'].includes(this.jwtService.getUserRole())) {
+            
             return true;
         }
         this.router.navigate(['/sales']);
