@@ -35,6 +35,7 @@ export class AddLocationComponent implements OnInit {
     'location': new FormControl('',Validators.required),
     'salesHead':new FormControl('',Validators.required),
     'center': new FormControl('', Validators.required),
+    'address': new FormControl('',Validators.required),
     'totalNoOfWorkstation': new FormControl('', Validators.required),
     'availableNoOfWorkstation': new FormControl('', Validators.required),
     'imageLinks': new FormArray([]),

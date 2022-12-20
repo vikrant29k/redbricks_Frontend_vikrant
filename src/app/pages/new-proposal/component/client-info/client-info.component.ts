@@ -13,16 +13,16 @@ import Swal from "sweetalert2";
     styleUrls: ['./client-info.component.scss']
 })
 export class NewProposalClientInfoComponent implements OnInit{
-    disabl = new FormControl({ value: null, disabled: true });
+    // disabl = new FormControl({ value: null, disabled: true });
     proposalId!: string;
     locations = new Set<string>();
     centers = new Set<string>();
     salesHeads: any[] = [];
-
     category: any;
-    IPC: any = ['JLL', 'CBRE', 'C & W', 'KF', 'Colliers', 'Savills', 'other'];
-    Non_IPC: any = ['CityInfo', 'EHRPCL', 'other'];
-
+    IPC: any = ['JLL', 'CBRE', 'C & W', 'KF', 'Colliers', 'Savills', 'Other'];
+    Non_IPC: any = ['CityInfo', 'EHRPCL', 'Other'];
+    Direct: any = "Client Name";
+    brokerTypeAll:any;
     // brokerCategory = {
     //     'IPC': ['JLL', 'CBRE', 'C & W', 'KF', 'Colliers', 'Savills', 'other'],
     //     'Non-IPC': ['CityInfo', 'EHRPCL', 'other']
@@ -30,15 +30,16 @@ export class NewProposalClientInfoComponent implements OnInit{
 
 
     clientInfoForm = new FormGroup<any>({
-        'salesTeam': new FormControl('', Validators.required),
-        'salesHead': new FormControl('', Validators.required),
         'location': new FormControl('',Validators.required),
         'center': new FormControl('', Validators.required),
-        'spocName': new FormControl('', Validators.required),
-        'clientName': new FormControl('', Validators.required),
+        'spocName': new FormControl(''),
+        'clientName': new FormControl(''),
         'brokerType': new FormControl('', Validators.required),
-        'brokerCategory': new FormControl('', Validators.required),
-        'brokerCategoryOther': new FormControl('')
+        'brokerCategory': new FormControl(''),
+        'brokerCategoryOther': new FormControl(''),
+        'SpocOtherName': new FormControl(''),
+        'SpocOtherEmail': new FormControl(''),
+        'clientEmail':new FormControl('')
     });
 
     constructor(
@@ -47,10 +48,20 @@ export class NewProposalClientInfoComponent implements OnInit{
         private locationService: LocationService,
         private proposalService: ProposalService,
         private authService: AuthenticationService,
-        private userService: UserService
+        private userService: UserService,
+        private brokerService:BrokerService
     ) { }
 
+    getBrokerData(){
+        this.brokerService.getAllData().subscribe(res=>{
+          this.brokerTypeAll =  res
+          console.log(this.brokerTypeAll);
+         });
+      }
 
+    addBrokerData(){
+
+    }
 
     onSubmit = () => {
         if (this.clientInfoForm.invalid) {
@@ -108,13 +119,13 @@ export class NewProposalClientInfoComponent implements OnInit{
         // this.cd.detectChanges();
     }
 
-    getSalesHead = () => {
-        this.userService.getSalesHead().subscribe({
-            next: (result: any) => {
-                this.salesHeads = [...result];
-            }
-        })
-    }
+    // getSalesHead = () => {
+    //     this.userService.getSalesHead().subscribe({
+    //         next: (result: any) => {
+    //             this.salesHeads = [...result];
+    //         }
+    //     })
+    // }
 
     watchValueChangesInForm = () => {
         this.clientInfoForm.get('location')?.valueChanges.subscribe(() => {
@@ -133,7 +144,8 @@ export class NewProposalClientInfoComponent implements OnInit{
         this.getCentersInLocation();
         this.watchValueChangesInForm();
         this.getLocationAndCenter();
-        this.getSalesHead();
+        this.getBrokerData();
+        // this.getSalesHead();
     }
 
 

@@ -28,6 +28,7 @@
     padding-block: 0.1rem;
     text-align: center;
   }
+ 
   .main-content {
     display: flex;
     align-items: flex-start;
@@ -51,17 +52,7 @@
           overflow: hidden !important;
           margin-block: 0.4rem;
           background-color: #c3343a;
-          .approve_cancel{
-            display: flex;
-            align-items: center;
-            mat-icon{
-              cursor: pointer;
-              width: 2rem;
-              height: 2rem;
-              font-size: 2rem;
-              margin-inline-start: 0.5rem;
-            }
-          }
+          
           th {
             text-align: center;
             font-weight: 600;
@@ -74,6 +65,9 @@
             color: white;
             text-align: center;
             // width: 10rem;
+            mat-icon{
+              font-weight: 500;
+            }
             button {
               background-color: white;
               color: rgb(8, 7, 7);
@@ -87,6 +81,7 @@
           }
         }
       }
+     
       .card-wrapper {
         border-radius: 6px;
         margin: 0.5rem 0.5rem;
@@ -116,7 +111,7 @@
           p {
             margin: 0;
             text-align: center;
-            width: 10rem;
+            width: 12rem;
             font-size: 1.4rem;
             font-weight: 600;
           }
@@ -234,6 +229,168 @@
       }
     }
   }
+  
+  .notify {
+display: block;
+position: fixed;
+    .icon {
+      position: fixed;
+      bottom: 2rem;
+      right:2rem;
+      overflow: hidden;
+
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 100%;
+        background-color: #C3343A;
+        color: #fff;
+        font-size: 1.1rem;
+        z-index: 1;
+        cursor: pointer;
+       mat-icon{
+        mat-badge{
+          top: 0.3rem;
+          width: 1rem;
+          background-color: #c3343a;
+          height: auto;
+          font-size: 0.9rem;
+          position: fixed;
+          right: 0.2rem;
+        }
+       }
+    }
+    
+    .sub-icon {
+      overflow-x:hidden;
+      
+      .tableConflictClass{
+        .resolve{
+          mat-icon{
+            width: 3rem;
+            height: 3rem;
+            font-size: 2.5rem;
+          }
+          .green{
+            color: rgb(0, 255, 0);
+          }
+          .red{
+            color: rgb(255, 0, 0);
+          }
+        }
+        background-color: #C3343A;
+        th {
+          text-align: center;
+          font-weight: 600;
+          color: rgb(255, 255, 255);
+          font-size: 1.1rem;
+          background-color: #C3343A;
+          // width: 6rem;
+        }
+        tr{background-color: white;
+        td {
+          font-size: 1rem;
+          color: #C3343A;
+          text-align: center;
+          // width: 10rem;
+          button {
+            background-color: white;
+            color: rgb(8, 7, 7);
+            width: 6rem;
+          }
+          .clicked{
+            background-color: rgb(12, 243, 12);
+            color: rgb(8, 7, 7);
+            width: 6rem;
+          }
+        }
+      }
+      }
+        position: fixed;
+        width: 0;
+        background-color: #C3343A;
+        max-height: 0rem;
+        bottom: 3rem;
+        overflow: hidden;
+        left:78rem;
+        border-radius: 100%;
+        z-index: 0;
+        transition-property: max-height, width;
+        transition: 300ms ease-out;
+        // cursor: pointer;
+
+        &.home-icon {
+          
+          width: 26rem;
+          overflow-y: auto;
+          overflow-x:hidden;
+          max-height: 10rem;
+          border-radius: 6px;
+          // padding: 1rem;
+            left: 52rem;
+            bottom:6rem;
+            justify-content: center;
+            // transition: width 300ms ease-in;
+            .tableConflictClass{
+              .resolve{
+                mat-icon{
+                  width: 3rem;
+                  height: 3rem;
+                  font-size: 2.5rem;
+                }
+              }
+              width: 26rem;
+              // border: 1rem solid white;
+              background-color: #C3343A;
+              th {
+                text-align: center;
+                font-weight: 600;
+                color: rgb(255, 255, 255);
+                font-size: 1.1rem;
+                // width: 6rem;
+              }
+              td {
+                font-size: 1rem;
+                color: white;
+                text-align: center;
+                // width: 10rem;
+                button {
+                  background-color: white;
+                  color: rgb(8, 7, 7);
+                  width: 6rem;
+                }
+                .clicked{
+                  background-color: rgb(12, 243, 12);
+                  color: rgb(8, 7, 7);
+                  width: 6rem;
+                }
+              }
+            }
+        }
+    }
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c3343a;
+}
+
+/* Handle on hover */
+
+
+.notify-none{
+  display: none;
+}
 }
 
 // scss for coumting numbers

@@ -36,12 +36,12 @@
       .icon {
         @include flex_center_center();
         @include flex-column();
-        width: 15rem;
-        height: 15rem;
+        width: 16rem;
+        height: 16rem;
         cursor: pointer;
         @include for-desktop() {
-          width: 13rem;
-          height: 13rem;
+          width: 14rem;
+          height: 14rem;
         }
 
         svg {
@@ -51,8 +51,12 @@
 
         p {
           color: #c3343a;
+          margin-block: 0rem 0.5rem;
           font-size: 1.6rem;
           font-weight: 500;
+        }
+        .seat-counts{
+          font-size: 1.3rem;
         }
       }
 

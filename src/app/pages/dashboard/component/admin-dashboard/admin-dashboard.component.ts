@@ -13,26 +13,7 @@ import {
 import { fadeOut, blub } from 'src/assets/animation/template.animation';
 import { LocationService } from 'src/app/service/location/location.service';
 import { DashboardService } from 'src/app/service/dashboard/dashboard.service';
-// export interface cityArray {
-//   name:string;
-//   selectedSeat:number;
-//   totalSeats:number;
-//   centers:[centerName:string,
-//     seatSelected: number,
-//     totalSeat: number ];
-// }
-// export interface user {
-//   _id: string;
-//   salesPerson: string;
-//   status: string;
-// }
-// const saleslist: user[] = 
-// [
-//   { _id: 'RBHYD2211124', salesPerson: 'Atul', status: 'Pending' },
-//   { _id: 'RBHYD2211643', salesPerson: 'Rahul', status: 'Pending' },
-//   { _id: 'RBHYD2211463', salesPerson: 'Manpreet', status: 'Pending' },
-//   { _id: 'RBHYD2211457', salesPerson: 'Varun', status: 'Pending' },
-// ];
+
 @Component({
   selector: 'dashboard-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -47,15 +28,27 @@ export class DashboardAdminDashboard implements OnInit {
     private jwt: JWTService,
     private location: LocationService
   ) {}
-
+  shownotification:boolean =false;
+  menuOpen: boolean = false;
+  hideBackButton: boolean = false;
   title: any = this.jwt.getUserRole();
   cityName: any;
   totalUser: any;
   saleslist:any;
-  dataSource:any;
+  dataSourceRecent:any;
+  dataSourceConflict:any =[
+    {_id:"RAHAY124551",salesPerson:"Rahul K"},
+    {_id:"RAHAY124551",salesPerson:"Rahul K"},
+    {_id:"RAHAY124551",salesPerson:"Rahul K"},
+    {_id:"RAHAY124551",salesPerson:"Rahul K"},
+    {_id:"RAHAY124551",salesPerson:"Rahul K"},
+    {_id:"RAHAY124551",salesPerson:"Rahul K"}
+  ];
+
   clk: boolean = false;
   changeColor: boolean = false;
-  displayedColumns: string[]=[];
+  displayedColumnsRecent: string[]=[];
+  displayedColumnsConflict:string[] =[];
   users:any;
   status: boolean = false;
  city:any;
@@ -66,10 +59,12 @@ export class DashboardAdminDashboard implements OnInit {
   ngOnInit(): void {
     if(this.title==='sales head'){
       // console.log(this.title);
-      this.displayedColumns= ['salesPerson', '_id', 'view', 'approve', 'delete'];
-
+      this.shownotification =true;
+      this.displayedColumnsRecent= ['salesPerson', '_id', 'view', 'approve', 'delete'];
+    this.displayedColumnsConflict = ['_id', 'salesPerson', 'resolve']
     }else {
-      this.displayedColumns= ['salesPerson', '_id', 'view','delete' ];
+      this.shownotification =false;
+      this.displayedColumnsRecent= ['salesPerson', '_id', 'view','delete' ];
       // console.log(this.title,"admin")
     }
     this.totalUserNo();
@@ -104,14 +99,14 @@ totalUserNo(){
       // console.log('loaction', res);
     });
     this.dashboardService.getRecentProposal().subscribe((res) => {
-      this.dataSource=res;
-      console.log('recent:', this.dataSource);
+      this.dataSourceRecent=res;
+      console.log('recent:', this.dataSourceRecent);
     });
   }
   
   // delete the row
   deleteRow(id: string) {
-    this.dataSource = this.dataSource.filter((u:any) => u._id !== id);
+    this.dataSourceRecent = this.dataSourceRecent.filter((u:any) => u._id !== id);
   }
 
   // function for changing status of proposal from pending to approve
@@ -120,7 +115,7 @@ totalUserNo(){
     this.clk = !this.clk;
     // console.log(saleslist);
     if (this.clk) {
-      const list = this.dataSource.map((res:any) => {
+      const list = this.dataSourceRecent.map((res:any) => {
         if (_id == res._id) {
           res.status = 'Approve';
           console.log(res);
