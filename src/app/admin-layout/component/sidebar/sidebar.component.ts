@@ -17,6 +17,7 @@ export class AdminLayoutSidebarComponent {
     logExpanded: boolean = false;
     userExpanded: boolean = false;
     locationExpanded: boolean = false;
+    brokerExpand: boolean = false;
 
     expandAccording = (title?: string) => {
         switch (title) {
@@ -24,16 +25,26 @@ export class AdminLayoutSidebarComponent {
                 this.logExpanded = !this.logExpanded;
                 this.userExpanded = false;
                 this.locationExpanded = false;
+                this.brokerExpand = false;
                 break;
             
             case 'user':
                 this.userExpanded = !this.userExpanded;
                 this.logExpanded = false;
                 this.locationExpanded = false;
+                this.brokerExpand = false;
                 break;
             
             case 'location':
                 this.locationExpanded = !this.locationExpanded;
+                this.logExpanded = false;
+                this.userExpanded = false;
+                this.brokerExpand = false;
+                break;
+            
+            case 'broker':
+                this.brokerExpand = !this.brokerExpand;
+                this.locationExpanded = false;
                 this.logExpanded = false;
                 this.userExpanded = false;
                 break;
@@ -42,6 +53,7 @@ export class AdminLayoutSidebarComponent {
                 this.logExpanded = false;
                 this.userExpanded = false;
                 this.locationExpanded = false;
+                this.brokerExpand = false;
                 this.drawerClicked.emit();
                 break;
         }

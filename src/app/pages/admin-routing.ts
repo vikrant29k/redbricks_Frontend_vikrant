@@ -42,6 +42,12 @@ const AdminRouting: Routes = [
         loadChildren: () => {
             return import('./users/users.module').then((m) => m.UsersModule);
         }
+    },
+    {
+        path: 'broker',
+        loadChildren: () => {
+            return import('./broker/broker.module').then((m) => m.BrokerModule);
+        }
     }
 ];
 

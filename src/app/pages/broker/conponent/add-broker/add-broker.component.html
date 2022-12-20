@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="main-content">
+        <div class="title"><h1>{{ editMode ? 'Update': 'Add'}} Broker</h1></div>
+        <form [formGroup]="brokerForm" (ngSubmit)="onSubmit()">
+            <section>
+                <mat-form-field appearance="outline">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="brokerType">
+                        <mat-option value="IPC">IPC</mat-option>
+                        <mat-option value="Non-IPC">Non-IPC</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Category</mat-label>
+                    <input type="text" matInput formControlName="brokerCategory" autocomplete="off">
+                </mat-form-field>
+            </section>
+            <section>
+                <mat-form-field appearance="outline">
+                    <mat-label>SPOC Name</mat-label>
+                    <input type="text" matInput formControlName="SPOCName" autocomplete="off">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>SPOC Email</mat-label>
+                    <input type="text" matInput formControlName="SPOCEmail" autocomplete="off">
+                </mat-form-field>
+            </section>
+            <section>
+                <mat-form-field appearance="outline">
+                    <mat-label>SPOC Contact</mat-label>
+                    <input type="text" matInput formControlName="SPOCNumber" autocomplete="off">
+                </mat-form-field>
+            </section>
+            <div class="form-action">
+                <button type="button" mat-raised-button color="primary" (click)="cancelUpdate()">Cancel</button>
+                <button type="submit" mat-raised-button color="primary">{{ editMode ? 'Update': 'Add'}} Broker</button>
+            </div>
+        </form>
+    </div>
+</div>

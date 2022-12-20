@@ -1,0 +1,226 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ececec;
+    width: 100%;
+    min-height: 100vh;
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .title {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-container {
+            table {
+                color: #fff;
+                background-color: #ececec;
+                width: 60rem;
+                text-align: center;
+
+                th {
+                    background-color: #c3343a;
+                    padding-inline: 1rem;
+                    padding-block: 1rem;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    color: #fff;
+                }
+
+                td {
+                    padding-inline: 1rem;
+                    text-align: center;
+                    // background-color: #8B8C8D;
+                }
+
+                tr {
+                    background-color: #8b8c8d;
+
+                    // color: #fff;
+                    td {
+                        color: #fff;
+                    }
+
+                    &:has(> .white) {
+                        background-color: #fff;
+
+                        td {
+                            color: black;
+                        }
+                    }
+
+                    &:last-child {
+                        td {
+                            &:first-child {
+                                border-bottom-left-radius: 1rem;
+                            }
+
+                            &:last-child {
+                                border-bottom-right-radius: 1rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        mat-paginator {
+            width: 100%;
+            background-color: #ececec;
+        }
+    }
+
+    //         .mat-icon{
+    //             color: white;
+    //           }
+    //     button{
+    //         background-color: #C3343A;
+    //         border-radius: 50%;
+    //         width: 3.5rem;
+
+    //         height: 3.5rem;
+    //         border: none;
+    //         mat-icon{
+    //             font-size: 1.5rem;
+    //         }
+    //     }
+    //     button:hover{
+    //         border-radius: 50%;
+    //     }
+
+    //     .mat-button{
+    //       width: 10px;
+    //       border-radius: 50%;
+    //          }
+
+    // }
+    // @mixin option{
+    //     background-color: #C3343A;
+    //     position: absolute;
+    //     width: 3.5rem;
+    //     color: #fff;
+    //     box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+    //     border-radius: 50%;
+    //   }
+    //    @mixin nothing{
+    //     width: 3rem;
+    //     font-size: 10px;
+    //     background-color:white;
+    //     color: #C3343A;
+    //     text-align: center;
+    //     border-radius: 6px;
+    //     padding: 5px 0;
+
+    //     /* Position the tooltip */
+    //     position: absolute;
+    //     z-index: 1;
+
+    //      }
+
+    //   .nothing1{
+    //     @include nothing();
+    //     visibility: hidden;
+
+    //   }
+    //   .nothing2{
+    //     @include nothing();
+    //     visibility: hidden;
+
+    //   }
+    //   .nothing3{
+    //     @include nothing();
+    //     visibility: hidden;
+
+    //   }
+    //   .nothing4{
+    //     @include nothing();
+    //     visibility: hidden;
+
+    //   }
+
+    //   .person:hover .nothing1{
+    //     visibility: visible;
+    //    }
+    //   .home:hover .nothing2{
+    //     visibility: visible;
+    //    }
+    //   .log:hover .nothing3{
+    //     visibility: visible;
+    //    }
+    //   .logout:hover .nothing4{
+    //     visibility: visible;
+    //    }
+
+    //     .mat-menu-panel.myClass{
+    //       div{
+    //         border-radius: 50%;
+    //       }
+    //       .mat-icon{
+    //         color: white;
+    //       }
+    //       min-width:none;
+    //       max-width: none;
+    //       height: 10rem;
+    //       width: 10rem;
+    //       position: absolute;
+    //       right: 0rem;
+    //       display: contents;
+    //       background: transparent;
+    //       top: -25px;
+
+    //      .person{
+    //       @include option();
+    //     right: 8rem;
+    //       top: -2rem;
+    //      }
+
+    //      .home{
+    //       @include option();
+    //       right:6rem;
+    //       top: 1rem;
+    //      }
+
+    //      .log{
+    //       @include option();
+    //       right: 2rem;
+    //       top: 1rem;
+
+    //      }
+
+    //      .logout{
+    //       @include option();
+    //         right: 0rem;
+    //         top: -2rem;
+
+    //      }
+}
+
+.displayno {
+    tr {
+        &:has(> .white) {
+            display: none;
+        }
+    }
+}
+
+.displayyes {
+    tr {
+        &:has(> .white) {
+            display: inherit;
+        }
+    }
+}
+
+.displaynon {
+    display: none;
+}
