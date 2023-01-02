@@ -2,7 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { UserService } from 'src/app/service/users/user.service';
 import { pipe, map, count } from 'rxjs';
+import { Router } from '@angular/router';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { JWTService } from 'src/app/service/jwt/jwt.service';
+import Swal from 'sweetalert2';
 import {
   trigger,
   animate,
@@ -10,9 +13,14 @@ import {
   style,
   query,
 } from '@angular/animations';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { fadeOut, blub } from 'src/assets/animation/template.animation';
 import { LocationService } from 'src/app/service/location/location.service';
 import { DashboardService } from 'src/app/service/dashboard/dashboard.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { AuthGuardService } from 'src/app/service/auth-guard/auth-guard.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'dashboard-admin-dashboard',
@@ -25,97 +33,211 @@ export class DashboardAdminDashboard implements OnInit {
     private proposalService: ProposalService,
     private dashboardService: DashboardService,
     private userservice: UserService,
+    private route: Router,
     private jwt: JWTService,
+    private cd: ChangeDetectorRef,
     private location: LocationService
   ) {}
-  shownotification:boolean =false;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  // @ViewChild(MatTable) table!: MatTable;
+  shownotification: boolean = false;
   menuOpen: boolean = false;
   hideBackButton: boolean = false;
   title: any = this.jwt.getUserRole();
   cityName: any;
   totalUser: any;
-  saleslist:any;
-  dataSourceRecent:any;
-  dataSourceConflict:any =[
-    {_id:"RAHAY124551",salesPerson:"Rahul K"},
-    {_id:"RAHAY124551",salesPerson:"Rahul K"},
-    {_id:"RAHAY124551",salesPerson:"Rahul K"},
-    {_id:"RAHAY124551",salesPerson:"Rahul K"},
-    {_id:"RAHAY124551",salesPerson:"Rahul K"},
-    {_id:"RAHAY124551",salesPerson:"Rahul K"}
-  ];
-
+  saleslist: any;
+  dataSourceRecent: any;
+  FinalAmount: any;
+  Amount: any;
+   System_value:any;
+   client_value:any;
+  UpdateAmount: any;
+  dataSourceConflict: any;
+  //  =[
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'}
+  // ];
+  notifications: any;
+  //  = this.dataSourceConflict.length
   clk: boolean = false;
   changeColor: boolean = false;
-  displayedColumnsRecent: string[]=[];
-  displayedColumnsConflict:string[] =[];
-  users:any;
+  displayedColumnsRecent: string[] = [];
+  displayedColumnsConflict: string[] = [];
+  users: any;
   status: boolean = false;
- city:any;
-//  city_center:any;
+  city: any;
+  //  city_center:any;
   clickEvent() {
     this.status = !this.status;
   }
+  // get conflicts
+  getConflict() {
+    this.dashboardService.getCoflicts().subscribe((res) => {
+      this.dataSourceConflict = res;
+      this.notifications = this.dataSourceConflict.length
+      console.log(res);
+    });
+  }
+  resolveConflict(_id: string) {
+    Swal.fire({
+      title: 'Resolve Conflict',
+      text: 'Are you sure you want to resolve this conflict?',
+      icon: 'question',
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: 'Resolve',
+      confirmButtonColor: '#C3343A',
+    }).then((confirmation) => {
+      if (confirmation.isConfirmed) {
+        this.proposalService.resolveConflict(_id).subscribe({
+          next: () => {
+            console.log('Resolved');
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+        });
+      }
+    });
+    // this.proposalService.resolveConflict(_id).subscribe(res=>{
+
+    //   console.log("RC",res);
+
+    // })
+  }
+
   ngOnInit(): void {
-    if(this.title==='sales head'){
+    this.dashboardService.getRecentProposal().subscribe((res) => {
+      console.log('recent', res);
+    });
+
+    this.getConflict();
+    //  this.resolveConflict('RBOHYSA26121133')
+    if (this.title === 'sales head') {
       // console.log(this.title);
-      this.shownotification =true;
-      this.displayedColumnsRecent= ['salesPerson', '_id', 'view', 'approve', 'delete'];
-    this.displayedColumnsConflict = ['_id', 'salesPerson', 'resolve']
-    }else {
-      this.shownotification =false;
-      this.displayedColumnsRecent= ['salesPerson', '_id', 'view','delete' ];
+      this.shownotification = true;
+      this.displayedColumnsRecent = [
+        'salesPerson',
+        '_id',
+        'view',
+        'approve',
+        'delete',
+      ];
+      this.displayedColumnsConflict = ['_id', 'salesPerson', 'resolve'];
+    } else {
+      this.shownotification = false;
+      this.displayedColumnsRecent = ['salesPerson', '_id', 'view'];
       // console.log(this.title,"admin")
     }
     this.totalUserNo();
     this.getDashoboardData();
   }
-  // total number of users 
-totalUserNo(){
-  var a;
-  this.userservice
-    .getAllUser()
-    .pipe(
-      map((res: any) => {
-        a = res.length;
-        this.totalUser = a;
-        // console.log(this.totalUser);
-      })
-    )
-    .subscribe();
-}
+  // total number of users
+  totalUserNo() {
+    var a;
+    this.userservice
+      .getAllUser()
+      .pipe(
+        map((res: any) => {
+          a = res.length;
+          this.totalUser = a;
+          // console.log(this.totalUser);
+        })
+      )
+      .subscribe();
+  }
+  tableDataSource(data: any) {
+    this.dataSourceRecent = new MatTableDataSource(data);
+    this.dataSourceRecent.paginator = this.paginator;
+    this.cd.detectChanges();
+    // this.table.renderRows();
+  }
   // dashboard data get function
   getDashoboardData() {
     this.dashboardService.getUserData().subscribe((res) => {
-      this.users=res;
-      this.users.sort((a:any, b:any) => b.totalProposalCount - a.totalProposalCount);
+      this.users = res;
+      this.users.sort(
+        (a: any, b: any) => b.totalProposalCount - a.totalProposalCount
+      );
+      var a = this.users.slice(0, 4);
+      this.users = [...a];
+      //  console.log("ahff",a)
+      // this.users.slice(0,4);
       // console.log('user:', res);
-      
     });
     this.dashboardService.getLocationData().subscribe((res) => {
-      this.city= res;
+      this.city = res;
       // this.city_center=res;
       // console.log("centers",[...this.city_center.centers])
       // console.log('loaction', res);
     });
     this.dashboardService.getRecentProposal().subscribe((res) => {
-      this.dataSourceRecent=res;
-      console.log('recent:', this.dataSourceRecent);
+      this.tableDataSource(res);
+      this.Amount = res;
+      
+    });
+
+  }
+ 
+  // Approve proposal
+  approvePropsal(id: string) {
+   
+    this.System_value = this.Amount.find((x:any) => x._id === id).previousFinalOfferAmmount ;
+    this.client_value =  this.Amount.find((x:any) => x._id === id).clientFinalOfferAmmount ;
+    console.log(this.System_value, 'System_value');
+    console.log(this.client_value, 'client_value');
+
+    var a = 'myprice';
+    Swal.fire({
+      title: 'Approve Proposal',
+      text: `Client Price:- ${this.client_value}\nSystem Price = ${this.System_value}`,
+      icon: 'info',
+      showConfirmButton: true,
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: '#C3343A',
+      input: 'number',
+      inputAttributes:{
+        required:'true'
+      } ,
+      inputLabel: 'Enter Final Amount',
+      showCancelButton: true,
+      cancelButtonColor: '#7D7E80',
+    }).then((confirmation) => {
+      if (confirmation.isConfirmed) {
+        this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value })
+          .subscribe((res) => {});
+      }
     });
   }
-  
   // delete the row
   deleteRow(id: string) {
-    this.dataSourceRecent = this.dataSourceRecent.filter((u:any) => u._id !== id);
+    this.dataSourceRecent = this.dataSourceRecent.filter(
+      (u: any) => u._id !== id
+    );
   }
-
+  // view proposals
+  viewDetails = (Id: string) => {
+    let currentRoute = this.route.url.split('/')[1];
+    if (currentRoute === 'sales') {
+      this.route.navigate(['/sales', 'new-proposal', 'proposal-preview', Id]);
+    } else {
+      this.route.navigate(['/admin', 'new-proposal', 'proposal-preview', Id]);
+    }
+  };
   // function for changing status of proposal from pending to approve
   changeStatus(_id: string) {
     this.changeColor = !this.changeColor;
     this.clk = !this.clk;
     // console.log(saleslist);
     if (this.clk) {
-      const list = this.dataSourceRecent.map((res:any) => {
+      const list = this.dataSourceRecent.map((res: any) => {
         if (_id == res._id) {
           res.status = 'Approve';
           console.log(res);
@@ -125,212 +247,3 @@ totalUserNo(){
     }
   }
 }
-  // selectedButton: any[] = [];
-  // approve: boolean = false;
-  
-  // delete: boolean = false;
-
-
-  // city: any[] = [
-  //   {
-  //     name: 'Hyderabad',
-  //     select: 90,
-  //     total: 120,
-  //     centers: [
-  //       {
-  //         center_name: 'Salarpuria',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //       {
-  //         center_name: 'WTC',
-  //         seatSelected: 60,
-  //         totalSeat: 70,
-  //         Center_Proposal: 30,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     name: 'Pune',
-  //     select: 60,
-  //     total: 100,
-  //     centers: [
-  //       {
-  //         center_name: 'BSB',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //       {
-  //         center_name: 'Pavilion',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     name: 'Mumbai',
-  //     select: 60,
-  //     total: 100,
-  //     centers: [
-  //       {
-  //         center_name: 'PSP',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //       {
-  //         center_name: 'ATP',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     name: 'Delhi',
-  //     select: 60,
-  //     total: 100,
-  //     centers: [
-  //       {
-  //         center_name: 'NTR',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //       {
-  //         center_name: 'PBP',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     name: 'Chennai',
-  //     select: 90,
-  //     total: 150,
-  //     centers: [
-  //       {
-  //         center_name: 'NTR',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //       {
-  //         center_name: 'PBP',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //       {
-  //         center_name: 'TLP',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //       {
-  //         center_name: 'BSB',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //       {
-  //         center_name: 'Pavilion',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     name: 'Bangalore',
-  //     select: 60,
-  //     total: 100,
-  //     centers: [
-  //       {
-  //         center_name: 'NTR',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //       {
-  //         center_name: 'PBP',
-  //         seatSelected: 30,
-  //         totalSeat: 50,
-  //         Center_Proposal: 60,
-  //       },
-  //     ],
-  //   },
-  // ];
-
-  // firsttime: any = 'true';
-
-  // users: any[] = [
-  //   { firstName: 'Rahul',
-  //     lastName: 'Kashyap',
-  //     totalProposal: 180,
-  //     role: 'sales',
-  //   },
-  //   {
-  //     firstName: 'Atul',
-  //     lastName: 'Shinde',
-  //     totalProposal: 190,
-  //     role: 'admin',
-  //   },
-  //   { firstName: 'Manpreet', lastName: 'T', totalProposal: 150, role: 'admin' },
-  //   { firstName: 'Varun', lastName: 'M', totalProposal: 160, role: 'sales' },
-  //   { firstName: 'Aditya', lastName: 'G', totalProposal: 170, role: 'sales' },
-  //   // { firstName: 'B',lastName:'G', totalProposal: 190, role:"sales" },
-  //   { firstName: 'Tanmay', lastName: 'D', totalProposal: 150, role: 'admin' },
-  //   { firstName: 'Y', lastName: 'Y', totalProposal: 140, role: 'admin' },
-  // ].sort((a, b) => b.totalProposal - a.totalProposal);
-  // ipc_Users: any[] = [
-  //   { userName: 'C & W', totalProposal: 180 },
-  //   { userName: 'KF', totalProposal: 190 },
-  //   { userName: 'Colliers', totalProposal: 150 },
-  //   { userName: 'Savills', totalProposal: 160 },
-  //   { userName: 'CBRE', totalProposal: 170 },
-  //   { userName: 'JLL', totalProposal: 140 },
-  // ];
-  // nonIpc_Users: any[] = [
-  //   { userName: 'CityInfo', totalProposal: 180 },
-  //   { userName: 'EHRPCL', totalProposal: 190 },
-  // ];
-
-  // topUsers: any;
-
-
-  // array: any[] = [];
-  // getLocationData() {
-  //   this.location.getAllLocation().subscribe((res: any) => {
-  //     //  this.array.push(res);
-  //     const result = res.map((a: any) => {
-  //       return {
-  //         cityName: a.location,
-  //         selectedSeat: a.availableNoOfWorkstation,
-  //         totalSeat: a.totalNoOfWorkstation,
-  //         center: a.center,
-  //       };
-  //     });
-  //     console.log(result);
-  //     this.cityName = result;
-  //   });
-  // }
-  // CityNames: any;
-  // getCityNames() {
-  //   this.location.getLocationList().subscribe((res: any) => {
-  //     //  this.array.push(res);
-  //     const rest = res.map((a: any) => {
-  //       return a;
-  //     });
-
-  //     console.log(rest);
-  //   });
-  // }
-
-  //  get dashboard service
- 
-

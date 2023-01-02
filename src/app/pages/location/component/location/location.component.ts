@@ -31,6 +31,11 @@ export class LocationLocationComponent implements OnInit {
                 this.locations = [...result]
             }
         })
+        // this.locationService.getAllLocation().subscribe({
+        //     next:(res:any)=>{
+        //         console.log(res,"asfasf");
+        //     }
+        // })
     }
 
     onLocationSelected = (location: any) => {

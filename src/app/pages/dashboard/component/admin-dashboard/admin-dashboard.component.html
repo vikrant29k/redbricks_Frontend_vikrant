@@ -1,11 +1,104 @@
-<div class="container" >
+<div class="container">
   <div class="title">
     <h1>{{ title }} Dashboard</h1>
   </div>
 
-  <div class="main-content" >
+  <div class="main-content">
+    <div class="sales-proposal">
+      <mat-card class="sales">
+        <!-- total users  -->
+        <div class="totals">
+          <!-- <mat-icon>people</mat-icon> -->
+          <p matTooltip="Total Users Availabel">Total Users: {{ totalUser }}</p>
+          <p>Top Sales Persons</p>
+        </div>
+        <!-- Sales Persons Lists -->
+        <div class="sales-persons">
+          <div class="sales-list" *ngFor="let userData of users; let i = index">
+            <!-- <div  *ngIf="userData.role==='sales'"> -->
+            <mat-card>
+              <p [ngClass]="i === 0 ? 'font' : ''">
+                <mat-icon>person_outline</mat-icon>
+              </p>
+              <p [ngClass]="i === 0 ? 'font' : ''">
+                {{ userData.firstName }}
+                {{ userData.lastName.slice(0, 1) }}.
+              </p>
+
+              <p [ngClass]="i === 0 ? 'font' : ''">
+                Total: {{ userData.totalProposalCount }}
+              </p>
+            </mat-card>
+          </div>
+        </div>
+        <div class="approval-lists">
+          <h3>Recent Proposals</h3>
+          <table
+            mat-table
+            [dataSource]="dataSourceRecent"
+            matSort
+            class="tableclass"
+          >
+            <ng-container matColumnDef="salesPerson">
+              <th mat-header-cell *matHeaderCellDef>Sales Person</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.salesPerson.firstName }}
+                {{ element.salesPerson.lastName }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="_id">
+              <th mat-header-cell *matHeaderCellDef>Proposal Id</th>
+              <td mat-cell *matCellDef="let element">{{ element._id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="approve">
+              <th mat-header-cell *matHeaderCellDef>Approval</th>
+              <td mat-cell *matCellDef="let element">
+                <button
+                  mat-button
+                  (click)="approvePropsal(element._id)"
+                  class="clicked"
+                >
+                  <span>Approve</span>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef>Hold</th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon (click)="deleteRow(element._id)" class="hold"
+                  >access_time</mat-icon
+                >
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="view">
+              <th mat-header-cell *matHeaderCellDef style="width: 7rem">
+                View Details
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-button (click)="viewDetails(element._id)">
+                  View
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsRecent"></tr>
+            <tr
+              mat-row
+              @fadeOut
+              *matRowDef="let row; columns: displayedColumnsRecent"
+            ></tr>
+          </table>
+          <mat-paginator
+            [pageSizeOptions]="[3, 6, 12, 24]"
+            aria-label="Select page of recent"
+          ></mat-paginator>
+        </div>
+      </mat-card>
+    </div>
     <!-- Total Proposal Generated View  -->
-    <div>
+    <!-- <div>
       <mat-card class="Proposal">
         <span class="tabs">
           <div>
@@ -28,23 +121,49 @@
           </div>
         </span>
       </mat-card>
-    </div>
+    </div> -->
     <!-- Locations and total cities -->
 
     <div mat-card class="card-container">
-      <div class="card-wrapper" (click)="clickEvent()" *ngFor="let city_name of city">
-        <app-admin-dashboard-expand [cardData]="city_name"></app-admin-dashboard-expand>
-      </div>
-      <!-- total users ----- Sales persons View ------------- porposal view recent generated -->
-     
-      <!-- proposal views table -->
+      <!-- porposal view recent generated -->
 
-      <div class="approval-lists">
-        <table mat-table [dataSource]="dataSourceRecent" class="tableclass">
+      <!-- proposal views table -->
+      <div class="card-wrapper-wrap">
+        <div
+          class="card-wrapper"
+          (click)="clickEvent()"
+          *ngFor="let city_name of city"
+        >
+          <app-admin-dashboard-expand
+            [cardData]="city_name"
+          ></app-admin-dashboard-expand>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notify  " [ngClass]="shownotification ? 'notify' : 'notify-none'" >
+    <div class="icon" (click)="menuOpen = !menuOpen" matRipple>
+      <mat-icon matBadge="{{ notifications }}">{{
+        menuOpen ? "close" : "notification_important"
+      }}</mat-icon>
+    </div>
+    <div 
+      class="sub-icon"
+      [ngClass]="menuOpen ? 'home-icon' : ''"
+      (autofocus)="true"
+    >
+      <div   class="tableConflictClass">
+        <table 
+          mat-table
+          [dataSource]="dataSourceConflict"
+          class="fadeInUp"
+        >
           <ng-container matColumnDef="salesPerson">
             <th mat-header-cell *matHeaderCellDef>Sales Person</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.salesPerson.firstName }} {{element.salesPerson.lastName}}
+              {{ element.salesPerson.firstName }}
+              {{ element.salesPerson.lastName }}
             </td>
           </ng-container>
 
@@ -53,99 +172,38 @@
             <td mat-cell *matCellDef="let element">{{ element._id }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="approve" >
-            <th mat-header-cell *matHeaderCellDef >Approval</th>
-            <td mat-cell *matCellDef="let element" >
-                <button mat-button (click)="changeStatus(element._id)" [ngClass]="element.status=='Pending'?'':'clicked'" >
-                  <span>{{element.status}}</span>
-                </button> 
-                
+          <ng-container matColumnDef="resolve">
+            <th mat-header-cell *matHeaderCellDef style="width: 7rem">
+              Resolve
+            </th>
+            <td
+              mat-cell
+              class="resolve"
+              *matCellDef="let element"
+              style="display: flex"
+            >
+              <mat-icon
+                class="green"
+                matTooltip="Same"
+                matTooltipPosition="left"
+                (click)="resolveConflict(element._id)"
+                >check_circle</mat-icon
+              >
+              <mat-icon
+                class="red"
+                matTooltip="Not Same"
+                matTooltipPosition="below"
+                >cancel</mat-icon
+              >
             </td>
           </ng-container>
-
-          <ng-container matColumnDef="delete" >
-            <th mat-header-cell *matHeaderCellDef >Hold</th>
-            <td mat-cell *matCellDef="let element" >
-              <mat-icon (click)="deleteRow(element._id)" class="hold">access_time</mat-icon>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="view">
-            <th mat-header-cell *matHeaderCellDef style="width: 7rem;">View Details</th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-button>View</button>
-              
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsRecent"></tr>
-          <tr mat-row  @fadeOut  *matRowDef="let row; columns: displayedColumnsRecent" ></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsConflict"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumnsConflict"
+          ></tr>
         </table>
       </div>
     </div>
-    <div class="sales-proposal">
-      <mat-card class="sales">
-        <!-- total users  -->
-        <div class="totals">
-          <!-- <mat-icon>people</mat-icon> -->
-          <p matTooltip="Total Users Availabel">
-            Total Users: {{ totalUser }}
-          </p>
-        </div>
-        <!-- Sales Persons Lists -->
-        <div class="sales-persons">
-          <h2>Top Sales Persons</h2>
-          <div class="sales-list" *ngFor="let userData of users; let i = index">
-            <!-- <div  *ngIf="userData.role==='sales'"> -->
-              <mat-card >
-               
-            <p [ngClass]="i === 0 ? 'font' : ''" >
-              {{ i + 1 }}. 
-            </p>
-            <p [ngClass]="i === 0 ? 'font' : ''" >
-              {{ userData.firstName }}  
-               {{userData.lastName.slice(0,1)}}.
-            </p>
-            
-            <p [ngClass]="i === 0 ? 'font' : ''">  {{ userData.totalProposalCount }}
-            </p>
-          </mat-card>
-
-          </div>
-        </div>
-      </mat-card>
-    </div>
- 
   </div>
-  <div class="notify" [ngClass]="shownotification?'notify':'notify-none'" >
-    <div class="icon" (click)="menuOpen = !menuOpen" matRipple>
-        <mat-icon matBadge="8" >{{menuOpen ? 'close': 'notification_important'}}</mat-icon>
-    </div>
-    <div class="sub-icon" [ngClass]="menuOpen ? 'home-icon': ''" (autofocus)="false"  >
-   <div>
-    <table mat-table [dataSource]="dataSourceConflict" class="tableConflictClass">
-      <ng-container matColumnDef="salesPerson">
-        <th mat-header-cell *matHeaderCellDef>Sales Person</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.salesPerson }} 
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="_id">
-        <th mat-header-cell *matHeaderCellDef>Proposal Id</th>
-        <td mat-cell *matCellDef="let element">{{ element._id }}</td>
-      </ng-container>
-
-
-      <ng-container matColumnDef="resolve" >
-        <th mat-header-cell *matHeaderCellDef style="width: 7rem;">Resolve</th>
-        <td mat-cell class="resolve" *matCellDef="let element" style="display: flex;">
-        <mat-icon class="green" matTooltip="Same" matTooltipPosition="left">check_circle</mat-icon>
-        <mat-icon class="red" matTooltip="Not Same"  matTooltipPosition="right">cancel</mat-icon>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumnsConflict"></tr>
-      <tr mat-row  *matRowDef="let row; columns: displayedColumnsConflict" ></tr>
-    </table>
-  </div>
-    </div>
-</div>
 </div>

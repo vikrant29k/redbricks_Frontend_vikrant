@@ -1,14 +1,14 @@
 <div class="container">
-    <div class="id">
-        <div class="card">
-            <p>ID: </p>
-            <p>{{proposalId || 'lask2342kfjalsdf94312'}}</p>
-        </div>
+  <div class="id">
+    <div class="card">
+      <p>ID:</p>
+      <p>{{ proposalId || "lask2342kfjalsdf94312" }}</p>
     </div>
-    <div class="main-content">
-        <form [formGroup]="clientInfoForm" (ngSubmit)="onSubmit()">
-            <!-- Sales Team -->
-            <!-- <mat-form-field appearance="fill">
+  </div>
+  <div class="main-content">
+    <form [formGroup]="clientInfoForm" (ngSubmit)="onSubmit()">
+      <!-- Sales Team -->
+      <!-- <mat-form-field appearance="fill">=
                 <mat-label>Sales Team</mat-label>
                 <mat-select formControlName="salesTeam">
                     <mat-option value="Ashish">Ashish</mat-option>
@@ -16,8 +16,8 @@
                 </mat-select>
                 <mat-error>Sales Team is required</mat-error>
             </mat-form-field> -->
-            <!-- Sales Head -->
-            <!-- <mat-form-field appearance="fill">
+      <!-- Sales Head -->
+      <!-- <mat-form-field appearance="fill">
                 <mat-label>Sales Head</mat-label>
                 <mat-select formControlName="salesHead">
                     <ng-container *ngFor="let salesHead of salesHeads">
@@ -26,92 +26,95 @@
                 </mat-select>
                 <mat-error>Sales Head is required</mat-error>
             </mat-form-field> -->
-            <!-- Location -->
-            <mat-form-field appearance="fill">
-                <mat-label>Location</mat-label>
-                <input type="text" matInput formControlName="location" autocomplete="off"  [readonly]="true">
-                <mat-error>Location is required</mat-error>
-            </mat-form-field>
-            <!-- Center -->
-            <mat-form-field appearance="fill">
-                <mat-label>Center</mat-label>
-                <input type="text" matInput formControlName="center" autocomplete="off" [readonly]="true">
-                <mat-error>Center is required</mat-error>
-            </mat-form-field>
-             <!-- Broker Type -->
-             <mat-form-field appearance="fill" *ngFor="let brokers of brokerTypeAll">
-                <mat-label>Broker Type</mat-label>
-                <mat-select formControlName="brokerType">
-                    <mat-option value="IPC">{{brokers.brokerType}}</mat-option>
-                    <!-- <mat-option value="Non-IPC">Non-IPC</mat-option>
-                    <mat-option value="Direct">Direct</mat-option> -->
-                </mat-select>
-                <mat-error>Broker Type is required</mat-error>
-            </mat-form-field>
-              <!-- Broker Category -->
-              <mat-form-field appearance="fill"  *ngIf="clientInfoForm.get('brokerType')?.value === 'IPC'||clientInfoForm.get('brokerType')?.value === 'Non-IPC'">
-                <mat-label>Broker Category</mat-label>
-                <mat-select formControlName="brokerCategory">
-                    <ng-container *ngIf="clientInfoForm.get('brokerType')?.value === 'IPC'">
-                        <ng-container *ngFor="let category of IPC">
-                            <mat-option [value]="category">{{category}}</mat-option>
-                        </ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="clientInfoForm.get('brokerType')?.value === 'Non-IPC'">
-                        <ng-container *ngFor="let category of Non_IPC">
-                            <mat-option [value]="category">{{category}}</mat-option>
-                        </ng-container>
-                    </ng-container>
-
-                    <!-- <mat-option value="Hello">Hello</mat-option>
-                    <mat-option value="Hello1">Hello1</mat-option>
-                    <mat-option value="Hello2">Hello2</mat-option>
-                    <mat-option value="other">Other</mat-option> -->
-                </mat-select>
-                <mat-error>Broker Category is required</mat-error>
-            </mat-form-field>
-            <!-- Broker Category Other -->
-            <mat-form-field appearance="fill" *ngIf="clientInfoForm.get('brokerCategory')?.value === 'Other'">
-                <mat-label>Broker Category Other</mat-label>
-                <input type="text" matInput formControlName="brokerCategoryOther" autocomplete="off">
-            </mat-form-field>
-             <!-- Client Name -->
-             <mat-form-field appearance="fill" *ngIf="clientInfoForm.get('brokerType')?.value === 'Direct'">
-                <mat-label>Client Name</mat-label>
-                <input type="text" matInput formControlName="clientName" autocomplete="off">
-                <mat-error>Client Name is required</mat-error>
-            </mat-form-field>
-            <!-- Spoc Name -->
-            <!-- <mat-form-field appearance="fill"  *ngIf="clientInfoForm.get('brokerCategory')?.value === 'Other'">
-                <mat-label>SPOC Name</mat-label>
-                <mat-select formControlName="spocName">
-                    <mat-option value="Sandesh">Sandesh</mat-option>
-                    <mat-option value="Dhiraj">Dhiraj</mat-option>
-                </mat-select>
-
-            </mat-form-field> -->
-            <!-- SPOC Other Name -->
-            <mat-form-field appearance="fill"  *ngIf="clientInfoForm.get('brokerCategory')?.value === 'Other'">
-                <mat-label>SPOC Name</mat-label>
-                        <input type="text" matInput formControlName="SpocOtherName" autocomplete="off">
-                <mat-error>SPOC Name is required</mat-error>
-            </mat-form-field>
-            <!-- SPOC EMail  -->
-            <mat-form-field appearance="fill" *ngIf="clientInfoForm.get('brokerCategory')?.value === 'Other'">
-                <mat-label>Spoc Email</mat-label>
-                <input type="text" matInput formControlName="SpocOtherEmail" autocomplete="off">
-            </mat-form-field>
-           <!-- Contact field -->
-           <mat-form-field appearance="fill" *ngIf="clientInfoForm.get('brokerType')?.value === 'Direct'">
-            <mat-label>Client Email</mat-label>
-            <input type="text" matInput formControlName="clientEmail" autocomplete="off">
-            <mat-error>Client Email is required</mat-error>
+      <!-- Location -->
+      <mat-form-field appearance="fill">
+        <mat-label>Location</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="location"
+          autocomplete="off"
+          [readonly]="true"
+        />
+        <mat-error>Location is required</mat-error>
+      </mat-form-field>
+      <!-- Center -->
+      <mat-form-field appearance="fill">
+        <mat-label>Center</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="center"
+          autocomplete="off"
+          [readonly]="true"
+        />
+        <mat-error>Center is required</mat-error>
+      </mat-form-field>
+      <!-- Broker Type -->
+      <mat-form-field appearance="fill">
+        <mat-label>Broker Type</mat-label>
+        <mat-select formControlName="brokerType">
+          <ng-container *ngFor="let brokers of brokerTypeList">
+            <mat-option [value]="brokers">{{ brokers }}</mat-option>
+          </ng-container>
+          <mat-option value="direct">Direct</mat-option>
+        </mat-select>
+        <mat-error>Broker Type is required</mat-error>
+      </mat-form-field>
+      <!-- Broker Category -->
+      <ng-container *ngIf="clientInfoForm.get('brokerCategory')">
+        <mat-form-field appearance="fill">
+          <mat-label>Broker Category</mat-label>
+          <mat-select formControlName="brokerCategory">
+            <ng-container>
+              <ng-container *ngFor="let category of brokeCategoryList">
+                <mat-option [value]="category">{{ category }}</mat-option>
+              </ng-container>
+              <mat-option value="other">other</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error>Broker Category is required</mat-error>
         </mat-form-field>
-          
-            <div class="form-action">
-                <button type="submit" mat-raised-button color="primary">Save & Next <mat-icon>play_arrow</mat-icon>
-                    </button>
-            </div>
-        </form>
-    </div>
+      </ng-container>
+      <!-- Broker Category other -->
+      <ng-container
+        *ngIf="clientInfoForm.get('brokerCategoryOther')"
+      >
+        <mat-form-field appearance="fill">
+          <!-- *ngIf="clientInfoForm.get('brokerCategory')?.value === 'other'"> -->
+          <mat-label>Broker Category other</mat-label>
+          <input type="text" matInput formControlName="brokerCategoryOther" autocomplete="off" />
+        </mat-form-field>
+      </ng-container>
+      <!-- Client Name -->
+      <ng-container *ngIf="clientInfoForm.get('clientName')">
+        <mat-form-field appearance="fill">
+          <mat-label>Client Name</mat-label>
+          <input type="text" matInput formControlName="clientName" autocomplete="off"/>
+          <mat-error>Client Name is required</mat-error>
+        </mat-form-field>
+      </ng-container>
+      <!-- Spoc Name -->
+      <ng-container *ngIf="clientInfoForm.get('spocName')">
+        <mat-form-field appearance="fill">
+          <mat-label>SPOC Name</mat-label>
+          <input type="text" matInput formControlName="spocName" autocomplete="off"/>
+          <mat-error>SPOC Name is required</mat-error>
+        </mat-form-field>
+      </ng-container>
+      <!-- SPOC EMail  -->
+      <ng-container *ngIf="clientInfoForm.get('spocEmail')">
+        <mat-form-field appearance="fill">
+          <mat-label>Spoc Email</mat-label>
+          <input type="text" matInput formControlName="spocEmail" autocomplete="off"/>
+        </mat-form-field>
+      </ng-container>
+  
+      <div class="form-action">
+        <button type="submit" mat-raised-button color="primary">
+          Save & Next <mat-icon>play_arrow</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -7,7 +7,7 @@ export const fadeOut =
     transition('void => *', sequence([
       animate(".1s ease")
     ])),
-    transition('* => void', [animate("1s ease")])
+    transition('* => void', [animate("300ms ease")])
   ]);
 
 export const rowsAnimation =

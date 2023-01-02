@@ -31,7 +31,7 @@ export class BrokerService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.post(this.baseUrl + 'create', brokerData, httpOptions).pipe(
             this.toster.observe({
-                success: 'Broker added successfully',
+                success: 'Broker Added Successfully',
                 loading: 'Adding Broker...',
                 error: ({ error }) => `${error.Message}`
             })
@@ -42,8 +42,8 @@ export class BrokerService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getAll', httpOptions).pipe(
             this.toster.observe({
-                success: 'Broker data loaded successfully',
-                loading: 'Loading broker data...',
+                success: 'Broker Data Loaded Successfully',
+                loading: 'Loading Broker Data...',
                 error: ({ error }) => `${error.Message}`
             })
         )
@@ -53,8 +53,8 @@ export class BrokerService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.put(this.baseUrl + 'update/' + id, brokerData, httpOptions).pipe(
             this.toster.observe({
-                success: 'Broker data updated successfully',
-                loading: 'Updating broker data...',
+                success: 'Broker Data Updated Successfully',
+                loading: 'Updating Broker Data...',
                 error: ({ error }) => `${error.Message}`
             })
         )
@@ -64,8 +64,8 @@ export class BrokerService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.delete(this.baseUrl + 'delete/' + id, httpOptions).pipe(
             this.toster.observe({
-                success: 'Broker data deleted',
-                loading: 'Deleting broker data...',
+                success: 'Broker Data Deleted',
+                loading: 'Deleting Broker Data...',
                 error: ({ error }) => `${error.Message}`
             })
         )
@@ -85,8 +85,8 @@ export class BrokerService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getById/' + brokerId, httpOptions).pipe(
             this.toster.observe({
-                success: 'Broker data loaded successfully',
-                loading: 'Loading Broker data...',
+                success: 'Broker Data Loaded Successfully',
+                loading: 'Loading Broker Data...',
                 error: ({ error }) => `${error.Message}`
             })
         );
