@@ -6,7 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
-
+import { MatDialog } from '@angular/material/dialog';
+import { DeselectUpdateComponent } from '../deselect-update/deselect-update.component';
 export interface OldProposalData {
   _id: any;
   createdAt: Date;
@@ -19,13 +20,16 @@ export interface OldProposalData {
   styleUrls: ['./old-proposal-table.component.scss'],
 })
 export class OldProposalTableComponent implements OnInit {
-  buttonStatus: any;
+  allData: any;
+  selectedSeat:any;
+  // idForDeslect:any;
   displayedColumns: string[] = [
     'proposalId',
     'date',
     'status',
     'esclateToCloser',
     'action',
+    // 'update'
   ];
   dataSource!: MatTableDataSource<OldProposalData>;
 
@@ -35,6 +39,7 @@ export class OldProposalTableComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private dialog:MatDialog,
     private proposalService: ProposalService
   ) {}
 
@@ -55,7 +60,8 @@ export class OldProposalTableComponent implements OnInit {
       next: (result: any) => {
         result = result.reverse();
         this.tableDataSource(result);
-        this.buttonStatus = result;
+
+        this.allData = result;
       },
     });
   };
@@ -84,4 +90,31 @@ export class OldProposalTableComponent implements OnInit {
   viewDetails = (Id: string) => {
     this.router.navigate(['/sales', 'new-proposal', 'proposal-preview', Id]);
   };
+
+showPopOver(data_id:any){
+var location;
+var center;
+ for(let i = 0; i < this.allData.length;i++){
+if(data_id == this.allData[i]._id){
+  this.selectedSeat=this.allData[i].totalNoOfSeatsSelected;
+  location = this.allData[i].location;
+  center = this.allData[i].center;
+}
+ }
+  const dialogRef = this.dialog.open(DeselectUpdateComponent, {
+  width: '20rem',
+  hasBackdrop: true,
+  data: {
+    info:{
+      idForDeselect:data_id,
+      location:location,
+      center:center,
+      seatSelected:this.selectedSeat
+    }
+
+},
+
+});
+}
+
 }

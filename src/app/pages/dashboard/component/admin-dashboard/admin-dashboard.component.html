@@ -141,20 +141,20 @@
       </div>
     </div>
   </div>
-
+<!-- Notification conflict -->
   <div class="notify  " [ngClass]="shownotification ? 'notify' : 'notify-none'" >
     <div class="icon" (click)="menuOpen = !menuOpen" matRipple>
       <mat-icon matBadge="{{ notifications }}">{{
         menuOpen ? "close" : "notification_important"
       }}</mat-icon>
     </div>
-    <div 
+    <div
       class="sub-icon"
       [ngClass]="menuOpen ? 'home-icon' : ''"
       (autofocus)="true"
     >
       <div   class="tableConflictClass">
-        <table 
+        <table
           mat-table
           [dataSource]="dataSourceConflict"
           class="fadeInUp"
@@ -204,6 +204,66 @@
           ></tr>
         </table>
       </div>
+    </div>
+  </div>
+
+
+  <!-- deslection approval -->
+  <div class="notify  " [ngClass]="deselect ? 'notify' : 'notify'" >
+    <!-- <div class="icon" (click)="menuOpen = !menuOpen" matRipple>
+      <mat-icon matBadge="{{ notifications }}">{{menuOpen ? "close" : "notification_important"}}</mat-icon>
+    </div>
+    <div class="sub-icon" [ngClass]="menuOpen ? 'home-icon' : ''" (autofocus)="true">
+      <div class="tableConflictClass">
+        <table mat-table [dataSource]="dataSourceConflict" class="fadeInUp">
+          <ng-container matColumnDef="salesPerson">
+            <th mat-header-cell *matHeaderCellDef>Sales Person</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.salesPerson.firstName }}
+              {{ element.salesPerson.lastName }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="_id">
+            <th mat-header-cell *matHeaderCellDef>Proposal Id</th>
+            <td mat-cell *matCellDef="let element">{{ element._id }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="resolve">
+            <th mat-header-cell *matHeaderCellDef style="width: 7rem">
+              Resolve
+            </th>
+            <td
+              mat-cell
+              class="resolve"
+              *matCellDef="let element"
+              style="display: flex"
+            >
+              <mat-icon
+                class="green"
+                matTooltip="Same"
+                matTooltipPosition="left"
+                (click)="resolveConflict(element._id)"
+                >check_circle</mat-icon
+              >
+              <mat-icon
+                class="red"
+                matTooltip="Not Same"
+                matTooltipPosition="below"
+                >cancel</mat-icon
+              >
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsConflict"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumnsConflict"
+          ></tr>
+        </table>
+      </div>
+    </div> -->
+    <div>
+      
     </div>
   </div>
 </div>

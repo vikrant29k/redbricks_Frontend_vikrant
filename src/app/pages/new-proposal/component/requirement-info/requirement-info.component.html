@@ -16,9 +16,14 @@
                                 <mat-form-field appearance="fill">
                                     <mat-label>Size</mat-label>
                                     <mat-select formControlName="workstationSize">
-                                        <mat-option value="small">Small</mat-option>
-                                        <mat-option value="medium">Medium</mat-option>
-                                        <mat-option value="large">Large</mat-option>
+                                        <mat-option value="small">3x2</mat-option>
+                                        <mat-option value="medium">4x2</mat-option>
+                                        <mat-option value="large">5x2</mat-option>
+                                        <mat-option value="large">5x2.5</mat-option>
+                                        <mat-option value="large">4x4</mat-option>
+                                        <mat-option value="large">5x4</mat-option>
+                                        <mat-option value="large">5x5</mat-option>
+                                        <!-- <mat-option value="cubical">Cubical 7x8.5</mat-option> -->
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -36,9 +41,10 @@
                                 <mat-form-field appearance="fill">
                                     <mat-label>Size</mat-label>
                                     <mat-select formControlName="cabinSize">
-                                        <mat-option value="small">Small</mat-option>
-                                        <mat-option value="medium">Medium</mat-option>
-                                        <mat-option value="large">Large</mat-option>
+                                        <mat-option value="small">Regular 7.67x9</mat-option>
+                                        <mat-option value="medium">Medium 8x10</mat-option>
+                                        <mat-option value="large">Large 10x10</mat-option>
+                                        <mat-option value="Md">MD 8x10</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -58,14 +64,16 @@
                                 <mat-form-field appearance="fill">
                                     <mat-label>Size</mat-label>
                                     <mat-select formControlName="meetingRoomSize">
-                                        <mat-option value="small">Small</mat-option>
-                                        <mat-option value="medium">Medium</mat-option>
-                                        <mat-option value="large">Large</mat-option>
+                                        <mat-option value="small">4P 7.67x9</mat-option>
+                                        <mat-option value="medium">6P 10.5x10</mat-option>
+                                        <mat-option value="large">8P 16x12</mat-option>
+                                        <mat-option value="large">12P 16x12</mat-option>
+                                        <mat-option value="large">16P 16x12</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
                             <div class="field-card-odd">
-                                <p>Meeting Rooms Number</p>
+                                <p>Meeting Rooms No.</p>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Number</mat-label>
                                     <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="meetingRoomNumber">
@@ -74,18 +82,20 @@
                         </div>
                         <div class="field">
                             <div class="field-card">
-                                <p>Visitor Meeting Rooms</p>
+                                <!-- <p>Visitor Meeting Rooms</p> -->
+                                <p>Board Rooms</p>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Size</mat-label>
                                     <mat-select formControlName="visitorMeetingRoomSize">
-                                        <mat-option value="small">Small</mat-option>
-                                        <mat-option value="medium">Medium</mat-option>
-                                        <mat-option value="large">Large</mat-option>
+                                        <mat-option value="small">20P 33x15</mat-option>
+                                        <mat-option value="medium">24P 28x15</mat-option>
+                                        <!-- <mat-option value="large">Large</mat-option> -->
                                     </mat-select>
                                 </mat-form-field>
                             </div>
                             <div class="field-card-odd">
-                                <p>Visitor Meeting Rooms Number</p>
+                                <!-- <p>Visitor Meeting Rooms Number</p> -->
+                                <p>Board Rooms Number</p>
                                 <mat-form-field appearance="fill">
                                     <mat-label>Number</mat-label>
                                     <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="visitorMeetingRoomNumber">
@@ -102,8 +112,24 @@
                                         <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
                                         <mat-radio-button value="no" color="primary">No</mat-radio-button>
                                     </mat-radio-group>
+                                    <mat-form-field appearance="fill" *ngIf="requirementInfoForm.value.collabArea=='yes'" >
+                                      <mat-select formControlName="visitorMeetingRoomSize">
+                                        <mat-option value="small">4 Person</mat-option>
+                                        <mat-option value="medium">6 Person</mat-option>
+                                        <mat-option value="large">8 Person</mat-option>
+                                    </mat-select>
+                                   </mat-form-field>
                                 </div>
                             </div>
+                            <ng-container *ngIf="requirementInfoForm.get('collabArea')?.value === 'yes'">
+                              <div class="field-card-odd">
+                                  <p>Collab Area Number</p>
+                                  <mat-form-field appearance="fill">
+                                      <mat-label>Number</mat-label>
+                                      <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="storeRoomNumber">
+                                  </mat-form-field>
+                              </div>
+                          </ng-container>
                             <div class="field-card">
                                 <p>Dry Pantry</p>
                                 <div class="sub-field-card__action-field">
@@ -113,6 +139,15 @@
                                     </mat-radio-group>
                                 </div>
                             </div>
+                            <ng-container *ngIf="requirementInfoForm.get('dryPantry')?.value === 'yes'">
+                              <div class="field-card-odd">
+                                  <p>Dry Pantry Number</p>
+                                  <mat-form-field appearance="fill">
+                                      <mat-label>Number</mat-label>
+                                      <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="storeRoomNumber">
+                                  </mat-form-field>
+                              </div>
+                          </ng-container>
                             <div class="field-card">
                                 <p>Reception</p>
                                 <div class="sub-field-card__action-field">
@@ -120,8 +155,24 @@
                                         <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
                                         <mat-radio-button value="no" color="primary">No</mat-radio-button>
                                     </mat-radio-group>
+                                    <mat-form-field appearance="fill" *ngIf="requirementInfoForm.value.reception=='yes'" style="width:7rem">
+                                      <mat-select formControlName="visitorMeetingRoomSize">
+                                        <mat-option value="small">8x10</mat-option>
+                                        <mat-option value="medium">10x10</mat-option>
+                                        <mat-option value="large">10x12</mat-option>
+                                    </mat-select>
+                                   </mat-form-field>
                                 </div>
                             </div>
+                            <ng-container *ngIf="requirementInfoForm.get('reception')?.value === 'yes'">
+                              <div class="field-card-odd">
+                                  <p>Reception Number</p>
+                                  <mat-form-field appearance="fill" >
+                                      <mat-label>Number</mat-label>
+                                      <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="storeRoomNumber">
+                                  </mat-form-field>
+                              </div>
+                          </ng-container>
                             <div class="field-card">
                                 <p>Store Room</p>
                                 <div class="sub-field-card__action-field">
@@ -143,12 +194,20 @@
                         </div>
                         <div class="field">
                             <div class="field-card">
-                                <p>Mail Room</p>
+                                <p>Server Room</p>
                                 <div class="sub-field-card__action-field">
                                     <mat-radio-group formControlName="mailRoom">
                                         <mat-radio-button value="yes" color="primary">Yes</mat-radio-button>
                                         <mat-radio-button value="no" color="primary">No</mat-radio-button>
                                     </mat-radio-group>
+                                    <mat-form-field appearance="fill" *ngIf="requirementInfoForm.value.mailRoom=='yes'" style="width:7rem">
+                                      <mat-select formControlName="visitorMeetingRoomSize">
+                                        <mat-option value="small">1 Rack</mat-option>
+                                        <mat-option value="medium">2 Rack</mat-option>
+                                        <mat-option value="large">3 Rack</mat-option>
+                                        <mat-option value="large">4 Rack</mat-option>
+                                    </mat-select>
+                                    </mat-form-field>
                                 </div>
                             </div>
                             <div class="field-card">

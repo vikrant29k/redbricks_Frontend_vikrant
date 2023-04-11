@@ -2,9 +2,7 @@
   <div class="main-content">
     <form ngSubmit="onSubmit()" [formGroup]="closerForm">
       <mat-card class="card">
-      
           <h3>The unique identification of your proposal is:</h3>
-     
           <input class="uid" type="text" formControlName="proposalId" [readOnly]="true" />
           <mat-form-field appearance="outline">
             <mat-label>
@@ -12,12 +10,9 @@
             </mat-label>
             <input  matInput formControlName="clientFinalOfferAmmount"  value="{{ finalOfferAmount }}"/>
           </mat-form-field>
-          
-       
           <button mat-button class="offer" (click)="updateAmount()">
             Send for Closure
           </button>
-     
       </mat-card>
     </form>
   </div>

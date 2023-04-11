@@ -25,7 +25,7 @@
             table {
                 color: #fff;
                 background-color: #ececec;
-                width: 60rem;
+                width: 65rem;
                 text-align: center;
 
                 th {
@@ -69,4 +69,8 @@
             background-color: #ececec;
         }
     }
+}
+
+mat-dialog{
+  width: 20rem!important;
 }

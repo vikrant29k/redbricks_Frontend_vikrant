@@ -65,6 +65,7 @@ export class DashboardAdminDashboard implements OnInit {
   //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'}
   // ];
   notifications: any;
+  deselect:any;
   //  = this.dataSourceConflict.length
   clk: boolean = false;
   changeColor: boolean = false;
@@ -181,14 +182,14 @@ export class DashboardAdminDashboard implements OnInit {
     this.dashboardService.getRecentProposal().subscribe((res) => {
       this.tableDataSource(res);
       this.Amount = res;
-      
+
     });
 
   }
- 
+
   // Approve proposal
   approvePropsal(id: string) {
-   
+
     this.System_value = this.Amount.find((x:any) => x._id === id).previousFinalOfferAmmount ;
     this.client_value =  this.Amount.find((x:any) => x._id === id).clientFinalOfferAmmount ;
     console.log(this.System_value, 'System_value');
