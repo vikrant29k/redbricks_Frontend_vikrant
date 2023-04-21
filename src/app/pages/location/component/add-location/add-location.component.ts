@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/service/users/user.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
@@ -20,8 +21,9 @@ export class AddLocationComponent implements OnInit {
   locationId!: string;
   userDataBeforeEdit: any;
   salesHeads: any = [];
-
+  toDate:any;
   constructor(
+    private datepipe: DatePipe,
     private loactionService: LocationService,
     private authService: AuthenticationService,
     private router: Router,
@@ -36,10 +38,15 @@ export class AddLocationComponent implements OnInit {
     center: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
     totalNoOfWorkstation: new FormControl('', Validators.required),
-    perSeatPrice: new FormControl('', Validators.required),
+    rentSheet: new FormArray([]),
+    // yearnew: new FormControl('', Validators.required),
+    // rent: new FormControl('', Validators.required),
+    // cam: new FormControl('', Validators.required),
     imageLinks: new FormArray([]),
     videoLinks: new FormArray([]),
   });
+
+
   selectSalesHead() {
     this.userService.getSalesHead().subscribe({
       next: (result: any) => {
@@ -55,10 +62,13 @@ export class AddLocationComponent implements OnInit {
       },
     });
   }
+
   get imageLinks() {
     return (this.locationForm.get('imageLinks') as FormArray).controls;
   }
-
+  get rentSheet() {
+    return (this.locationForm.get('rentSheet') as FormArray).controls;
+  }
   get videoLinks() {
     return (this.locationForm.get('videoLinks') as FormArray).controls;
   }
@@ -77,6 +87,17 @@ export class AddLocationComponent implements OnInit {
     const control = new FormControl(null, Validators.required);
     (<FormArray>this.locationForm.get(controlName)).push(control);
   }
+  transformToFormGroup(control:any){
+    return control as FormGroup;
+  }
+  onAddFromGroup() {
+    const control = new FormGroup({
+      year: new FormControl('', Validators.required),
+      rent: new FormControl('', Validators.required),
+      cam: new FormControl('', Validators.required)
+    });
+    (<FormArray>this.locationForm.get('rentSheet')).push(control);
+  }
   onRemove(controlName: string, controlIndex: number) {
     (<FormArray>this.locationForm.get(controlName)).removeAt(controlIndex);
   }
@@ -86,9 +107,7 @@ export class AddLocationComponent implements OnInit {
     for (let key of Object.keys(this.locationForm.value)) {
       if (Array.isArray(this.locationForm.get(key)?.value)) {
         let temp: any = [];
-        this.locationForm
-          .get(key)
-          ?.value.forEach((element: string, index: number) => {
+        this.locationForm.get(key)?.value.forEach((element: string, index: number) => {
             temp = [...temp, [index, element]];
           });
         temp = Object.fromEntries(temp);
@@ -97,6 +116,7 @@ export class AddLocationComponent implements OnInit {
         formData.append(key, this.locationForm.get(key)?.value);
       }
     }
+
     if (this.jsonUploaded) {
       formData.append('jsonFile', this.JSONFile);
     }
@@ -108,6 +128,8 @@ export class AddLocationComponent implements OnInit {
   };
 
   ngOnInit(): void {
+
+    this.toDate = this.datepipe.transform(new Date(),'yyyy')
     let ID = this.route.snapshot.params['Id'];
     if (ID) {
       this.locationId = ID;
@@ -120,6 +142,7 @@ export class AddLocationComponent implements OnInit {
   getLocationDataToUpdate = (Id: string) => {
     this.loactionService.getLocationById(Id).subscribe({
       next: (result: any) => {
+        console.log(result);
         this.locationForm.patchValue({
           location: result.location,
           center: result.center,
@@ -129,6 +152,7 @@ export class AddLocationComponent implements OnInit {
           perSeatPrice: result.perSeatPrice,
           videoLinks: result.videoLinks,
           imageLinks: result.imageLinks,
+          rentSheet: result.rentSheet
         });
         result.imageLinks.forEach((element: string, index: number) => {
           this.onAdd('imageLinks');
@@ -138,11 +162,30 @@ export class AddLocationComponent implements OnInit {
           this.onAdd('videoLinks');
           this.videoLinks[index].patchValue(element);
         });
+        result.rentSheet.forEach((element: any,index: number) => {
+          this.onAddFromGroup();
+          this.rentSheet[index].patchValue(element);
+        })
+        // debugger;
+        // let rentSheet = JSON.parse(result.rentSheet);
+        // rentSheet.forEach((element: any,index: number) => {
+
+        // })
+        // ((element: any, index: number) => {
+        //   element=JSON.parse(element)?.[index];
+        //   console.log(result.rentSheet[index]);
+
+        //   this.onAddFromGroup();
+        //   this.rentSheet[index].patchValue({year:element.year, rent:element.rent, cam:element.cam})
+        // });
+
       },
     });
+
   };
 
   onSubmit = () => {
+    console.log(this.locationForm.value);
     if (this.locationForm.invalid) {
       return;
     } else if (

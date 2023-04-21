@@ -10,9 +10,9 @@ import { DashboardAdminDashboard } from '../admin-dashboard/admin-dashboard.comp
 export class AdminDashboardExpandComponent implements OnInit {
   @Input() cardData: any;
   showMe: boolean=false;
- city:any;
- centers:any;
- data:any;
+  city:any;
+  centers:any;
+  data:any;
   constructor(private city_val:DashboardAdminDashboard) { }
 
   ngOnInit(): void {
@@ -22,5 +22,5 @@ export class AdminDashboardExpandComponent implements OnInit {
   clickHandler(){
     this.showMe = !this.showMe;
   }
-  
+
 }

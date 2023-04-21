@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { LocationService } from "src/app/service/location/location.service";
-
+import { CostService } from "src/app/service/cost/cost.service";
 @Component({
     selector: 'location-location',
     templateUrl: './location.component.html',
@@ -15,7 +15,8 @@ export class LocationLocationComponent implements OnInit {
 
     constructor(
         private locationService: LocationService,
-        private router: Router
+        private router: Router,
+        private costService:CostService
     ) { }
 
     ngOnInit(): void {

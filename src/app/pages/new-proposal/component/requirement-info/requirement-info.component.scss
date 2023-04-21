@@ -1,3 +1,4 @@
+
 @mixin for-desktop {
   @media (max-width: 1440px) {
     @content;
@@ -5,11 +6,15 @@
 }
 @mixin field-card {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 25rem;
+  overflow: hidden;
+  flex-direction: column;
+  // justify-content: space-around;
+  // justify-content: center;
+  // align-items: center;
+  // width: 25rem;
+  width: 20rem;
   border-radius: 0.5rem;
-  padding-inline-start: 1rem;
+  // padding-inline-start: 1rem;
   color: #fff;
   font-size: 1.1rem;
   font-weight: 600;
@@ -22,7 +27,7 @@
 @mixin flex-column__center-center {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
 }
 
@@ -40,13 +45,13 @@
   width: 100%;
   background-color: #ececec;
   min-height: 100vh;
-  gap: 1rem;
+  gap: 2rem;
 
   .id {
     display: flex;
     justify-content: flex-start;
     width: inherit;
-    padding-block-start: 1rem;
+    padding-block-start: 2rem;
   }
 
   .card {
@@ -81,8 +86,8 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        align-items: center;
-        gap: 5rem;
+        // align-items: center;
+        gap: 3rem;
         @include for-desktop() {
           gap: 1rem;
           margin-top: 1rem;
@@ -92,7 +97,7 @@
           @include flex-column__center-center();
           gap: 1rem;
           @include for-desktop() {
-            width: 70%;
+            width: 60%;
           }
 
           .section {
@@ -103,15 +108,18 @@
             .field {
               @include flex-column__center-center();
               gap: 1rem;
-
               .field-card {
                 background-color: #c3343a;
                 @include field-card();
-
-                mat-form-field {
-                  width: 10rem;
-                  padding-inline: 1rem;
-                  padding-block: 0.5rem;
+                // max-height: 50px;
+                // mat-form-field {
+                //   width: 10rem;
+                //   padding-inline: 1rem;
+                //   padding-block: 0.5rem;
+                // }
+                mat-panel-title{
+                  font-size: 1.2rem;
+                  color: white;
                 }
 
                 .sub-field-card__action-field {
@@ -160,7 +168,25 @@
             }
           }
         }
+.center{
+  // padding-block-start: 2rem;
+  color: rgb(7, 7, 7);
+  h2{
+    color: #c3343a;
+  }
+  width: 19%;
+  text-align: center;
+  border: 2px solid #c3343a;
+  border-radius: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+  .text{
+    padding-inline-start: 10px;
+    font-weight: 500;
+    text-align: left;
+    font-size: 1.1rem;
+  }
 
+}
         .right {
           @include flex-column__center-center();
           gap: 2rem;
@@ -168,7 +194,7 @@
           border-radius: 2rem;
           padding: 3rem;
           @include for-desktop() {
-            width: 16%;
+            width: 19%;
             padding: 1.5rem 3rem;
           }
 
@@ -372,4 +398,7 @@
       }
     }
   }
+}
+::ng-deep mat-expansion-indicator::after {
+  color: white !important;
 }

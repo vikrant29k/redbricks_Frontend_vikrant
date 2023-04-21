@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { NewProposalLayoutPreviewComponent } from '../layout-preview/layout-preview.component';
-
 @Component({
   selector: 'new-proposal-space-availability',
   templateUrl: './space-availability.component.html',
@@ -31,12 +30,13 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
-    private proposalService: ProposalService
+    private proposalService: ProposalService,
   ) {}
 
   onSubmit = () => {};
 
   ngOnInit(): void {
+
     // this.consolidatedSeats = this.proposalService.consolidatedSeats;
     // this.seatAvailability = this.proposalService.seatAvailability;
     this.proposalId = this.route.snapshot.params['proposalId'];
@@ -71,12 +71,7 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     if (this.proposalExtraDetailForm.invalid) {
       return;
     }
-    this.proposalService
-      .generateProposal(
-        this.proposalId,
-        this.selectFrom,
-        this.proposalExtraDetailForm.value
-      )
+    this.proposalService.generateProposal(this.proposalId, this.selectFrom, this.proposalExtraDetailForm.value)
       .subscribe({
         next: (result: any) => {
           if (result.Message === 'Proposal Generated Successfully') {

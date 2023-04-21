@@ -49,12 +49,14 @@
             width: 18rem;
           }
         }
-
+        .center_align{
+          width: 16rem;
+        }
         .form-field {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          align-items: flex-start;
+          align-items: center;
 
           mat-form-field {
             mat-icon {

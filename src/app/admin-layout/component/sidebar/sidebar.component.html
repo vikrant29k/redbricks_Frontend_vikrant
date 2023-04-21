@@ -110,6 +110,18 @@
             </ng-container>
         </div>
         <div class="section">
+          <div class="title"  routerLink="/admin/cost/" routerLinkActive="active" (click)="expandAccording()">
+              <div class="main">
+                  <div class="title-icon">
+                      <mat-icon fontSet="material-icons-round">attach_money</mat-icon>
+                  </div>
+                  <div class="title-text">
+                      <p>Cost Sheet</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <div class="section">
             <div class="title" [ngClass]="locationExpanded ? 'expanded': ''" (click)="expandAccording('location')">
                 <div class="main">
                     <div class="title-icon">

@@ -198,7 +198,7 @@ export class DashboardAdminDashboard implements OnInit {
     var a = 'myprice';
     Swal.fire({
       title: 'Approve Proposal',
-      text: `Client Price:- ${this.client_value}\nSystem Price = ${this.System_value}`,
+      text: `Client Price:- ${(this.client_value).toFixed(2)} \n System Price = ${(this.System_value).toFixed(2)}`,
       icon: 'info',
       showConfirmButton: true,
       confirmButtonText: 'Confirm',
@@ -213,7 +213,9 @@ export class DashboardAdminDashboard implements OnInit {
     }).then((confirmation) => {
       if (confirmation.isConfirmed) {
         this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value })
-          .subscribe((res) => {});
+          .subscribe((res) => {
+            console.log(res,"Final offer amount admin dashboard approve")
+          });
       }
     });
   }

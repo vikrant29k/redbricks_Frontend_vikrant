@@ -9,8 +9,12 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatMenuModule } from "@angular/material/menu";
+import {MatExpansionModule} from '@angular/material/expansion';
 
 const materials = [
+    MatMenuModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,

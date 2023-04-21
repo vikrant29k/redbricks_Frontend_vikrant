@@ -115,7 +115,7 @@ body {
 
 // .mat-form-field-appearance-fill .mat-form-field-underline {
 //   bottom: 0;
-  
+
 //   span{
 //     display: none;
 //   }
@@ -129,3 +129,6 @@ body {
 // .mat-select-arrow{
 //   color: #fff
 // }
+.mat-expansion-indicator::after{
+  color: white;
+}

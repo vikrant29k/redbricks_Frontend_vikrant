@@ -11,6 +11,7 @@ import { AddLocationComponent } from './component/add-location/add-location.comp
 import { LocationListComponent } from './component/location-list/location-list.component';
 import { LocationAdminChildRouteGuard } from "./module/service/location-admin-child-route/location-child-admin-route-guard.guard";
 import { LocationSalesChildRouteGuard } from "./module/service/location-sales-child-route/location-sales-child-route.guard";
+import { DatePipe } from "@angular/common";
 @NgModule({
     declarations: [
         LocationComponent,
@@ -28,6 +29,7 @@ import { LocationSalesChildRouteGuard } from "./module/service/location-sales-ch
     ],
     providers: [
         LocationAdminChildRouteGuard,
+        DatePipe,
         LocationSalesChildRouteGuard
     ]
 })
