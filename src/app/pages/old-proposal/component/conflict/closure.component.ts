@@ -33,8 +33,7 @@ export class ClosureComponent implements OnInit {
     this.proposalService.finalOfferAmount(Id).subscribe((res) => {
       var finalAmount: any = res;
       this.finalOfferAmount = (finalAmount.finalOfferAmmount).toFixed(2);
-
-      // console.log(this.finalOfferAmount);
+      console.log(this.finalOfferAmount);
     });
   }
   updateAmount() {

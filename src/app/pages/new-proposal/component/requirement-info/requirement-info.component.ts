@@ -31,7 +31,6 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     workstation4x4: new FormControl(),
     workstation5x4: new FormControl(),
     workstation5x5: new FormControl(),
-    workstationNumber: new FormControl(),
     cubicalCount: new FormControl(),
     cabinRegular: new FormControl(),
     cabinMedium: new FormControl(),
@@ -64,10 +63,9 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     wellnessRoomNumber: new FormControl(),
     trainingRoomNumber: new FormControl(),
     gameRoomNumber: new FormControl(),
-    content:new FormControl()
+    content:new FormControl(),
+    totalNumberOfSeats: new FormControl()
   });
-
-
 
 
   constructor(
@@ -86,18 +84,22 @@ export class NewProposalRequirementInfoComponent implements OnInit {
   }
 
   onSubmit = () => {
+    let finalSeat =  this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1);
+    this.requirementInfoForm.patchValue({
+      totalNumberOfSeats:finalSeat
+    });
 
-    this.requirementInfoForm.value.content  =  document.getElementById('datadiv')?.textContent;
-
-    this.proposalService
-      .addRequirement(this.requirementInfoForm.value, this.proposalId)
-      .subscribe({
+    let contentt =  document.getElementById('datadiv')?.textContent;
+    this.requirementInfoForm.patchValue({
+      content:contentt
+    });
+    this.proposalService.addRequirement(this.requirementInfoForm.value, this.proposalId).subscribe({
         next: (result: any) => {
           if (result.Message === 'Requirement added Successfully!') {
             this.proposalService.consolidatedSeats = result.consolidatedSeats;
             this.proposalService.seatAvailability = result.seatsAvailability;
             this.proposalService.conflict = result.conflict;
-            console.log(this.proposalService.conflict, 'fasfasf');
+            // console.log(this.proposalService.conflict);
             // this.router.navigate(['/sales','new-proposal','space-availability',this.proposalId]);
           }
           if (this.proposalService.conflict === true) {
@@ -150,12 +152,10 @@ public handleOpened(item:any): void {
 
   watchFormValue = () => {
     this.requirementInfoForm.valueChanges.subscribe(() => {
-      let valueLabel = this.requirementInfoForm.controls;
-      console.log(valueLabel)
       let value = this.requirementInfoForm.value;
 
       this.totalSelectedWorkstation =
-    ((value.workstation2x1 * 0.60) +
+   (value.workstation2x1 * 0.60) +
     (value.workstation3x2 * 0.75) +
     (value.workstation4x2 * 1.00) +
     (value.workstation5x2 * 1.25) +
@@ -193,8 +193,8 @@ public handleOpened(item:any): void {
     (value.server4Rack * 10.50) +
     (value.prayerRoomNumber * 4.50) +
     (value.wellnessRoomNumber * 4.50)  +
-    value.trainingRoomNumber   +
-    value.gameRoomNumber).toFixed(0);
+    value.trainingRoomNumber +
+    value.gameRoomNumber;
 
     // let circulation = totalNoOfSeats*0.1;
     // let netBillableSeat = totalNoOfSeats + circulation;

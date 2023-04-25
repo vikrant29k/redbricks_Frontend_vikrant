@@ -13,7 +13,7 @@ export class LocationService {
 
     selectedLocation!: string;
     selectedCenter!: string;
-
+    selectedAddress!:string
     constructor(
         private headerService: HeaderService,
         private http: HttpClient,
@@ -97,69 +97,79 @@ export class LocationService {
         );
     }
 
+    getRentData = (data:any)=>{
+      let httpOptions = this.headerService.updateHeader();
+        return this.http.post(this.baseUrl + 'getRentSheet', data , httpOptions).pipe(
+            this.toster.observe({
+                success: 'Centers Loaded Successfully',
+                loading: 'Loading Centers...',
+                error: ({ error }) => `${error.Message}`
+            })
+        );
+    }
 
 
 
-    locationData = [
-        {
-            location: 'Pune',
-            center: 'Kharadi',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Pune',
-            center: 'Shivaji Nagar',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Pune',
-            center: 'Koregaon Park',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Pune',
-            center: 'Hadapsar',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Hyderabad',
-            center: 'Salarpuria',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Hyderabad',
-            center: 'Indira Nagar',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Hyderabad',
-            center: 'Frazer Town',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Mumbai',
-            center: 'Bandra',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Mumbai',
-            center: 'Boriwali',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Mumbai',
-            center: 'Panwale',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Delhi',
-            center: 'Canode palace',
-            image: ['location-preview.png']
-        },
-        {
-            location: 'Delhi',
-            center: 'Mandoli',
-            image: ['location-preview.png']
-        }
-    ]
+    // locationData = [
+    //     {
+    //         location: 'Pune',
+    //         center: 'Kharadi',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Pune',
+    //         center: 'Shivaji Nagar',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Pune',
+    //         center: 'Koregaon Park',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Pune',
+    //         center: 'Hadapsar',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Hyderabad',
+    //         center: 'Salarpuria',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Hyderabad',
+    //         center: 'Indira Nagar',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Hyderabad',
+    //         center: 'Frazer Town',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Mumbai',
+    //         center: 'Bandra',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Mumbai',
+    //         center: 'Boriwali',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Mumbai',
+    //         center: 'Panwale',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Delhi',
+    //         center: 'Canode palace',
+    //         image: ['location-preview.png']
+    //     },
+    //     {
+    //         location: 'Delhi',
+    //         center: 'Mandoli',
+    //         image: ['location-preview.png']
+    //     }
+    // ]
 }

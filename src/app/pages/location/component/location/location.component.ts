@@ -30,6 +30,7 @@ export class LocationLocationComponent implements OnInit {
         this.locationService.getLocationList().subscribe({
             next: (result: any) => {
                 this.locations = [...result]
+                console.log(this.locations)
             }
         })
         // this.locationService.getAllLocation().subscribe({

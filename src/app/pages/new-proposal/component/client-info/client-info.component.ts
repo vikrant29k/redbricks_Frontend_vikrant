@@ -18,6 +18,7 @@ export class NewProposalClientInfoComponent implements OnInit {
   proposalId!: string;
   locations = new Set<string>();
   centers = new Set<string>();
+  address = new Set<string>();
   salesHeads: any[] = [];
   category: any;
   // IPC: any = ['JLL', 'CBRE', 'C & W', 'KF', 'Colliers', 'Savills', 'other'];
@@ -35,6 +36,7 @@ export class NewProposalClientInfoComponent implements OnInit {
   clientInfoForm = new FormGroup<any>({
     location: new FormControl('', Validators.required),
     center: new FormControl('', Validators.required),
+    address: new FormControl(''),
     // 'spocName': new FormControl(''),
     // 'clientName': new FormControl(''),
     brokerType: new FormControl('', Validators.required),
@@ -138,39 +140,42 @@ export class NewProposalClientInfoComponent implements OnInit {
       });
   };
 
-  getAllLocation = () => {
-    this.locationService.locationData.forEach((element) => {
-      this.locations.add(element.location);
-    });
-  };
+  // getAllLocation = () => {
+  //   this.locationService.locationData.forEach((element:any) => {
+  //     this.locations.add(element.location);
+  //     console.log(element,"Location che values")
 
-  getCentersInLocation = () => {
-    let location: any =
-      this.clientInfoForm.value.location ||
-      this.locationService.selectedLocation;
-    if (location) {
-      this.locationService.locationData.forEach((element) => {
-        let temp: any = element.location;
-        if (temp === location) {
-          this.centers.add(element.center);
-        }
-      });
-    }
-    console.log('location value updated::');
-    // this.cd.detectChanges();
-  };
+  //   });
+  // };
+
+  // getCentersInLocation = () => {
+  //   let location: any =
+  //     this.clientInfoForm.value.location ||
+  //     this.locationService.selectedLocation;
+  //   if (location) {
+  //     this.locationService.locationData.forEach((element:any) => {
+  //       let temp: any = element.location;
+  //       if (temp === location) {
+  //         this.centers.add(element.center);
+  //         this.address.add(element.address)
+  //       }
+  //     });
+  //   }
+  //   console.log('location value updated::');
+  //   // this.cd.detectChanges();
+  // };
 
   watchValueChangesInForm = () => {
-    this.clientInfoForm.get('location')?.valueChanges.subscribe(() => {
-      this.getCentersInLocation();
-    });
+    // this.clientInfoForm.get('location')?.valueChanges.subscribe(() => {
+    //   this.getCentersInLocation();
+    // });
     let brokerType = this.clientInfoForm.get('brokerType');
     brokerType?.valueChanges.subscribe((res) => {
       let value = brokerType?.value;
       this.getBrokerCategoryList(res);
       this.directClient(res);
     });
-    
+
   };
 
   watchValueChangesInBrokerCategory = () => {
@@ -198,8 +203,8 @@ export class NewProposalClientInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.proposalId = this.getProposalId();
-    this.getAllLocation();
-    this.getCentersInLocation();
+    // this.getAllLocation();
+    // this.getCentersInLocation();
     this.watchValueChangesInForm();
     this.getLocationAndCenter();
     this.getBrokerTypeList();
@@ -210,10 +215,12 @@ export class NewProposalClientInfoComponent implements OnInit {
   getLocationAndCenter = () => {
     let location = this.locationService.selectedLocation;
     let center = this.locationService.selectedCenter;
+    let address = this.locationService.selectedAddress;
     console.log(location, center);
     this.clientInfoForm.patchValue({
       location: location,
       center: center,
+      address:address
     });
     console.log(this.clientInfoForm.value);
   };
