@@ -155,7 +155,7 @@ export class DashboardAdminDashboard implements OnInit {
       .subscribe();
   }
   tableDataSource(data: any) {
-    this.dataSourceRecent = new MatTableDataSource(data);
+    this.dataSourceRecent =data;
     this.dataSourceRecent.paginator = this.paginator;
     this.cd.detectChanges();
     // this.table.renderRows();
@@ -180,6 +180,7 @@ export class DashboardAdminDashboard implements OnInit {
       // console.log('loaction', res);
     });
     this.dashboardService.getRecentProposal().subscribe((res) => {
+      console.log(res)
       this.tableDataSource(res);
       this.Amount = res;
 
@@ -189,7 +190,6 @@ export class DashboardAdminDashboard implements OnInit {
 
   // Approve proposal
   approvePropsal(id: string) {
-
     this.System_value = this.Amount.find((x:any) => x._id === id).previousFinalOfferAmmount ;
     this.client_value =  this.Amount.find((x:any) => x._id === id).clientFinalOfferAmmount ;
     console.log(this.System_value, 'System_value');
@@ -198,7 +198,7 @@ export class DashboardAdminDashboard implements OnInit {
     var a = 'myprice';
     Swal.fire({
       title: 'Approve Proposal',
-      text: `Client Price:- ${(this.client_value).toFixed(2)} \n System Price = ${(this.System_value).toFixed(2)}`,
+      html: `Client Price = ${(this.client_value).toFixed(2)} <br> System Price = ${(this.System_value).toFixed(2)}`,
       icon: 'info',
       showConfirmButton: true,
       confirmButtonText: 'Confirm',
@@ -212,18 +212,19 @@ export class DashboardAdminDashboard implements OnInit {
       cancelButtonColor: '#7D7E80',
     }).then((confirmation) => {
       if (confirmation.isConfirmed) {
-        this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value })
+        this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value, salesHeadFinalOfferAmmount: confirmation.value })
           .subscribe((res) => {
-            console.log(res,"Final offer amount admin dashboard approve")
+            console.log(res,"Final offer amount sales head dashboard approve")
           });
       }
     });
   }
   // delete the row
-  deleteRow(id: string) {
-    this.dataSourceRecent = this.dataSourceRecent.filter(
-      (u: any) => u._id !== id
-    );
+  deleteRow(id: any) {
+    // console.log(this.dataSourceRecent.value[id]);
+
+    this.dataSourceRecent = this.dataSourceRecent.filter((u:any) => u._id !== id);
+    console.log(this.dataSourceRecent)
   }
   // view proposals
   viewDetails = (Id: string) => {

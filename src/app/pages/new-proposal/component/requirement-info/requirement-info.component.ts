@@ -19,10 +19,12 @@ export class NewProposalRequirementInfoComponent implements OnInit {
   totalWorkstationBooked: any = 0;
   totalAvailableWorkstation: any = 373;
   totalSelectedWorkstation: any = 0;
+  areaOfSelectedSeat:any;
   valueToBeDivided:any;
   valueOfDinominator:any=1152;
 
   requirementInfoForm = new FormGroup({
+    areaOfSelectedSeat:new FormControl(),
     workstation2x1: new FormControl(),
     workstation3x2: new FormControl(),
     workstation4x2: new FormControl(),
@@ -39,6 +41,7 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     meeting4P: new FormControl(),
     meeting6P: new FormControl(),
     meeting8P: new FormControl(),
+    meeting10P: new FormControl(),
     meeting12P: new FormControl(),
     meeting16P: new FormControl(),
     board20P: new FormControl(),
@@ -76,15 +79,20 @@ export class NewProposalRequirementInfoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     (window as any).scrollTo(top);
     this.totalWorkStationBalance = this.proposalService.TotalNoOfSets;
     this.totalAvailableWorkstation = this.proposalService.AvailableNoOfSeats;
     this.proposalId = this.getProposaId();
+    this.proposalService.getProposalById(this.proposalId).subscribe((res:any)=>{
+      console.log(res)
+      this.requirementInfoForm.patchValue(res[0]);
+    })
     this.watchFormValue();
   }
 
   onSubmit = () => {
-    let finalSeat =  this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1);
+    let finalSeat = Math.ceil(this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1));
     this.requirementInfoForm.patchValue({
       totalNumberOfSeats:finalSeat
     });
@@ -92,6 +100,9 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     let contentt =  document.getElementById('datadiv')?.textContent;
     this.requirementInfoForm.patchValue({
       content:contentt
+    });
+    this.requirementInfoForm.patchValue({
+      areaOfSelectedSeat:this.areaOfSelectedSeat
     });
     this.proposalService.addRequirement(this.requirementInfoForm.value, this.proposalId).subscribe({
         next: (result: any) => {
@@ -170,6 +181,7 @@ public handleOpened(item:any): void {
     (value.cabinMD * 7.50) +
     (value.meeting6P * 6.50)+
     (value.meeting8P * 12.00) +
+    (value.meeting10P * 14.00) +
     (value.meeting4P * 4.50) +
     (value.meeting16P * 25.00) +
     (value.meeting12P * 17.00) +
@@ -195,7 +207,8 @@ public handleOpened(item:any): void {
     (value.wellnessRoomNumber * 4.50)  +
     value.trainingRoomNumber +
     value.gameRoomNumber;
-
+    let billableSeat = this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1);
+    this.areaOfSelectedSeat = (billableSeat*19.00).toFixed(2);
     // let circulation = totalNoOfSeats*0.1;
     // let netBillableSeat = totalNoOfSeats + circulation;
     });

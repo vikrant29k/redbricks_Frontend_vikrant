@@ -19,7 +19,26 @@
   width: 100%;
   background-color: #fddede;
   font-size: 1.1rem;
+  .previous {
+    color: black;
+    font-size: 3rem;
+    position: fixed;
+    cursor: pointer;
+    top: 2rem;
+    left: 2rem;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 100%;
+    background-color: #C3343A;
+    color: #fff;
+    font-size: 1.1rem;
+    z-index: 1;
+    cursor: pointer;
 
+  }
   .main-content {
     @include flex_center-center();
     @include flex-column();

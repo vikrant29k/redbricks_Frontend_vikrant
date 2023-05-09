@@ -13,6 +13,7 @@ import {MatExpansionModule} from '@angular/material/expansion'
 import {MatTooltipModule}   from '@angular/material/tooltip'
 import { MatRippleModule  } from "@angular/material/core";
 import {MatBadgeModule} from "@angular/material/badge"
+
 const material = [
     MatTableModule,
     MatBadgeModule,
@@ -23,13 +24,13 @@ const material = [
    MatCardModule,
     MatPaginatorModule,
     MatSortModule,
- 
+
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
    MatDialogModule,
    MatIconModule
-    
+
 ];
 
 @NgModule({

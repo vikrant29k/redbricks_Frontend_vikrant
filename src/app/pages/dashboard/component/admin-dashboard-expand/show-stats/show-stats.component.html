@@ -1,0 +1,37 @@
+<div class="container">
+  <mat-card class="card">
+  <h2><mat-icon>location_city</mat-icon> {{centerName}}</h2>
+
+    <p>Total Seat:{{totalNumber }} </p>
+    <div style="display: flex; justify-content: space-evenly;"><p style="margin: 0;">Selected Seat :{{selectedNumber}}</p><p style="margin: 0;">Remaining Seat :{{totalNumber-selectedNumber}}</p></div>
+
+
+</mat-card>
+<mat-card class="card">
+  <section>
+    <p>System Current Price:</p><p>Rs.{{currentValue}} per seat</p>
+    </section>
+    <section>
+    <p>Rack Value:</p><p> Rs.{{rackValue}} per seat</p>
+    </section>
+  <section>
+    <p>Total Sales Price Until Now :</p><p>Rs.{{bookingPriceUptilNow}} </p>
+  </section>
+  <section>
+    <p>As Per Sales, Current Seat Price Is :</p><p>Rs.{{currentSeatPrice}} per seat</p>
+  </section>
+
+  <section>
+    <p>Profit / Loss:</p>
+    <p> <mat-icon>{{profitLoss>0?'arrow_upward':'arrow_downward'}}</mat-icon>
+      Rs. {{profitLoss}}
+
+    </p>
+
+  </section>
+  <!-- <section>
+    <p>Rent Cam Total</p>
+    {{currentValue}}
+  </section> -->
+ </mat-card>
+</div>

@@ -52,7 +52,7 @@
       //  width: 100%;
       margin-inline: 1rem;
       justify-content: space-between;
-      .sales { 
+      .sales {
         .totals {
           display: flex;
           align-items: center;
@@ -73,7 +73,7 @@
         color: white;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.484),
           0 6px 15px 0 rgba(0, 0, 0, 0.19);
-        width: 33rem;
+        width: 35rem;
         margin-inline: 1rem 0rem;
         margin-block: 0.5rem;
 
@@ -266,9 +266,9 @@
       }
     }
   }
-  
+
   .notify {
-   
+
     display: block;
     position: fixed;
     .icon {
@@ -306,8 +306,8 @@
 
     .sub-icon {
       overflow-x: hidden;
-      
-  
+
+
       .tableConflictClass {
         .fadeInUp{animation: fadeInUp 1s ease backwards;}
         .resolve {

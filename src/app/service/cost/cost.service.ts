@@ -23,8 +23,8 @@ export class CostService {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getAll', httpOptions).pipe(
             this.toster.observe({
-                success: 'Cost Data Loaded Successfully',
-                loading: 'Loading Cost Data...',
+                success: 'Data Loaded Successfully',
+                loading: 'Loading Data...',
                 error: ({ error }) => `${error.Message}`
             })
         )

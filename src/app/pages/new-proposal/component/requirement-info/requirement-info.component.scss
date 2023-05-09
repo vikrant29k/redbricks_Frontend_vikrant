@@ -108,6 +108,20 @@
             .field {
               @include flex-column__center-center();
               gap: 1rem;
+              .field-inputs{
+                display: flex;
+                font-size: 1.2rem;
+                flex-direction: row;
+                gap: 1rem;
+                justify-content: space-between;
+                input{
+                  background-color: white;
+                  width: 6rem;
+                  border-radius: 6px;
+                  font-size: 1.2rem;
+                  border: none;
+                }
+              }
               .field-card {
                 background-color: #c3343a;
                 @include field-card();

@@ -9,7 +9,7 @@ import { CostService } from "src/app/service/cost/cost.service";
 })
 export class LocationLocationComponent implements OnInit {
 
-    locations!: string[];
+    locations:any;
     // cities: string[] = ['Pune', 'Mumbai', 'Kolkata', 'Delhi', 'Kota', 'Banglore', 'Chandigad'];
     // iconColor: string[] = ['red', 'blue', 'yellow', 'pink', 'green', 'black'];
 

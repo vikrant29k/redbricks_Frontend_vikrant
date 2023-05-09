@@ -133,6 +133,17 @@ export class ProposalService {
     );
   };
 
+  getProposalById = (Id:any) => {
+    let httpOptions = this.headerService.updateHeader();
+    return this.http.get(this.baseUrl+'getProposalById/'+Id,httpOptions).pipe(
+      this.toster.observe({
+        success: 'Proposal Loaded Successfully',
+        loading: 'Loading Proposal...',
+        error: ({ error }) => `${error.Message}`,
+      })
+    );
+  }
+
   checkSeatAvailability = (Id: string) => {
     let httpOptions = this.headerService.updateHeader();
     return this.http

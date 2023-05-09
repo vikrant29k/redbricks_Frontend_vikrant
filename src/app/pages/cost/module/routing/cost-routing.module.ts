@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CostComponent } from "../../cost.component";
 import { CostUpdateCostComponent } from "../../component/update-cost/update-cost.component";
+import { ViewListComponent } from "../../component/view-list/view-list.component";
 
 
 
@@ -19,6 +20,10 @@ const routes: Routes = [
                 path: 'update-cost',
                 component: CostUpdateCostComponent
             },
+            {
+              path: 'view-list',
+              component : ViewListComponent
+            }
             // {
             //     path: 'update-cost/:brokerId',
             //     component: CostUpdateCostComponent

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { UserService } from 'src/app/service/users/user.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { CalculationDataService } from 'src/app/service/Calculate Data/calculation-data.service';
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
@@ -22,7 +23,9 @@ export class AddLocationComponent implements OnInit {
   userDataBeforeEdit: any;
   salesHeads: any = [];
   toDate:any;
+  rentCamArray:any;
   constructor(
+    private calculateService: CalculationDataService,
     private datepipe: DatePipe,
     private loactionService: LocationService,
     private authService: AuthenticationService,
@@ -37,8 +40,13 @@ export class AddLocationComponent implements OnInit {
     salesHead: new FormControl('', Validators.required),
     center: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
+    selectedNoOfSeats:new FormControl(''),
     totalNoOfWorkstation: new FormControl('', Validators.required),
     rentSheet: new FormArray([]),
+    carParkCharge: new FormControl(''),
+    rackRate:new FormControl(''),
+    rentAndCamTotal:new FormControl(''),
+
     // yearnew: new FormControl('', Validators.required),
     // rent: new FormControl('', Validators.required),
     // cam: new FormControl('', Validators.required),
@@ -135,16 +143,24 @@ export class AddLocationComponent implements OnInit {
       this.locationId = ID;
       this.editMode = true;
       this.getLocationDataToUpdate(this.locationId);
+
+
     }
+
     this.selectSalesHead();
   }
 
   getLocationDataToUpdate = (Id: string) => {
+
     this.loactionService.getLocationById(Id).subscribe({
       next: (result: any) => {
-        console.log(result);
+        this.rentCamArray=result.rentSheet;
+        console.log(this.rentCamArray);
+        this.calculateService.objectValueUpdated.emit(this.rentCamArray[0])
+        this.calculateService.objectValue = this.rentCamArray
         this.locationForm.patchValue({
           location: result.location,
+          selectedNoOfSeats:result.selectedNoOfSeats,
           center: result.center,
           totalNoOfWorkstation: result.totalNoOfWorkstation,
           salesHead: result.salesHead,
@@ -152,7 +168,9 @@ export class AddLocationComponent implements OnInit {
           perSeatPrice: result.perSeatPrice,
           videoLinks: result.videoLinks,
           imageLinks: result.imageLinks,
-          rentSheet: result.rentSheet
+          rentSheet: result.rentSheet,
+          carParkCharge: result.carParkCharge,
+          rackRate: result.rackRate
         });
         result.imageLinks.forEach((element: string, index: number) => {
           this.onAdd('imageLinks');
@@ -185,14 +203,13 @@ export class AddLocationComponent implements OnInit {
   };
 
   onSubmit = () => {
-    console.log(this.locationForm.value);
-    if (this.locationForm.invalid) {
+
+    // console.log(this.locationForm.value,"on add location submit");
+    if (this.locationForm.invalid)
+    {
       return;
-    } else if (
-      !this.jsonUploaded &&
-      !this.layoutImageUploaded &&
-      !this.editMode
-    ) {
+    } else if (!this.jsonUploaded && !this.layoutImageUploaded && !this.editMode)
+    {
       Swal.fire({
         title: 'File Upload Require!',
         icon: 'error',
@@ -201,12 +218,21 @@ export class AddLocationComponent implements OnInit {
         confirmButtonText: 'Got It!',
         confirmButtonColor: '#C3343A',
       });
-    } else {
+    }
+    else
+    {
+    let val =  this.locationForm.get('rentSheet')?.value;
+    console.log(val,"asdasd");
+    let total = val[0].rent + val[0].cam
+     this.locationForm.patchValue({
+       rentAndCamTotal:total
+     });
       let formData: FormData = this.appentFormData();
-      if (this.editMode) {
-        this.loactionService
-          .updateLocation(this.locationId, formData)
-          .subscribe({
+      if (this.editMode)
+      {
+
+        console.log(this.locationForm.value.rentAndCamTotal)
+        this.loactionService.updateLocation(this.locationId, formData).subscribe({
             next: (result: any) => {
               this.router.navigate(['/admin', 'location', 'location-list']);
             },
@@ -214,9 +240,14 @@ export class AddLocationComponent implements OnInit {
               this.authService.handleAuthError(err);
             },
           });
-      } else {
+      }
+      else
+      {
+
+         console.log(this.locationForm.value.rentAndCamTotal)
         this.loactionService.addLocation(formData).subscribe({
           next: (result: any) => {
+
             this.router.navigate(['/admin', 'location', 'location-list']);
           },
           error: (err: any) => {

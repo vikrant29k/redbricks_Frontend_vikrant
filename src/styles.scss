@@ -132,3 +132,6 @@ body {
 .mat-expansion-indicator::after{
   color: white;
 }
+mat-expansion-panel{
+  margin:0 !important;
+}

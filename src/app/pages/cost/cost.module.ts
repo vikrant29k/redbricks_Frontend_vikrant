@@ -5,12 +5,14 @@ import { BrokerRoutingModule } from "./module/routing/cost-routing.module";
 import { CostComponent } from "./cost.component";
 import { CostUpdateCostComponent } from "./component/update-cost/update-cost.component";
 import {  CostMaterialMoudule} from "./module/material/cost-material.module";
+import { ViewListComponent } from './component/view-list/view-list.component';
 
 
 @NgModule({
     declarations: [
         CostComponent,
         CostUpdateCostComponent,
+        ViewListComponent,
     ],
     imports: [
         CommonModule,

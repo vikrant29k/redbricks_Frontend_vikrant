@@ -34,16 +34,16 @@
         </mat-form-field>
       </section>
       <section>
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Per Seat Price</mat-label>
+        <mat-form-field appearance="outline" *ngIf="editMode">
+          <mat-label>Selected workstation number</mat-label>
           <input
             type="number"
             min="0"
             oninput="this.value = Math.round(Math.abs(this.value))"
             matInput
-            formControlName="perSeatPrice"
+            formControlName="selectedNoOfSeats"
           />
-        </mat-form-field> -->
+        </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Total workstation number</mat-label>
           <input
@@ -54,15 +54,33 @@
             formControlName="totalNoOfWorkstation"
           />
         </mat-form-field>
-<!-- Default Date And upload one object that is one year, rent and cam -->
-        <!-- <mat-form-field appearance="outline">
-          <mat-label>Year</mat-label>
-          <mat-select formControlName="yearnew" autocomplete="off">
-              <mat-option value="{{toDate}}">{{toDate}}</mat-option>
-          </mat-select>
-        </mat-form-field> -->
 
       </section>
+    <section>
+      <!-- Car Rent add -->
+      <mat-form-field appearance="outline">
+        <mat-label>Car Parking Charges</mat-label>
+        <input
+        type="number"
+        min="0"
+        oninput="this.value = Math.round(Math.abs(this.value))"
+        matInput
+        formControlName="carParkCharge"
+      />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="editMode">
+        <mat-label>Rack Rate for Center</mat-label>
+        <input
+        type="number"
+        min="0"
+        oninput="this.value = Math.round(Math.abs(this.value))"
+        matInput
+        formControlName="rackRate"
+      />
+      </mat-form-field>
+    </section>
+      <!-- Default Date And upload one object that is one year, rent and cam -->
       <!-- <section > -->
         <!-- <mat-form-field appearance="outline">
           <mat-label>Rent</mat-label>
@@ -127,12 +145,9 @@
             type="button"
             mat-raised-button
             (click)="layoutImage.click()"
-            color="primary"
-          >
+            color="primary">
             <div class="button_content">
-              <mat-icon fontSet="material-icons-round"
-                >add_photo_alternate</mat-icon
-              >
+              <mat-icon fontSet="material-icons-round">add_photo_alternate</mat-icon>
               <p>Upload Layout Image</p>
             </div>
           </button>

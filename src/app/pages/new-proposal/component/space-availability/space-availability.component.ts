@@ -6,12 +6,17 @@ import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { CostService } from 'src/app/service/cost/cost.service';
 import { LocationService } from 'src/app/service/location/location.service';
 import { NewProposalLayoutPreviewComponent } from '../layout-preview/layout-preview.component';
+import { Location } from '@angular/common'
+
 @Component({
   selector: 'new-proposal-space-availability',
   templateUrl: './space-availability.component.html',
   styleUrls: ['./space-availability.component.scss'],
 })
 export class NewProposalSpaceAvailabilityComponent implements OnInit {
+  goBack(){
+    this.location.back();
+  }
   nonStandardRequirement: boolean = false;
   proposalId!: string;
   isServiced: boolean = false;
@@ -26,8 +31,8 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
   camValue:any;
   selectedLocation:any;
   selectedCenter:any;
- finalAmount:any;
-
+  finalAmount:any;
+  getRackValue:any;
   proposalExtraDetailForm = new FormGroup({
     consolidated: new FormControl(''),
     Tenure: new FormControl('', Validators.required),
@@ -35,10 +40,14 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     NonStandardRequirement: new FormControl(''),
     Serviced: new FormControl('', Validators.required),
     serviceCosts: new FormControl(''),
-    finalOfferAmmount: new FormControl('')
+    finalOfferAmmount: new FormControl(''),
+    rackValue: new FormControl(''),
+    systemValue: new FormControl(''),
+
   });
 
   constructor(
+    private location:Location,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
@@ -50,7 +59,7 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
   onSubmit = () => {};
 
   ngOnInit(): void {
-this.createCostServices();
+
     // this.consolidatedSeats = this.proposalService.consolidatedSeats;
     // this.seatAvailability = this.proposalService.seatAvailability;
     this.proposalId = this.route.snapshot.params['proposalId'];
@@ -69,7 +78,7 @@ this.createCostServices();
         this.locationService.getRentData(data).subscribe((res:any)=>{
           this.rentValue = res[0].rentSheet[0].rent;
           this.camValue = res[0].rentSheet[0].cam;
-
+          this.getRackValue=res[0]
         })
       },
       error: (err: any) => {},
@@ -92,56 +101,7 @@ this.createCostServices();
   };
 
   generateProposal = () => {
-    this.costService.getAllCosts().subscribe((res:any)=>{
 
-      if(this.isServiced === true)
-      {
-        let servicedCostOfElectricity = res[0].costOfElectricity;
-        let  servicedCostOfOps =  res[0].costOfOPS
-        // calculation Start of cost service
-        let standarCost = 2000.00;
-        let years3Rent =(standarCost/36)*1.12;
-        let total_1 = years3Rent + servicedCostOfElectricity + servicedCostOfOps + this.rentValue + this.camValue;
-        let adminMarketing = total_1*0.05;
-        let brokerage = total_1*0.07;
-        let total_2 = total_1 + adminMarketing + brokerage;
-        let profitBeforeTax = total_2*0.5;
-        let total_3 = total_2 + profitBeforeTax;
-        let rateOfInventoryOnLeaseArea = (22/0.7)*total_3;
-        let includeCommonsAmeneities = rateOfInventoryOnLeaseArea * 1.1;
-        let on80perDiversityFactor = includeCommonsAmeneities/0.8;
-        let final = this.totalNumberofSeat *on80perDiversityFactor;
-        this.proposalExtraDetailForm.patchValue({
-          serviceCosts:on80perDiversityFactor.toFixed(2)
-        });
-        this.proposalExtraDetailForm.patchValue({
-          finalOfferAmmount:final.toFixed(2)
-        })
-      }
-      else
-      {
-        let servicedCostOfElectricity = res[1].costOfElectricity;
-        let  servicedCostOfOps =  res[1].costOfOPS
-        // calculation Start of cost service
-        let standarCost = 2000.00;
-        let years3Rent =(standarCost/36)*1.12;
-        let total_1 = years3Rent + servicedCostOfElectricity + servicedCostOfOps + this.rentValue + this.camValue;
-        let adminMarketing = total_1*0.05;
-        let brokerage = total_1*0.07;
-        let total_2 = total_1 + adminMarketing + brokerage;
-        let profitBeforeTax = total_2*0.5;
-        let total_3 = total_2 + profitBeforeTax;
-        let rateOfInventoryOnLeaseArea = (22/0.7)*total_3;
-        let includeCommonsAmeneities = rateOfInventoryOnLeaseArea * 1.1;
-        let on80perDiversityFactor = includeCommonsAmeneities/0.8;
-        let final = this.totalNumberofSeat *on80perDiversityFactor;
-        this.proposalExtraDetailForm.patchValue({
-          serviceCosts:on80perDiversityFactor.toFixed(2)
-        })
-        this.proposalExtraDetailForm.patchValue({
-          finalOfferAmmount:final.toFixed(2)
-        })
-      }
 
     let serviced = this.isServiced ? 'yes' : 'no';
     let acceptConsolidatedSeats = this.isAcceptConsolidatedSeats ? 'yes' : 'no';
@@ -149,6 +109,7 @@ this.createCostServices();
       consolidated: acceptConsolidatedSeats,
       Serviced: serviced,
     });
+
     if (this.proposalExtraDetailForm.invalid) {
       return;
     }
@@ -161,16 +122,7 @@ this.createCostServices();
         },
         error: (err: any) => {},
       });
-    // this.router.navigate(['/']);
-  });
-  };
-
-  createCostServices(){
-
-
-
   }
-
 
 
 }

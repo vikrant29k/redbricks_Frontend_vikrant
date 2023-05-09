@@ -216,7 +216,7 @@ export class NewProposalClientInfoComponent implements OnInit {
     let location = this.locationService.selectedLocation;
     let center = this.locationService.selectedCenter;
     let address = this.locationService.selectedAddress;
-    console.log(location, center);
+    // console.log(location, center);
     this.clientInfoForm.patchValue({
       location: location,
       center: center,
