@@ -1,7 +1,7 @@
 <div class="container">
   <div class="main-content">
     <div class="title">
-      <h1>Add Location</h1>
+      <h1> {{editMode?'Update Location':'Add Location'}}</h1>
     </div>
     <form [formGroup]="locationForm" (ngSubmit)="onSubmit()" class="form-group">
       <section>
@@ -34,7 +34,7 @@
         </mat-form-field>
       </section>
       <section>
-        <mat-form-field appearance="outline" *ngIf="editMode">
+        <!-- <mat-form-field appearance="outline" *ngIf="editMode">
           <mat-label>Selected workstation number</mat-label>
           <input
             type="number"
@@ -43,7 +43,7 @@
             matInput
             formControlName="selectedNoOfSeats"
           />
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field appearance="outline">
           <mat-label>Total workstation number</mat-label>
           <input
@@ -54,11 +54,30 @@
             formControlName="totalNoOfWorkstation"
           />
         </mat-form-field>
-
+        <mat-form-field appearance="outline">
+          <mat-label>Car Parking Charges</mat-label>
+          <input
+          type="number"
+          min="0"
+          oninput="this.value = Math.round(Math.abs(this.value))"
+          matInput
+          formControlName="carParkCharge"
+        />
+        </mat-form-field>
       </section>
     <section>
+      <mat-form-field appearance="outline" *ngIf="editMode">
+        <mat-label>Selected workstation number</mat-label>
+        <input
+          type="number"
+          min="0"
+          oninput="this.value = Math.round(Math.abs(this.value))"
+          matInput
+          formControlName="selectedNoOfSeats"
+        />
+      </mat-form-field>
       <!-- Car Rent add -->
-      <mat-form-field appearance="outline">
+      <!-- <mat-form-field appearance="outline">
         <mat-label>Car Parking Charges</mat-label>
         <input
         type="number"
@@ -67,9 +86,9 @@
         matInput
         formControlName="carParkCharge"
       />
-      </mat-form-field>
+      </mat-form-field> -->
 
-      <mat-form-field appearance="outline" *ngIf="editMode">
+      <!-- <mat-form-field appearance="outline" *ngIf="editMode">
         <mat-label>Rack Rate for Center</mat-label>
         <input
         type="number"
@@ -78,7 +97,19 @@
         matInput
         formControlName="rackRate"
       />
-      </mat-form-field>
+      </mat-form-field> -->
+    </section>
+    <section>
+      <!-- <mat-form-field appearance="outline" *ngIf="editMode">
+        <mat-label>Total Sales Price</mat-label>
+        <input
+          type="number"
+          min="0"
+          oninput="this.value = Math.round(Math.abs(this.value))"
+          matInput
+          formControlName="bookingPriceUptilNow"
+        />
+        </mat-form-field> -->
     </section>
       <!-- Default Date And upload one object that is one year, rent and cam -->
       <!-- <section > -->
@@ -198,9 +229,9 @@
         </div>
       </section>
       <div class="form-action">
-        <button type="reset" mat-raised-button color="primary">Cancel</button>
+        <button type="reset" mat-raised-button color="primary">Reset</button>
         <button type="submit" mat-raised-button color="primary">
-          Add Location
+          {{editMode?'Update Location':'Add Location'}}
         </button>
       </div>
     </form>

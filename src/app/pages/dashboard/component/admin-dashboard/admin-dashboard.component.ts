@@ -220,6 +220,13 @@ export class DashboardAdminDashboard implements OnInit {
     });
   }
   // delete the row
+  deleteConflict(id: any) {
+    // console.log(this.dataSourceRecent.value[id]);
+
+    this.dataSourceConflict = this.dataSourceConflict.filter((u:any) => u._id !== id);
+    this.notifications = this.dataSourceConflict.length
+    console.log(this.dataSourceConflict)
+  }
   deleteRow(id: any) {
     // console.log(this.dataSourceRecent.value[id]);
 

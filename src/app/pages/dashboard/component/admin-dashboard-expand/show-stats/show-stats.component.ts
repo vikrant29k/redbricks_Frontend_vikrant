@@ -48,8 +48,8 @@ this.getCostSheetValue()
     this.totalNumber = data.totalNoOfWorkstation;
     this.selectedNumber = data.selectedNoOfSeats;
     this.rentAndCamTotal = data.rentAndCamTotal;
-    this.rackValue = new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(data.rackRate);
-    let rackvalue = data.rackRate;
+    // this.rackValue = new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(data.rackRate);
+    // let rackvalue = data.rackRate;
     this.costService.getAllCosts().subscribe((res:any)=>{
       // console.log(res)
       // this.standarCost= ;\
@@ -65,9 +65,11 @@ this.getCostSheetValue()
       let on80perDiversityFactor = includeCommonsAmeneities/0.8;
       this.currentValue = new Intl.NumberFormat('en-IN', { currency: 'INR' }).format(Math.round(on80perDiversityFactor)) ;
 
+      let rackNewValue = (Math.ceil(on80perDiversityFactor/1000)*1000) +1000;
+      this.rackValue = rackNewValue;
     // let standarCost = 2000.00;
     const totalSeats = this.totalNumber;
-    const seatCost = rackvalue;
+    const seatCost = rackNewValue;
     const totalSellingPrice = bookedPrice;
     const seatsSoldTotal = this.selectedNumber;
 

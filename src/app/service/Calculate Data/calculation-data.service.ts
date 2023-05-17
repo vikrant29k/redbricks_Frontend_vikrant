@@ -9,9 +9,9 @@ import { HotToastService } from "@ngneat/hot-toast"
   providedIn: 'root'
 })
 export class CalculationDataService {
-  public objectValueUpdated: EventEmitter<any> = new EventEmitter<any>();
+  // public objectValueUpdated: EventEmitter<any> = new EventEmitter<any>();
 
-  public objectValue: any;
+  // public objectValue: any;
   // public rentValue:EventEmitter<number> = new EventEmitter<number>();
   // public camValue:EventEmitter<number> = new EventEmitter<number>();
 
@@ -20,7 +20,7 @@ export class CalculationDataService {
   constructor( private http: HttpClient,
                private headerService: HeaderService,
                private toster: HotToastService) {
-                console.log(this.objectValueUpdated,"both value from services")
+                // console.log(this.objectValueUpdated,"both value from services")
 
   }
   // getValueAndcalculate(){

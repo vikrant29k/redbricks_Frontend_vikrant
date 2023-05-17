@@ -12,6 +12,7 @@ import { LocationListComponent } from './component/location-list/location-list.c
 import { LocationAdminChildRouteGuard } from "./module/service/location-admin-child-route/location-child-admin-route-guard.guard";
 import { LocationSalesChildRouteGuard } from "./module/service/location-sales-child-route/location-sales-child-route.guard";
 import { DatePipe } from "@angular/common";
+import { GenerateRackValueComponent } from './component/generate-rack-value/generate-rack-value.component';
 @NgModule({
     declarations: [
         LocationComponent,
@@ -19,7 +20,8 @@ import { DatePipe } from "@angular/common";
         LocationCenterComponent,
         LocationLocationDetailComponent,
         AddLocationComponent,
-        LocationListComponent
+        LocationListComponent,
+        GenerateRackValueComponent
     ],
     imports: [
         CommonModule,

@@ -3,7 +3,7 @@
   <h2><mat-icon>location_city</mat-icon> {{ cardData.location }}</h2>
   <div class="subtitle">
     <mat-card matTooltip="Selected Seat / Total Seats">
-      <p> <b> Total Seats: {{ cardData.selectedNoOfSeats }}/{{ cardData.totalNoOfWorkstation }}</b></p>
+      <p> <b> Total Seats: {{ cardData.selectedNoOfSeats || 0 }}/{{ cardData.totalNoOfWorkstation }}</b></p>
     </mat-card>
     <mat-card>
       <p> <b>Proposal Generated: {{ cardData.totalNoOfWorkstation}}</b></p>
@@ -13,7 +13,7 @@
     <mat-card class="sub" *ngFor="let center of cardData.centers let i=index " (click)="openDialog(i)">
       <span class="center_title">{{ center.name}}: </span>
      <mat-card class="sub_sub_card">
-        <p><b>Total Seat Selected:</b> {{ center.selectedNoOfSeats}}/{{ center.totalNoOfWorkstation }} </p>
+        <p><b>Total Seat Selected:</b> {{ center.selectedNoOfSeats || 0}}/{{ center.totalNoOfWorkstation }} </p>
     </mat-card>
       <mat-card class="sub_sub_card">
         <p><b>Total Proposal Generated:</b> {{center.totalNoOfWorkstation }}</p>

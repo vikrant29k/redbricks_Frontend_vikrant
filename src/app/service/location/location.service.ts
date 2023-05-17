@@ -23,12 +23,23 @@ export class LocationService {
     getAllLocation = () => {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getAll', httpOptions).pipe(
-            this.toster.observe({
-                success: 'All Location Data Loaded successfully',
-                loading: 'Loading Location Data...',
-                error: ({ error }) => `${error.Message}`
-            })
+            // this.toster.observe({
+            //     success: 'All Location Data Loaded successfully',
+            //     loading: 'Loading Location Data...',
+            //     error: ({ error }) => `${error.Message}`
+            // })
         );
+    }
+
+    addRackValue = (data:any) =>{
+      let httpOptions = this.headerService.updateHeader();
+      return this.http.post(this.baseUrl + 'updateRackValue',data, httpOptions).pipe(
+          this.toster.observe({
+              success: 'Rack Value Added successfully',
+              loading: 'Adding Rack Value...',
+              error: ({ error }) => `${error.Message}`
+          })
+      );
     }
 
     addLocation = (data: any) => {
@@ -78,22 +89,22 @@ export class LocationService {
     getLocationList = () => {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getLocationList', httpOptions).pipe(
-            this.toster.observe({
-                success: 'Location-list Loaded Successfully',
-                loading: 'Getting Location-list...',
-                error: ({ error }) => `${error.Message}`
-            })
+            // this.toster.observe({
+            //     success: 'Location-list Loaded Successfully',
+            //     loading: 'Getting Location-list...',
+            //     error: ({ error }) => `${error.Message}`
+            // })
         );
     }
 
     getCentersInLocation = (location: string) => {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getCentersInLocation/' + location, httpOptions).pipe(
-            this.toster.observe({
-                success: 'Centers Loaded Successfully',
-                loading: 'Loading Centers...',
-                error: ({ error }) => `${error.Message}`
-            })
+            // this.toster.observe({
+            //     success: 'Centers Loaded Successfully',
+            //     loading: 'Loading Centers...',
+            //     error: ({ error }) => `${error.Message}`
+            // })
         );
     }
 

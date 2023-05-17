@@ -89,6 +89,7 @@
         // align-items: center;
         gap: 3rem;
         @include for-desktop() {
+          flex-wrap: nowrap;
           gap: 1rem;
           margin-top: 1rem;
         }
@@ -97,7 +98,7 @@
           @include flex-column__center-center();
           gap: 1rem;
           @include for-desktop() {
-            width: 60%;
+            width: 50%;
           }
 
           .section {
@@ -208,7 +209,7 @@
           border-radius: 2rem;
           padding: 3rem;
           @include for-desktop() {
-            width: 19%;
+            width: 15%;
             padding: 1.5rem 3rem;
           }
 

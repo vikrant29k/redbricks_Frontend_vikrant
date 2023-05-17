@@ -5,7 +5,7 @@
                 <div class="icon" (click)="onCenterSelected(center._id)">
                     <ng-container [ngTemplateOutlet]="locationIcon"></ng-container>
                     <p>{{center.center}}</p>
-                    <p class="seat-counts">{{center.selectedNoOfSeats}} / {{center.totalNoOfWorkstation}}</p>
+                    <p class="seat-counts">{{center.selectedNoOfSeats || 0}} / {{center.totalNoOfWorkstation}}</p>
                 </div>
                 <!-- <div class="icon"></div> -->
             </ng-container>

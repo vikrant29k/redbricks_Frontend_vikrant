@@ -9,22 +9,22 @@
 </mat-card>
 <mat-card class="card">
   <section>
-    <p>System Current Price:</p><p>Rs.{{currentValue}} per seat</p>
+    <p>System Current Price:</p><p>Rs.{{currentValue || 0}} per seat</p>
     </section>
     <section>
-    <p>Rack Value:</p><p> Rs.{{rackValue}} per seat</p>
+    <p>Rack Value:</p><p> Rs.{{rackValue || 0}} per seat</p>
     </section>
   <section>
-    <p>Total Sales Price Until Now :</p><p>Rs.{{bookingPriceUptilNow}} </p>
+    <p>Total Sales Price Until Now :</p><p>Rs.{{bookingPriceUptilNow || 0}} </p>
   </section>
   <section>
-    <p>As Per Sales, Current Seat Price Is :</p><p>Rs.{{currentSeatPrice}} per seat</p>
+    <p>As Per Sales, Current Seat Price Is :</p><p>Rs.{{currentSeatPrice || 0}} per seat</p>
   </section>
 
   <section>
     <p>Profit / Loss:</p>
     <p> <mat-icon>{{profitLoss>0?'arrow_upward':'arrow_downward'}}</mat-icon>
-      Rs. {{profitLoss}}
+      Rs. {{profitLoss || 0}}
 
     </p>
 

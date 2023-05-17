@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="main-content">
+      <div class="title"><h1>Generated System Value And Rack Value</h1> </div>
+      <form [formGroup]="rackForm" (ngSubmit)="confirmation()">
+          <section>
+            <mat-form-field appearance="outline">
+              <mat-label>System Value</mat-label>
+              <input type="number" matInput formControlName="systemPrice" autocomplete="off" [readonly]="editMode?'false':'true'" >
+          </mat-form-field>
+              <mat-form-field appearance="outline">
+                  <mat-label>Rack Value</mat-label>
+                  <input type="number" matInput formControlName="rackRate" autocomplete="off" [readonly]="editMode?'false':'true'" >
+              </mat-form-field>
+          </section>
+          <!-- <section>
+            <mat-form-field appearance="outline">
+              <mat-label>Cost of Standard Interiors</mat-label>
+              <input type="number" matInput formControlName="costStandardInteriors" autocomplete="off" >
+          </mat-form-field>
+          </section> -->
+          <div class="form-action">
+              <button type="button" (click)="enableEdit()" mat-raised-button color="primary" >Edit</button>
+              <button type="submit" mat-raised-button color="primary">Confirm</button>
+          </div>
+      </form>
+  </div>
+</div>

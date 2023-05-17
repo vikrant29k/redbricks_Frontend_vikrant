@@ -87,7 +87,6 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
   }
 
   openDialog = () => {
-
     const dialogRef = this.dialog.open(NewProposalLayoutPreviewComponent, {
       width: '800px',
       height: '566px',
@@ -101,8 +100,6 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
   };
 
   generateProposal = () => {
-
-
     let serviced = this.isServiced ? 'yes' : 'no';
     let acceptConsolidatedSeats = this.isAcceptConsolidatedSeats ? 'yes' : 'no';
     this.proposalExtraDetailForm.patchValue({

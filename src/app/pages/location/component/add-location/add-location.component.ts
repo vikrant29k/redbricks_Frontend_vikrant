@@ -6,8 +6,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/service/users/user.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { MatDialog } from "@angular/material/dialog";
 import { DatePipe } from '@angular/common';
-import { CalculationDataService } from 'src/app/service/Calculate Data/calculation-data.service';
+import { GenerateRackValueComponent } from '../generate-rack-value/generate-rack-value.component';
+// import { CalculationDataService } from 'src/app/service/Calculate Data/calculation-data.service';
+// import { CostService } from 'src/app/service/cost/cost.service';
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
@@ -25,7 +28,8 @@ export class AddLocationComponent implements OnInit {
   toDate:any;
   rentCamArray:any;
   constructor(
-    private calculateService: CalculationDataService,
+    // private calculateService: CalculationDataService,
+    private dialog:MatDialog,
     private datepipe: DatePipe,
     private loactionService: LocationService,
     private authService: AuthenticationService,
@@ -46,7 +50,7 @@ export class AddLocationComponent implements OnInit {
     carParkCharge: new FormControl(''),
     rackRate:new FormControl(''),
     rentAndCamTotal:new FormControl(''),
-
+    // bookingPriceUptilNow:new FormControl(''),
     // yearnew: new FormControl('', Validators.required),
     // rent: new FormControl('', Validators.required),
     // cam: new FormControl('', Validators.required),
@@ -155,12 +159,12 @@ export class AddLocationComponent implements OnInit {
     this.loactionService.getLocationById(Id).subscribe({
       next: (result: any) => {
         this.rentCamArray=result.rentSheet;
-        console.log(this.rentCamArray);
-        this.calculateService.objectValueUpdated.emit(this.rentCamArray[0])
-        this.calculateService.objectValue = this.rentCamArray
+        console.log("asdfsadsdaa",this.rentCamArray);
+        // this.calculateService.objectValueUpdated.emit(this.rentCamArray[0])
+        // this.calculateService.objectValue = this.rentCamArray
         this.locationForm.patchValue({
           location: result.location,
-          selectedNoOfSeats:result.selectedNoOfSeats,
+          selectedNoOfSeats:result.selectedNoOfSeats||0,
           center: result.center,
           totalNoOfWorkstation: result.totalNoOfWorkstation,
           salesHead: result.salesHead,
@@ -170,7 +174,8 @@ export class AddLocationComponent implements OnInit {
           imageLinks: result.imageLinks,
           rentSheet: result.rentSheet,
           carParkCharge: result.carParkCharge,
-          rackRate: result.rackRate
+          rackRate: result.rackRate,
+          // bookingPriceUptilNow:result.bookingPriceUptilNow
         });
         result.imageLinks.forEach((element: string, index: number) => {
           this.onAdd('imageLinks');
@@ -234,7 +239,16 @@ export class AddLocationComponent implements OnInit {
         console.log(this.locationForm.value.rentAndCamTotal)
         this.loactionService.updateLocation(this.locationId, formData).subscribe({
             next: (result: any) => {
+              // this.router.navigate(['/admin', 'location', 'location-list']);
+              console.log(result,"Add locataionasddddddddddddddddddddd")
+            const dialogRef = this.dialog.open(GenerateRackValueComponent, {
+              // width: '800px',
+              // height: '566px',
+              data: { rentCamTotal: total, locationData:result.data, locationId:this.locationId},
+            });
+            dialogRef.afterClosed().subscribe(()=>{
               this.router.navigate(['/admin', 'location', 'location-list']);
+            })
             },
             error: (err: any) => {
               this.authService.handleAuthError(err);
@@ -245,10 +259,20 @@ export class AddLocationComponent implements OnInit {
       {
 
          console.log(this.locationForm.value.rentAndCamTotal)
+
         this.loactionService.addLocation(formData).subscribe({
           next: (result: any) => {
+            console.log(result,"Add locataionasddddddddddddddddddddd")
+            const dialogRef = this.dialog.open(GenerateRackValueComponent, {
+              // width: '800px',
+              // height: '566px',
+              data: { rentCamTotal: total, locationData:result.data},
+            });
+            dialogRef.afterClosed().subscribe(()=>{
+              this.router.navigate(['/admin', 'location', 'location-list']);
+            })
 
-            this.router.navigate(['/admin', 'location', 'location-list']);
+            // this.router.navigate(['/admin', 'location', 'location-list']);
           },
           error: (err: any) => {
             this.authService.handleAuthError(err);

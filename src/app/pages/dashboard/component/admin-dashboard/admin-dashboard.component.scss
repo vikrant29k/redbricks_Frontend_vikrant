@@ -368,15 +368,15 @@
       // cursor: pointer;
 
       &.home-icon {
-        position: relative;
+        position: fixed;
         width: 26rem;
         overflow-y: auto;
         overflow-x: hidden;
         max-height: 12.5rem;
         border-radius: 6px;
         // padding: 1rem;
-        left: 52rem;
-        bottom: 5rem;
+        left: 70vw;
+        bottom: 10rem;
         justify-content: center;
         // transition: width 300ms ease-in;
         .tableConflictClass {

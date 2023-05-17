@@ -40,11 +40,11 @@ export class CostUpdateCostComponent implements OnInit {
         }
 
       })
-      this.calculate.objectValueUpdated.subscribe(res=>{
-        // alert('got value'+res)
-        console.log('Cost sheet ts',res)
+      // this.calculate.objectValueUpdated.subscribe(res=>{
+      //   // alert('got value'+res)
+      //   console.log('Cost sheet ts',res)
 
-      })
+      // })
     }
     routeToList(){
       this.route.navigateByUrl('/admin/cost/view-list')
