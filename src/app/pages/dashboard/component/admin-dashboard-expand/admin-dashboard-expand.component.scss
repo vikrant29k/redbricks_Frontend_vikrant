@@ -28,20 +28,22 @@
       // flex-direction: column;
       justify-content: space-between;
       gap:1;
-    
+
     mat-card{
       margin-block: 0.5rem;
       width: 12rem;
       padding: 0;
-      padding-block: 1rem 0rem;
+      padding-block: 1rem 1rem;
     }
   }
   .sub_card {
     width: 40rem;
+
   display: flex;
   flex-wrap: wrap;
+
   justify-content: center;
-  overflow: hidden;
+  // overflow: hidden;
   .sub {
     margin: 1rem;
     width: 14rem;
@@ -84,10 +86,12 @@
     }
     .sub_card {
         width: 40rem;
+        overflow-y: auto;
+        max-height: 33rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      overflow: hidden;
+      // overflow: hidden;
       .sub {
         margin: 1rem;
         width: 14rem;
@@ -105,5 +109,23 @@
       }
     }
   }
+  .chart{
+    width: 10rem;
+    height: 10rem;
+    background-color: #c3343a;
+    }
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c3343a;
+}

@@ -9,8 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { DatePipe } from '@angular/common';
 import { GenerateRackValueComponent } from '../generate-rack-value/generate-rack-value.component';
-// import { CalculationDataService } from 'src/app/service/Calculate Data/calculation-data.service';
-// import { CostService } from 'src/app/service/cost/cost.service';
+
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
@@ -43,6 +42,7 @@ export class AddLocationComponent implements OnInit {
     location: new FormControl('', Validators.required),
     salesHead: new FormControl('', Validators.required),
     center: new FormControl('', Validators.required),
+    floor:new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
     selectedNoOfSeats:new FormControl(''),
     totalNoOfWorkstation: new FormControl('', Validators.required),
@@ -50,6 +50,17 @@ export class AddLocationComponent implements OnInit {
     carParkCharge: new FormControl(''),
     rackRate:new FormControl(''),
     rentAndCamTotal:new FormControl(''),
+    costOfStandardInteriors:new FormControl(''),
+    amortizedFitOutRentFor3Years:new FormControl(''),
+    total_1:new FormControl(''),
+    adminMarketingAndOverHeads:new FormControl(''),
+    brokerage:new FormControl(''),
+    total_2:new FormControl(''),
+    profitBeforeTax:new FormControl(''),
+    total_3:new FormControl(''),
+    rateOfInventoryOnLeaseArea:new FormControl(''),
+    includeCommonsAmenities:new FormControl(''),
+    on80perDiversityFactor:new FormControl(''),
     // bookingPriceUptilNow:new FormControl(''),
     // yearnew: new FormControl('', Validators.required),
     // rent: new FormControl('', Validators.required),
@@ -88,6 +99,7 @@ export class AddLocationComponent implements OnInit {
   jsonUploadHandler = (event: any) => {
     this.JSONFile = event.target.files[0];
     this.jsonUploaded = true;
+
   };
 
   layoutImageUploadHandler = (event: any) => {
@@ -147,8 +159,6 @@ export class AddLocationComponent implements OnInit {
       this.locationId = ID;
       this.editMode = true;
       this.getLocationDataToUpdate(this.locationId);
-
-
     }
 
     this.selectSalesHead();
@@ -166,6 +176,7 @@ export class AddLocationComponent implements OnInit {
           location: result.location,
           selectedNoOfSeats:result.selectedNoOfSeats||0,
           center: result.center,
+          floor:result.floor,
           totalNoOfWorkstation: result.totalNoOfWorkstation,
           salesHead: result.salesHead,
           address: result.address,
@@ -175,6 +186,7 @@ export class AddLocationComponent implements OnInit {
           rentSheet: result.rentSheet,
           carParkCharge: result.carParkCharge,
           rackRate: result.rackRate,
+
           // bookingPriceUptilNow:result.bookingPriceUptilNow
         });
         result.imageLinks.forEach((element: string, index: number) => {
@@ -240,10 +252,10 @@ export class AddLocationComponent implements OnInit {
         this.loactionService.updateLocation(this.locationId, formData).subscribe({
             next: (result: any) => {
               // this.router.navigate(['/admin', 'location', 'location-list']);
-              console.log(result,"Add locataionasddddddddddddddddddddd")
+
             const dialogRef = this.dialog.open(GenerateRackValueComponent, {
-              // width: '800px',
-              // height: '566px',
+              width: '1010px',
+              height: '650px',
               data: { rentCamTotal: total, locationData:result.data, locationId:this.locationId},
             });
             dialogRef.afterClosed().subscribe(()=>{
@@ -262,10 +274,10 @@ export class AddLocationComponent implements OnInit {
 
         this.loactionService.addLocation(formData).subscribe({
           next: (result: any) => {
-            console.log(result,"Add locataionasddddddddddddddddddddd")
+            // console.log(result,"Add locataionasddddddddddddddddddddd")
             const dialogRef = this.dialog.open(GenerateRackValueComponent, {
-              // width: '800px',
-              // height: '566px',
+              width: '1010px',
+              height: '650px',
               data: { rentCamTotal: total, locationData:result.data},
             });
             dialogRef.afterClosed().subscribe(()=>{

@@ -6,7 +6,7 @@
       <p> <b> Total Seats: {{ cardData.selectedNoOfSeats || 0 }}/{{ cardData.totalNoOfWorkstation }}</b></p>
     </mat-card>
     <mat-card>
-      <p> <b>Proposal Generated: {{ cardData.totalNoOfWorkstation}}</b></p>
+      <p> <b>Proposal Generated: {{ cardData.totalProposals}}</b></p>
     </mat-card>
   </div>
   <div class="sub_card"  >
@@ -16,7 +16,7 @@
         <p><b>Total Seat Selected:</b> {{ center.selectedNoOfSeats || 0}}/{{ center.totalNoOfWorkstation }} </p>
     </mat-card>
       <mat-card class="sub_sub_card">
-        <p><b>Total Proposal Generated:</b> {{center.totalNoOfWorkstation }}</p>
+        <p><b>Total Proposal Generated:</b> {{center.totalProposals }}</p>
       </mat-card>
     </mat-card>
   </div>

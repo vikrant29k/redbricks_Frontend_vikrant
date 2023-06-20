@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "src/app/service/authentication/authentication.service";
 import { LocationService } from "src/app/service/location/location.service";
@@ -11,7 +11,63 @@ import Swal from "sweetalert2";
     styleUrls: ['./location-detail.component.scss']
 })
 export class LocationLocationDetailComponent implements OnInit {
+  @Input() indicators = true;
+  @ViewChild('zoomableImage', { static: true }) zoomableImage: any| ElementRef;
+  zoomed = false;
+  zoomX = 0;
+  zoomY = 0;
 
+  toggleZoom(event: MouseEvent) {
+    const imgElement = this.zoomableImage.nativeElement;
+    this.zoomed = !this.zoomed;
+
+    if (this.zoomed) {
+      const rect = imgElement.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      this.zoomX = -(x / rect.width * 100);
+      this.zoomY = -(y / rect.height * 100);
+    } else {
+      this.zoomX = 0;
+      this.zoomY = 0;
+    }
+  }
+  images: string[] = [
+    'https://coworkingers.com/wp-content/uploads/2020/11/Redbrick-Offices-004.jpg',
+    'https://coworkingers.com/wp-content/uploads/2020/07/Redbrick-Offices-001-min.jpg',
+    'https://coworker.imgix.net/photos/india/mumbai/redbrick-andheri-east/1-1557813134.jpg?w=800&h=0&q=90&auto=format,compress&fit=crop&mark=/template/img/wm_icon.png&markscale=5&markalign=center,middle',
+    'https://coworker.imgix.net/photos/india/mumbai/redbrick-andheri-east/main.jpg?w=800&h=0&q=90&auto=format,compress&fit=crop&mark=/template/img/wm_icon.png&markscale=5&markalign=center,middle'
+  ];
+
+  videos:string[]=[
+    'https://youtu.be/hNjFmOUK-oE'
+  ]
+  currentIndex = 0;
+
+  selectImage(index:number):void{
+    this.currentIndex=index;
+  }
+  changeImageAuto() {
+    setTimeout(() => {
+      this.currentIndex++;
+      if (this.currentIndex >= 4) {
+        this.currentIndex = 0;
+      }
+      this.changeImageAuto();
+    }, 3000); // Delay of 1000 milliseconds (1 second)
+  }
+  // previousImage(): void {
+  //   if (this.currentIndex > 0) {
+  //     this.currentIndex--;
+  //   }
+  // }
+
+  // nextImage(): void {
+  //   if (this.currentIndex < this.images.length - 1) {
+  //     this.currentIndex++;
+  //   }
+  // }
     // location: any;
     // center: any;
     centerData: any = {};
@@ -35,8 +91,8 @@ export class LocationLocationDetailComponent implements OnInit {
     ngOnInit(): void {
         let centerId = this.route.snapshot.params['Id'];
         this.getCenterData(centerId);
+this.changeImageAuto();
     }
-
     addProposal = (centerId: string) => {
         Swal.fire({
             title: 'Initialized Proposal',
@@ -61,6 +117,7 @@ export class LocationLocationDetailComponent implements OnInit {
                     this.locationService.selectedLocation = this.centerData.location;
                     this.locationService.selectedCenter = this.centerData.center;
                     this.locationService.selectedAddress = this.centerData.address;
+                    this.locationService.selectedFloor = this.centerData.floor;
                     console.log(this.centerData);
                     // this.router.navigate(['/new-proposal/add', this.location, result.Id]);
                     this.router.navigate(['/sales','new-proposal', 'client-info',result.Id]);

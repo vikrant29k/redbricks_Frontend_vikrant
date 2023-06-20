@@ -19,12 +19,15 @@ export class NewProposalRequirementInfoComponent implements OnInit {
   totalWorkstationBooked: any = 0;
   totalAvailableWorkstation: any = 373;
   totalSelectedWorkstation: any = 0;
-  areaOfSelectedSeat:any;
+  areaOfCoreSelectedSeat:any;
+  areaOfUsableSelectedSeat:any;
+
   valueToBeDivided:any;
   valueOfDinominator:any=1152;
 
   requirementInfoForm = new FormGroup({
-    areaOfSelectedSeat:new FormControl(),
+    areaOfCoreSelectedSeat:new FormControl(),
+    areaOfUsableSelectedSeat:new FormControl(),
     workstation2x1: new FormControl(),
     workstation3x2: new FormControl(),
     workstation4x2: new FormControl(),
@@ -92,7 +95,7 @@ export class NewProposalRequirementInfoComponent implements OnInit {
   }
 
   onSubmit = () => {
-    let finalSeat = Math.ceil(this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1));
+    let finalSeat = Math.ceil(this.totalSelectedWorkstation);
     this.requirementInfoForm.patchValue({
       totalNumberOfSeats:finalSeat
     });
@@ -102,7 +105,8 @@ export class NewProposalRequirementInfoComponent implements OnInit {
       content:contentt
     });
     this.requirementInfoForm.patchValue({
-      areaOfSelectedSeat:this.areaOfSelectedSeat
+      areaOfCoreSelectedSeat:this.areaOfCoreSelectedSeat,
+      areaOfUsableSelectedSeat:this.areaOfUsableSelectedSeat
     });
     this.proposalService.addRequirement(this.requirementInfoForm.value, this.proposalId).subscribe({
         next: (result: any) => {
@@ -207,8 +211,9 @@ public handleOpened(item:any): void {
     (value.wellnessRoomNumber * 4.50)  +
     value.trainingRoomNumber +
     value.gameRoomNumber;
-    let billableSeat = this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1);
-    this.areaOfSelectedSeat = (billableSeat*19.00).toFixed(2);
+    this.totalSelectedWorkstation = (this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1)).toFixed(2);
+    this.areaOfCoreSelectedSeat = (this.totalSelectedWorkstation*19.00).toFixed(2);
+    this.areaOfUsableSelectedSeat = (this.areaOfCoreSelectedSeat *1.85).toFixed(2)
     // let circulation = totalNoOfSeats*0.1;
     // let netBillableSeat = totalNoOfSeats + circulation;
     });

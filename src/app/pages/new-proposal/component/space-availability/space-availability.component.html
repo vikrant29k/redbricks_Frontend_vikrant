@@ -17,17 +17,33 @@
                     </div>
                 </div>
             </ng-container>
-            <div class="consolidated-manner">
+            <!-- <div class="consolidated-manner">
                 <p>From which side workstations should be selected?</p>
                 <div class="consolidated-manner__action">
                     <button type="button" mat-raised-button color="primary"[color]="selectFrom === 'left' ? 'primary':'accent'" (click)="selectFrom = 'left'">Left</button>
                     <button type="button" mat-raised-button color="primary"[color]="selectFrom === 'right' ? 'primary':'accent'" (click)="selectFrom = 'right'">Right</button>
                 </div>
-            </div>
+            </div> -->
             <div class="extra-proposal-details">
+              <div class="extra-proposal-details_first_div">
+              <div class="">
+                <p>Tenure:</p>
+                <mat-form-field appearance="fill">
+                    <mat-label>In Months</mat-label>
+                    <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="Tenure">
+                </mat-form-field>
+            </div>
+            <div class="">
+                <p>Lock In:</p>
+                <mat-form-field appearance="fill">
+                    <mat-label>In Months</mat-label>
+                    <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="LockIn">
+                </mat-form-field>
+            </div>
+          </div>
                 <div class="extra-proposal-details__top">
                     <div class="extra-proposal-details__top-left">
-                        <div class="extra-proposal-details__top-left__fields">
+                        <!-- <div class="extra-proposal-details__top-left__fields">
                             <p>Tenure:</p>
                             <mat-form-field appearance="fill">
                                 <mat-label>In Months</mat-label>
@@ -40,7 +56,21 @@
                                 <mat-label>In Months</mat-label>
                                 <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="LockIn">
                             </mat-form-field>
-                        </div>
+                        </div> -->
+                        <div class="extra-proposal-details__top-left__fields">
+                          <p>Deposit Term:</p>
+                          <mat-form-field appearance="fill">
+                              <mat-label>In Months</mat-label>
+                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="depositTerm">
+                          </mat-form-field>
+                      </div>
+                      <div class="extra-proposal-details__top-left__fields">
+                          <p>Notice Period:</p>
+                          <mat-form-field appearance="fill">
+                              <mat-label>In Months</mat-label>
+                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="noticePeriod">
+                          </mat-form-field>
+                      </div>
                     </div>
                     <div class="extra-proposal-details__top-right">
                         <div class="extra-proposal-details__top-right__fields">

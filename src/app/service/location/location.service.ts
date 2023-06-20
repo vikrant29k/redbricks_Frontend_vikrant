@@ -14,6 +14,7 @@ export class LocationService {
     selectedLocation!: string;
     selectedCenter!: string;
     selectedAddress!:string
+    selectedFloor!:string;
     constructor(
         private headerService: HeaderService,
         private http: HttpClient,
@@ -107,6 +108,13 @@ export class LocationService {
             // })
         );
     }
+
+    getFloorsInLocation = (floor: string) => {
+      let httpOptions = this.headerService.updateHeader();
+      return this.http.get(this.baseUrl + 'getFloorsInLocation/' + floor, httpOptions).pipe(
+
+      );
+  }
 
     getRentData = (data:any)=>{
       let httpOptions = this.headerService.updateHeader();

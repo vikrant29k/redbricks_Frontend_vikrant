@@ -18,10 +18,19 @@
 
       <section>
         <mat-form-field appearance="outline">
+          <mat-label>Floor</mat-label>
+          <input type="text" matInput formControlName="floor" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>Location Address</mat-label>
           <input type="text" matInput formControlName="address" />
         </mat-form-field>
 
+
+      </section>
+
+      <section>
         <mat-form-field appearance="outline">
           <mat-label>Sales Head</mat-label>
           <mat-select formControlName="salesHead" autocomplete="off">
@@ -32,18 +41,7 @@
             </ng-container>
           </mat-select>
         </mat-form-field>
-      </section>
-      <section>
-        <!-- <mat-form-field appearance="outline" *ngIf="editMode">
-          <mat-label>Selected workstation number</mat-label>
-          <input
-            type="number"
-            min="0"
-            oninput="this.value = Math.round(Math.abs(this.value))"
-            matInput
-            formControlName="selectedNoOfSeats"
-          />
-        </mat-form-field> -->
+
         <mat-form-field appearance="outline">
           <mat-label>Total workstation number</mat-label>
           <input
@@ -54,18 +52,20 @@
             formControlName="totalNoOfWorkstation"
           />
         </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Car Parking Charges</mat-label>
-          <input
-          type="number"
-          min="0"
-          oninput="this.value = Math.round(Math.abs(this.value))"
-          matInput
-          formControlName="carParkCharge"
-        />
-        </mat-form-field>
+
       </section>
     <section>
+      <mat-form-field appearance="outline">
+        <mat-label>Car Parking Charges</mat-label>
+        <input
+        type="number"
+        min="0"
+        oninput="this.value = Math.round(Math.abs(this.value))"
+        matInput
+        formControlName="carParkCharge"
+      />
+      </mat-form-field>
+
       <mat-form-field appearance="outline" *ngIf="editMode">
         <mat-label>Selected workstation number</mat-label>
         <input

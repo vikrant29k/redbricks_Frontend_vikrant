@@ -51,7 +51,18 @@
               <th mat-header-cell *matHeaderCellDef>Proposal Id</th>
               <td mat-cell *matCellDef="let element">{{ element._id }}</td>
             </ng-container>
-
+            <ng-container matColumnDef="lock">
+              <th mat-header-cell *matHeaderCellDef>Lock</th>
+              <td mat-cell *matCellDef="let element">
+                <button
+                  mat-button
+                  (click)="lockProposal(element._id)"
+                  class="clicked"
+                >
+                  <span>Lock</span>
+                </button>
+              </td>
+            </ng-container>
             <ng-container matColumnDef="approve">
               <th mat-header-cell *matHeaderCellDef>Approval</th>
               <td mat-cell *matCellDef="let element">
@@ -268,3 +279,11 @@
     </div>
   </div>
 </div>
+<div style="position: fixed;
+z-index: 2;
+bottom: 6px;
+width: 100%;
+text-align: center;"><p style="font-weight: 600;">
+  Copyright @Redbricks <br>
+  Developed By Mobicloud Technologies PVT. LTD.
+</p></div>

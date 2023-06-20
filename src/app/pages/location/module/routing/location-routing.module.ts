@@ -8,7 +8,9 @@ import { LocationLocationComponent } from "../../component/location/location.com
 import { LocationComponent } from "../../location.component";
 import { LocationAdminChildRouteGuard } from "../service/location-admin-child-route/location-child-admin-route-guard.guard";
 import { LocationSalesChildRouteGuard } from "../service/location-sales-child-route/location-sales-child-route.guard";
-
+import { ShowLayoutComponent } from "../../component/show-layout/show-layout.component";
+import { ShowGalleryComponent } from "../../component/show-gallery/show-gallery.component";
+import { FloorsComponent } from "../../component/floors/floors.component";
 const routes: Routes = [
     {
         path: '',
@@ -30,6 +32,11 @@ const routes: Routes = [
                 component: LocationCenterComponent
             },
             {
+              path: 'floor/:center',
+              canActivate: [LocationSalesChildRouteGuard],
+              component: FloorsComponent
+            },
+            {
                 path: 'location-detail/:Id',
                 component: LocationLocationDetailComponent
             },
@@ -47,6 +54,16 @@ const routes: Routes = [
                 path: 'edit-location/:Id',
                 canActivate: [LocationAdminChildRouteGuard],
                 component: AddLocationComponent
+            },
+            {
+              path:'show-layout/:Id',
+              canActivate:[LocationSalesChildRouteGuard],
+              component:ShowLayoutComponent
+            },
+            {
+              path:'show-gallery/:Id',
+              canActivate:[LocationSalesChildRouteGuard],
+              component:ShowGalleryComponent
             }
         ]
     }

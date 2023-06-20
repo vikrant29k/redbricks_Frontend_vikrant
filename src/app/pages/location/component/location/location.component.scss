@@ -28,24 +28,32 @@
     height: inherit;
 
     .location-pointer {
-      @include flex_center_center();
+      display: flex;
+      justify-content: center;
+      align-items: center;
       flex-wrap: wrap;
-      width: 80rem;
-
+      /* width: 80rem; */
+      height: 100vh;
+      justify-content: space-evenly;
+      // margin-block-start: 2rem;
       .icon {
-        @include flex_center_center();
-        @include flex-column();
-        width: 16rem;
-        height: 16rem;
+        display: flex;
+        justify-content: flex-start;
+        width: 25rem;
+        height: 22rem;
+        cursor: pointer;
+        align-items: center;
+        flex-direction: column;
         @include for-desktop(){
-            width: 14rem;
-            height: 14rem;
+            width: 23rem;
+            height: 20rem;
         }
         cursor: pointer;
 
         svg {
-          width: inherit;
-          height: inherit;
+          // width: inherit;
+          // height: inherit;
+          overflow: visible;
         }
 
         p {

@@ -195,10 +195,26 @@
   border-radius: 2rem;
   font-family: 'Courier New', Courier, monospace;
   .text{
-    padding-inline-start: 10px;
+    // padding-inline-start: 10px;
     font-weight: 500;
     text-align: left;
     font-size: 1.1rem;
+    p{
+      display: flex;
+      justify-content: space-between;
+      .info-label{
+        display: flex;
+        width: 64%;
+        justify-content: center;
+      }
+      .info-count{
+        display: flex;
+         width: 20%;
+        justify-content: center;
+      }
+    }
+
+
   }
 
 }
@@ -214,8 +230,8 @@
           }
 
           .counter-card {
-            width: 17rem;
-            height: 17rem;
+            width: 18rem;
+            height: 18rem;
             @include for-desktop() {
               width: 16rem;
               height: 16rem;
@@ -237,13 +253,14 @@
 
               .label {
                 font-size: 1.2rem;
+                text-align: center;
                 @include for-desktop() {
                   font-size: 1rem;
                 }
               }
 
               .count {
-                font-size: 2rem;
+                font-size: 1.7rem;
                 font-weight: 700;
                 @include for-desktop() {
                   font-size: 1.6rem;

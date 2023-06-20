@@ -22,12 +22,15 @@ export class AuthLoginComponent implements OnInit{
     ) {}
 
     ngOnInit(): void {
-        
+
+    }
+    clickHome(){
+      alert("Hello")
     }
 
     loginForm = new FormGroup({
-        'userName': new FormControl('', [Validators.required, Validators.email]),
-        'password': new FormControl('', Validators.required)
+        'userName': new FormControl('firstweb@gmail.com', [Validators.required, Validators.email]),
+        'password': new FormControl('admin', Validators.required)
     });
 
     get userName() {
@@ -38,14 +41,17 @@ export class AuthLoginComponent implements OnInit{
     }
 
     onSubmit = async () => {
+      console.log("Submit login");
         if (this.loginForm.invalid) {
             return;
         }
         let loginData = { ...this.loginForm.value, forceLogin: this.forceLogin };
+        console.log("Data", loginData);
         (await this.AuthService.login(loginData)).subscribe({
             next: (result: any) => {
                 if (result.Message === 'User Login Successfull!') {
-                    localStorage.setItem('auth-token', result.Token);
+                  sessionStorage.setItem('token', result.Token);
+                    // localStorage.setItem('auth-token', result.Token);
                     console.log(result);
                     this.router.navigate(['/'])
                 }

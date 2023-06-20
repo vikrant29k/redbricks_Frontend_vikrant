@@ -143,6 +143,16 @@ export class ProposalService {
       })
     );
   }
+  updateProposalById = (Id:any) => {
+    let httpOptions = this.headerService.updateHeader();
+    return this.http.post(this.baseUrl+'updateProposalId/'+Id,httpOptions).pipe(
+      // this.toster.observe({
+      //   success: 'Proposal ID Updated Successfully',
+      //   loading: 'Loading Proposal...',
+      //   error: ({ error }) => `${error.Message}`,
+      // })
+    );
+  }
 
   checkSeatAvailability = (Id: string) => {
     let httpOptions = this.headerService.updateHeader();
@@ -168,6 +178,19 @@ export class ProposalService {
         this.toster.observe({
           success: 'Propsal Approved Successfully',
           loading: 'Approving Propsal...',
+          error: ({ error }) => `${error.Message}`,
+        })
+      );
+  };
+
+  lockProposal = (Id: string, data: any) => {
+    let httpOptions = this.headerService.updateHeader();
+    return this.http
+      .post(this.baseUrl + 'lockProposal/' + Id, data, httpOptions)
+      .pipe(
+        this.toster.observe({
+          success: 'Propsal Locked Successfully',
+          loading: 'Locking Propsal...',
           error: ({ error }) => `${error.Message}`,
         })
       );

@@ -135,3 +135,22 @@ body {
 mat-expansion-panel{
   margin:0 !important;
 }
+.stats_dialog{
+  mat-dialog-container{
+    background-color: rgb(226, 226, 226);
+    border-radius: 50px;
+  }
+}
+
+.floorDropDown{
+  .mat-form-field-wrapper {
+    background: #C3343A;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    height: 3rem;
+    width: 5rem;
+}
+
+}
+

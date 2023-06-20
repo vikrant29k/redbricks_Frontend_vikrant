@@ -22,7 +22,7 @@
       <table mat-table [dataSource]="dataSource" matSort class="w-100">
         <ng-container matColumnDef="proposalId">
           <th mat-header-cell *matHeaderCellDef>Proposal Id</th>
-          <td mat-cell *matCellDef="let row">{{ row._id }}</td>
+          <td mat-cell *matCellDef="let row">{{ row._id}} <ng-container *ngIf="row.revised > 0">R{{ row.revised }}</ng-container></td>
         </ng-container>
         <!-- <ng-container matColumnDef="logMessage">
                     <th mat-header-cell *matHeaderCellDef> Log Message</th>
@@ -56,9 +56,10 @@
             <ng-container>
               <button
                 mat-raised-button
-                (click)=" row.status == 'Conflict Resolved'? continuePage(row._id) : viewDetails(row._id)"[disabled]="row.status == 'Pending' || row.status == 'Conflict'">
+                (click)=" row.status == 'Conflict Resolved'? continuePage(row._id) : viewDetails(row._id)" [disabled]="row.status == 'Pending' || row.status == 'Conflict'">
                 {{ changeButtonLabel(row.status) }}
               </button>
+              <button mat-raised-button style=" background-color: rgb(78, 255, 55);margin-inline-start: 15px;" (click)="editDetails(row._id)" [disabled]="row.status!=='Completed But not Esclated'"> Edit Proposal</button>
             </ng-container>
 
           </td>

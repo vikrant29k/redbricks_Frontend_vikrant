@@ -6,7 +6,7 @@ import { ElectronApiService } from "../electron-api/electron-api.service";
 import { environment } from "src/environments/environment";
 import { HotToastService } from "@ngneat/hot-toast";
 import { HeaderService } from "../header/header.service";
-
+import  FingerprintJS from "@fingerprintjs/fingerprintjs";
 @Injectable({
     providedIn: 'root'
 })
@@ -21,10 +21,19 @@ export class AuthenticationService {
         private http: HttpClient,
         private toster: HotToastService
     ) { }
-    
+     getBrowserFingerprint = async (): Promise<string> => {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+
+      // Get the unique fingerprint ID
+      const fingerprint = result.visitorId;
+
+      return fingerprint;
+    };
     login = async (loginData: any) => {
         let httpOptions = this.headerService.updateHeader();
-        let deviceId = await this.electronApiService.getMacAddress();
+        // let deviceId = await this.electronApiService.getMacAddress();
+        let deviceId =await this.getBrowserFingerprint();
         console.log(deviceId);
         loginData = { ...loginData, deviceId: deviceId };
         return this.http.post(this.baseUrl + 'login', loginData, httpOptions).pipe(
@@ -48,7 +57,7 @@ export class AuthenticationService {
     }
 
     isAuthenticated = (): boolean => {
-        let token = localStorage.getItem('auth-token');
+        let token = sessionStorage.getItem('token');
         if (token) {
             return true;
         }
@@ -63,7 +72,8 @@ export class AuthenticationService {
             timer: 2000,
             showConfirmButton: false
         })
-        localStorage.removeItem('auth-token');
+        // localStorage.removeItem('auth-token');
+        sessionStorage.removeItem('token')
         this.router.navigate(['/auth']);
     }
 

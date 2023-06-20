@@ -5,12 +5,14 @@ import { AdminLayoutRoutingModule } from "./module/routing/admin-layout-routing.
 import { AdminLayoutContentComponent } from "./component/content/content.component";
 import { AdminLayoutSidebarComponent } from "./component/sidebar/sidebar.component";
 import { AdminLayoutMaterialModule } from "./module/material/admin-layout-material.module";
+import { ReportDialogComponent } from './component/report-dialog/report-dialog.component';
 
 @NgModule({
     declarations: [
         AdminLayoutComponent,
         AdminLayoutContentComponent,
-        AdminLayoutSidebarComponent
+        AdminLayoutSidebarComponent,
+        ReportDialogComponent
     ],
     imports: [
         CommonModule,

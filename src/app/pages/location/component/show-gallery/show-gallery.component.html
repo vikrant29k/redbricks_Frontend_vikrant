@@ -1,0 +1,38 @@
+
+  <!-- <img src="{{image}}" alt="Image" > -->
+<div class="container">
+  <div class="title">
+    <h1>{{ imageData.location }} |&nbsp;</h1>
+    <!-- <mat-icon>play_arrow</mat-icon> -->
+    <h1 class="center-name"> {{ imageData.center }}</h1>
+  </div>
+<div class="images">
+
+    <div *ngIf="images && images.length > 0" class="carousel-container">
+      <img
+        *ngFor="let image of images; let i = index"
+        [src]="image"
+        [ngClass]="{ 'image-active': currentIndex === i }"/>
+
+      <div *ngIf="indicators" class="carousel-dot-container">
+        <span
+          *ngFor="let dot of images; let i = index"
+          class="dot"
+          [ngClass]="{ active: currentIndex === i }"
+          (click)="selectImage(i)">
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="video">
+    <div  *ngIf="videos && videos.length>0" class="video-content">
+      <h3>YouTube Links</h3>
+      <span *ngFor="let video of videos let i=index">
+        <a href="{{video}}" target="_blank"> > Link {{i+1}}</a>
+      </span>
+    </div>
+
+  </div>
+</div>

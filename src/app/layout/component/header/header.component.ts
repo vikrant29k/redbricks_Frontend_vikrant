@@ -18,13 +18,23 @@ export class LayoutHeaderComponent implements DoCheck{
         private authService: AuthenticationService,
         private router: Router,
         private navigate: NavigationService,
-    ) { }
+    ) {
+
+     }
     ngDoCheck(): void {
+      window.addEventListener('beforeunload', this.onBeforeUnload);
+    }
+
+
+    onBeforeUnload = (): void => {
+      // Send a request to the backend to remove the device ID
+      this.logOut();
     }
     logOut = () => {
         this.authService.logOut().subscribe((result: any) => {
             if (result.Message === 'user logout sucessfully!') {
-                localStorage.removeItem('auth-token');
+                // localStorage.removeItem('auth-token');
+                sessionStorage.removeItem('token');
                 this.router.navigate(['/auth']);
             }
         });

@@ -54,6 +54,7 @@ export class DashboardAdminDashboard implements OnInit {
   Amount: any;
    System_value:any;
    client_value:any;
+   selectedSeatOfCurrentProposal:any;
   UpdateAmount: any;
   dataSourceConflict: any;
   //  =[
@@ -134,7 +135,7 @@ export class DashboardAdminDashboard implements OnInit {
       this.displayedColumnsConflict = ['_id', 'salesPerson', 'resolve'];
     } else {
       this.shownotification = false;
-      this.displayedColumnsRecent = ['salesPerson', '_id', 'view'];
+      this.displayedColumnsRecent = ['salesPerson', '_id', 'view', 'lock'];
       // console.log(this.title,"admin")
     }
     this.totalUserNo();
@@ -219,6 +220,37 @@ export class DashboardAdminDashboard implements OnInit {
       }
     });
   }
+
+  //lock proposal
+  lockProposal(id: string) {
+    // this.System_value = this.Amount.find((x:any) => x._id === id).previousFinalOfferAmmount ;
+    // this.client_value =  this.Amount.find((x:any) => x._id === id).clientFinalOfferAmmount ;
+    // console.log(this.System_value, 'System_value');
+    // console.log(this.client_value, 'client_value');
+    this.selectedSeatOfCurrentProposal =  this.Amount.find((x:any) => x._id === id).totalNumberOfSeats ;
+    var a = 'myprice';
+    Swal.fire({
+      title: 'Lock Seats Of This Proposal',
+      html: `Selected Seat Of This Proposal Are ${(this.selectedSeatOfCurrentProposal)} Click On Confirm To Lock The Seats`,
+      icon: 'info',
+      showConfirmButton: true,
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: '#C3343A',
+      inputAttributes:{
+        required:'true'
+      } ,
+      showCancelButton: true,
+      cancelButtonColor: '#7D7E80',
+    }).then((confirmation) => {
+      if (confirmation.isConfirmed) {
+        this.proposalService.lockProposal(id, { lockProposal:true })
+          .subscribe((res) => {
+            console.log(res,"Locked Proposal")
+          });
+      }
+    });
+  }
+
   // delete the row
   deleteConflict(id: any) {
     // console.log(this.dataSourceRecent.value[id]);

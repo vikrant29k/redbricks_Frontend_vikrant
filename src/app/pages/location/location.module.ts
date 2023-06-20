@@ -13,6 +13,9 @@ import { LocationAdminChildRouteGuard } from "./module/service/location-admin-ch
 import { LocationSalesChildRouteGuard } from "./module/service/location-sales-child-route/location-sales-child-route.guard";
 import { DatePipe } from "@angular/common";
 import { GenerateRackValueComponent } from './component/generate-rack-value/generate-rack-value.component';
+import { ShowLayoutComponent } from './component/show-layout/show-layout.component';
+import { ShowGalleryComponent } from './component/show-gallery/show-gallery.component';
+import { FloorsComponent } from './component/floors/floors.component';
 @NgModule({
     declarations: [
         LocationComponent,
@@ -21,7 +24,10 @@ import { GenerateRackValueComponent } from './component/generate-rack-value/gene
         LocationLocationDetailComponent,
         AddLocationComponent,
         LocationListComponent,
-        GenerateRackValueComponent
+        GenerateRackValueComponent,
+        ShowLayoutComponent,
+        ShowGalleryComponent,
+        FloorsComponent
     ],
     imports: [
         CommonModule,

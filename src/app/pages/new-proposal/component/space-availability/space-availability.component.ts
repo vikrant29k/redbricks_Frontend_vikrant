@@ -19,24 +19,26 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
   }
   nonStandardRequirement: boolean = false;
   proposalId!: string;
-  isServiced: boolean = false;
+  isServiced: boolean = true;
   isAcceptConsolidatedSeats: boolean = true;
   selectFrom: 'left' | 'right' = 'left';
   seatAvailability: boolean = true;
   consolidatedSeats: boolean = false;
   totalNumberofSeat:any;
   costOfElectricity:any;
-  costOfOps:any;
-  rentValue:any;
-  camValue:any;
+  // costOfOps:any;
+  // rentValue:any;
+  // camValue:any;
   selectedLocation:any;
   selectedCenter:any;
   finalAmount:any;
-  getRackValue:any;
+  // getRackValue:any;
   proposalExtraDetailForm = new FormGroup({
     consolidated: new FormControl(''),
     Tenure: new FormControl('', Validators.required),
     LockIn: new FormControl('', Validators.required),
+    depositTerm:new FormControl('',Validators.required),
+    noticePeriod:new FormControl('',Validators.required),
     NonStandardRequirement: new FormControl(''),
     Serviced: new FormControl('', Validators.required),
     serviceCosts: new FormControl(''),
@@ -75,11 +77,11 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
           selectedCenter:this.selectedCenter,
           selectedLocation:this.selectedLocation
         };
-        this.locationService.getRentData(data).subscribe((res:any)=>{
-          this.rentValue = res[0].rentSheet[0].rent;
-          this.camValue = res[0].rentSheet[0].cam;
-          this.getRackValue=res[0]
-        })
+        // this.locationService.getRentData(data).subscribe((res:any)=>{
+        //   this.rentValue = res[0].rentSheet[0].rent;
+        //   this.camValue = res[0].rentSheet[0].cam;
+        //   this.getRackValue=res[0]
+        // })
       },
       error: (err: any) => {},
     });

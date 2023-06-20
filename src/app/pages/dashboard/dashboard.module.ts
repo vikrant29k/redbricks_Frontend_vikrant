@@ -9,7 +9,10 @@ import { DashboardSalesChildRouteGuard } from "./module/service/dashboard-sales-
 import { DashboardMaterialModule } from "./module/material/dashboard-material.module";
 import { AdminDashboardExpandComponent } from './component/admin-dashboard-expand/admin-dashboard-expand.component';
 import { ShowStatsComponent } from './component/admin-dashboard-expand/show-stats/show-stats.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 // import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+
 @NgModule({
     declarations: [
         DashboardComponent,
@@ -20,6 +23,7 @@ import { ShowStatsComponent } from './component/admin-dashboard-expand/show-stat
     ],
     imports: [
         CommonModule,
+        GoogleChartsModule,
         // BrowserAnimationsModule,
         DashboardMaterialModule,
         DashboardRoutingModule

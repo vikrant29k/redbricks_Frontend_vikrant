@@ -42,11 +42,14 @@
   .main-content {
     @include flex_center-center();
     @include flex-column();
+    justify-content: space-around;
     gap: 1rem;
     background-color: #fff;
     border-radius: 1rem;
+    height: 33rem;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-    width: 65rem;
+    // width: 65rem;
+    width: 60rem;
     padding-block: 2rem;
     @include for-desktop() {
       width: 50rem;
@@ -101,12 +104,23 @@
       .extra-proposal-details {
         @include flex_center-center();
         @include flex-column();
-        gap: 3rem;
+        gap: 2rem;
         font-size: 1.3rem;
         @include for-desktop() {
           font-size: 1rem;
         }
-
+        .extra-proposal-details_first_div{
+          display: flex;
+          width: 85%;
+          margin-block-end: -25px;
+          justify-content: space-between;
+          div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+          }
+        }
         .extra-proposal-details__top {
           @include flex_center-center();
           gap: 2rem;

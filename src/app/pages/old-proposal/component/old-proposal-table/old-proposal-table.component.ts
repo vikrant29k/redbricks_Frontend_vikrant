@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeselectUpdateComponent } from '../deselect-update/deselect-update.component';
+import Swal from 'sweetalert2';
 export interface OldProposalData {
   _id: any;
   createdAt: Date;
@@ -89,6 +90,30 @@ export class OldProposalTableComponent implements OnInit {
 
   viewDetails = (Id: string) => {
     this.router.navigate(['/sales', 'new-proposal', 'proposal-preview', Id]);
+  };
+  editDetails = (Id: string) => {
+    Swal.fire({
+      title: 'Edit Proposal',
+      html: `Are you sure you want to edit this proposal ? `,
+      icon: 'question',
+      showConfirmButton: true,
+      confirmButtonText: 'Yes',
+      confirmButtonColor: '#C3343A',
+      showCancelButton: true,
+      cancelButtonText:'No',
+      cancelButtonColor: '#7D7E80',
+    }).then((confirmation) => {
+      if (confirmation.isConfirmed) {
+        if(Id){
+          this.proposalService.updateProposalById(Id).subscribe(()=>{
+            console.log('Edited')
+            this.router.navigate(['/sales', 'new-proposal', 'requirement-info', Id]);
+          })
+        }
+
+      }
+    });
+
   };
 
 showPopOver(data_id:any){

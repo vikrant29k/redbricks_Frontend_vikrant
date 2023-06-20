@@ -37,6 +37,7 @@ export class NewProposalClientInfoComponent implements OnInit {
     location: new FormControl('', Validators.required),
     center: new FormControl('', Validators.required),
     address: new FormControl(''),
+    floor:new FormControl('', Validators.required),
     // 'spocName': new FormControl(''),
     // 'clientName': new FormControl(''),
     brokerType: new FormControl('', Validators.required),
@@ -84,7 +85,7 @@ export class NewProposalClientInfoComponent implements OnInit {
   }
   directClient(res: string) {
     if (res === 'direct') {
-      this.clientInfoForm.addControl('clientName',new FormControl('', Validators.required));
+      this.clientInfoForm.addControl('clientName',new FormControl(''));
       // this.clientInfoForm.addControl('clientEmail', new FormControl('', Validators.required));
     } else {
       this.clientInfoForm.removeControl('clientName');
@@ -140,35 +141,9 @@ export class NewProposalClientInfoComponent implements OnInit {
       });
   };
 
-  // getAllLocation = () => {
-  //   this.locationService.locationData.forEach((element:any) => {
-  //     this.locations.add(element.location);
-  //     console.log(element,"Location che values")
-
-  //   });
-  // };
-
-  // getCentersInLocation = () => {
-  //   let location: any =
-  //     this.clientInfoForm.value.location ||
-  //     this.locationService.selectedLocation;
-  //   if (location) {
-  //     this.locationService.locationData.forEach((element:any) => {
-  //       let temp: any = element.location;
-  //       if (temp === location) {
-  //         this.centers.add(element.center);
-  //         this.address.add(element.address)
-  //       }
-  //     });
-  //   }
-  //   console.log('location value updated::');
-  //   // this.cd.detectChanges();
-  // };
 
   watchValueChangesInForm = () => {
-    // this.clientInfoForm.get('location')?.valueChanges.subscribe(() => {
-    //   this.getCentersInLocation();
-    // });
+
     let brokerType = this.clientInfoForm.get('brokerType');
     brokerType?.valueChanges.subscribe((res) => {
       let value = brokerType?.value;
@@ -180,11 +155,11 @@ export class NewProposalClientInfoComponent implements OnInit {
 
   watchValueChangesInBrokerCategory = () => {
     let brokerCategory = this.clientInfoForm.get('brokerCategory');
-    brokerCategory?.valueChanges.subscribe((rrr) => console.log('asdfasd',rrr))
+
     brokerCategory?.valueChanges.subscribe((res) => {
-      console.log(res)
+      // console.log(res)
       let value =res;
-      console.log(value,res);
+      // console.log(value,res);
 
       if(value === 'other'){
         this.clientInfoForm.addControl('brokerCategoryOther', new FormControl(''));
@@ -216,11 +191,13 @@ export class NewProposalClientInfoComponent implements OnInit {
     let location = this.locationService.selectedLocation;
     let center = this.locationService.selectedCenter;
     let address = this.locationService.selectedAddress;
+    let floor = this.locationService.selectedFloor;
     // console.log(location, center);
     this.clientInfoForm.patchValue({
       location: location,
       center: center,
-      address:address
+      address:address,
+      floor:floor
     });
     console.log(this.clientInfoForm.value);
   };

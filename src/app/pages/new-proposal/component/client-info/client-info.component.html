@@ -70,22 +70,22 @@
               <ng-container *ngFor="let category of brokeCategoryList">
                 <mat-option [value]="category">{{ category }}</mat-option>
               </ng-container>
-              <mat-option value="other">other</mat-option>
+              <mat-option value="other" [disabled]="true">Infrom Admin if not listed</mat-option>
             </ng-container>
           </mat-select>
           <mat-error>Broker Category is required</mat-error>
         </mat-form-field>
       </ng-container>
       <!-- Broker Category other -->
-      <ng-container
+      <!-- <ng-container
         *ngIf="clientInfoForm.get('brokerCategoryOther')"
       >
         <mat-form-field appearance="fill">
-          <!-- *ngIf="clientInfoForm.get('brokerCategory')?.value === 'other'"> -->
+           *ngIf="clientInfoForm.get('brokerCategory')?.value === 'other'">
           <mat-label>Broker Category other</mat-label>
           <input type="text" matInput formControlName="brokerCategoryOther" autocomplete="off" />
         </mat-form-field>
-      </ng-container>
+      </ng-container> -->
       <!-- Client Name -->
       <ng-container *ngIf="clientInfoForm.get('clientName')">
         <mat-form-field appearance="fill">
@@ -95,20 +95,20 @@
         </mat-form-field>
       </ng-container>
       <!-- Spoc Name -->
-      <ng-container *ngIf="clientInfoForm.get('spocName')">
+      <!-- <ng-container *ngIf="clientInfoForm.get('spocName')">
         <mat-form-field appearance="fill">
           <mat-label>SPOC Name</mat-label>
           <input type="text" matInput formControlName="spocName" autocomplete="off"/>
           <mat-error>SPOC Name is required</mat-error>
         </mat-form-field>
-      </ng-container>
+      </ng-container> -->
       <!-- SPOC EMail  -->
-      <ng-container *ngIf="clientInfoForm.get('spocEmail')">
+      <!-- <ng-container *ngIf="clientInfoForm.get('spocEmail')">
         <mat-form-field appearance="fill">
           <mat-label>Spoc Email</mat-label>
           <input type="text" matInput formControlName="spocEmail" autocomplete="off"/>
         </mat-form-field>
-      </ng-container>
+      </ng-container> -->
 
       <div class="form-action">
         <button type="submit" mat-raised-button color="primary">

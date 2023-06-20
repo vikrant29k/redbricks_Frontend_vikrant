@@ -1,6 +1,6 @@
 import { HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DeviceDetectorService } from "../device-detector/device-detector.service";
+// import { DeviceDetectorService } from "../device-detector/device-detector.service";
 
 @Injectable({
     providedIn: 'root'
@@ -8,15 +8,16 @@ import { DeviceDetectorService } from "../device-detector/device-detector.servic
 export class HeaderService {
 
     constructor(
-        private deviceDetectorService: DeviceDetectorService
+        // private deviceDetectorService: DeviceDetectorService
     ) {}
 
     updateHeader = () => {
-        let authToken: string = `${localStorage.getItem('auth-token')}`;
-        let deviceType: string = this.deviceDetectorService.detectDevice();
+        // let authToken: string = `${localStorage.getItem('auth-token')}`;
+        let authToken: string = `${sessionStorage.getItem('token')}`;
+        // let deviceType: string = this.deviceDetectorService.detectDevice();
         let headers: HttpHeaders = new HttpHeaders({
-            'auth-token': authToken,
-            'devicetype': deviceType
+            'token': authToken,
+            // 'devicetype': deviceType
         });
 
         let httpOptions: any = {

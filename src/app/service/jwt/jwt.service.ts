@@ -13,7 +13,8 @@ export class JWTService {
     ){}
 
     private getToken = () => {
-        let token: string = `${localStorage.getItem('auth-token')}`;
+        // let token: string = `${localStorage.getItem('auth-token')}`;
+        let token: string = `${sessionStorage.getItem('token')}`;
         return token;
     }
 
@@ -27,10 +28,11 @@ export class JWTService {
         if (this.decodeToken().role) {
             // console.log(this.decodeToken().role);
             return this.decodeToken().role;
-            
+
         }
         else {
-            localStorage.removeItem('auth-token');
+            // localStorage.removeItem('auth-token');
+            sessionStorage.removeItem('token')
             this.router.navigate(['/auth']);
         }
     }
