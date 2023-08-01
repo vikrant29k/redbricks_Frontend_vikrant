@@ -1,49 +1,67 @@
-
 <div class="container">
-  <!-- <a (click)="goBack()" class="previous"><mat-icon>keyboard_backspace</mat-icon> </a> -->
-    <div class="main-content">
-        <div class="space-availability">
-            <p>{{seatAvailability ? 'Space Available': 'Space Not-Available'}}</p>
+  <a (click)="goBack()" class="previous"
+    ><mat-icon>keyboard_backspace</mat-icon>
+  </a>
+  <div class="main-content">
+    <div class="space-availability">
+      <p>{{ seatAvailability ? "Space Available" : "Space Not-Available" }}</p>
+    </div>
+    <form [formGroup]="proposalExtraDetailForm" (ngSubmit)="onSubmit()">
+      <ng-container *ngIf="consolidatedSeats">
+        <div class="consolidated-manner">
+          <p>Not Available in Consolidated manner. Do you wish to proceed?</p>
+          <div class="consolidated-manner__action">
+            <button
+              type="button"
+              mat-raised-button
+              color="primary"
+              [color]="isAcceptConsolidatedSeats ? 'primary' : 'accent'"
+              (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats"
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              mat-raised-button
+              color="primary"
+              [color]="isAcceptConsolidatedSeats ? 'accent' : 'primary'"
+              (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats"
+            >
+              No
+            </button>
+          </div>
         </div>
-        <form [formGroup]="proposalExtraDetailForm" (ngSubmit)="onSubmit()">
-            <ng-container *ngIf="consolidatedSeats">
-                <div class="consolidated-manner">
-                    <p>Not Available in Consolidated manner. Do you wish to proceed?</p>
-                    <div class="consolidated-manner__action">
-                        <button type="button" mat-raised-button color="primary" [color]="isAcceptConsolidatedSeats ? 'primary':'accent'"
-                            (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats">Yes</button>
-                        <button type="button" mat-raised-button color="primary" [color]="isAcceptConsolidatedSeats ? 'accent':'primary'"
-                            (click)="isAcceptConsolidatedSeats = !isAcceptConsolidatedSeats">No</button>
-                    </div>
-                </div>
-            </ng-container>
-            <!-- <div class="consolidated-manner">
+      </ng-container>
+      <!-- <div class="consolidated-manner">
                 <p>From which side workstations should be selected?</p>
                 <div class="consolidated-manner__action">
                     <button type="button" mat-raised-button color="primary"[color]="selectFrom === 'left' ? 'primary':'accent'" (click)="selectFrom = 'left'">Left</button>
                     <button type="button" mat-raised-button color="primary"[color]="selectFrom === 'right' ? 'primary':'accent'" (click)="selectFrom = 'right'">Right</button>
                 </div>
             </div> -->
-            <div class="extra-proposal-details">
-              <div class="extra-proposal-details_first_div">
-              <div class="">
-                <p>Tenure:</p>
-                <mat-form-field appearance="fill">
-                    <mat-label>In Months</mat-label>
-                    <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="Tenure">
-                </mat-form-field>
-            </div>
-            <div class="">
-                <p>Lock In:</p>
-                <mat-form-field appearance="fill">
-                    <mat-label>In Months</mat-label>
-                    <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="LockIn">
-                </mat-form-field>
-            </div>
+      <div class="extra-proposal-details">
+        <div class="extra-proposal-details_first_div">
+          <div class="">
+
           </div>
-                <div class="extra-proposal-details__top">
-                    <div class="extra-proposal-details__top-left">
-                        <!-- <div class="extra-proposal-details__top-left__fields">
+
+        </div>
+        <div class="extra-proposal-details__top">
+          <div class="extra-proposal-details__top-left">
+            <div class="extra-proposal-details__top-left__fields">
+              <p>Tenure:</p>
+            <mat-form-field appearance="fill">
+              <mat-label>In Months</mat-label>
+              <input
+                type="number"
+                min="0"
+                oninput="this.value = Math.round(Math.abs(this.value))"
+                matInput
+                formControlName="Tenure"
+              />
+            </mat-form-field>
+            </div>
+            <!-- <div class="extra-proposal-details__top-left__fields">
                             <p>Tenure:</p>
                             <mat-form-field appearance="fill">
                                 <mat-label>In Months</mat-label>
@@ -57,47 +75,123 @@
                                 <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="LockIn">
                             </mat-form-field>
                         </div> -->
-                        <div class="extra-proposal-details__top-left__fields">
-                          <p>Deposit Term:</p>
-                          <mat-form-field appearance="fill">
-                              <mat-label>In Months</mat-label>
-                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="depositTerm">
-                          </mat-form-field>
-                      </div>
-                      <div class="extra-proposal-details__top-left__fields">
-                          <p>Notice Period:</p>
-                          <mat-form-field appearance="fill">
-                              <mat-label>In Months</mat-label>
-                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" matInput formControlName="noticePeriod">
-                          </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="extra-proposal-details__top-right">
-                        <div class="extra-proposal-details__top-right__fields">
-                            <p> Any Non-Standard Requirement</p>
-                            <button type="button" mat-raised-button [color]="nonStandardRequirement ? 'primary':'accent'" (click)="nonStandardRequirement = !nonStandardRequirement">Yes</button>
-                            <button type="button" mat-raised-button [color]="nonStandardRequirement ? 'accent':'primary'" (click)="nonStandardRequirement = !nonStandardRequirement">No</button>
-                        </div>
-                        <ng-container *ngIf="nonStandardRequirement">
-                            <div class="extra-proposal-details__top-right__fields">
-                                <p>If Yes,</p>
-                                <mat-form-field appearance="fill">
-                                    <mat-label>Notes to be Included in Proposal</mat-label>
-                                    <input type="text" matInput formControlName="NonStandardRequirement">
-                                </mat-form-field>
-                            </div>
-                        </ng-container>
-                    </div>
-                </div>
-                <div class="extra-proposal-details__bottom">
-                    <button type="button" mat-raised-button [color]="isServiced ? 'primary':'accent'" (click)="isServiced = !isServiced" value="yes" formControlName="Serviced">Serviced</button>
-                    <button type="button" mat-raised-button [color]="isServiced ? 'accent':'primary'" (click)="isServiced = !isServiced" value="no" formControlName="Serviced">Non Serviced</button>
-                </div>
+            <div class="extra-proposal-details__top-left__fields">
+              <p>Deposit Term:</p>
+              <mat-form-field appearance="fill">
+                <mat-label>In Months</mat-label>
+                <input
+                  type="number"
+                  min="0"
+                  oninput="this.value = Math.round(Math.abs(this.value))"
+                  matInput
+                  formControlName="depositTerm"
+                />
+              </mat-form-field>
             </div>
-            <div class="form-action">
-                <button type="submit" mat-raised-button color="primary" (click)="openDialog()" [disabled]="!seatAvailability">Generate Layout</button>
-                <button type="submit" mat-raised-button color="primary" (click)="generateProposal()" [disabled]="!seatAvailability">Generate Proposal</button>
+            <div class="extra-proposal-details__top-left__fields">
+              <p>Notice Period:</p>
+              <mat-form-field appearance="fill">
+                <mat-label>In Months</mat-label>
+                <input
+                  type="number"
+                  min="0"
+                  oninput="this.value = Math.round(Math.abs(this.value))"
+                  matInput
+                  formControlName="noticePeriod"
+                />
+              </mat-form-field>
             </div>
-        </form>
-    </div>
+          </div>
+          <div class="extra-proposal-details__top-right">
+           <div class="extra-proposal-details__top-right__fields">
+              <p>Lock In:</p>
+              <mat-form-field appearance="fill">
+                <mat-label>In Months</mat-label>
+                <input
+                  type="number"
+                  min="0"
+                  oninput="this.value = Math.round(Math.abs(this.value))"
+                  matInput
+                  formControlName="LockIn"
+                />
+              </mat-form-field>
+            </div>
+            <div class="extra-proposal-details__top-right__fields">
+              <p>Any Non-Standard Requirement</p>
+              <button type="button" mat-raised-button [color]="nonStandardRequirement ? 'primary' : 'accent'" (click)="nonStandardRequirement = !nonStandardRequirement">
+                Yes
+              </button>
+              <button type="button" mat-raised-button [color]="nonStandardRequirement ? 'accent' : 'primary'" (click)="nonStandardRequirement = !nonStandardRequirement">
+                No
+              </button>
+            </div>
+            <ng-container *ngIf="nonStandardRequirement">
+              <div class="extra-proposal-details__top-right__fields">
+                <p>If Yes,</p>
+                <mat-form-field appearance="fill" style="width: 22rem;">
+                  <mat-label>Notes to be Included in Proposal</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    formControlName="NonStandardRequirement"
+                  />
+                </mat-form-field>
+              </div>
+            </ng-container>
+
+          </div>
+        </div>
+        <div  class="extra-proposal-date-field">
+          <mat-form-field appearance="fill" class="date">
+            <mat-label>Rent Commencement Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="rentCommencmentDate"  autocomplete="off">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="extra-proposal-details__bottom">
+          <button
+            type="button"
+            mat-raised-button
+            [color]="isServiced ? 'primary' : 'accent'"
+            (click)="isServiced = !isServiced"
+            value="yes"
+            formControlName="Serviced"
+          >
+            Serviced
+          </button>
+          <button
+            type="button"
+            mat-raised-button
+            [color]="isServiced ? 'accent' : 'primary'"
+            (click)="isServiced = !isServiced"
+            value="no"
+            formControlName="Serviced"
+          >
+            Non Serviced
+          </button>
+        </div>
+      </div>
+      <div class="form-action">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          (click)="openDialog()"
+          [disabled]="!seatAvailability"
+        >
+          Generate Layout
+        </button>
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          (click)="generateProposal()"
+          [disabled]="!seatAvailability"
+        >
+          Generate Proposal
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

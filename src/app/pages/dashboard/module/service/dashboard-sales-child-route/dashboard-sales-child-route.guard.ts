@@ -11,7 +11,7 @@ export class DashboardSalesChildRouteGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         let currentRoute = state.url.split('/')[1];
-        console.log(currentRoute);
+        // console.log(currentRoute);
         // if (currentRoute === 'sales') {
         //     return true;
         // }

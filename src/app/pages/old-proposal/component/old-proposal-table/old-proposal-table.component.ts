@@ -106,7 +106,7 @@ export class OldProposalTableComponent implements OnInit {
       if (confirmation.isConfirmed) {
         if(Id){
           this.proposalService.updateProposalById(Id).subscribe(()=>{
-            console.log('Edited')
+            // console.log('Edited')
             this.router.navigate(['/sales', 'new-proposal', 'requirement-info', Id]);
           })
         }

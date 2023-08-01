@@ -19,6 +19,7 @@ export class FloorsComponent implements OnInit {
 
   ngOnInit(): void {
       let floorName = this.route.snapshot.params['center'];
+      localStorage.removeItem('selectedSeat')
       this.getFloor(floorName);
   }
 
@@ -36,7 +37,14 @@ export class FloorsComponent implements OnInit {
   showLayout(centerId:any){
     this.router.navigate(['/sales','location','show-layout',centerId]);
   }
-  onFloorSelected = (centerId: any) => {
+  onFloorSelected = (centerId: any, numSeats:any) => {
       this.router.navigate(['/sales','location','location-detail',centerId]);
+      if(numSeats){
+        localStorage.setItem('selectedSeat',numSeats)
+      }else{
+        numSeats=0;
+        localStorage.setItem('selectedSeat',numSeats)
+      }
+
   }
 }

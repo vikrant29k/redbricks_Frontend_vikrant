@@ -48,19 +48,6 @@ export class AddLocationComponent implements OnInit {
     totalNoOfWorkstation: new FormControl('', Validators.required),
     rentSheet: new FormArray([]),
     carParkCharge: new FormControl(''),
-    rackRate:new FormControl(''),
-    rentAndCamTotal:new FormControl(''),
-    costOfStandardInteriors:new FormControl(''),
-    amortizedFitOutRentFor3Years:new FormControl(''),
-    total_1:new FormControl(''),
-    adminMarketingAndOverHeads:new FormControl(''),
-    brokerage:new FormControl(''),
-    total_2:new FormControl(''),
-    profitBeforeTax:new FormControl(''),
-    total_3:new FormControl(''),
-    rateOfInventoryOnLeaseArea:new FormControl(''),
-    includeCommonsAmenities:new FormControl(''),
-    on80perDiversityFactor:new FormControl(''),
     // bookingPriceUptilNow:new FormControl(''),
     // yearnew: new FormControl('', Validators.required),
     // rent: new FormControl('', Validators.required),
@@ -76,7 +63,7 @@ export class AddLocationComponent implements OnInit {
         this.salesHeads = [...result];
         this.locationForm.addControl('salesHead', new FormControl(''));
         if (this.editMode) {
-          console.log(this.userDataBeforeEdit);
+          // console.log(this.userDataBeforeEdit);
           this.locationForm
             .get('salesHead')
             ?.patchValue(this.userDataBeforeEdit.salesHead);
@@ -160,16 +147,19 @@ export class AddLocationComponent implements OnInit {
       this.editMode = true;
       this.getLocationDataToUpdate(this.locationId);
     }
-
+    if(this.editMode==false){
+      this.onAddFromGroup()
+    }
     this.selectSalesHead();
   }
-
+allData:any
   getLocationDataToUpdate = (Id: string) => {
 
     this.loactionService.getLocationById(Id).subscribe({
       next: (result: any) => {
+        this.allData=result;
         this.rentCamArray=result.rentSheet;
-        console.log("asdfsadsdaa",this.rentCamArray);
+        console.log("asdfsadsdaa",result);
         // this.calculateService.objectValueUpdated.emit(this.rentCamArray[0])
         // this.calculateService.objectValue = this.rentCamArray
         this.locationForm.patchValue({
@@ -239,7 +229,7 @@ export class AddLocationComponent implements OnInit {
     else
     {
     let val =  this.locationForm.get('rentSheet')?.value;
-    console.log(val,"asdasd");
+    // console.log(val,"asdasd");
     let total = val[0].rent + val[0].cam
      this.locationForm.patchValue({
        rentAndCamTotal:total
@@ -248,15 +238,14 @@ export class AddLocationComponent implements OnInit {
       if (this.editMode)
       {
 
-        console.log(this.locationForm.value.rentAndCamTotal)
+        // console.log(this.locationForm.value.rentAndCamTotal)
         this.loactionService.updateLocation(this.locationId, formData).subscribe({
             next: (result: any) => {
               // this.router.navigate(['/admin', 'location', 'location-list']);
-
             const dialogRef = this.dialog.open(GenerateRackValueComponent, {
               width: '1010px',
               height: '650px',
-              data: { rentCamTotal: total, locationData:result.data, locationId:this.locationId},
+              data: { rentCamTotal: total, locationData:result.data, locationId:this.locationId, formdata:this.allData,editMode:this.editMode},
             });
             dialogRef.afterClosed().subscribe(()=>{
               this.router.navigate(['/admin', 'location', 'location-list']);
@@ -270,7 +259,7 @@ export class AddLocationComponent implements OnInit {
       else
       {
 
-         console.log(this.locationForm.value.rentAndCamTotal)
+        //  console.log(this.locationForm.value.rentAndCamTotal)
 
         this.loactionService.addLocation(formData).subscribe({
           next: (result: any) => {
@@ -278,7 +267,7 @@ export class AddLocationComponent implements OnInit {
             const dialogRef = this.dialog.open(GenerateRackValueComponent, {
               width: '1010px',
               height: '650px',
-              data: { rentCamTotal: total, locationData:result.data},
+              data: { rentCamTotal: total, locationData:result.data, editMode:this.editMode},
             });
             dialogRef.afterClosed().subscribe(()=>{
               this.router.navigate(['/admin', 'location', 'location-list']);

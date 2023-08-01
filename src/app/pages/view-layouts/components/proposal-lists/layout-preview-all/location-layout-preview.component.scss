@@ -1,0 +1,31 @@
+.mat-dialog-content {
+    max-height: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .invisible {
+        visibility: hidden;
+    }
+
+    pdf-viewer {
+        width: 100%;
+        height: 566px;
+        display: block;
+    }
+
+    mat-spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

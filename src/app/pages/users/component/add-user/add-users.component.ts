@@ -80,7 +80,7 @@ export class AddUsersComponent implements OnInit {
             this.salesHeads = [...result];
             this.userForm.addControl('salesHead', new FormControl(''));
             if (this.editMode) {
-              console.log(this.userDataBeforeEdit);
+              // console.log(this.userDataBeforeEdit);
               this.userForm.get('salesHead')?.patchValue(this.userDataBeforeEdit.salesHead);
               this.cd.detectChanges();
             }

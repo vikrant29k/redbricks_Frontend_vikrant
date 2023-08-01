@@ -34,7 +34,7 @@ export class AuthenticationService {
         let httpOptions = this.headerService.updateHeader();
         // let deviceId = await this.electronApiService.getMacAddress();
         let deviceId =await this.getBrowserFingerprint();
-        console.log(deviceId);
+        // console.log(deviceId);
         loginData = { ...loginData, deviceId: deviceId };
         return this.http.post(this.baseUrl + 'login', loginData, httpOptions).pipe(
             this.toster.observe({

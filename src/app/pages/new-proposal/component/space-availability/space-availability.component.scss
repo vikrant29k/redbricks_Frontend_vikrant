@@ -55,7 +55,8 @@
     gap: 1rem;
     background-color: #fff;
     border-radius: 1rem;
-    // height: 33rem;
+    height: 37rem;
+
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
     // width: 65rem;
     width: 60rem;
@@ -148,17 +149,13 @@
         }
         .extra-proposal-details__top {
           @include flex_center-center();
-          justify-content: center;
-          align-items: center;
-          gap: 2rem;
-          @include for-mobile() {
-            margin-block-start: 15px;
-            display: flex;
-            flex-direction: column;
-          }
+          gap: 3rem;
+
           .extra-proposal-details__top-left {
-            @include flex_center-center();
-            @include flex-column();
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            flex-direction: column;
             gap: 1rem;
 
             .extra-proposal-details__top-left__fields {
@@ -189,13 +186,10 @@
 
             .extra-proposal-details__top-right__fields {
               @include flex_center-center();
+              justify-content: flex-start;
               width: 100%;
               gap: 1rem;
-              height: 4.15rem;
-              @include for-mobile() {
-                gap: 0.4rem;
-                flex-direction: column;
-              }
+              height: 3.15rem;
               mat-label {
                 font-weight: 600;
                 @include for-desktop() {
@@ -204,8 +198,7 @@
               }
               &:nth-child(2) {
                 p {
-                  width: 5rem;
-
+                  // width: 5rem;
                   @include for-desktop() {
                     width: 4rem;
                   }
@@ -221,7 +214,25 @@
             }
           }
         }
+        .extra-proposal-date-field{
+          width: 22rem;
+          .date{
+            width: 100% !important;
+            .mat-form-field-appearance-fill {
+              font-size: 1.1rem;
 
+              .mat-form-field-flex {
+
+                  height: 5rem !important;
+
+              }
+              .mat-icon-button{
+                color: white !important;
+              }
+            }
+
+          }
+        }
         .extra-proposal-details__bottom {
           @include flex_center-center();
           gap: 2rem;

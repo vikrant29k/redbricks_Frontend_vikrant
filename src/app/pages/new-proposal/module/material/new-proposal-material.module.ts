@@ -11,9 +11,12 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatMenuModule } from "@angular/material/menu";
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 const materials = [
     MatMenuModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatSelectModule,

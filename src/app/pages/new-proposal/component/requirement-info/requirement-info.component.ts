@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
@@ -25,9 +25,10 @@ export class NewProposalRequirementInfoComponent implements OnInit {
   valueToBeDivided:any;
   valueOfDinominator:any=1152;
 
-  requirementInfoForm = new FormGroup({
+  requirementInfoForm:any = new FormGroup({
     areaOfCoreSelectedSeat:new FormControl(),
     areaOfUsableSelectedSeat:new FormControl(),
+    createWithArea:new FormControl('count',Validators.required),
     workstation2x1: new FormControl(),
     workstation3x2: new FormControl(),
     workstation4x2: new FormControl(),
@@ -85,16 +86,21 @@ export class NewProposalRequirementInfoComponent implements OnInit {
 
     (window as any).scrollTo(top);
     this.totalWorkStationBalance = this.proposalService.TotalNoOfSets;
-    this.totalAvailableWorkstation = this.proposalService.AvailableNoOfSeats;
+    // this.totalAvailableWorkstation = this.proposalService.AvailableNoOfSeats;
+const numberOfseats =localStorage.getItem('selectedSeat');
+this.totalAvailableWorkstation=this.proposalService.AvailableNoOfSeats - Number(numberOfseats) ;
     this.proposalId = this.getProposaId();
     this.proposalService.getProposalById(this.proposalId).subscribe((res:any)=>{
-      console.log(res)
+      // console.log(res)
+
       this.requirementInfoForm.patchValue(res[0]);
+      console.log( this.requirementInfoForm.value,"gt the data")
     })
     this.watchFormValue();
   }
 
   onSubmit = () => {
+    // console.log(this.requirementInfoForm.get('createWithArea'))
     let finalSeat = Math.ceil(this.totalSelectedWorkstation);
     this.requirementInfoForm.patchValue({
       totalNumberOfSeats:finalSeat
@@ -106,8 +112,9 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     });
     this.requirementInfoForm.patchValue({
       areaOfCoreSelectedSeat:this.areaOfCoreSelectedSeat,
-      areaOfUsableSelectedSeat:this.areaOfUsableSelectedSeat
+      areaOfUsableSelectedSeat:this.areaOfUsableSelectedSeat,
     });
+
     this.proposalService.addRequirement(this.requirementInfoForm.value, this.proposalId).subscribe({
         next: (result: any) => {
           if (result.Message === 'Requirement added Successfully!') {
@@ -145,25 +152,12 @@ export class NewProposalRequirementInfoComponent implements OnInit {
       });
   };
 
-  // ifConflict(){
-
-  // }
 
   getProposaId = () => {
     return this.route.snapshot.params['proposalId'];
   };
-// brief:any;
-//   requireBrief(){
-//     this.requirementInfoForm.valueChanges.subscribe(()=>{
-//       let value = this.requirementInfoForm.value;
-//       this.brief = [`Workstation2x1: ${Number(value.workstation2x1)}, Workstation3x2: ${Number(value.workstation3x2)}, workstation4x2 = ${Number(value.workstation2x1)},Workstation4x4,Workstation5x2,Workstation5x2.5,Workstation5x4,Workstation5x5,Regular Cabin,Medium Cabin,Large Cabin,MD Cabin,4P Meeting,6P Meeting,8P Meeting,12P Meeting,16P Meeting, Cubical, Board Room,Collab Area ,Dry Pantry Room, Server, Reception, Store Room, Prayer/Pooja Room, Cafeteria`]
-//     })
-//   }
-currentOpenedItemId: any;
 
-public handleOpened(item:any): void {
-  this.currentOpenedItemId = item.id;
-}
+
 
   watchFormValue = () => {
     this.requirementInfoForm.valueChanges.subscribe(() => {
@@ -217,11 +211,6 @@ public handleOpened(item:any): void {
     // let circulation = totalNoOfSeats*0.1;
     // let netBillableSeat = totalNoOfSeats + circulation;
     });
-  };
-
-  selectOnlyOneCheckBox = (control: string, value: string) => {
-    this.requirementInfoForm.get(control)?.setValue(value);
-    console.log(this.requirementInfoForm.get(control)?.value);
   };
 
 }

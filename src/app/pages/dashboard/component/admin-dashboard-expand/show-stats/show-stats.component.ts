@@ -49,7 +49,7 @@ export class ShowStatsComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
-    console.log(this.data.center, 'on open');
+    // console.log(this.data.center, 'on open');
     let data = this.data.center;
     this.centerName = data.name;
     this.bookingPriceUptilNow = new Intl.NumberFormat('en-IN', {currency: 'INR',}).format(data.bookingPriceUptilNow);

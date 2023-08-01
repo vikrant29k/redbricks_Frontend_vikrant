@@ -19,26 +19,26 @@ export class NavigationService {
   }
 
   public getHistory(): string[] {
-    console.log(this.history);
+    // console.log(this.history);
     return this.history;
   }
 
   public goBack(): void {
     this.history.pop();
- 
+
     if (this.history.length > 0) {
-        console.log(this.location);
+        // console.log(this.location);
       this.location.back();
     } else {
-        console.log(this.location.back());
+        // console.log(this.location.back());
       this.router.navigateByUrl("/")
     }
   }
 
   public getPreviousUrl(): string {
-    console.log(this.history);
+    // console.log(this.history);
     if (this.history.length > 0) {
-        console.log("length",this.history.length);
+        // console.log("length",this.history.length);
         return this.history[this.history.length - 2];
     }
 

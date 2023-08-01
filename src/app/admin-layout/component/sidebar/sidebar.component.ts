@@ -1,19 +1,24 @@
-import { Component } from "@angular/core";
+import { Component,OnInit } from "@angular/core";
 import { AuthenticationService } from "src/app/service/authentication/authentication.service";
 import { Router } from "@angular/router";
 import { Output } from "@angular/core";
 import { EventEmitter } from "@angular/core";
 import { Dialog } from "@angular/cdk/dialog";
 import { ReportService } from "src/app/service/report/report.service";
-import { ReportDialogComponent } from "../report-dialog/report-dialog.component";
+// import { ReportDialogComponent } from "../report-dialog/report-dialog.component";
+import { JWTService } from "src/app/service/jwt/jwt.service";
 import Swal from "sweetalert2";
 @Component({
     selector: 'admin-layout-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss']
 })
-export class AdminLayoutSidebarComponent {
-
+export class AdminLayoutSidebarComponent implements OnInit {
+  user:any;
+  ngOnInit(): void {
+      // console.log("Hello user",this.jwt.getUserRole());
+    this.user=this.jwt.getUserRole()
+  }
     @Output() drawerClicked = new EventEmitter
     // menuOpen: boolean = false;
 
@@ -78,6 +83,7 @@ data:String="0 8 * * */Monday";
         private authService: AuthenticationService,
         private reportService:ReportService,
         private router: Router,
+        private jwt:JWTService,
         private dialog: Dialog
     ) { }
 
@@ -96,7 +102,7 @@ data:String="0 8 * * */Monday";
       }).then((confirmation) => {
         if (confirmation.isConfirmed) {
           this.reportService.generateReport(this.data).subscribe(()=>{
-            console.log("Generated Successfully");
+            // console.log("Generated Successfully");
           })
         }
       });

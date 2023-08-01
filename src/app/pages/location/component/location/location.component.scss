@@ -29,6 +29,7 @@
   @include for-mobile() {
     overflow: auto;
   }
+  overflow: auto;
 
   .main-content {
     @include flex_center_center();

@@ -2,17 +2,18 @@
   <div class="main-content">
       <div class="location-pointer">
           <ng-container *ngFor="let floor of floors">
-              <div class="icon"  >
+            <div class="icon" [ngClass]="{ 'disableicon': floor.selectedNoOfSeats > (floor.totalNoOfWorkstation - 10) }">
+
                 <div style="display: flex; align-items: center;">
                  <mat-icon matTooltip="Layout Preview" (click)="showLayout(floor._id)">dataset</mat-icon>
 
-                  <div (click)="onFloorSelected(floor._id)">
+                  <div (click)="onFloorSelected(floor._id,floor.selectedNoOfSeats)">
                     <ng-container  [ngTemplateOutlet]="locationIcon"></ng-container>
                   </div>
                  <mat-icon matTooltip="Gallery" (click)="showGallery(floor._id)">collections</mat-icon>
                 </div>
-                  <p style="text-align: center;" (click)="onFloorSelected(floor._id)">{{floor.floor}}</p>
-                  <p class="seat-counts" (click)="onFloorSelected(floor._id)">{{floor.selectedNoOfSeats || 0}} / {{floor.totalNoOfWorkstation}}</p>
+                  <p style="text-align: center;" (click)="onFloorSelected(floor._id,floor.selectedNoOfSeats)">{{floor.floor}}</p>
+                  <p class="seat-counts" (click)="onFloorSelected(floor._id,floor.selectedNoOfSeats)">{{floor.selectedNoOfSeats || 0}} / {{floor.totalNoOfWorkstation}}</p>
               </div>
               <!-- <div class="icon"></div> -->
           </ng-container>

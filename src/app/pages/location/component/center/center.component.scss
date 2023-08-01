@@ -27,14 +27,12 @@
   background-size: cover;
   background-position: center;
   background-color: #fddede;
-  @include for-mobile() {
-    overflow: auto;
-  }
+  overflow: auto;
   .main-content {
     @include flex_center_center();
     width: inherit;
     height: inherit;
-    padding: 30px 5px;
+    // padding: 30px 5px;\
 
     .location-pointer {
       display: flex;
@@ -61,10 +59,6 @@
           height: 20rem;
         }
 
-        @include for-mobile() {
-          width: 16rem;
-          height: 20rem;
-        }
         svg {
           // width: inherit;
           // height: inherit;
