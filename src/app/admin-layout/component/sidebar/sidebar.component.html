@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="section">
+        <div class="section" *ngIf="user!=='sales head'">
             <div class="title" [ngClass]="userExpanded ? 'expanded': ''" (click)="expandAccording('user')">
                 <div class="main">
                     <div class="title-icon">
@@ -69,7 +69,7 @@
                 </div>
             </ng-container>
         </div>
-        <div class="section">
+        <div class="section"  *ngIf="user!=='sales head'">
             <div class="title" [ngClass]="brokerExpand ? 'expanded': ''" (click)="expandAccording('broker')">
                 <div class="main">
                     <div class="title-icon">
@@ -121,7 +121,7 @@
               </div>
           </div>
       </div> -->
-      <div class="section">
+      <!-- <div class="section">
         <div class="title" [ngClass]="calculation ? 'expanded': ''" (click)="expandAccording('calculation')">
             <div class="main">
                 <div class="title-icon">
@@ -160,8 +160,8 @@
                 </div>
             </div>
         </ng-container>
-    </div>
-        <div class="section">
+    </div> -->
+        <div class="section"  *ngIf="user!=='sales head'">
             <div class="title" [ngClass]="locationExpanded ? 'expanded': ''" (click)="expandAccording('location')">
                 <div class="main">
                     <div class="title-icon">
@@ -201,6 +201,18 @@
                 </div>
             </ng-container>
         </div>
+        <div class="section" *ngIf="user!=='sales head'">
+          <div class="title" routerLink="/admin/view-layouts/" routerLinkActive="active" (click)="expandAccording()">
+              <div class="main">
+                  <div class="title-icon">
+                      <mat-icon fontSet="material-icons-round">developer_board</mat-icon>
+                  </div>
+                  <div class="title-text">
+                      <p>Layouts & Proposal</p>
+                  </div>
+              </div>
+          </div>
+      </div>
         <div class="section">
             <div class="title" [ngClass]="logExpanded ? 'expanded': ''" (click)="expandAccording('log')">
                 <div class="main">

@@ -30,7 +30,7 @@ export class LocationListComponent implements OnInit {
   height!: string;
   Locations: any;
   editMode: boolean = false;
-  displayedColumns: string[] = ['location', 'center', 'availableNoOfWorkstation', 'totalNoOfWorkstation', 'edit', 'delete'];
+  displayedColumns: string[] = ['location', 'center','floor', 'availableNoOfWorkstation', 'totalNoOfWorkstation', 'edit', 'delete'];
   dataSource!: MatTableDataSource<LocationData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -43,7 +43,7 @@ export class LocationListComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router
   ) { }
-  
+
   tableDataSource(data: LocationData[] | undefined) {
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.paginator = this.paginator;
@@ -104,5 +104,5 @@ export class LocationListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }  
+  }
 }

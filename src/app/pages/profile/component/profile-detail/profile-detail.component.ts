@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from 'src/app/service/profile/profile.service';
 import Swal from 'sweetalert2';
-
+import { Route, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 @Component({
   selector: 'profile-profile-detail',
   templateUrl: './profile-detail.component.html',
@@ -18,6 +19,7 @@ export class ProfileProfileDetailComponent implements OnInit {
   userDataBeforeEdit: any;
 
   profileForm = new FormGroup({
+    _id:new FormControl(),
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
     mobileNo: new FormControl('', Validators.required),
@@ -29,7 +31,9 @@ export class ProfileProfileDetailComponent implements OnInit {
     password: new FormControl({ value: '', disabled: true }),
   });
 
-  constructor(private profileService: ProfileService) {}
+  constructor(private profileService: ProfileService,
+     private authService:AuthenticationService,
+     private route:Router) {}
 
   ngOnInit(): void {
     this.getProfileData();
@@ -75,13 +79,22 @@ export class ProfileProfileDetailComponent implements OnInit {
         this.profileService.updateUserProfile(updateProfileData).subscribe({
           next: (result: any) => {
             this.disableEditMode();
-            this.getProfileData();
+            // this.getProfileData();
+            this.logOut();
           },
         });
       }
     });
   };
-
+  logOut = () => {
+    this.authService.logOut().subscribe((result: any) => {
+        if (result.Message === 'user logout sucessfully!') {
+            // localStorage.removeItem('auth-token');
+            sessionStorage.removeItem('token');
+            this.route.navigate(['/'])
+        }
+    });
+}
   passwordUpdateAlert = () => {
     if (
       this.passwordUpdated === false &&
@@ -89,7 +102,7 @@ export class ProfileProfileDetailComponent implements OnInit {
     ) {
       Swal.fire({
         title: 'Password Update',
-        text: "If you don't want to update your password leave this field blank!",
+        text: "If you update your Password you need to Login Again",
         icon: 'warning',
         showConfirmButton: true,
         confirmButtonText: 'Got it!',

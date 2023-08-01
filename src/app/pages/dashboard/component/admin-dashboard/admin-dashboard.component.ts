@@ -84,7 +84,7 @@ export class DashboardAdminDashboard implements OnInit {
     this.dashboardService.getCoflicts().subscribe((res) => {
       this.dataSourceConflict = res;
       this.notifications = this.dataSourceConflict.length
-      console.log(res);
+      // console.log(res);
     });
   }
   resolveConflict(_id: string) {
@@ -100,10 +100,10 @@ export class DashboardAdminDashboard implements OnInit {
       if (confirmation.isConfirmed) {
         this.proposalService.resolveConflict(_id).subscribe({
           next: () => {
-            console.log('Resolved');
+            // console.log('Resolved');
           },
           error: (err: any) => {
-            console.log(err);
+            // console.log(err);
           },
         });
       }
@@ -181,7 +181,7 @@ export class DashboardAdminDashboard implements OnInit {
       // console.log('loaction', res);
     });
     this.dashboardService.getRecentProposal().subscribe((res) => {
-      console.log(res)
+      // console.log(res)
       this.tableDataSource(res);
       this.Amount = res;
 
@@ -193,8 +193,8 @@ export class DashboardAdminDashboard implements OnInit {
   approvePropsal(id: string) {
     this.System_value = this.Amount.find((x:any) => x._id === id).previousFinalOfferAmmount ;
     this.client_value =  this.Amount.find((x:any) => x._id === id).clientFinalOfferAmmount ;
-    console.log(this.System_value, 'System_value');
-    console.log(this.client_value, 'client_value');
+    // console.log(this.System_value, 'System_value');
+    // console.log(this.client_value, 'client_value');
 
     var a = 'myprice';
     Swal.fire({
@@ -215,7 +215,8 @@ export class DashboardAdminDashboard implements OnInit {
       if (confirmation.isConfirmed) {
         this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value, salesHeadFinalOfferAmmount: confirmation.value })
           .subscribe((res) => {
-            console.log(res,"Final offer amount sales head dashboard approve")
+            // console.log(res,"Final offer amount sales head dashboard approve")
+           this.deleteRow(id)
           });
       }
     });
@@ -247,6 +248,7 @@ export class DashboardAdminDashboard implements OnInit {
           .subscribe((res) => {
             console.log(res,"Locked Proposal")
           });
+          this.deleteRow(id)
       }
     });
   }
@@ -257,13 +259,13 @@ export class DashboardAdminDashboard implements OnInit {
 
     this.dataSourceConflict = this.dataSourceConflict.filter((u:any) => u._id !== id);
     this.notifications = this.dataSourceConflict.length
-    console.log(this.dataSourceConflict)
+    // console.log(this.dataSourceConflict)
   }
   deleteRow(id: any) {
     // console.log(this.dataSourceRecent.value[id]);
 
     this.dataSourceRecent = this.dataSourceRecent.filter((u:any) => u._id !== id);
-    console.log(this.dataSourceRecent)
+    // console.log(this.dataSourceRecent)
   }
   // view proposals
   viewDetails = (Id: string) => {
@@ -283,7 +285,7 @@ export class DashboardAdminDashboard implements OnInit {
       const list = this.dataSourceRecent.map((res: any) => {
         if (_id == res._id) {
           res.status = 'Approve';
-          console.log(res);
+          // console.log(res);
         }
       });
       this.clk = !this.clk;

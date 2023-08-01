@@ -45,7 +45,7 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     finalOfferAmmount: new FormControl(''),
     rackValue: new FormControl(''),
     systemValue: new FormControl(''),
-
+    rentCommencmentDate: new FormControl('',Validators.required),
   });
 
   constructor(
@@ -112,7 +112,7 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     if (this.proposalExtraDetailForm.invalid) {
       return;
     }
-    console.log(this.proposalExtraDetailForm.value.serviceCosts," before proposal service ")
+    // console.log(this.proposalExtraDetailForm.value.serviceCosts," before proposal service ")
     this.proposalService.generateProposal(this.proposalId, this.selectFrom, this.proposalExtraDetailForm.value).subscribe({
         next: (result: any) => {
           if (result.Message === 'Proposal Generated Successfully') {

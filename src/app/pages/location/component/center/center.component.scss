@@ -22,12 +22,12 @@
   background-size: cover;
   background-position: center;
   background-color: #fddede;
-
+  overflow: auto;
   .main-content {
     @include flex_center_center();
     width: inherit;
     height: inherit;
-    padding: 30px 5px;
+    // padding: 30px 5px;\
 
     .location-pointer {
       display: flex;
@@ -50,8 +50,8 @@
         flex-direction: column;
 
         @include for-desktop() {
-          width: 23rem;
-          height: 20rem;
+          width: 25rem;
+          height: 22rem;
         }
 
         svg {

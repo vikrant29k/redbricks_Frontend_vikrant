@@ -10,8 +10,12 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatDialogModule } from "@angular/material/dialog";
 import {MatTooltipModule} from "@angular/material/tooltip"
 import {MatCardModule} from "@angular/material/card"
+import { PdfViewerModule } from "ng2-pdf-viewer";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 const material = [
     MatTableModule,
+    PdfViewerModule,
+    MatProgressSpinnerModule,
     MatCardModule,
     MatInputModule,
     MatTooltipModule,

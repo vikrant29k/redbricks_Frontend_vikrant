@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { ShowLayoutComponent } from "./location/component/show-layout/show-layout.component";
 
 const AdminRouting: Routes = [
     {
@@ -7,6 +8,12 @@ const AdminRouting: Routes = [
             return import('./dashboard/dashboard.module').then((m) => m.DashboardModule);
         }
     },
+    {
+      path: 'view-layouts',
+      loadChildren: () => {
+          return import('./view-layouts/view-layouts.module').then((m) => m.ViewLayoutsModule);
+      }
+  },
     {
         path: 'location',
         loadChildren: () => {
@@ -55,6 +62,7 @@ const AdminRouting: Routes = [
             return import('./cost/cost.module').then((m) => m.CostModule);
         }
     }
+
 ];
 
 export { AdminRouting };

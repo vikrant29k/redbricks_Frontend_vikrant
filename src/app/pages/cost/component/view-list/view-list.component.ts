@@ -38,8 +38,8 @@ export class ViewListComponent implements OnInit {
 
   ngOnInit(): void {
     this.costService.getAllCosts().subscribe((res:any)=>{
-      console.log(res)
-      console.log(res[0].servicedOrNonService )
+      // console.log(res)
+      // console.log(res[0].servicedOrNonService )
       if(res[0].servicedOrNonService === 'yes'){
       // this.costForm.value.costOfElectricity = res[0].costOfElectricity;
       // this.costForm.value.costOfOPS = res[0].costOfOPS;
@@ -60,7 +60,7 @@ export class ViewListComponent implements OnInit {
 
     this.costService.updateCosts(this.costForm.value).subscribe({
       next: (result: unknown) => {
-        console.log('Successfully Updated',result);
+        // console.log('Successfully Updated',result);
       }
 
     })

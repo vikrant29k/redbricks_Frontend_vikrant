@@ -35,7 +35,7 @@ export class LogProposalLog implements OnInit {
         private logService: LogService,
         private router: Router
     ) { }
-    
+
     ngOnInit(): void {
         this.getAllLogs();
         // this.readntransform();
@@ -43,8 +43,8 @@ export class LogProposalLog implements OnInit {
     getExpiredOrNot = (date: any) => {
         date = new Date(date);
         let current = new Date();
-      let diff = current.getTime() - date.getTime(); 
-      let dayDiff = diff / (1000 * 60 * 60 * 24); 
+      let diff = current.getTime() - date.getTime();
+      let dayDiff = diff / (1000 * 60 * 60 * 24);
 
       if(dayDiff > 90){
         return true;
@@ -95,7 +95,7 @@ updatetable = () =>{
            a=[...a,d];
         }
     });
-    console.log(a);
+    // console.log(a);
     this.tableDataSource(a);
    }
    displayNotExpiredData=async()=>{
@@ -104,11 +104,11 @@ updatetable = () =>{
         if(d.expired===false){
             a=[...a,d];
         }
-    }); 
-    console.log(a);
+    });
+    // console.log(a);
     this.tableDataSource(a);
    }
-    
+
 
     getAllLogs = (filter:string='all') => {
         this.logService.getAllLogs().subscribe({
@@ -117,12 +117,12 @@ updatetable = () =>{
                 let a =this.displayAllData(result);
                 // console.log(result);
                 this.logData=[...a];
-                
+
                 this.tableDataSource(a);
             }
         })
     }
-  
+
 
     tableDataSource = (data: any) => {
         this.dataSource = new MatTableDataSource(data);

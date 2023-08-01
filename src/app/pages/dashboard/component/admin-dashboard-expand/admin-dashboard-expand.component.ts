@@ -19,7 +19,7 @@ export class AdminDashboardExpandComponent implements OnInit {
 
   ngOnInit(): void {
     this.city = this.city_val.city ;
-    console.log(this.cardData,"sadasdasd",this.city)
+    // console.log(this.cardData,"sadasdasd",this.city)
     // this.centers=this.city_val.city.city_center;
   }
 

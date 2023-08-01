@@ -4,99 +4,102 @@
       <form [formGroup]="rackForm" (ngSubmit)="confirmation()">
         <section>
           <mat-form-field appearance="outline">
+            <mat-label>Efficiency For Lease Area</mat-label>
+            <input type="number" matInput formControlName="efficiency" autocomplete="off" [readonly]="editMode?true:false" value="{{efficiency}}">
+        </mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Cost Of Standard Interiors</mat-label>
-            <input type="number" matInput formControlName="costOfStandardInteriors" autocomplete="off" [readonly]="true" >
+            <input type="number" matInput formControlName="costOfStandardInteriors" autocomplete="off" [readonly]="editMode?true:false" value="{{costStandardInteriors}}">
         </mat-form-field>
 
         </section>
           <section>
             <mat-form-field appearance="outline">
               <mat-label>Amortized Fitout Rent For 3 Years</mat-label>
-              <input type="number" matInput formControlName="amortizedFitOutRentFor3Years" autocomplete="off" [readonly]="true" >
+              <input type="number" matInput formControlName="amortizedFitOutRentFor3Years" autocomplete="off" [readonly]="editMode?true:false" value="{{years3Rent}}"  >
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Cost of Electricity</mat-label>
-            <input type="number" matInput formControlName="costOfElectricity" autocomplete="off" [readonly]="true" >
+            <input type="number" matInput formControlName="costOfElectricity" autocomplete="off" [readonly]="editMode?true:false" value="{{costOfElectricity}}">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Cost of OPS</mat-label>
-          <input type="number" matInput formControlName="costOfOps" autocomplete="off" [readonly]="true" >
+          <input type="number" matInput formControlName="costOfOps" autocomplete="off" [readonly]="editMode?true:false" value="{{costOfOps}}" >
       </mat-form-field>
           </section>
           <section>
             <mat-form-field appearance="fill">
               <mat-label>Total 1</mat-label>
-              <input type="number" matInput formControlName="total_1" autocomplete="off" [readonly]="true" >
+              <input type="number" matInput formControlName="total_1" autocomplete="off" value="{{total_1}}" [readonly]="true" >
           </mat-form-field>
           </section>
           <section>
             <div>
             <mat-form-field appearance="outline">
               <mat-label>Admin Marketing And Over Heads</mat-label>
-              <input #data type="number" matInput formControlName="adminMarketingAndOverHeads" autocomplete="off" [readonly]="true" >
+              <input #data type="number" matInput formControlName="adminMarketingAndOverHeads" autocomplete="off" [readonly]="editMode?true:false" value="{{adminMarketing}}" >
           </mat-form-field> <label style="color:#C3343A; font-weight: 600; padding-inline-start: 10px;">{{calculatePercent}}%</label></div>
           <div>
             <mat-form-field appearance="outline">
               <mat-label>Brokerage</mat-label>
-              <input type="number" matInput formControlName="brokerage" autocomplete="off" [readonly]="true" >
+              <input type="number" matInput formControlName="brokerage" autocomplete="off" [readonly]="editMode?true:false" value="{{brokerage}}" >
           </mat-form-field><label style="color:#C3343A; font-weight: 600; padding-inline-start: 10px;">{{brokeragePercent}}%</label></div>
           </section>
           <section>
             <mat-form-field appearance="fill">
               <mat-label>Total 2</mat-label>
-              <input type="number" matInput formControlName="total_2" autocomplete="off" [readonly]="true" >
+              <input type="number" matInput formControlName="total_2" autocomplete="off" [readonly]="true"  value="{{total_2}}">
           </mat-form-field>
           </section>
           <section>
            <div> <mat-form-field appearance="outline">
               <mat-label>Profit Before Tax</mat-label>
-              <input type="number" matInput formControlName="profitBeforeTax" autocomplete="off" [readonly]="true" >
+              <input type="number" matInput formControlName="profitBeforeTax" autocomplete="off" [readonly]="editMode?true:false" value="{{profitBeforeTax}}" >
           </mat-form-field><label style="color:#C3343A; font-weight: 600; padding-inline-start: 10px;">{{profitBeforeTaxPercent}}%</label></div>
               <mat-form-field appearance="fill">
                   <mat-label>Total 3</mat-label>
-                  <input type="number" matInput formControlName="total_3" autocomplete="off" [readonly]="true" >
+                  <input type="number" matInput formControlName="total_3" autocomplete="off" [readonly]="true" value="{{total_3}}" >
               </mat-form-field>
           </section>
           <section>
             <mat-form-field appearance="outline">
               <mat-label>Rate of Inventory On Lease Area</mat-label>
-              <input type="number" matInput formControlName="rateOfInventoryOnLeaseArea" autocomplete="off" [readonly]="true" >
+              <input type="number" matInput formControlName="rateOfInventoryOnLeaseArea" autocomplete="off" [readonly]="true" value="{{rateOfInventoryOnLeaseArea}}">
           </mat-form-field>
               <mat-form-field appearance="outline">
                   <mat-label>Include Commons/Amenities</mat-label>
-                  <input type="number" matInput formControlName="includeCommonsAmenities" autocomplete="off" [readonly]="true" >
+                  <input type="number" matInput formControlName="includeCommonsAmenities" autocomplete="off" [readonly]="true" value="{{includeCommonsAmeneities}}" >
               </mat-form-field>
               <mat-form-field appearance="outline">
                 <mat-label>On 80% Diversity Factor</mat-label>
-                <input type="number" matInput formControlName="on80perDiversityFactor" autocomplete="off" [readonly]="true" >
+                <input type="number" matInput formControlName="on80perDiversityFactor" autocomplete="off" [readonly]="true" value="{{on80perDiversityFactor}}" >
             </mat-form-field>
           </section>
           <!-- <section>
-
-          </section> -->
-          <!-- <section>
-            <mat-form-field appearance="outline">
-              <mat-label>Non-Serviced System Value </mat-label>
-              <input type="number" matInput formControlName="systemPriceNS" autocomplete="off" [readonly]="true" >
-          </mat-form-field>
-              <mat-form-field appearance="outline">
-                  <mat-label>Non-Serviced Rack Value</mat-label>
-                  <input type="number" matInput formControlName="rackRateNS" autocomplete="off" [readonly]="true" >
-              </mat-form-field>
           </section> -->
           <section>
             <mat-form-field appearance="outline">
+              <mat-label>Non-Serviced System Value </mat-label>
+              <input type="number" matInput formControlName="systemPriceNS" autocomplete="off" [readonly]="editMode?true:false" value="{{systemValueNS}}">
+          </mat-form-field>
+              <mat-form-field appearance="outline">
+                  <mat-label>Non-Serviced Rack Value</mat-label>
+                  <input type="number" matInput formControlName="rackRateNS" autocomplete="off" [readonly]="editMode?true:false" value="{{rackValueNS}}">
+              </mat-form-field>
+          </section>
+          <section>
+            <mat-form-field appearance="outline">
               <mat-label>Serviced System Value</mat-label>
-              <input type="number" matInput formControlName="systemPrice" autocomplete="off" [readonly]="true" >
+              <input type="number" matInput formControlName="systemPrice" autocomplete="off" [readonly]="editMode?true:false" value="{{systemValue}}" >
           </mat-form-field>
               <mat-form-field appearance="outline">
                   <mat-label>Serviced Rack Value</mat-label>
-                  <input type="number" matInput formControlName="rackRate" autocomplete="off" [readonly]="true" >
+                  <input type="number" matInput formControlName="rackRate" autocomplete="off" [readonly]="editMode?true:false"  value="{{rackValue}}">
               </mat-form-field>
           </section>
 
           <div class="form-action">
-              <button type="button" (click)="enableEdit()" mat-raised-button color="primary" >{{editMode?'Lock':'Edit'}}</button>
+              <button type="button" (click)="enableEdit()" mat-raised-button color="primary" >{{editMode?'Edit':'Lock'}}</button>
               <button type="submit" mat-raised-button color="primary">Confirm</button>
           </div>
       </form>

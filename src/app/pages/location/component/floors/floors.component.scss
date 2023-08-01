@@ -21,7 +21,7 @@
   background-size: cover;
   background-position: center;
   background-color: #fddede;
-
+  overflow: auto;
   .main-content {
     @include flex_center_center();
     width: inherit;
@@ -36,6 +36,7 @@
       height: 100vh;
       justify-content: space-evenly;
       // margin-block-start: 2rem;
+
       .icon {
         display: flex;
         justify-content: flex-start;
@@ -57,8 +58,53 @@
           }
 
           @include for-desktop() {
-            width: 23rem;
-            height: 20rem;
+            width: 25rem;
+            height: 22rem;
+          }
+
+
+        svg {
+          // width: inherit;
+          // height: inherit;
+          overflow: visible;
+        }
+
+        p {
+          color: #c3343a;
+          margin-block: -0.3rem 1rem;
+          font-size: 1.6rem;
+          font-weight: 500;
+          cursor: pointer;
+        }
+        .seat-counts{
+          font-size: 1.3rem;
+        }
+      }
+      .disableicon {
+        pointer-events: none;
+        opacity: 0.5;
+        display: flex;
+        justify-content: flex-start;
+        width: 25rem;
+        height: 22rem;
+        cursor: pointer;
+        align-items: center;
+        flex-direction: column;
+
+          mat-icon{
+            color: #ffffff;
+            margin-block-start: 8rem;
+            height: 2.5rem;
+            background: #c3343ae6;
+            width: 2.5rem;
+            font-size: 2.5rem;
+            border-radius: 10px;
+            padding: 3px;
+          }
+
+          @include for-desktop() {
+            width: 25rem;
+            height: 22rem;
           }
 
 

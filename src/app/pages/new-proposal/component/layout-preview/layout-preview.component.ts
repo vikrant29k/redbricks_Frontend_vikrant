@@ -37,15 +37,15 @@ export class NewProposalLayoutPreviewComponent implements OnInit {
     }
 
     pageRendered = (e: any) => {
-        console.log('page-rendered', e);
+        // console.log('page-rendered', e);
     }
 
     onProgress = (e: PDFProgressData) => {
-        console.log(e);
+        // console.log(e);
     }
 
     loadComplete = (e: any) => {
-        console.log(e);
+        // console.log(e);
         this.isPdfLoaded = true
     }
 

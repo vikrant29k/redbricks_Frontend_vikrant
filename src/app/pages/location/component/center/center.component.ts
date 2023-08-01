@@ -42,7 +42,7 @@ export class LocationCenterComponent implements OnInit {
         this.locationService.getCentersInLocation(locationName).subscribe({
             next: (result: any) => {
                 this.centers = [...result];
-                console.log(this.centers)
+                // console.log(this.centers)
 
             }
 
@@ -56,7 +56,7 @@ export class LocationCenterComponent implements OnInit {
       this.router.navigate(['/sales','location','show-layout',centerId]);
     }
     onCenterSelected = (centerName: any) => {
-      console.log(centerName, "Selected center")
+      // console.log(centerName, "Selected center")
         this.router.navigate(['/sales','location','floor',centerName]);
     }
 }

@@ -29,8 +29,8 @@ export class AuthLoginComponent implements OnInit{
     }
 
     loginForm = new FormGroup({
-        'userName': new FormControl('firstweb@gmail.com', [Validators.required, Validators.email]),
-        'password': new FormControl('admin', Validators.required)
+        'userName': new FormControl('', [Validators.required, Validators.email]),
+        'password': new FormControl('', Validators.required)
     });
 
     get userName() {
@@ -41,25 +41,35 @@ export class AuthLoginComponent implements OnInit{
     }
 
     onSubmit = async () => {
-      console.log("Submit login");
+      // console.log("Submit login");
         if (this.loginForm.invalid) {
             return;
         }
-        let loginData = { ...this.loginForm.value, forceLogin: this.forceLogin };
-        console.log("Data", loginData);
+        let loginData = { ...this.loginForm.value, forceLogin: true};
+        // console.log("Data", loginData);
         (await this.AuthService.login(loginData)).subscribe({
             next: (result: any) => {
                 if (result.Message === 'User Login Successfull!') {
                   sessionStorage.setItem('token', result.Token);
                     // localStorage.setItem('auth-token', result.Token);
-                    console.log(result);
+                    // console.log(result);
                     this.router.navigate(['/'])
                 }
             },
             error: (result: any) => {
                 if (result.error.Message === "User Have Already Logged In From Another Device!") {
-                    console.log('Already logged In');
+                    // console.log('Already logged In');
                     this.forcedLogin();
+                }else if(result.error.Message === "Device Unauthorized") {
+                  Swal.fire({
+                    title: 'Already Logged In!',
+                    text: 'You have already logged In from another device. Logout from previous device',
+                    icon: 'info',
+                    // confirmButtonText: 'Continue Log In',
+                    // cancelButtonText: 'OK',
+                    // showCancelButton: true,
+                    // showConfirmButton: true
+                })
                 }
             }
         })

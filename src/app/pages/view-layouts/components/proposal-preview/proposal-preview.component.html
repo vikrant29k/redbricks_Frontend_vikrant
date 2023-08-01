@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="main-content">
+        <pdf-viewer [ngClass]="isPdfLoaded?'invisibility':''" [fit-to-page]="true" [src]="pdfUrl"
+            (pages-initialized)="pageInitialized($event)" (page-rendered)="pageRendered($event)"
+            [external-link-target]="'blank'" [page]="1" (on-progress)="onProgress($event)"
+            (after-load-complete)="loadComplete($event)" [fit-to-page]="true">
+        </pdf-viewer>
+        <ng-container *ngIf="!isPdfLoaded">
+            <mat-spinner color="primary"></mat-spinner>
+        </ng-container>
+    </div>
+</div>

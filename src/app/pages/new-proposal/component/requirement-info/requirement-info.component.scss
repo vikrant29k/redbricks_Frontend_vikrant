@@ -186,6 +186,23 @@
 .center{
   // padding-block-start: 2rem;
   color: rgb(7, 7, 7);
+  .center_title{
+    display:flex;
+    font-size:1.2rem;
+    justify-content:space-around;
+    @include for-desktop() {
+      justify-content: space-between;
+    }
+    .center_title_first_span{
+      font-weight: 600;
+      color:#c3343a;
+    }
+    .center_title_second_span{
+      padding-right: 10px;
+      font-weight: 600;
+      color:#c3343a
+    }
+  }
   h2{
     color: #c3343a;
   }
@@ -274,142 +291,14 @@
             }
           }
 
-          // .section {
-          //     @include flex-column__center-center();
-          //     gap: 2rem;
 
-          //     .field-card {
-          //         background-color: #C3343A;
-          //         @include field-card();
-
-          //         .sub-field-card__action-field {
-          //             display: flex;
-          //             justify-content: flex-end;
-          //             align-items: center;
-
-          //             mat-radio-group {
-          //                 display: flex;
-          //                 // flex-direction: column;
-          //                 align-items: flex-start;
-
-          //                 mat-radio-button {
-          //                     &:nth-child(even) {
-          //                         color: #ffffff;
-          //                     }
-
-          //                     color: #ffffff;
-          //                     font-size: 1.1rem;
-          //                     padding: 0.3rem 0.7rem;
-          //                     border-radius: 0.5rem;
-          //                 }
-
-          //             }
-          //         }
-
-          //         mat-form-field {
-          //             width: 4rem;
-          //             padding-inline: 1rem;
-          //             padding-block: 0.5rem;
-          //         }
-          //     }
-
-          //     // .sub-field-card {
-          //     //     @include flex-column__center-center();
-          //     //     gap: 0.5rem;
-
-          //     //     .sub-field-card__image {
-          //     //         display: flex;
-          //     //         justify-content: center;
-          //     //         align-items: center;
-          //     //         border-radius: 100%;
-          //     //         width: 8rem;
-          //     //         height: 8rem;
-
-          //     //         img {
-          //     //             width: inherit;
-          //     //             height: inherit;
-          //     //         }
-          //     //     }
-
-          //     //     .sub-field-card__action {
-          //     //         display: flex;
-          //     //         flex-wrap: nowrap;
-          //     //         gap: 0.3rem;
-
-          //     //         .sub-field-card__action-label {
-          //     //             font-size: 1.1rem;
-          //     //             font-weight: 500;
-
-          //     //             p {
-          //     //                 margin-block: 0rem;
-          //     //             }
-
-          //     //         }
-
-          //     //         .sub-field-card__action-field {
-
-          //     //             mat-radio-group {
-          //     //                 display: flex;
-          //     //                 flex-direction: column;
-          //     //                 align-items: flex-start;
-
-          //     //                 mat-radio-button {
-          //     //                     &:nth-child(even) {
-          //     //                         color: #7D7E80;
-          //     //                     }
-
-          //     //                     color: #C3343A;
-          //     //                     font-size: 1.1rem;
-          //     //                     padding: 0.3rem 0.7rem;
-          //     //                     border-radius: 0.5rem;
-          //     //                 }
-
-          //     //                 .with-input {
-          //     //                     background-color: #C3343A;
-          //     //                     color: #fff;
-          //     //                     padding-block: 0.3rem;
-          //     //                     padding-inline-end: 0.3rem;
-          //     //                     border-radius: 0.5rem;
-          //     //                     display: flex;
-
-          //     //                     mat-radio-button {
-          //     //                         color: #fff;
-          //     //                     }
-
-          //     //                     input {
-          //     //                         width: 2rem;
-          //     //                         border-radius: 0.5rem;
-          //     //                         outline: none;
-          //     //                         border: none;
-          //     //                         padding: 0.2rem;
-          //     //                         padding-inline-end: 0.5rem;
-          //     //                         font-size: 1.1rem;
-          //     //                         caret-color: #C3343A;
-          //     //                         color: #C3343A;
-
-          //     //                         &::placeholder{
-          //     //                             color: #C3343A;
-          //     //                         }
-
-          //     //                     }
-
-          //     //                     input[type='number']::-webkit-outer-spin-button,
-          //     //                     input[type='number']::-webkit-inner-spin-button {
-          //     //                         appearance: none;
-          //     //                     }
-          //     //                 }
-          //     //             }
-          //     //         }
-          //     //     }
-          //     // }
-          // }
         }
       }
 
       .form-action {
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 1rem;
+        margin-bottom: 3rem;
         width: inherit;
 
         button {

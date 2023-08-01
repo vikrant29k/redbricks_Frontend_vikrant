@@ -61,7 +61,7 @@ export class NewProposalClientInfoComponent implements OnInit {
   getBrokerTypeList() {
     this.brokerService.getBrokerTypeList().subscribe((res) => {
       this.brokerTypeList = res;
-      console.log(this.brokerTypeList, 'type list');
+      // console.log(this.brokerTypeList, 'type list');
     });
   }
   getBrokerCategoryList(res1: string) {
@@ -80,7 +80,7 @@ export class NewProposalClientInfoComponent implements OnInit {
         // this.clientInfoForm.removeControl('spocName');
         // this.clientInfoForm.removeControl('spocEmail');
       }
-      console.log(this.brokeCategoryList, 'categor list');
+      // console.log(this.brokeCategoryList, 'categor list');
     });
   }
   directClient(res: string) {
@@ -116,9 +116,9 @@ export class NewProposalClientInfoComponent implements OnInit {
       cancelButtonColor: '#7D7E80',
     }).then((confirmation) => {
       if (confirmation.isConfirmed) {
-        console.log(this.clientInfoForm.value);
+        // console.log(this.clientInfoForm.value);
         this.addClientInfo();
-        console.log('After submit values', this.clientInfoForm.value);
+        // console.log('After submit values', this.clientInfoForm.value);
       }
     });
   };
@@ -163,9 +163,9 @@ export class NewProposalClientInfoComponent implements OnInit {
 
       if(value === 'other'){
         this.clientInfoForm.addControl('brokerCategoryOther', new FormControl(''));
-        console.log('categoryOther Field added');
+        // console.log('categoryOther Field added');
         this.clientInfoForm.addControl('spocName',new FormControl(''));
-        console.log('spocNameFieldAdded');
+        // console.log('spocNameFieldAdded');
         this.clientInfoForm.addControl('spocEmail',new FormControl(''));
 
       }
@@ -199,7 +199,7 @@ export class NewProposalClientInfoComponent implements OnInit {
       address:address,
       floor:floor
     });
-    console.log(this.clientInfoForm.value);
+    // console.log(this.clientInfoForm.value);
   };
 
   getProposalId = (): string => {

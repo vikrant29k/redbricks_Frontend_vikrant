@@ -234,4 +234,16 @@ export class ProposalService {
         })
       );
   };
+
+  viewLayoutOnSales = (Id:string)=>{
+    return this.http
+      .get(this.baseUrl + 'viewLayoutSales/' + Id)
+      .pipe(
+        this.toster.observe({
+          success: 'Layout View',
+          loading: 'Loading...',
+          error: ({ error }) => `${error.Message}`,
+        })
+      );
+  }
 }

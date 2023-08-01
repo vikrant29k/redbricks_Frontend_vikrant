@@ -21,6 +21,7 @@
   background-size: cover;
   background-position: center;
   background-color: #fddede;
+  overflow: auto;
 
   .main-content {
     @include flex_center_center();
@@ -45,8 +46,8 @@
         align-items: center;
         flex-direction: column;
         @include for-desktop(){
-            width: 23rem;
-            height: 20rem;
+            width: 25rem;
+            height: 22rem;
         }
         cursor: pointer;
 

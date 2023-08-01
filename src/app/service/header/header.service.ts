@@ -23,7 +23,7 @@ export class HeaderService {
         let httpOptions: any = {
             headers: headers
         }
-
+        // console.log(httpOptions,"SDFGHJ")
         return httpOptions;
 
     };
