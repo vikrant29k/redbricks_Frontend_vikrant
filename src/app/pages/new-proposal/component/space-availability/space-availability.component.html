@@ -1,6 +1,6 @@
 
 <div class="container">
-  <a (click)="goBack()" class="previous"><mat-icon>keyboard_backspace</mat-icon> </a>
+  <!-- <a (click)="goBack()" class="previous"><mat-icon>keyboard_backspace</mat-icon> </a> -->
     <div class="main-content">
         <div class="space-availability">
             <p>{{seatAvailability ? 'Space Available': 'Space Not-Available'}}</p>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="extra-proposal-details__top-right">
                         <div class="extra-proposal-details__top-right__fields">
-                            <p>Any Non-Standard Requirement</p>
+                            <p> Any Non-Standard Requirement</p>
                             <button type="button" mat-raised-button [color]="nonStandardRequirement ? 'primary':'accent'" (click)="nonStandardRequirement = !nonStandardRequirement">Yes</button>
                             <button type="button" mat-raised-button [color]="nonStandardRequirement ? 'accent':'primary'" (click)="nonStandardRequirement = !nonStandardRequirement">No</button>
                         </div>

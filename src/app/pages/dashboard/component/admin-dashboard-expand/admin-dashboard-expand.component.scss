@@ -1,4 +1,8 @@
-
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -6,6 +10,9 @@
     h2{
       font-size: 1.5rem;
       margin: 0;
+      @include for-mobile(){
+        font-size: 1.2rem;
+      }
         mat-icon{
             font-size: 1.6rem;
             width: 23px;
@@ -22,6 +29,7 @@
 // transition-property: max-height;
 // transition-property: width;
   transition: 600ms ease-out;
+
   .subtitle{
       width: 34rem;
       display: flex;
@@ -37,11 +45,9 @@
     }
   }
   .sub_card {
-    width: 40rem;
-
+  width: 40rem;
   display: flex;
   flex-wrap: wrap;
-
   justify-content: center;
   // overflow: hidden;
   .sub {
@@ -65,12 +71,22 @@
     width: 40rem;
     max-height: 100rem;
     transition:  600ms ease-in;
+    @include for-mobile(){
+      width: 15rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     .subtitle {
       mat-card{
-        margin-block: 1rem;
+      margin-block: 1rem;
       width: 16rem;
       padding:1rem;
        padding-block: 1rem 1rem;
+       @include for-mobile(){
+        width: 14rem;
+      }
     }
      margin-block-start: 0;
      width: 40rem;
@@ -78,10 +94,18 @@
       // flex-direction: row;
       justify-content: space-around;
       gap:1;
+      @include for-mobile(){
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
       p {
         margin-block:0;
         // margin-inline: 2rem;
         font-size: 1.2rem;
+        @include for-mobile(){
+          font-size: 1rem;
+        }
       }
     }
     .sub_card {
@@ -92,6 +116,9 @@
       flex-wrap: wrap;
       justify-content: center;
       // overflow: hidden;
+      @include for-mobile(){
+        width: 34rem;
+      }
       .sub {
         margin: 1rem;
         width: 14rem;
@@ -100,6 +127,9 @@
         .center_title{
             font-size: 1.5rem;
             font-weight: 600;
+            @include for-mobile(){
+              font-size: 1rem;
+            }
         }
         .sub_sub_card{
             margin-block: 0.5rem;

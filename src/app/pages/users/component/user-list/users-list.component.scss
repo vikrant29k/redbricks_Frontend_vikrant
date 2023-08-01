@@ -1,3 +1,8 @@
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .container {
   display: flex;
   justify-content: center;
@@ -18,14 +23,24 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      @include for-mobile() {
+      font-size: 0.9rem;
+      }
     }
 
     .table-container {
+      @include for-mobile() {
+        width: 20rem;
+        overflow-x: scroll;
+      }
       table {
         color: #fff;
         background-color: #ececec;
         width: 60rem;
         text-align: center;
+        @include for-mobile() {
+          width:35rem;
+        }
 
         th {
           background-color: #c3343a;

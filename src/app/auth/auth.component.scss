@@ -8,6 +8,11 @@
         @content;
     }
 }
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .container{
     background-image: url('../../assets/images/auth/auth-background.png');
     background-size: cover;
@@ -27,19 +32,19 @@
         }
         @include for-laptop-height-620(){
          width: 30rem;
-         top:2rem;       
+         top:2rem;
         }
         img{
             width: inherit;
             object-fit: cover;
-           
+
         }
 
     }
     .main-content{
         width: max-content;
-        
-        
+
+
     }
 }
 

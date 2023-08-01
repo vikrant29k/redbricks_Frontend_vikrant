@@ -3,6 +3,11 @@
     @content;
   }
 }
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 @mixin flex_center_center {
   display: flex;
   justify-content: center;
@@ -22,7 +27,9 @@
   background-size: cover;
   background-position: center;
   background-color: #fddede;
-
+  @include for-mobile() {
+    overflow: auto;
+  }
   .main-content {
     @include flex_center_center();
     width: inherit;
@@ -54,10 +61,18 @@
           height: 20rem;
         }
 
+        @include for-mobile() {
+          width: 16rem;
+          height: 20rem;
+        }
         svg {
           // width: inherit;
           // height: inherit;
           overflow: visible;
+          @include for-mobile() {
+
+            transform: matrix(0.8, 0, 0, 0.8, 3, 19);
+          }
         }
 
         p {
@@ -67,6 +82,10 @@
           font-weight: 500;
           width: 10rem;
           cursor: pointer;
+          @include for-mobile() {
+            margin-block: 0.15rem 0.5rem;
+            font-size: 0.9rem;
+          }
         }
         .seat-counts{
           font-size: 1.3rem;

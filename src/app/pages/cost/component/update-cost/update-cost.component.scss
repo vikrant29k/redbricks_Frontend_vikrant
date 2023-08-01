@@ -3,7 +3,11 @@
         @content;
     }
 }
-
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .container {
     display: flex;
     justify-content: center;
@@ -21,9 +25,13 @@
         box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
         width: 60rem;
 
-        @include for-desktop() {
-            width: 45rem;
+        // @include for-desktop() {
+        //     width: 45rem;
+        // }
+        @include for-mobile() {
+          width:17rem;
         }
+
 
         .title {
             width: 100%;
@@ -31,6 +39,9 @@
             justify-content: space-between;
             align-items: center;
             width: inherit;
+            @include for-mobile() {
+              flex-direction: column;
+            }
         }
 
         form {
@@ -92,10 +103,12 @@
                 align-items: center;
                 width: inherit;
                 gap: 5rem;
-
-                @include for-desktop() {
-                    gap: 9.5rem;
+                @include for-mobile() {
+                  gap: 1rem;
                 }
+                // @include for-desktop() {
+                //     gap: 9.5rem;
+                // }
 
                 button {
                     width: 15rem;

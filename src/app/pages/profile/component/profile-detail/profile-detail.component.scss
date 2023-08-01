@@ -3,6 +3,11 @@
     @content;
   }
 }
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 
 @mixin flex_center_center {
   display: flex;
@@ -28,7 +33,12 @@
       justify-content: flex-start;
       align-items: center;
       gap: 1rem;
-
+      @include for-mobile() {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      }
       .edit-icon {
         opacity: 0.5;
 
@@ -70,6 +80,10 @@
         padding: 1.5rem 1rem;
         border-radius: 4rem;
       }
+      @include for-mobile(){
+        width: 19rem;
+        border-radius: 3rem;
+      }
       form {
         @include flex_center_center();
         @include flex-column();
@@ -81,6 +95,13 @@
           width: inherit;
           @include for-desktop() {
             width: 39rem;
+          }
+          @include for-mobile() {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: inherit;
+            flex-direction: column;
           }
           mat-form-field {
             width: 20rem;
@@ -102,9 +123,15 @@
           @include flex_center_center();
           width: inherit;
           gap: 5rem;
+          @include for-mobile() {
+            gap: 1rem;
+          }
           button {
             width: 10rem;
             padding: 0rem 2rem;
+            @include for-mobile(){
+              width: 8rem;
+            }
           }
         }
       }

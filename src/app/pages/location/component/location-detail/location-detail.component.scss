@@ -1,3 +1,8 @@
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .container {
   min-height: 100vh;
   display: flex;
@@ -21,13 +26,18 @@
       justify-content: flex-start;
       align-items: center;
       width: 100%;
-
+      @include for-mobile() {
+       flex-wrap: wrap;
+        }
       h1{
         color: #C3343A;
         font-weight: 500;
         // width: 100%;
         // text-align: center;
         margin-block: 0.5rem;
+        @include for-mobile() {
+          font-size: 1.4rem;
+        }
       }
 
       .center-name {
@@ -40,6 +50,10 @@
     .image {
       width: 95%;
       text-align: center;
+      @include for-mobile() {
+        width: 100%;
+      }
+
       img {
         width: inherit;
         height: inherit;
@@ -143,6 +157,9 @@ img{
     font-weight: 500;
     width: 100%;
     text-align: center;
+    @include for-mobile() {
+      font-size: 1.4rem;
+    }
   }
 }
 }

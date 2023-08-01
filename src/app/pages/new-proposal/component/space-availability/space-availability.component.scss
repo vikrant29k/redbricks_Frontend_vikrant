@@ -3,6 +3,11 @@
     @content;
   }
 }
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 @mixin flex-column {
   flex-direction: column;
 }
@@ -19,6 +24,10 @@
   width: 100%;
   background-color: #fddede;
   font-size: 1.1rem;
+  @include for-mobile() {
+    overflow-x: scroll;
+  }
+
   .previous {
     color: black;
     font-size: 3rem;
@@ -46,7 +55,7 @@
     gap: 1rem;
     background-color: #fff;
     border-radius: 1rem;
-    height: 33rem;
+    // height: 33rem;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
     // width: 65rem;
     width: 60rem;
@@ -54,6 +63,10 @@
     @include for-desktop() {
       width: 50rem;
       padding-block: 1rem;
+    }
+    @include for-mobile() {
+      width: 21rem;
+
     }
     .space-availability {
       margin-top: 1rem;
@@ -69,6 +82,10 @@
       @include for-desktop() {
         margin-top: 0.5rem;
         font-weight: 500;
+      }
+      @include for-mobile() {
+        flex-direction: column;
+        padding: 0.3rem 1rem;
       }
     }
 
@@ -109,6 +126,10 @@
         @include for-desktop() {
           font-size: 1rem;
         }
+        @include for-mobile() {
+          gap: 1.5rem;
+          font-size: 0.9rem;
+        }
         .extra-proposal-details_first_div{
           display: flex;
           width: 85%;
@@ -120,11 +141,21 @@
             align-items: center;
             gap: 1rem;
           }
+          @include for-mobile() {
+           flex-direction: column;
+           gap:1rem;
+          }
         }
         .extra-proposal-details__top {
           @include flex_center-center();
+          justify-content: center;
+          align-items: center;
           gap: 2rem;
-
+          @include for-mobile() {
+            margin-block-start: 15px;
+            display: flex;
+            flex-direction: column;
+          }
           .extra-proposal-details__top-left {
             @include flex_center-center();
             @include flex-column();
@@ -161,6 +192,10 @@
               width: 100%;
               gap: 1rem;
               height: 4.15rem;
+              @include for-mobile() {
+                gap: 0.4rem;
+                flex-direction: column;
+              }
               mat-label {
                 font-weight: 600;
                 @include for-desktop() {
@@ -170,17 +205,17 @@
               &:nth-child(2) {
                 p {
                   width: 5rem;
+
                   @include for-desktop() {
                     width: 4rem;
                   }
-                }
 
+                }
                 mat-form-field {
                   width: 100%;
                 }
               }
             }
-
             &:last-child {
               align-items: flex-start;
             }
@@ -190,10 +225,16 @@
         .extra-proposal-details__bottom {
           @include flex_center-center();
           gap: 2rem;
-
+          @include for-mobile() {
+            width: 16rem;
+            height: 2.5rem;
+            gap:1rem;
+            margin-top: 16px;
+          }
           button {
             width: 10rem;
             height: 2.5rem;
+
           }
         }
       }
@@ -202,7 +243,12 @@
         @include flex_center-center();
         margin-block: 1.5rem;
         gap: 2rem;
-
+        @include for-mobile() {
+          margin-block: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        }
         button {
           width: 15rem;
           height: 3rem;
@@ -210,6 +256,14 @@
           @include for-desktop() {
             font-size: 1rem;
             width: 13rem;
+          }
+          @include for-mobile() {
+            display: flex;
+            flex-direction: column;
+            width: 13rem;
+            height: 2.7rem;
+            font-size: 1.1rem;
+            align-items: center;
           }
         }
       }

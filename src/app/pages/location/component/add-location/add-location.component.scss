@@ -3,6 +3,11 @@
     @content;
   }
 }
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .container {
   display: flex;
   justify-content: center;
@@ -23,12 +28,19 @@
     @include for-desktop() {
       width: 45rem;
     }
+    @include for-mobile() {
+      width:17rem;
+    }
     .title {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: inherit;
+      @include for-mobile() {
+        flex-direction: column;
+
+      }
     }
 
     form {
@@ -43,6 +55,9 @@
         justify-content: space-around;
         align-items: center;
         width: inherit;
+        @include for-mobile() {
+          flex-direction: column;
+        }
 
         mat-form-field {
           width: 20rem;
@@ -91,11 +106,17 @@
         @include for-desktop() {
           gap: 9.5rem;
         }
+        @include for-mobile() {
+          gap: 0.5rem;
+          display: flex;
+          flex-direction: column;
+        }
         button {
           width: 15rem;
           @include for-desktop() {
-            width: 13rem;
+            width: 10rem;
           }
+
         }
       }
     }

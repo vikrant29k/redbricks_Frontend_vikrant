@@ -3,7 +3,11 @@
         @content;
     }
 }
-
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .container {
     display: flex;
     flex-direction: column;
@@ -36,6 +40,10 @@
         color: #ffffff;
         font-weight: 600;
 
+        @include for-mobile() {
+          margin-bottom: 0.8rem;
+          margin-inline-start: 4rem;
+        }
     }
 
     form {
@@ -105,7 +113,7 @@
                 @include for-desktop(){
                     font-size: 1rem;
                     font-weight: 500;
-                    
+
                 }
             }
         }
