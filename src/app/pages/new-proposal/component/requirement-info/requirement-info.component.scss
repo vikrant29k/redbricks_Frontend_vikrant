@@ -203,6 +203,9 @@
     @include for-desktop() {
       justify-content: space-between;
     }
+    @include for-mobile(){
+      margin-inline-start: 5px;
+  }
     .center_title_first_span{
       font-weight: 600;
       color:#c3343a;
@@ -222,7 +225,7 @@
   border-radius: 2rem;
   font-family: 'Courier New', Courier, monospace;
   @include for-mobile() {
-    width: 13rem;
+    width: 17rem;
   }
 
   .text{

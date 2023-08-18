@@ -3,6 +3,11 @@
     @content;
   }
 }
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 mat-drawer-container {
   height: 100vh;
 
@@ -18,7 +23,11 @@ mat-drawer-container {
     top: 1rem;
     left: 2rem;
     z-index: 1;
+    @include for-mobile(){
+      left: 0rem;
+      top: 0.2rem;
 
+        }
     .icon {
       display: flex;
       justify-content: center;
@@ -30,6 +39,15 @@ mat-drawer-container {
       font-size: 1.1rem;
       z-index: 1;
       cursor: pointer;
+      @include for-mobile(){
+        margin-left: 2px;
+        padding: 0.55rem;
+        height: 20px;
+        width: 20px;
+        .material-icons {
+        font-size: 20px;
+        }
+      }
     }
   }
 }

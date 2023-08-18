@@ -1,3 +1,9 @@
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+
 .footer-container{
   position: fixed;
   display: flex;
@@ -11,5 +17,8 @@
   background: #c3343a;
   p{
     margin: 6px 5px;
+    @include for-mobile(){
+      margin: 2px 5px;
+    }
   }
 }

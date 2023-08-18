@@ -21,7 +21,9 @@
 
 .container {
   @include flex_center_center();
-
+  // @include for-mobile(){
+  //   height: 72rem;
+  // }
   .main-content {
     @include flex_center_center();
     @include flex-column();
@@ -83,12 +85,15 @@
       @include for-mobile(){
         width: 19rem;
         border-radius: 3rem;
+
       }
       form {
         @include flex_center_center();
         @include flex-column();
         width: inherit;
-
+        @include for-mobile(){
+         overflow-y: auto;
+        }
         .section {
           @include flex_center_center();
           justify-content: space-around;
