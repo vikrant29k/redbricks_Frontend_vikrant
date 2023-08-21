@@ -34,6 +34,7 @@
       width: inherit;
       @include for-mobile() {
         flex-direction: column;
+        margin-top: -2rem;
       }
     }
 

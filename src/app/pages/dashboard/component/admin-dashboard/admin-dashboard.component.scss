@@ -40,6 +40,9 @@
       text-transform: capitalize;
       margin: 10px;
       font-size: 2rem;
+      @include for-mobile() {
+        font-size: 1.5rem;
+      }
     }
     color: #c3343a;
     padding-block: 0.1rem;
