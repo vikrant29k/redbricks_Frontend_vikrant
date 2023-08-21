@@ -1,0 +1,21 @@
+.contain{
+    width: 800px;
+    height: 566px;
+    border: 1px solid black;
+  }
+  .changeContain{
+    width: 800px;
+    height: 566px;
+    border: 1px solid black;
+  
+      user-select: none;
+      cursor: move;
+   
+  }
+  .main{
+    display: flex;
+    button{
+      margin: 10px;
+    }
+  }
+  

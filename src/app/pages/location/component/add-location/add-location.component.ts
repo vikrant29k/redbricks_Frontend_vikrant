@@ -16,7 +16,7 @@ import { GenerateRackValueComponent } from '../generate-rack-value/generate-rack
   styleUrls: ['./add-location.component.scss'],
 })
 export class AddLocationComponent implements OnInit {
-  JSONFile!: File;
+  // JSONFile!: File;
   layoutImage!: File;
   jsonUploaded: boolean = false;
   layoutImageUploaded: boolean = false;
@@ -53,7 +53,7 @@ export class AddLocationComponent implements OnInit {
     // rent: new FormControl('', Validators.required),
     // cam: new FormControl('', Validators.required),
     imageLinks: new FormArray([]),
-    videoLinks: new FormArray([]),
+    // videoLinks: new FormArray([]),
   });
 
 
@@ -79,15 +79,15 @@ export class AddLocationComponent implements OnInit {
   get rentSheet() {
     return (this.locationForm.get('rentSheet') as FormArray).controls;
   }
-  get videoLinks() {
-    return (this.locationForm.get('videoLinks') as FormArray).controls;
-  }
+  // get videoLinks() {
+  //   return (this.locationForm.get('videoLinks') as FormArray).controls;
+  // }
 
-  jsonUploadHandler = (event: any) => {
-    this.JSONFile = event.target.files[0];
-    this.jsonUploaded = true;
+  // jsonUploadHandler = (event: any) => {
+  //   this.JSONFile = event.target.files[0];
+  //   this.jsonUploaded = true;
 
-  };
+  // };
 
   layoutImageUploadHandler = (event: any) => {
     this.layoutImage = event.target.files[0];
@@ -128,9 +128,9 @@ export class AddLocationComponent implements OnInit {
       }
     }
 
-    if (this.jsonUploaded) {
-      formData.append('jsonFile', this.JSONFile);
-    }
+    // if (this.jsonUploaded) {
+    //   formData.append('jsonFile', this.JSONFile);
+    // }
     if (this.layoutImageUploaded) {
       formData.append('layoutImage', this.layoutImage);
     }
@@ -171,7 +171,7 @@ allData:any
           salesHead: result.salesHead,
           address: result.address,
           perSeatPrice: result.perSeatPrice,
-          videoLinks: result.videoLinks,
+          // videoLinks: result.videoLinks,
           imageLinks: result.imageLinks,
           rentSheet: result.rentSheet,
           carParkCharge: result.carParkCharge,
@@ -183,10 +183,10 @@ allData:any
           this.onAdd('imageLinks');
           this.imageLinks[index].patchValue(element);
         });
-        result.videoLinks.forEach((element: string, index: number) => {
-          this.onAdd('videoLinks');
-          this.videoLinks[index].patchValue(element);
-        });
+        // result.videoLinks.forEach((element: string, index: number) => {
+        //   this.onAdd('videoLinks');
+        //   this.videoLinks[index].patchValue(element);
+        // });
         result.rentSheet.forEach((element: any,index: number) => {
           this.onAddFromGroup();
           this.rentSheet[index].patchValue(element);

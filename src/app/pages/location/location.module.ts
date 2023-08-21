@@ -16,6 +16,7 @@ import { GenerateRackValueComponent } from './component/generate-rack-value/gene
 import { ShowLayoutComponent } from './component/show-layout/show-layout.component';
 import { ShowGalleryComponent } from './component/show-gallery/show-gallery.component';
 import { FloorsComponent } from './component/floors/floors.component';
+import { LayoutEditorComponent } from './component/layout-editor/layout-editor.component';
 @NgModule({
     declarations: [
         LocationComponent,
@@ -27,7 +28,8 @@ import { FloorsComponent } from './component/floors/floors.component';
         GenerateRackValueComponent,
         ShowLayoutComponent,
         ShowGalleryComponent,
-        FloorsComponent
+        FloorsComponent,
+        LayoutEditorComponent
     ],
     imports: [
         CommonModule,

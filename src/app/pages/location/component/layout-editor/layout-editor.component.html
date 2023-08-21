@@ -1,0 +1,21 @@
+
+<div class="main">
+    <div class="canvas-container">
+      <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled ?'contain':'changeContain'"></div>
+    </div>
+  <div style="display: flex;
+  flex-direction: column;">
+  <button (click)="toggleDrawing()">{{isDrawingEnabled?'Stop':'Start'}} Drawing Rectangle</button>
+  <button (click)='addRectDataInArray()'>Update Border</button>
+  <button (click)="drawSeatAndGetHW()">{{isSeatDrawingEnabled?'Stop':'Start'}} Drawing Seat</button>
+  <label for="noRect">Enter Numbers of seats</label>
+
+  <label>Width={{seatWidth}}</label>
+  <label>Height={{seatHeight}} </label>
+  <button (click)='updateSeatsSize()'>Update Seat</button>
+  <button (click)="resetZoomAndPosition()">Reset Zoom and Position</button>
+  
+  </div>
+  </div>
+  
+  

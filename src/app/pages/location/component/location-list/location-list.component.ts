@@ -30,7 +30,7 @@ export class LocationListComponent implements OnInit {
   height!: string;
   Locations: any;
   editMode: boolean = false;
-  displayedColumns: string[] = ['location', 'center','floor', 'availableNoOfWorkstation', 'totalNoOfWorkstation', 'edit', 'delete'];
+  displayedColumns: string[] = ['location', 'center','floor', 'availableNoOfWorkstation', 'totalNoOfWorkstation', 'edit', 'delete','setBorder'];
   dataSource!: MatTableDataSource<LocationData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -85,7 +85,11 @@ export class LocationListComponent implements OnInit {
       }
     })
   }
-
+  setBorder(id: any) {
+ console.log(id)
+    // this.router.navigate(['/admin','location','layout-editor',id])
+    this.router.navigate(['/admin','location','layout-editor',id])
+  }
   editLocation(id: any) {
     this.router.navigate(['/admin','location','edit-location',id])
     // this.editMode = true;

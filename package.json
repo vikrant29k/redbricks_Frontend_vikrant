@@ -6,14 +6,8 @@
   "description": "Front-end for Redbricks Project",
   "scripts": {
     "ng": "ng",
-    "start": "electron-forge start",
     "build": "ng build --aot --base-href ./",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "electron": "electron .",
-    "electron-build": "ng build --aot --base-href ./ && electron .",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -30,8 +24,8 @@
     "@fingerprintjs/fingerprintjs": "^3.4.1",
     "@ngneat/hot-toast": "^4.1.0",
     "angular-google-charts": "^2.2.3",
-    "electron-squirrel-startup": "^1.0.0",
     "jwt-decode": "^3.1.2",
+    "konva": "^8.2.0",
     "macaddress": "^0.5.3",
     "ng2-pdf-viewer": "^9.1.2",
     "ngx-device-detector": "^4.0.1",
@@ -50,7 +44,6 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.70",
     "@electron-forge/maker-zip": "^6.0.0-beta.70",
     "@types/jasmine": "~4.0.0",
-    "electron": "^21.2.3",
     "electron-wix-msi": "^5.0.0",
     "jasmine-core": "~4.2.0",
     "karma": "~6.4.0",

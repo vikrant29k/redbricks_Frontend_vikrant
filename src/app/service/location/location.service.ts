@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { HeaderService } from "../header/header.service";
 import { HotToastService } from "@ngneat/hot-toast";
+import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -86,6 +87,14 @@ export class LocationService {
             })
         );
     }
+    
+    getImageById(id: any): Observable<any> {
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.get(this.baseUrl + 'getImage/' + id, {
+          ...httpOptions,
+          responseType: 'text' // Set responseType to 'text' to prevent automatic parsing
+        });
+      }
 
     getLocationList = () => {
         let httpOptions = this.headerService.updateHeader();
@@ -128,67 +137,4 @@ export class LocationService {
     }
 
 
-
-    // locationData = [
-    //     {
-    //         location: 'Pune',
-    //         center: 'Kharadi',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Pune',
-    //         center: 'Shivaji Nagar',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Pune',
-    //         center: 'Koregaon Park',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Pune',
-    //         center: 'Hadapsar',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Hyderabad',
-    //         center: 'Salarpuria',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Hyderabad',
-    //         center: 'Indira Nagar',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Hyderabad',
-    //         center: 'Frazer Town',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Mumbai',
-    //         center: 'Bandra',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Mumbai',
-    //         center: 'Boriwali',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Mumbai',
-    //         center: 'Panwale',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Delhi',
-    //         center: 'Canode palace',
-    //         image: ['location-preview.png']
-    //     },
-    //     {
-    //         location: 'Delhi',
-    //         center: 'Mandoli',
-    //         image: ['location-preview.png']
-    //     }
-    // ]
 }

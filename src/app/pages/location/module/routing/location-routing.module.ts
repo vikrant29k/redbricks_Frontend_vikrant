@@ -11,6 +11,7 @@ import { LocationSalesChildRouteGuard } from "../service/location-sales-child-ro
 import { ShowLayoutComponent } from "../../component/show-layout/show-layout.component";
 import { ShowGalleryComponent } from "../../component/show-gallery/show-gallery.component";
 import { FloorsComponent } from "../../component/floors/floors.component";
+import { LayoutEditorComponent } from "../../component/layout-editor/layout-editor.component";
 const routes: Routes = [
     {
         path: '',
@@ -26,6 +27,7 @@ const routes: Routes = [
                 canActivate: [LocationSalesChildRouteGuard],
                 component: LocationLocationComponent
             },
+         
             {
                 path: 'center/:location',
                 canActivate: [LocationSalesChildRouteGuard],
@@ -54,6 +56,11 @@ const routes: Routes = [
                 path: 'edit-location/:Id',
                 canActivate: [LocationAdminChildRouteGuard],
                 component: AddLocationComponent
+            },
+               {
+                path:'layout-editor/:Id',
+                canActivate:[LocationAdminChildRouteGuard],
+                component:LayoutEditorComponent
             },
             {
               path:'show-layout/:Id',

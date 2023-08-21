@@ -291,4 +291,17 @@ export class DashboardAdminDashboard implements OnInit {
       this.clk = !this.clk;
     }
   }
+  public line_ChartData = [
+    ['Year', 'Sales', 'Expenses'],
+    ['2004', 1000, 400],
+    ['2005', 1170, 460],
+    ['2006', 660, 1120],
+    ['2007', 1030, 540]];
+    public line_ChartOptions = {
+      title: 'Company Performance',
+      curveType: 'function',
+      legend: {
+          position: 'bottom'
+      }
+  };
 }

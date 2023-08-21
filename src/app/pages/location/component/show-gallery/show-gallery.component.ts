@@ -39,7 +39,7 @@ imageData:any=[]
         next: (result: any) => {
             this.imageData = {...result};
             this.images = this.imageData.imageLinks
-            this.videos = this.imageData.videoLinks
+            // this.videos = this.imageData.videoLinks
         }
     })
 }
