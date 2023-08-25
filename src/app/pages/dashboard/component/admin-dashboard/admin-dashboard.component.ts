@@ -224,10 +224,6 @@ export class DashboardAdminDashboard implements OnInit {
 
   //lock proposal
   lockProposal(id: string) {
-    // this.System_value = this.Amount.find((x:any) => x._id === id).previousFinalOfferAmmount ;
-    // this.client_value =  this.Amount.find((x:any) => x._id === id).clientFinalOfferAmmount ;
-    // console.log(this.System_value, 'System_value');
-    // console.log(this.client_value, 'client_value');
     this.selectedSeatOfCurrentProposal =  this.Amount.find((x:any) => x._id === id).totalNumberOfSeats ;
     var a = 'myprice';
     Swal.fire({
@@ -244,10 +240,13 @@ export class DashboardAdminDashboard implements OnInit {
       cancelButtonColor: '#7D7E80',
     }).then((confirmation) => {
       if (confirmation.isConfirmed) {
-        this.proposalService.lockProposal(id, { lockProposal:true })
-          .subscribe((res) => {
-            console.log(res,"Locked Proposal")
-          });
+        // this.proposalService.lockProposal(id, { lockProposal:true })
+        //   .subscribe((res:any) => {
+        //     console.log(res,"Locked Proposal")
+
+                 this.route.navigate(['/admin','location','lock-layout',id])
+              
+          // });
           this.deleteRow(id)
       }
     });

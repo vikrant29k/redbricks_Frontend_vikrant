@@ -12,6 +12,7 @@ import { ShowLayoutComponent } from "../../component/show-layout/show-layout.com
 import { ShowGalleryComponent } from "../../component/show-gallery/show-gallery.component";
 import { FloorsComponent } from "../../component/floors/floors.component";
 import { LayoutEditorComponent } from "../../component/layout-editor/layout-editor.component";
+import { LockLayoutEditorComponent } from "../../component/locking the layout/locking the layout-editor.component";
 const routes: Routes = [
     {
         path: '',
@@ -61,6 +62,10 @@ const routes: Routes = [
                 path:'layout-editor/:Id',
                 canActivate:[LocationAdminChildRouteGuard],
                 component:LayoutEditorComponent
+            },
+            {
+                path:'lock-layout/:proposalId',
+                component:LockLayoutEditorComponent
             },
             {
               path:'show-layout/:Id',

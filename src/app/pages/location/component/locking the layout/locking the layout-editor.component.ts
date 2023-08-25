@@ -2,12 +2,13 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Konva from 'konva';
 import { LocationService } from 'src/app/service/location/location.service';
+import { ProposalService } from 'src/app/service/proposal/proposal.service';
 @Component({
-  selector: 'app-layout-editor',
-  templateUrl: './layout-editor.component.html',
-  styleUrls: ['./layout-editor.component.scss'],
+  selector: 'app-lock-layout-editor',
+  templateUrl: './locking the layout-editor.component.html',
+  styleUrls: ['./locking the layout-editor.component.scss'],
 })
-export class LayoutEditorComponent implements OnInit, AfterViewInit {
+export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
   stage!: Konva.Stage;
   layer!: Konva.Layer;
   line!: Konva.Line;
@@ -32,16 +33,25 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   isDrawing: boolean = false;
   constructor(private router: Router,
                private route: ActivatedRoute,
-               private locationService: LocationService
+               private locationService: LocationService,
+               private proposalService:ProposalService
              ) {}
   id!: string;
   imageUrl:any;
+  proposalId!:string
+  drawnSeats:any[]=[];
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['Id'];
-   
-    // console.log(this.id,"HELOOOOOOOOOOOOOOo")
+    this.proposalId = this.route.snapshot.params['proposalId'];
+
   }
   ngAfterViewInit(): void {
+    this.proposalService.getProposalById(this.proposalId).subscribe((res:any)=>{
+      // console.log(res)
+      this.id=res[0].locationId
+      this.drawnSeats=res[0].seatsData
+  //  this.drawnSeats=res[0].seatsData
+  this.seatSizeHeight=res[0].seatSize[0].height;
+  this.seatSizeWidth=res[0].seatSize[0].width;
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
         this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
@@ -79,6 +89,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
               });
   
               this.layer.add(rect);
+              
       }
         });
         }
@@ -94,9 +105,40 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
       }
     );
 
-    
+  })
   }
-
+  drawTHeSeat(){
+    for (const seat of this.drawnSeats) {
+      this.drawSeatsBetweenPoints(seat.start, seat.end);
+    }
+  }
+  drawSeatsBetweenPoints(start:any, end:any) {
+    const startX = Math.min(start.x, end.x);
+    const startY = Math.min(start.y, end.y);
+    const endX = Math.max(start.x, end.x);
+    const endY = Math.max(start.y, end.y);
+  
+    for (let x = startX; x < endX; x += this.seatSizeWidth) {
+      for (let y = startY; y < endY; y += this.seatSizeHeight) {
+        this.drawSeatRectangle(x, y);
+      }
+    }
+  }
+  drawSeatRectangle(x:any, y:any) {
+    console.log(x,y)
+    const rect = new Konva.Rect({
+      x: x,
+      y: y,
+      width: this.seatSizeWidth,
+      height: this.seatSizeHeight,
+      fill: 'red',
+      opacity: 0.5,
+      stroke: 'red',
+      strokeWidth: 0.4,
+      name: 'seat-rectangle',
+    });
+    this.layer.add(rect);
+  }
   backgroundImage!: Konva.Image;
   initializeKonva(imageObj: HTMLImageElement): void {
     this.stage = new Konva.Stage({
@@ -420,6 +462,7 @@ seatArray:any[]=[]
   }
 
   displayRectangles() {
+    this.drawTHeSeat()
     // Find all rectangles with the attribute name 'workstation-layer'
     const workstationRectangles = this.layer.find('.workstation-layer');
   

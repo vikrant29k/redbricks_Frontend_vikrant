@@ -38,6 +38,7 @@ export class NewProposalClientInfoComponent implements OnInit {
     center: new FormControl('', Validators.required),
     address: new FormControl(''),
     floor:new FormControl('', Validators.required),
+    locationId:new FormControl('',Validators.required),
     // 'spocName': new FormControl(''),
     // 'clientName': new FormControl(''),
     brokerType: new FormControl('', Validators.required),
@@ -192,12 +193,14 @@ export class NewProposalClientInfoComponent implements OnInit {
     let center = this.locationService.selectedCenter;
     let address = this.locationService.selectedAddress;
     let floor = this.locationService.selectedFloor;
+    let locationId = this.locationService.locationId;
     // console.log(location, center);
     this.clientInfoForm.patchValue({
       location: location,
       center: center,
       address:address,
-      floor:floor
+      floor:floor,
+      locationId:locationId
     });
     // console.log(this.clientInfoForm.value);
   };

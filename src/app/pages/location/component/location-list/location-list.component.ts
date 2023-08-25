@@ -87,8 +87,22 @@ export class LocationListComponent implements OnInit {
   }
   setBorder(id: any) {
  console.log(id)
+ Swal.fire({
+  title: 'Choose the option below',
+  icon: 'info',
+  showConfirmButton: true,
+  confirmButtonText: 'Edit Layout',
+  confirmButtonColor: '#C3343A',
+  showCancelButton: true,
+  cancelButtonText:'Add Client And Layout',
+  cancelButtonColor: '#C3343A',
+}).then((confirmation) => {
+  if (confirmation.isConfirmed) {
     // this.router.navigate(['/admin','location','layout-editor',id])
     this.router.navigate(['/admin','location','layout-editor',id])
+  }
+});
+    
   }
   editLocation(id: any) {
     this.router.navigate(['/admin','location','edit-location',id])

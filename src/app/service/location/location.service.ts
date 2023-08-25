@@ -16,6 +16,7 @@ export class LocationService {
     selectedCenter!: string;
     selectedAddress!:string
     selectedFloor!:string;
+    locationId!:string;
     constructor(
         private headerService: HeaderService,
         private http: HttpClient,
@@ -95,7 +96,10 @@ export class LocationService {
           responseType: 'text' // Set responseType to 'text' to prevent automatic parsing
         });
       }
-
+      getBorderData(id: any): Observable<any> {
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.get(this.baseUrl + 'getBorderData/' + id, httpOptions);
+      }
     getLocationList = () => {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getLocationList', httpOptions).pipe(
@@ -136,5 +140,15 @@ export class LocationService {
         );
     }
 
+    addLayoutData = (id:string,data:any)=>{
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.post(this.baseUrl + 'addLayout/'+id,data,httpOptions).pipe(
+            this.toster.observe({
+                success: 'Layout Data Added Successfully',
+                loading:'Adding Layout Data...',
+                error:({error})=>`${error.Message}`
+            })
+        );
+    }
 
 }
