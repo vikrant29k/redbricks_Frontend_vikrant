@@ -492,8 +492,25 @@ seatArray:any[]=[]
       const height = rectangle.height();
       
     console.log('Updated stored values:', rectangle);
+    const rect = {
+      _id:Date.now(),
+      startX: rectangle.x(),
+      startY: rectangle.y(),
+      endX: this.shape.attrs.x +  rectangle.width(),
+      endY: rectangle.y() +  rectangle.height(),
+      shape: rectangle,
+    };
+    this.getAllPoints.push(rect)
+    console.log(this.getAllPoints);
     });
+  //   let data = { 
+  //     LayoutData:{layoutBorder:this.getAllPoints,
+  //          seatSize:this.seatArray}
+  //        }
   
+  // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
+  //   console.log(res)
+  // })
     
     
   }
