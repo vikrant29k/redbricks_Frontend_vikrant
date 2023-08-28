@@ -7,7 +7,7 @@ import { AuthenticationService } from 'src/app/service/authentication/authentica
 import { LocationService } from 'src/app/service/location/location.service';
 import { Router } from "@angular/router";
 import Swal from 'sweetalert2';
-
+import { MatDialog } from '@angular/material/dialog';
 export interface LocationData {
   _id: any,
   city: string,
@@ -41,7 +41,8 @@ export class LocationListComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private locationService: LocationService,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private dialog:MatDialog
   ) { }
 
   tableDataSource(data: LocationData[] | undefined) {
@@ -87,9 +88,22 @@ export class LocationListComponent implements OnInit {
   }
   setBorder(id: any) {
  console.log(id)
-    // this.router.navigate(['/admin','location','layout-editor',id])
-    this.router.navigate(['/admin','location','layout-editor',id])
-  }
+    Swal.fire({title: 'Choose the option below',
+     icon: 'info',
+      showConfirmButton: true,
+       confirmButtonText: 'Edit Layout',
+       confirmButtonColor: '#C3343A',
+       showCancelButton: true,
+       cancelButtonText:'Add Client And Layout',
+        cancelButtonColor: '#C3343A',}).then((confirmation) => {
+           if (confirmation.isConfirmed) {
+            this.router.navigate(['/admin','location','layout-editor',id])
+          }else{
+            this.router.navigate(['/admin','location','add-client',id])
+          }
+           })
+          }
+
   editLocation(id: any) {
     this.router.navigate(['/admin','location','edit-location',id])
     // this.editMode = true;
@@ -109,4 +123,7 @@ export class LocationListComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+
+
 }

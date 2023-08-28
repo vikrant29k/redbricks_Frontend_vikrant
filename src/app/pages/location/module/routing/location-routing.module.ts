@@ -12,6 +12,7 @@ import { ShowLayoutComponent } from "../../component/show-layout/show-layout.com
 import { ShowGalleryComponent } from "../../component/show-gallery/show-gallery.component";
 import { FloorsComponent } from "../../component/floors/floors.component";
 import { LayoutEditorComponent } from "../../component/layout-editor/layout-editor.component";
+import { AddClientComponent } from "../../component/add-client/add-client.component";
 const routes: Routes = [
     {
         path: '',
@@ -27,7 +28,7 @@ const routes: Routes = [
                 canActivate: [LocationSalesChildRouteGuard],
                 component: LocationLocationComponent
             },
-         
+
             {
                 path: 'center/:location',
                 canActivate: [LocationSalesChildRouteGuard],
@@ -71,7 +72,12 @@ const routes: Routes = [
               path:'show-gallery/:Id',
               canActivate:[LocationSalesChildRouteGuard],
               component:ShowGalleryComponent
-            }
+            },
+            {
+              path:'add-client/:Id',
+              canActivate:[LocationAdminChildRouteGuard],
+              component:AddClientComponent
+          },
         ]
     }
 ]

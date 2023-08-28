@@ -10,6 +10,7 @@ import { DashboardMaterialModule } from "./module/material/dashboard-material.mo
 import { AdminDashboardExpandComponent } from './component/admin-dashboard-expand/admin-dashboard-expand.component';
 import { ShowStatsComponent } from './component/admin-dashboard-expand/show-stats/show-stats.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { ShowChartComponent } from './component/admin-dashboard/show-chart/show-chart.component';
 // import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
@@ -19,7 +20,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
         DashboardSalesDashboardComponent,
         DashboardAdminDashboard,
         AdminDashboardExpandComponent,
-        ShowStatsComponent
+        ShowStatsComponent,
+        ShowChartComponent
     ],
     imports: [
         CommonModule,
