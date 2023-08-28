@@ -52,6 +52,10 @@
       align-items: center;
       width: inherit;
 
+      .sub-section{
+        display: flex;
+        gap:2rem;
+      }
       section {
         display: flex;
         justify-content: space-around;

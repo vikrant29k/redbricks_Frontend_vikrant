@@ -31,18 +31,4 @@
     width:15rem;
     align-items: center;
   }
-  .label{
-    display: flex;
-    gap:1rem;
-
-    mat-card{
-      margin-block: 0.5rem;
-      width: 9rem;
-      padding: 0;
-      padding-block: 1rem 1rem;
-    }
-    p{
-      margin-left: 10px;
-    }
-  }
 }

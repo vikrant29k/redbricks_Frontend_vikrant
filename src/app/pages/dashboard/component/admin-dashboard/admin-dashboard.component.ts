@@ -21,7 +21,8 @@ import { DashboardService } from 'src/app/service/dashboard/dashboard.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { AuthGuardService } from 'src/app/service/auth-guard/auth-guard.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { ShowChartComponent } from './show-chart/show-chart.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'dashboard-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -36,7 +37,8 @@ export class DashboardAdminDashboard implements OnInit {
     private route: Router,
     private jwt: JWTService,
     private cd: ChangeDetectorRef,
-    private location: LocationService
+    private location: LocationService,
+    private dialog:MatDialog
   ) {}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -303,4 +305,22 @@ export class DashboardAdminDashboard implements OnInit {
           position: 'bottom'
       }
   };
+
+
+
+  openDialog(){
+    this.dialog.open(ShowChartComponent, {
+      width: '900px',
+      height:' 615px',
+
+    });
+  }
+
+
+
+
+
+
+
+
 }
