@@ -60,6 +60,9 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         }else{
           this.seatSizeHeight=res.layoutArray[0].seatSize[0].height;
           this.seatSizeWidth=res.layoutArray[0].seatSize[0].width;
+          this.seatHeight=this.seatSizeHeight;
+          this.seatWidth=this.seatSizeWidth;
+          this.updateSeatsSize()
           res.layoutArray[0].layoutBorder.forEach((item:any) => {
             const {_id, startX, startY, endX, endY, shape } = item;
             this.getAllPoints.push({_id, startX, startY, endX, endY, shape });
@@ -196,28 +199,26 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         strokeWidth: 0.8,
         name: 'workstation-layer',
       });
-      // const transformer = new Konva.Transformer({
-      //   name:'rect-transform'
-      // });
-      // transformer.on('transform', () => {
-      //   const scaleX = this.shape.scaleX();
-      //   const scaleY = this.shape.scaleY();
-      //   const newWidth = this.shape.width() * scaleX;
-      //   const newHeight = this.shape.height() * scaleY;
-      //   this.shape.width(newWidth);
-      //   this.shape.height(newHeight);
-      //   if (this.isDrawingEnabled) {
-      //     this.rectHeight = Number(newHeight.toFixed(2));
-      //     this.rectWidth = Number(newWidth.toFixed(2));
-      //   }
-      //   this.layer.batchDraw();
-      // });
-      this.layer.add(this.shape)
-      // this.layer.add(this.shape, transformer);/
-      // transformer.attachTo(this.shape);
-    } else {
-      // console.log('MouseDown: Drawing is disabled');
-    }
+     
+      const transformer = new Konva.Transformer();
+     
+      transformer.on('transform', () => {
+        const scaleX = this.shape.scaleX();
+        const scaleY = this.shape.scaleY();
+        const newWidth = this.shape.width() * scaleX;
+        const newHeight = this.shape.height() * scaleY;
+        this.shape.width(newWidth);
+        this.shape.height(newHeight);
+     
+        this.layer.batchDraw();
+      });
+      this.layer.add(this.shape,transformer);
+      transformer.attachTo(this.shape);
+    
+    
+      // this.layer.add(this.shape)
+
+    } 
   }
 
   handleMouseMove(e: Konva.KonvaEventObject<MouseEvent>): void {
@@ -238,6 +239,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   handleMouseUp(e: Konva.KonvaEventObject<MouseEvent>): void {
     if (this.isDrawingEnabled && this.isDrawing) {
       this.isDrawing = false;
+      this.isDrawingEnabled=!this.isDrawingEnabled
 
     } 
   }
@@ -253,7 +255,7 @@ addRectDataInArray(){
   };
   this.getAllPoints.push(rect)
   console.log(this.getAllPoints);
-
+  this.isDrawingEnabled=!this.isDrawingEnabled
 }
   seatDrawing: boolean = false;
   isSeatDrawingEnabled = false;
@@ -379,145 +381,7 @@ seatArray:any[]=[]
       this.router.navigate(['/admin','location','location-list'])
     })
   }
-  selectStoredRectangles() {
-    const workstationRectangles = this.getAllPoints.map(point => point.shape);
-    console.log(workstationRectangles)
-    this.displayRectangles(workstationRectangles);
-  }
-  displayRectangles(rectangles: Konva.Rect[]) {
-    console.log(rectangles)
-    for (const layoutBorderObj of rectangles) {
+ 
 
-      const shape  = layoutBorderObj.attrs
-
-      shape.draggable(true)
-      const transformer = new Konva.Transformer();
-      transformer.attachTo(shape);
-      this.layer.add(transformer);
-      // rectangles.forEach(rectangle => {
-      //   // rectangle.draggable(true);
-      //   // console.log(rectangle)
-      //   const transformer = new Konva.Transformer();
-      //   transformer.attachTo(rectangle);
-      //   this.layer.add(transformer);
-      // });
-     
-}
-   
-    this.layer.batchDraw();
-  }
-  updateStoredValues() {
-    // Find all rectangles with the attribute name 'workstation-layer'
-    const workstationRectangles = this.layer.find('.workstation-layer');
-  
-    // Update the stored values for each transformed rectangle
-    workstationRectangles.forEach(rectangle => {
-      if(!rectangle){
-        console.log('NULL')
-      }else{
-        const name = rectangle.name();
-        const x = rectangle.x();
-        const y = rectangle.y();
-        const width = rectangle.width();
-        const height = rectangle.height();
-        
-      // console.log('Updated stored values:', rectangle);
-      const rect = {
-        _id:Date.now(),
-        startX: rectangle.x(),
-        startY: rectangle.y(),
-        endX: rectangle.x() +  rectangle.width(),
-        endY: rectangle.y() +  rectangle.height(),
-        shape: rectangle,
-      };
-      this.getAllPoints.push(rect)
-      }
-     
-    
-    });
-  
-    console.log(this.getAllPoints);
-    this.seatArray=[{
-      width:this.seatSizeWidth,
-      height:this.seatSizeHeight
-    }]
-    let data = { 
-      LayoutData:{layoutBorder:this.getAllPoints,
-           seatSize:this.seatArray}
-         }
-        
-  this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-    console.log(res);
-    this.router.navigate(['/admin','location','location-list'])
-  })
-    
-  }
-
-
-
-  addSelectedSeats(){
-      // const rect = new Konva.Rect({
-      //   name:'locked-part',
-
-      // })
-  }
-    //creating locked seats.....
-  isDrawingLockEnabled = false;
-  isLockDrawing=true
-  lockedshape!: Konva.Rect;
-  lockstartPoint!:{ x: number; y: number };
-  toggleLockDrawing(): void {
-    this.isDrawingLockEnabled = !this.isDrawingLockEnabled;
-    this.startDrawingLOCKRect();
-    if (!this.isDrawingLockEnabled) {
-      this.isLockDrawing = false; // Stop ongoing drawing if disabled
-    }
-  }
-  startDrawingLOCKRect() {
-    this.stage.on('mousedown', this.handleMouseLOCKDown.bind(this));
-    this.stage.on('mousemove', this.handleMouseLOCKMove.bind(this));
-    this.stage.on('mouseup', this.handleMouseLOCKUp.bind(this));
-  }
-    handleMouseLOCKDown(e: Konva.KonvaEventObject<MouseEvent>): void {
-    if (this.isDrawingLockEnabled) {
-      const pos: any = this.stage.getPointerPosition();
-      this.lockstartPoint = pos;
-      this.isLockDrawing = true;
-
-      this.lockedshape = new Konva.Rect({
-        x: pos.x,
-        y: pos.y,
-        width: 0,
-        height: 0,
-        fill: 'red',
-        opacity: 0.3,
-        stroke: '#000000',
-        strokeWidth: 0.8,
-        name: 'locked-layer',
-      });
-     
-      this.layer.add(this.lockedshape)
-    } 
-  }
-
-  handleMouseLOCKMove(e: Konva.KonvaEventObject<MouseEvent>): void {
-    if (this.isDrawingLockEnabled && this.isLockDrawing) {
-      const pos: any = this.stage.getPointerPosition();
-      const width = pos.x - this.lockstartPoint.x;
-      const height = pos.y - this.lockstartPoint.y;
-      this.lockedshape.width(width);
-      this.lockedshape.height(height);
-
-      this.layer.batchDraw();
-    }
-  }
-
-  handleMouseLOCKUp(e: Konva.KonvaEventObject<MouseEvent>): void {
-    if (this.isDrawingLockEnabled && this.isLockDrawing) {
-      this.isLockDrawing = false;
-     
-    }
-    console.log(this.lockedshape,"SHAPE OF LOCKED")
-  }
   
 }
