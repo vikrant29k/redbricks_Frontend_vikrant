@@ -9,12 +9,6 @@ const AdminRouting: Routes = [
         }
     },
     {
-      path: 'view-layouts',
-      loadChildren: () => {
-          return import('./view-layouts/view-layouts.module').then((m) => m.ViewLayoutsModule);
-      }
-  },
-    {
         path: 'location',
         loadChildren: () => {
             return import('./location/location.module').then((m) => m.LocationModule);

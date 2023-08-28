@@ -21,6 +21,7 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
   proposalId!: string;
   isServiced: boolean = true;
   isAcceptConsolidatedSeats: boolean = true;
+  locationId!:string;
   selectFrom: 'left' | 'right' = 'left';
   seatAvailability: boolean = true;
   consolidatedSeats: boolean = false;
@@ -41,10 +42,10 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     noticePeriod:new FormControl('',Validators.required),
     NonStandardRequirement: new FormControl(''),
     Serviced: new FormControl('', Validators.required),
-    serviceCosts: new FormControl(''),
-    finalOfferAmmount: new FormControl(''),
-    rackValue: new FormControl(''),
-    systemValue: new FormControl(''),
+    // serviceCosts: new FormControl(''),
+    // finalOfferAmmount: new FormControl(''),
+    // rackValue: new FormControl(''),
+    // systemValue: new FormControl(''),
     rentCommencmentDate: new FormControl('',Validators.required),
   });
 
@@ -72,16 +73,7 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
         this.totalNumberofSeat = result.totalNumberOfSeats;
         this.selectedLocation = result.location;
         this.selectedCenter = result.center;
-
-        let data = {
-          selectedCenter:this.selectedCenter,
-          selectedLocation:this.selectedLocation
-        };
-        // this.locationService.getRentData(data).subscribe((res:any)=>{
-        //   this.rentValue = res[0].rentSheet[0].rent;
-        //   this.camValue = res[0].rentSheet[0].cam;
-        //   this.getRackValue=res[0]
-        // })
+        this.locationId=result.locationId;
       },
       error: (err: any) => {},
     });
@@ -91,8 +83,8 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
   openDialog = () => {
     const dialogRef = this.dialog.open(NewProposalLayoutPreviewComponent, {
       width: '800px',
-      height: '566px',
-      data: { proposalId: this.proposalId, selectFrom: this.selectFrom },
+      height: '600px',
+      data: { locationId: this.locationId, proposalId: this.proposalId, totalNoOfSeat:this.totalNumberofSeat },
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
@@ -121,6 +113,7 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
         },
         error: (err: any) => {},
       });
+
   }
 
 

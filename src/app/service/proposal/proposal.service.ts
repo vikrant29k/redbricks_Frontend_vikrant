@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HotToastService } from '@ngneat/hot-toast';
 import { HeaderService } from '../header/header.service';
-
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -92,17 +92,17 @@ export class ProposalService {
   //     )
   // }
 
-  generateLayout = (Id: string, selectFrom: string) => {
+  generateLayout = (Id: string) => {
     let httpOptions = this.headerService.updateHeader();
     return this.http
-      .get(this.baseUrl + 'layout/' + Id + '/' + selectFrom, httpOptions)
-      .pipe(
-        this.toster.observe({
-          success: 'Layout Preview Generated Successfully',
-          loading: 'Generating Layout...',
-          error: ({ error }) => `${error.Message}`,
-        })
-      );
+      .get(this.baseUrl + 'layout/' + Id , httpOptions)
+      // .pipe(
+      //   this.toster.observe({
+      //     success: 'Layout Preview Generated Successfully',
+      //     loading: 'Generating Layout...',
+      //     error: ({ error }) => `${error.Message}`,
+      //   })
+      // );
   };
 
   generateProposal = (Id: string, selectFrom: string, data: any) => {
@@ -242,6 +242,20 @@ export class ProposalService {
         this.toster.observe({
           success: 'Layout View',
           loading: 'Loading...',
+          error: ({ error }) => `${error.Message}`,
+        })
+      );
+  }
+
+  saveImage(Id:string,data:any): Observable<any>{
+    let httpOptions = this.headerService.updateHeader();
+    
+    return this.http
+      .post(this.baseUrl + 'saveImage/' + Id, data, httpOptions)
+      .pipe(
+        this.toster.observe({
+          success: 'Layout Saved Successfully',
+          loading: 'Saving Layout...',
           error: ({ error }) => `${error.Message}`,
         })
       );

@@ -64,6 +64,10 @@ const routes: Routes = [
                 component:LayoutEditorComponent
             },
             {
+                path:'lock-layout/:proposalId',
+                component:LockLayoutEditorComponent
+            },
+            {
               path:'show-layout/:Id',
               canActivate:[LocationSalesChildRouteGuard],
               component:ShowLayoutComponent

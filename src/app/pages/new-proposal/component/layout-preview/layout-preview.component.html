@@ -1,4 +1,4 @@
-<div mat-dialog-content>
+<!-- <div mat-dialog-content>
     <pdf-viewer [ngClass]="isPdfLoaded?'invisibility':''" [src]="pdfUrl" [original-size]="true"
         (pages-initialized)="pageInitialized($event)" (page-rendered)="pageRendered($event)"
         [external-link-target]="'blank'" [page]="1" (on-progress)="onProgress($event)"
@@ -7,4 +7,20 @@
     <ng-container *ngIf="!isPdfLoaded">
         <mat-spinner color="primary"></mat-spinner>
     </ng-container>
-</div>
+</div> -->
+<div class="canvas-container" >
+    <div>
+    <label>Seats to be Selected: {{totalNumber}}</label>
+    <button mat-button (click)="drawRectangles()">Select Seats</button>
+    <mat-radio-group [(ngModel)]="flowOfDrawingSeats" name="radioButtons" (change)="onRadioButtonChange($event)">
+        <mat-radio-button id="vertical" value="vertical" checked>Vertical</mat-radio-button>
+        <mat-radio-button id="horizontal" value="horizontal">Horizontal</mat-radio-button>
+      
+      </mat-radio-group>
+      <button (click)="saveImage()">Download Image</button>
+    </div>
+    <!-- <div #captureContainer> -->
+        <div id="container"></div>
+    <!-- </div> -->
+   
+  </div>

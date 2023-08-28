@@ -2,12 +2,13 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Konva from 'konva';
 import { LocationService } from 'src/app/service/location/location.service';
+import { ProposalService } from 'src/app/service/proposal/proposal.service';
 @Component({
-  selector: 'app-layout-editor',
-  templateUrl: './layout-editor.component.html',
-  styleUrls: ['./layout-editor.component.scss'],
+  selector: 'app-lock-layout-editor',
+  templateUrl: './locking the layout-editor.component.html',
+  styleUrls: ['./locking the layout-editor.component.scss'],
 })
-export class LayoutEditorComponent implements OnInit, AfterViewInit {
+export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
   stage!: Konva.Stage;
   layer!: Konva.Layer;
   line!: Konva.Line;
@@ -32,16 +33,25 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   isDrawing: boolean = false;
   constructor(private router: Router,
                private route: ActivatedRoute,
-               private locationService: LocationService
+               private locationService: LocationService,
+               private proposalService:ProposalService
              ) {}
   id!: string;
   imageUrl:any;
+  proposalId!:string
+  drawnSeats:any[]=[];
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['Id'];
-   
-    // console.log(this.id,"HELOOOOOOOOOOOOOOo")
+    this.proposalId = this.route.snapshot.params['proposalId'];
+
   }
   ngAfterViewInit(): void {
+    this.proposalService.getProposalById(this.proposalId).subscribe((res:any)=>{
+      // console.log(res)
+      this.id=res[0].locationId
+      this.drawnSeats=res[0].seatsData
+  //  this.drawnSeats=res[0].seatsData
+  this.seatSizeHeight=res[0].seatSize[0].height;
+  this.seatSizeWidth=res[0].seatSize[0].width;
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
         this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
@@ -58,13 +68,9 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         if(res.Message==='No data'){
           console.log("NO DATAA")
         }else{
-          this.seatSizeHeight=res.layoutArray[0].seatSize[0].height;
-          this.seatSizeWidth=res.layoutArray[0].seatSize[0].width;
-          res.layoutArray[0].layoutBorder.forEach((item:any) => {
-            const {_id, startX, startY, endX, endY, shape } = item;
-            this.getAllPoints.push({_id, startX, startY, endX, endY, shape });
-            // console.log("ARRAY DATAAAAAA--",this.getAllPoints,this.seatSizeHeight,this.seatSizeWidth)
-          });
+          res.layoutArray.forEach((item:any) => {
+            const { startX, startY, endX, endY, shape } = item;
+            this.getAllPoints.push({ startX, startY, endX, endY, shape });
             for (const layoutBorderObj of res.shapes) {
 
               const shape  = layoutBorderObj.attrs
@@ -83,8 +89,9 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
               });
   
               this.layer.add(rect);
+              
       }
-        
+        });
         }
         
       })
@@ -98,9 +105,40 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
       }
     );
 
-    
+  })
   }
-
+  drawTHeSeat(){
+    for (const seat of this.drawnSeats) {
+      this.drawSeatsBetweenPoints(seat.start, seat.end);
+    }
+  }
+  drawSeatsBetweenPoints(start:any, end:any) {
+    const startX = Math.min(start.x, end.x);
+    const startY = Math.min(start.y, end.y);
+    const endX = Math.max(start.x, end.x);
+    const endY = Math.max(start.y, end.y);
+  
+    for (let x = startX; x < endX; x += this.seatSizeWidth) {
+      for (let y = startY; y < endY; y += this.seatSizeHeight) {
+        this.drawSeatRectangle(x, y);
+      }
+    }
+  }
+  drawSeatRectangle(x:any, y:any) {
+    console.log(x,y)
+    const rect = new Konva.Rect({
+      x: x,
+      y: y,
+      width: this.seatSizeWidth,
+      height: this.seatSizeHeight,
+      fill: 'red',
+      opacity: 0.5,
+      stroke: 'red',
+      strokeWidth: 0.4,
+      name: 'seat-rectangle',
+    });
+    this.layer.add(rect);
+  }
   backgroundImage!: Konva.Image;
   initializeKonva(imageObj: HTMLImageElement): void {
     this.stage = new Konva.Stage({
@@ -238,10 +276,47 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   handleMouseUp(e: Konva.KonvaEventObject<MouseEvent>): void {
     if (this.isDrawingEnabled && this.isDrawing) {
       this.isDrawing = false;
+      // if (this.transformer) {
+      //   this.transformer.attachTo(this.shape); // Reattach transformer
+      // }
+      // const rect = {
+      //   startX: this.shape.attrs.x,
+      //   startY: this.shape.attrs.y,
+      //   endX: this.shape.attrs.x + this.shape.attrs.width,
+      //   endY: this.shape.attrs.y + this.shape.attrs.height,
+      //   shape: this.shape,
+      //   // xPercentage: this.shape.attrs.x/ this.customWidth,
+      //   // yPercentage: this.shape.attrs.y/ this.customHeight,
+      //   // widthPercentage: this.shape.attrs.width / this.customWidth,
+      //   // heightPercentage:this.shape.attrs.height / this.customHeight
+      // };
 
-    } 
+      // this.getAllPoints.push(rect);
+      // console.log(this.getAllPoints);
+    } else {
+      // console.log('MouseUp: Drawing is disabled');
+    }
   }
+  updateGetAllPointsAfterTransformation(): void {
+    // Find the index of the shape in getAllPoints based on the shape instance
+    const index = this.getAllPoints.findIndex(
+      (point) => point.shape === this.shape
+    );
 
+    if (index !== -1) {
+      // Update the corresponding rectangle in getAllPoints with new dimensions
+      this.getAllPoints[index] = {
+        ...this.getAllPoints[index],
+        startX: this.shape.attrs.x,
+        startY: this.shape.attrs.y,
+        endX: this.shape.attrs.x + this.shape.attrs.width,
+        endY: this.shape.attrs.y + this.shape.attrs.height,
+        shape: this.shape,
+      };
+
+      console.log('Updated getAllPoints:', this.getAllPoints);
+    }
+  }
 addRectDataInArray(){
   const rect = {
     _id:Date.now(),
@@ -253,6 +328,10 @@ addRectDataInArray(){
   };
   this.getAllPoints.push(rect)
   console.log(this.getAllPoints);
+  const rectBorder=this.layer.find('.rect-transform');
+  rectBorder.forEach(rectangle => {
+    rectangle.destroy(); // Remove the rectangle from the layer
+  });
 
 }
   seatDrawing: boolean = false;
@@ -265,7 +344,10 @@ addRectDataInArray(){
       this.seatDrawing = false; // Stop ongoing drawing if disabled
     }
   }
-  
+  // getHeightWidthOfSeat() {
+  //   const rect = this.stage.find('.seat-layer');
+  //   // console.log(rect);
+  // }
 
   seatDrawn = 0;
 
@@ -375,35 +457,26 @@ seatArray:any[]=[]
            }
     
     this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-      console.log(res);
-      this.router.navigate(['/admin','location','location-list'])
+      console.log(res)
     })
   }
-  selectStoredRectangles() {
-    const workstationRectangles = this.getAllPoints.map(point => point.shape);
-    console.log(workstationRectangles)
-    this.displayRectangles(workstationRectangles);
-  }
-  displayRectangles(rectangles: Konva.Rect[]) {
-    console.log(rectangles)
-    for (const layoutBorderObj of rectangles) {
 
-      const shape  = layoutBorderObj.attrs
-
-      shape.draggable(true)
+  displayRectangles() {
+    this.drawTHeSeat()
+    // Find all rectangles with the attribute name 'workstation-layer'
+    const workstationRectangles = this.layer.find('.workstation-layer');
+  
+    // Make each found rectangle draggable and transformable
+    workstationRectangles.forEach(rectangle => {
+      rectangle.draggable(true);
+      console.log(rectangle)
+      // Create a transformer for each rectangle and attach it
       const transformer = new Konva.Transformer();
-      transformer.attachTo(shape);
+      transformer.attachTo(rectangle);
       this.layer.add(transformer);
-      // rectangles.forEach(rectangle => {
-      //   // rectangle.draggable(true);
-      //   // console.log(rectangle)
-      //   const transformer = new Konva.Transformer();
-      //   transformer.attachTo(rectangle);
-      //   this.layer.add(transformer);
-      // });
-     
-}
-   
+    });
+  
+    // Redraw the layer to reflect the changes
     this.layer.batchDraw();
   }
   updateStoredValues() {
@@ -412,44 +485,33 @@ seatArray:any[]=[]
   
     // Update the stored values for each transformed rectangle
     workstationRectangles.forEach(rectangle => {
-      if(!rectangle){
-        console.log('NULL')
-      }else{
-        const name = rectangle.name();
-        const x = rectangle.x();
-        const y = rectangle.y();
-        const width = rectangle.width();
-        const height = rectangle.height();
-        
-      // console.log('Updated stored values:', rectangle);
-      const rect = {
-        _id:Date.now(),
-        startX: rectangle.x(),
-        startY: rectangle.y(),
-        endX: rectangle.x() +  rectangle.width(),
-        endY: rectangle.y() +  rectangle.height(),
-        shape: rectangle,
-      };
-      this.getAllPoints.push(rect)
-      }
-     
-    
-    });
-  
+      const name = rectangle.name();
+      const x = rectangle.x();
+      const y = rectangle.y();
+      const width = rectangle.width();
+      const height = rectangle.height();
+      
+    console.log('Updated stored values:', rectangle);
+    const rect = {
+      _id:Date.now(),
+      startX: rectangle.x(),
+      startY: rectangle.y(),
+      endX: this.shape.attrs.x +  rectangle.width(),
+      endY: rectangle.y() +  rectangle.height(),
+      shape: rectangle,
+    };
+    this.getAllPoints.push(rect)
     console.log(this.getAllPoints);
-    this.seatArray=[{
-      width:this.seatSizeWidth,
-      height:this.seatSizeHeight
-    }]
-    let data = { 
-      LayoutData:{layoutBorder:this.getAllPoints,
-           seatSize:this.seatArray}
-         }
-        
-  this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-    console.log(res);
-    this.router.navigate(['/admin','location','location-list'])
-  })
+    });
+  //   let data = { 
+  //     LayoutData:{layoutBorder:this.getAllPoints,
+  //          seatSize:this.seatArray}
+  //        }
+  
+  // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
+  //   console.log(res)
+  // })
+    
     
   }
 
