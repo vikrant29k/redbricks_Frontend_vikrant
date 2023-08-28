@@ -13,6 +13,7 @@ import { ShowGalleryComponent } from "../../component/show-gallery/show-gallery.
 import { FloorsComponent } from "../../component/floors/floors.component";
 import { LayoutEditorComponent } from "../../component/layout-editor/layout-editor.component";
 import { AddClientComponent } from "../../component/add-client/add-client.component";
+import { LockLayoutEditorComponent } from "../../component/locking the layout/locking the layout-editor.component";
 const routes: Routes = [
     {
         path: '',
