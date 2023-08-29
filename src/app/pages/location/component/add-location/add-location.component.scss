@@ -196,3 +196,24 @@
 //     padding-bottom: 0.5rem !important;
 //   }
 // }
+
+.example-month-picker .mat-calendar-period-button {
+  pointer-events: none;
+}
+
+.example-month-picker .mat-calendar-arrow {
+  display: none !important;
+}
+table {
+  border-collapse: collapse;
+  margin: 20px 30px;
+  th,
+  td {
+      text-align: left;
+      border: 2px solid #000;
+      padding: 8px 16px;
+  }
+  td mat-icon{
+    cursor: pointer;
+  }
+}

@@ -12,6 +12,9 @@ import {MatTooltipModule} from "@angular/material/tooltip"
 import {MatCardModule} from "@angular/material/card"
 import { PdfViewerModule } from "ng2-pdf-viewer";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatDatepickerModule, MatYearView } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
 const material = [
     MatTableModule,
     PdfViewerModule,
@@ -25,7 +28,9 @@ const material = [
     MatFormFieldModule,
     MatSelectModule,
    MatDialogModule,
-   MatIconModule
+   MatIconModule,
+   MatDatepickerModule,
+   MatMomentDateModule
 
 ];
 

@@ -137,8 +137,16 @@
             <ng-container [formGroup]="transformToFormGroup(control)">
             <mat-form-field appearance="outline" class="center_align" >
               <mat-label>Year {{ i + 1 }}</mat-label>
-              <input type="number" matInput formControlName="year" />
+              <input matInput [matDatepicker]="dp" placeholder="select Year" formControlName="year" />
+              <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+              <mat-datepicker #dp
+                              startView="multi-year"
+                              (yearSelected)="chosenYearHandler($event, dp,i)"
+                             
+                              panelClass="example-month-picker">
+              </mat-datepicker>
             </mat-form-field>
+            
             <mat-form-field appearance="outline" class="center_align">
               <mat-label>Rent {{ i + 1 }}</mat-label>
               <input type="number" matInput formControlName="rent" />
@@ -192,6 +200,48 @@
       </section>
       <section>
         <div class="form-field">
+          <button
+            type="button"
+            mat-raised-button
+            (click)="multimagesSelect.click()"
+            color="primary">
+            <div class="button_content">
+              <mat-icon fontSet="material-icons-round">link</mat-icon>
+              <p>Upload Image Link</p>
+            </div>
+          </button>
+          <input
+            type="file"
+            accept="image/png"
+            multiple 
+            (change)="getFileDetails($event)"
+            hidden
+            #multimagesSelect
+           
+          />
+          <table *ngIf ="myFiles.length>0">
+            <thead>
+                <tr>
+                    <th>Sr.</th>
+                    <th>Image Name</th>
+                    <!-- <th>Image</th> -->
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let file of myFiles;let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{file.name}}</td>
+                    <!-- <td>James Bond</td> -->
+                    <td><mat-icon fontSet="material-icons-round" (click)="deleteImageFromList(i)">delete</mat-icon></td>
+                </tr>
+                
+               
+                
+            </tbody>
+        </table>
+        </div>
+        <!-- <div class="form-field">
           <button type="button" mat-raised-button (click)="onAdd('imageLinks')" color="primary">
             <div class="button_content">
               <mat-icon fontSet="material-icons-round">link</mat-icon>
@@ -205,7 +255,7 @@
               <mat-icon matSuffix (click)="onRemove('imageLinks', i)">delete</mat-icon>
             </mat-form-field>
           </ng-container>
-        </div>
+        </div> -->
         <!-- <div class="form-field">
           <button type="button" mat-raised-button (click)="onAdd('videoLinks')" color="primary">
             <div class="button_content">
