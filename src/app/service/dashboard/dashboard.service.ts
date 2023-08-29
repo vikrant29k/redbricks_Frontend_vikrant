@@ -25,4 +25,7 @@ export class DashboardService {
     const httpOptions = this.headerService.updateHeader();
     return this.http.get(this.baseUrl + 'proposalWithConflict', httpOptions);
   };
+  getSaleData(id:any){
+    return this.http.get('http://192.168.29.203:3000/salesChart/getSalesPersonProposals/'+id)
+  }
 }

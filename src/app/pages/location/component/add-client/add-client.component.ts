@@ -1,13 +1,15 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Konva from 'konva';
 import { LocationService } from 'src/app/service/location/location.service';
+
 @Component({
-  selector: 'app-layout-editor',
-  templateUrl: './layout-editor.component.html',
-  styleUrls: ['./layout-editor.component.scss'],
+  selector: 'app-add-client',
+  templateUrl: './add-client.component.html',
+  styleUrls: ['./add-client.component.scss']
 })
-export class LayoutEditorComponent implements OnInit, AfterViewInit {
+export class AddClientComponent implements OnInit {
   stage!: Konva.Stage;
   layer!: Konva.Layer;
   line!: Konva.Line;
@@ -30,6 +32,8 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   seatShape!: Konva.Rect;
   startPoint: any | { x: number; y: number };
   isDrawing: boolean = false;
+
+
   constructor(private router: Router,
                private route: ActivatedRoute,
                private locationService: LocationService
@@ -38,8 +42,8 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   imageUrl:any;
   ngOnInit(): void {
     this.id = this.route.snapshot.params['Id'];
-   
-    // console.log(this.id,"HELOOOOOOOOOOOOOOo")
+
+
   }
   ngAfterViewInit(): void {
     this.locationService.getImageById(this.id).subscribe(
@@ -53,44 +57,6 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
       // this.enablePanning(); // Add this line to enable panning
       this.transformer = new Konva.Transformer(); // Initialize transformer
       this.layer.add(this.transformer);
-      this.locationService.getBorderData(this.id).subscribe((res:any)=>{
-        // console.log(res);
-        if(res.Message==='No data'){
-          console.log("NO DATAA")
-        }else{
-          this.seatSizeHeight=res.layoutArray[0].seatSize[0].height;
-          this.seatSizeWidth=res.layoutArray[0].seatSize[0].width;
-          this.seatHeight=this.seatSizeHeight;
-          this.seatWidth=this.seatSizeWidth;
-          this.updateSeatsSize()
-          res.layoutArray[0].layoutBorder.forEach((item:any) => {
-            const {_id, startX, startY, endX, endY, shape } = item;
-            this.getAllPoints.push({_id, startX, startY, endX, endY, shape });
-            // console.log("ARRAY DATAAAAAA--",this.getAllPoints,this.seatSizeHeight,this.seatSizeWidth)
-          });
-            for (const layoutBorderObj of res.shapes) {
-
-              const shape  = layoutBorderObj.attrs
-       
-              const rect = new Konva.Rect({
-                  x: shape.x,
-                  y: shape.y,
-                  width: shape.width,
-                  height: shape.height,
-                  fill: shape.fill,
-                  opacity: shape.opacity,
-                  stroke: shape.stroke,
-                  strokeWidth: shape.strokeWidth,
-                  name: shape.name,
-                  draggable: false // Set draggable as needed
-              });
-  
-              this.layer.add(rect);
-      }
-        
-        }
-        
-      })
     };
 
     imageObj.src = this.imageUrl;
@@ -100,11 +66,32 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         // Handle the error as needed
       }
     );
-
-    
   }
 
-  backgroundImage!: Konva.Image;
+  clientForm = new FormGroup<any>({
+    clientName:new FormControl('',Validators.required),
+    location: new FormControl('', Validators.required),
+    floor: new FormControl('', Validators.required),
+    finalOfferAmmount: new FormControl('', Validators.required),
+    salesPerson: new FormControl('', Validators.required),
+    Tenure: new FormControl('', Validators.required),
+    LockIn: new FormControl('', Validators.required),
+    depoistTerm: new FormControl('', Validators.required),
+    center: new FormControl('', Validators.required),
+    noticePeriod:new FormControl('', Validators.required),
+    rentCommencmentDate: new FormControl('', Validators.required),
+    NonStandardRequirement: new FormControl('', Validators.required),
+    Serviced:new FormControl('',Validators.required),
+    totalNumberOfSeats: new FormControl('',Validators.required),
+
+  })
+
+onSubmit(){
+  console.log(this.clientForm.value)
+}
+
+
+backgroundImage!: Konva.Image;
   initializeKonva(imageObj: HTMLImageElement): void {
     this.stage = new Konva.Stage({
       container: 'container',
@@ -199,26 +186,28 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         strokeWidth: 0.8,
         name: 'workstation-layer',
       });
-     
-      const transformer = new Konva.Transformer();
-     
-      transformer.on('transform', () => {
-        const scaleX = this.shape.scaleX();
-        const scaleY = this.shape.scaleY();
-        const newWidth = this.shape.width() * scaleX;
-        const newHeight = this.shape.height() * scaleY;
-        this.shape.width(newWidth);
-        this.shape.height(newHeight);
-     
-        this.layer.batchDraw();
-      });
-      this.layer.add(this.shape,transformer);
-      transformer.attachTo(this.shape);
-    
-    
-      // this.layer.add(this.shape)
-
-    } 
+      // const transformer = new Konva.Transformer({
+      //   name:'rect-transform'
+      // });
+      // transformer.on('transform', () => {
+      //   const scaleX = this.shape.scaleX();
+      //   const scaleY = this.shape.scaleY();
+      //   const newWidth = this.shape.width() * scaleX;
+      //   const newHeight = this.shape.height() * scaleY;
+      //   this.shape.width(newWidth);
+      //   this.shape.height(newHeight);
+      //   if (this.isDrawingEnabled) {
+      //     this.rectHeight = Number(newHeight.toFixed(2));
+      //     this.rectWidth = Number(newWidth.toFixed(2));
+      //   }
+      //   this.layer.batchDraw();
+      // });
+      this.layer.add(this.shape)
+      // this.layer.add(this.shape, transformer);/
+      // transformer.attachTo(this.shape);
+    } else {
+      // console.log('MouseDown: Drawing is disabled');
+    }
   }
 
   handleMouseMove(e: Konva.KonvaEventObject<MouseEvent>): void {
@@ -239,23 +228,66 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   handleMouseUp(e: Konva.KonvaEventObject<MouseEvent>): void {
     if (this.isDrawingEnabled && this.isDrawing) {
       this.isDrawing = false;
-      this.isDrawingEnabled=!this.isDrawingEnabled
+      // if (this.transformer) {
+      //   this.transformer.attachTo(this.shape); // Reattach transformer
+      // }
+      // const rect = {
+      //   startX: this.shape.attrs.x,
+      //   startY: this.shape.attrs.y,
+      //   endX: this.shape.attrs.x + this.shape.attrs.width,
+      //   endY: this.shape.attrs.y + this.shape.attrs.height,
+      //   shape: this.shape,
+      //   // xPercentage: this.shape.attrs.x/ this.customWidth,
+      //   // yPercentage: this.shape.attrs.y/ this.customHeight,
+      //   // widthPercentage: this.shape.attrs.width / this.customWidth,
+      //   // heightPercentage:this.shape.attrs.height / this.customHeight
+      // };
 
-    } 
+      // this.getAllPoints.push(rect);
+      // console.log(this.getAllPoints);
+    } else {
+      // console.log('MouseUp: Drawing is disabled');
+    }
   }
+  updateGetAllPointsAfterTransformation(): void {
+    // Find the index of the shape in getAllPoints based on the shape instance
+    const index = this.getAllPoints.findIndex(
+      (point) => point.shape === this.shape
+    );
 
+    if (index !== -1) {
+      // Update the corresponding rectangle in getAllPoints with new dimensions
+      this.getAllPoints[index] = {
+        ...this.getAllPoints[index],
+        startX: this.shape.attrs.x,
+        startY: this.shape.attrs.y,
+        endX: this.shape.attrs.x + this.shape.attrs.width,
+        endY: this.shape.attrs.y + this.shape.attrs.height,
+        shape: this.shape,
+      };
+
+      console.log('Updated getAllPoints:', this.getAllPoints);
+    }
+  }
 addRectDataInArray(){
   const rect = {
-    _id:Date.now(),
     startX: this.shape.attrs.x,
     startY: this.shape.attrs.y,
     endX: this.shape.attrs.x + this.shape.attrs.width,
     endY: this.shape.attrs.y + this.shape.attrs.height,
     shape: this.shape,
+    // xPercentage: this.shape.attrs.x/ this.customWidth,
+    // yPercentage: this.shape.attrs.y/ this.customHeight,
+    // widthPercentage: this.shape.attrs.width / this.customWidth,
+    // heightPercentage:this.shape.attrs.height / this.customHeight
   };
   this.getAllPoints.push(rect)
   console.log(this.getAllPoints);
-  this.isDrawingEnabled=!this.isDrawingEnabled
+  const rectBorder=this.layer.find('.rect-transform');
+  rectBorder.forEach(rectangle => {
+    rectangle.destroy(); // Remove the rectangle from the layer
+  });
+
 }
   seatDrawing: boolean = false;
   isSeatDrawingEnabled = false;
@@ -267,7 +299,10 @@ addRectDataInArray(){
       this.seatDrawing = false; // Stop ongoing drawing if disabled
     }
   }
-  
+  // getHeightWidthOfSeat() {
+  //   const rect = this.stage.find('.seat-layer');
+  //   // console.log(rect);
+  // }
 
   seatDrawn = 0;
 
@@ -348,13 +383,13 @@ addRectDataInArray(){
       // console.log('MouseUp: Drawing is disabled Seat');
     }
   }
-seatArray:any[]=[]
+
   updateSeatsSize() {
     this.seatSizeWidth = this.seatWidth;
     this.seatSizeHeight = this.seatHeight;
     const rectanglesToRemove = this.layer.find('.seat-layer'); // Assuming you've given your rectangles a class name like 'seat-rectangle'
     const transform = this.layer.find('.seat-transform')
-   
+
     rectanglesToRemove.forEach(rectangle => {
       rectangle.destroy(); // Remove the rectangle from the layer
     });
@@ -362,26 +397,10 @@ seatArray:any[]=[]
       rectangle.destroy(); // Remove the rectangle from the layer
     });
     this.layer.batchDraw();
-    this.seatArray=[{
-      width:this.seatWidth,
-      height:this.seatHeight
-    }]
     console.log(this.seatHeight,this.seatWidth)
-
   }
 
-  addLayout(){
-    let data = { 
-        LayoutData:{layoutBorder:this.getAllPoints,
-             seatSize:this.seatArray}
-           }
-    
-    this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-      console.log(res);
-      this.router.navigate(['/admin','location','location-list'])
-    })
-  }
- 
 
-  
 }
+
+
