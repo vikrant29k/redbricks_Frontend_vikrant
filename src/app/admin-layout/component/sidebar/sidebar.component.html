@@ -201,18 +201,46 @@
                 </div>
             </ng-container>
         </div>
-        <!-- <div class="section" *ngIf="user!=='sales head'">
-          <div class="title" routerLink="/admin/view-layouts/" routerLinkActive="active" (click)="expandAccording()">
-              <div class="main">
-                  <div class="title-icon">
-                      <mat-icon fontSet="material-icons-round">developer_board</mat-icon>
-                  </div>
-                  <div class="title-text">
-                      <p>Layouts & Proposal</p>
-                  </div>
-              </div>
-          </div>
-      </div> -->
+        <div class="section"  *ngIf="user!=='sales head'">
+            <div class="title" [ngClass]="clientExpand? 'expanded': ''" (click)="expandAccording('client')">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">groups_3</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>Clients</p>
+                    </div>
+                </div>
+                <div class="expansion-icon">
+                    <mat-icon>expand_more</mat-icon>
+                </div>
+            </div>
+            <ng-container *ngIf="clientExpand">
+                <div class="sub-section">
+                    <div class="title" routerLink="/admin/old-proposal/old-client-list" routerLinkActive="active" (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">map</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Client List</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title" routerLink="/admin/old-proposal/add-old-client" routerLinkActive="active"
+                        (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">add_location_alt</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Add Old Client</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
         <div class="section">
             <div class="title" [ngClass]="logExpanded ? 'expanded': ''" (click)="expandAccording('log')">
                 <div class="main">
