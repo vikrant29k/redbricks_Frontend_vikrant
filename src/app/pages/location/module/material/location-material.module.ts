@@ -16,6 +16,9 @@ import {MatRadioModule} from '@angular/material/radio';
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { FormsModule } from "@angular/forms";
+import { MatDatepickerModule, MatYearView } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
 const material = [
     MatTableModule,
     FormsModule,
@@ -32,7 +35,9 @@ const material = [
    MatDialogModule,
    MatIconModule,MatRadioModule,
    MatDatepickerModule,
-   MatNativeDateModule
+   MatNativeDateModule,
+   MatDatepickerModule,
+   MatMomentDateModule
 
 ];
 
