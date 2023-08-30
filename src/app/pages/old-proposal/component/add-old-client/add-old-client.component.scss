@@ -48,7 +48,11 @@
         justify-content: center;
         align-items: center;
         width: inherit;
-  
+        .controllers{
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
       section{
         display: flex;
         gap:1rem;

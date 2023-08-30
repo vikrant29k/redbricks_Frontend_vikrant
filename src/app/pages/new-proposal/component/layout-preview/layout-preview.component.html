@@ -12,11 +12,11 @@
     <div>
     <label>Seats to be Selected: {{totalNumber}}</label>
     <button mat-button (click)="drawRectangles()">Select Seats</button>
-    <mat-radio-group [(ngModel)]="flowOfDrawingSeats" name="radioButtons" (change)="onRadioButtonChange($event)">
+    <!-- <mat-radio-group [(ngModel)]="flowOfDrawingSeats" name="radioButtons" (change)="onRadioButtonChange($event)">
         <mat-radio-button id="vertical" value="vertical" checked>Vertical</mat-radio-button>
         <mat-radio-button id="horizontal" value="horizontal">Horizontal</mat-radio-button>
       
-      </mat-radio-group>
+      </mat-radio-group> -->
       <button (click)="saveImage()">Download Image</button>
     </div>
     <!-- <div #captureContainer> -->

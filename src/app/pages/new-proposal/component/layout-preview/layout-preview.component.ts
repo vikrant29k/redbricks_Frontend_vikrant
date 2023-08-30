@@ -32,13 +32,13 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
     ngAfterViewInit(): void { 
         
       }
-      onRadioButtonChange(event:any) {
-        console.log("onRadioButtonChange()");
-        console.log("event.source=" + event.source.id);
-        console.log("event.value=" + event.value);
-        this.flowOfDrawingSeats = event.value
-        // this.getDrawingMode()
-      }
+      // onRadioButtonChange(event:any) {
+      //   console.log("onRadioButtonChange()");
+      //   console.log("event.source=" + event.source.id);
+      //   console.log("event.value=" + event.value);
+      //   this.flowOfDrawingSeats = event.value
+      //   // this.getDrawingMode()
+      // }
     constructor(
         public dialogRef: MatDialogRef<NewProposalLayoutPreviewComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -98,48 +98,79 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
       getImageAndInitialize(locationId:any, drawRect:any){
         this.locationService.getImageById(locationId).subscribe(
             (imageUrl) => {
-              this.proposalService.getProposalByLocationId(locationId).subscribe((result:any)=>{
-                // console.log(res)
-                this.extractProposalData(result);
-              
               this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
-            //   console.log(this.imageUrl);
+              this.proposalService.getProposalByLocationId(locationId).subscribe(
+                (result:any)=>{
+                  if(result.message=='no data'){
+                    console.log("Ny tyt data ky")
+                         //   console.log(this.imageUrl);
               const imageObj = new Image();
-          imageObj.onload = () => {
-            this.initializeKonva(imageObj);
-            this.drawTheBlankSeat()
-            this.transformer = new Konva.Transformer(); // Initialize transformer
-            this.layer.add(this.transformer);
-            for (const layoutBorderObj of drawRect) {
-               
-                // Extract start and end points from the layoutBorder shape
-                const shape  = layoutBorderObj.attrs
-               
-                // Push the points into the getAllPoints array
-                // this.getAllPoints.push(shape);
-                // this.getAllPoints.push({})
-                const rect = new Konva.Rect({
-                    x: shape.x,
-                    y: shape.y,
-                    width: shape.width,
-                    height: shape.height,
-                    fill: shape.fill,
-                    opacity: shape.opacity,
-                    stroke: shape.stroke,
-                    strokeWidth: shape.strokeWidth,
-                    name: shape.name,
-                    draggable: false // Set draggable as needed
-                });
-    
-                this.layer.add(rect);
-        }
-          //   this.getLayout();
-          };
-      
+              imageObj.onload = () => {
+                this.initializeKonva(imageObj);
+                this.drawTheBlankSeat()
+                this.transformer = new Konva.Transformer(); // Initialize transformer
+                this.layer.add(this.transformer);
+                for (const layoutBorderObj of drawRect) {
+                    const shape  = layoutBorderObj.attrs
+                    const rect = new Konva.Rect({
+                        x: shape.x,
+                        y: shape.y,
+                        width: shape.width,
+                        height: shape.height,
+                        fill: shape.fill,
+                        opacity: shape.opacity,
+                        stroke: shape.stroke,
+                        strokeWidth: shape.strokeWidth,
+                        name: shape.name,
+                        draggable: false // Set draggable as needed
+                    });
+        
+                    this.layer.add(rect);
+            }
+              
+              };
           
-          imageObj.src = this.imageUrl;
-          imageObj.crossOrigin = 'Anonymous';
-          // this.drawRectangles()
+              
+              imageObj.src = this.imageUrl;
+              imageObj.crossOrigin = 'Anonymous';
+              // this.drawRectangles()
+                  }else{
+                    this.extractProposalData(result);
+                         //   console.log(this.imageUrl);
+              const imageObj = new Image();
+              imageObj.onload = () => {
+                this.initializeKonva(imageObj);
+                this.drawTheBlankSeat()
+                this.transformer = new Konva.Transformer(); // Initialize transformer
+                this.layer.add(this.transformer);
+                for (const layoutBorderObj of drawRect) {
+                    const shape  = layoutBorderObj.attrs
+                    const rect = new Konva.Rect({
+                        x: shape.x,
+                        y: shape.y,
+                        width: shape.width,
+                        height: shape.height,
+                        fill: shape.fill,
+                        opacity: shape.opacity,
+                        stroke: shape.stroke,
+                        strokeWidth: shape.strokeWidth,
+                        name: shape.name,
+                        draggable: false // Set draggable as needed
+                    });
+        
+                    this.layer.add(rect);
+            }
+              
+              };
+          
+              
+              imageObj.src = this.imageUrl;
+              imageObj.crossOrigin = 'Anonymous';
+              // this.drawRectangles()
+                  }
+               
+             
+       
             },
             error => {
               console.error('Error loading image data:', error);
@@ -207,23 +238,24 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                   }
                 }
               }
-            } else {
+            } 
+            // else {
           
-              const rows = Math.min(Math.ceil(remainingSeats / maxHorizontalRectangles), maxVerticalRectangles);
+            //   const rows = Math.min(Math.ceil(remainingSeats / maxHorizontalRectangles), maxVerticalRectangles);
       
-              for (let row = 0; row < rows; row++) {
-                for (let x = minX; x < maxX - 10; x += this.seatSizeWidth) {
-                  const y = minY + row * this.seatSizeHeight;
+            //   for (let row = 0; row < rows; row++) {
+            //     for (let x = minX; x < maxX - 8; x += this.seatSizeWidth) {
+            //       const y = minY + row * this.seatSizeHeight;
       
-                  if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: this.seatSizeWidth, height: this.seatSizeHeight }, polygon.getClientRect())) {
-                    this.drawSeatRectangle(x, y);
-                    this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + this.seatSizeWidth, y: y + this.seatSizeHeight },workStatkionID: point._id });
+            //       if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: this.seatSizeWidth, height: this.seatSizeHeight }, polygon.getClientRect())) {
+            //         this.drawSeatRectangle(x, y);
+            //         this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + this.seatSizeWidth, y: y + this.seatSizeHeight },workStatkionID: point._id });
 
-                    remainingSeats--;
-                  }
-                }
-              }
-            }
+            //         remainingSeats--;
+            //       }
+            //     }
+            //   }
+            // }
             this.totalNumber=remainingSeats;
             if (remainingSeats === 0) {
               this.drawingEnabled = false;

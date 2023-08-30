@@ -10,6 +10,7 @@ import { ProposalService } from 'src/app/service/proposal/proposal.service';
   styleUrls: ['./add-old-client.component.scss']
 })
 export class AddOldClientComponent implements OnInit {
+ 
   stage!: Konva.Stage;
   layer!: Konva.Layer;
   line!: Konva.Line;
@@ -28,12 +29,10 @@ export class AddOldClientComponent implements OnInit {
   seatHeight: number = 0;
   rectWidth: number = 0;
   rectHeight: number = 0;
-  shape!: Konva.Rect; // Use Rect instead of Line
+  shape!: Konva.Rect; 
   seatShape!: Konva.Rect;
   startPoint: any | { x: number; y: number };
   isDrawing: boolean = false;
-
-
   constructor(private router: Router,
                private route: ActivatedRoute,
                private proposalService:ProposalService,
@@ -43,34 +42,18 @@ export class AddOldClientComponent implements OnInit {
   imageUrl:any;
   ngOnInit(): void {
     this.id = this.route.snapshot.params['Id'];
-
+    this.watchValueChangesInForm();
+    this.getLocationList();
 
   }
-  ngAfterViewInit(): void {
-    this.locationService.getImageById(this.id).subscribe(
-      (imageUrl) => {
-        this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
-        console.log(this.imageUrl);
-        const imageObj = new Image();
-    imageObj.onload = () => {
-      this.initializeKonva(imageObj);
-      this.enableZoom(); // Add this line to enable zoom
-      this.transformer = new Konva.Transformer(); // Initialize transformer
-      this.layer.add(this.transformer);
-    };
+ngAfterViewInit():void{
 
-    imageObj.src = this.imageUrl;
-      },
-      error => {
-        console.error('Error loading image data:', error);
-        // Handle the error as needed
-      }
-    );
-  }
+}
 
   clientForm = new FormGroup<any>({
     clientName:new FormControl('',Validators.required),
     location: new FormControl('', Validators.required),
+    locationId:new FormControl('',Validators.required),
     floor: new FormControl('', Validators.required),
     finalOfferAmmount: new FormControl('', Validators.required),
     salesPerson: new FormControl('', Validators.required),
@@ -83,18 +66,120 @@ export class AddOldClientComponent implements OnInit {
     NonStandardRequirement: new FormControl('', Validators.required),
     Serviced:new FormControl('',Validators.required),
     totalNumberOfSeats: new FormControl('',Validators.required),
-
+    status:new FormControl('',Validators.required),
+    seatsData:new FormControl('',Validators.required),
+    seatSize:new FormControl('',Validators.required),
+    color:new FormControl('',Validators.required),
   })
 
+  
 onSubmit(){
-  // console.log(this.clientForm.value);
+  this.clientForm.patchValue({
+    seatsData:this.drawnSeats,
+    seatSize:[{
+      height: this.seatSizeHeight,
+      width:this.seatSizeWidth
+     }],
+     status:'Completed and Locked',
+     locationId:this.locationId
+  })
+  console.log(this.clientForm.value)
   this.proposalService.addOldClient(this.clientForm.value).subscribe(res=>{
     console.log(res)
   })
+  
 }
 
+//Get Location List
+locationList:any[]=[]
+centerList:any[]=[]
+floorList:any[]=[]
+locationId!:string
+//gets the all location
+getLocationList(){
+  this.locationService.getLocationList().subscribe((res:any)=>{
+this.locationList=res
+  })
+}
+//get the center list after selecting location
+getCenterList(location: string) {
+  this.locationService.getCentersInLocation(location).subscribe((res:any) => {
+    this.centerList = [];
+    for (const center of res) {
+      this.centerList.push(center.center);
+    }
+  });
+}
+// get the floors after center selected
+getFloorList(location: string) {
+  this.locationService.getFloorsInLocation(location).subscribe((res:any) => {
+    this.floorList = []
+    for (const center of res) {
+      this.floorList.push({
+        center:center.floor,
+        _id:center._id
+        });
+    }
+    // this.clientForm.addControl('floor',new FormControl('', Validators.required));
+  });
+}
+showContainer:boolean=false
+getLocationIdFromFloor(id:string){
+  console.log(id,"I am lcoation id")
+  this.locationId=id;
+  this.locationService.getImageById(id).subscribe(
+    (imageUrl) => {
+      this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
+      console.log(this.imageUrl);
+      const imageObj = new Image();
+  imageObj.onload = () => {
+    this.initializeKonva(imageObj);
+    this.enableZoom(); // Add this line to enable zoom
+    this.transformer = new Konva.Transformer(); // Initialize transformer
+    this.layer.add(this.transformer);
+    this.locationService.getBorderData(id).subscribe((res:any)=>{
+      // console.log(res);
+      if(res.Message==='No data'){
+        console.log("NO DATAA")
+      }else{
+        this.seatSizeHeight= this.seatHeight = res.layoutArray[0].seatSize[0].height;
+        this.seatSizeWidth= this.seatWidth= res.layoutArray[0].seatSize[0].width;
+      //   =this.seatSizeHeight;
+      //  =this.seatSizeWidth;
+        this.updateSeatsSize()
+      }
+      
+    })
+  };
+
+  imageObj.src = this.imageUrl;
+    },
+    error => {
+      console.error('Error loading image data:', error);
+      // Handle the error as needed
+    }
+  );
+}
+watchValueChangesInForm = () => {
+
+  let location = this.clientForm.get('location');
+  location?.valueChanges.subscribe((res) => {
+    this.getCenterList(res);
+  });
+  let center = this.clientForm.get('center');
+  center?.valueChanges.subscribe(res=>{
+    this.getFloorList(res)
+  })
+  let floor = this.clientForm.get('floor');
+  floor?.valueChanges.subscribe(res=>{
+    if(res){
+      this.showContainer=true
+    }
+  })
+};
 
 backgroundImage!: Konva.Image;
+//konva initialization
   initializeKonva(imageObj: HTMLImageElement): void {
     this.stage = new Konva.Stage({
       container: 'container',
@@ -116,16 +201,14 @@ backgroundImage!: Konva.Image;
     this.layer.add(this.backgroundImage);
     this.layer.draw();
   }
-  startDrawingSeat() {
-    this.stage.on('mousedown', this.handleMouseDownForSeat.bind(this));
-    this.stage.on('mousemove', this.handleMouseMoveForSeat.bind(this));
-    this.stage.on('mouseup', this.handleMouseUpForSeat.bind(this));
-  }
+
   startDrawingRect() {
     this.stage.on('mousedown', this.handleMouseDown.bind(this));
     this.stage.on('mousemove', this.handleMouseMove.bind(this));
     this.stage.on('mouseup', this.handleMouseUp.bind(this));
   }
+
+  //zoomin and zoomout the image
   enableZoom(): void {
     const scaleBy = 1.1; // Adjust the scale factor as needed
     this.stage.on('wheel', (e) => {
@@ -153,7 +236,7 @@ backgroundImage!: Konva.Image;
       this.stage.batchDraw();
     });
   }
-  resetZoomAndPosition(): void {
+  resetZoomAndPosition() {
     // Set the initial scale and position values as per your original configuration
     const initialScale = 1;
     const initialPosition = { x: 0, y: 0 };
@@ -172,6 +255,7 @@ backgroundImage!: Konva.Image;
       this.isDrawing = false; // Stop ongoing drawing if disabled
     }
   }
+  // starts drawing rect 
   handleMouseDown(e: Konva.KonvaEventObject<MouseEvent>): void {
     if (this.isDrawingEnabled) {
       const pos: any = this.stage.getPointerPosition();
@@ -189,28 +273,26 @@ backgroundImage!: Konva.Image;
         strokeWidth: 0.8,
         name: 'workstation-layer',
       });
-      // const transformer = new Konva.Transformer({
-      //   name:'rect-transform'
-      // });
-      // transformer.on('transform', () => {
-      //   const scaleX = this.shape.scaleX();
-      //   const scaleY = this.shape.scaleY();
-      //   const newWidth = this.shape.width() * scaleX;
-      //   const newHeight = this.shape.height() * scaleY;
-      //   this.shape.width(newWidth);
-      //   this.shape.height(newHeight);
-      //   if (this.isDrawingEnabled) {
-      //     this.rectHeight = Number(newHeight.toFixed(2));
-      //     this.rectWidth = Number(newWidth.toFixed(2));
-      //   }
-      //   this.layer.batchDraw();
-      // });
-      this.layer.add(this.shape)
-      // this.layer.add(this.shape, transformer);/
-      // transformer.attachTo(this.shape);
-    } else {
-      // console.log('MouseDown: Drawing is disabled');
-    }
+     
+      const transformer = new Konva.Transformer();
+     
+      transformer.on('transform', () => {
+        const scaleX = this.shape.scaleX();
+        const scaleY = this.shape.scaleY();
+        const newWidth = this.shape.width() * scaleX;
+        const newHeight = this.shape.height() * scaleY;
+        this.shape.width(newWidth);
+        this.shape.height(newHeight);
+     
+        this.layer.batchDraw();
+      });
+      this.layer.add(this.shape,transformer);
+      transformer.attachTo(this.shape);
+    
+    
+      // this.layer.add(this.shape)
+
+    } 
   }
 
   handleMouseMove(e: Konva.KonvaEventObject<MouseEvent>): void {
@@ -231,162 +313,26 @@ backgroundImage!: Konva.Image;
   handleMouseUp(e: Konva.KonvaEventObject<MouseEvent>): void {
     if (this.isDrawingEnabled && this.isDrawing) {
       this.isDrawing = false;
-      // if (this.transformer) {
-      //   this.transformer.attachTo(this.shape); // Reattach transformer
-      // }
-      // const rect = {
-      //   startX: this.shape.attrs.x,
-      //   startY: this.shape.attrs.y,
-      //   endX: this.shape.attrs.x + this.shape.attrs.width,
-      //   endY: this.shape.attrs.y + this.shape.attrs.height,
-      //   shape: this.shape,
-      //   // xPercentage: this.shape.attrs.x/ this.customWidth,
-      //   // yPercentage: this.shape.attrs.y/ this.customHeight,
-      //   // widthPercentage: this.shape.attrs.width / this.customWidth,
-      //   // heightPercentage:this.shape.attrs.height / this.customHeight
-      // };
+      this.isDrawingEnabled=!this.isDrawingEnabled
 
-      // this.getAllPoints.push(rect);
-      // console.log(this.getAllPoints);
-    } else {
-      // console.log('MouseUp: Drawing is disabled');
-    }
+    } 
   }
-  updateGetAllPointsAfterTransformation(): void {
-    // Find the index of the shape in getAllPoints based on the shape instance
-    const index = this.getAllPoints.findIndex(
-      (point) => point.shape === this.shape
-    );
-
-    if (index !== -1) {
-      // Update the corresponding rectangle in getAllPoints with new dimensions
-      this.getAllPoints[index] = {
-        ...this.getAllPoints[index],
-        startX: this.shape.attrs.x,
-        startY: this.shape.attrs.y,
-        endX: this.shape.attrs.x + this.shape.attrs.width,
-        endY: this.shape.attrs.y + this.shape.attrs.height,
-        shape: this.shape,
-      };
-
-      console.log('Updated getAllPoints:', this.getAllPoints);
-    }
+  //rect is added in this.getAllpoints 
+  addRectDataInArray(){
+    const rect = {
+      _id:Date.now(),
+      startX: this.shape.attrs.x,
+      startY: this.shape.attrs.y,
+      endX: this.shape.attrs.x + this.shape.attrs.width,
+      endY: this.shape.attrs.y + this.shape.attrs.height,
+      shape: this.shape,
+    };
+    this.getAllPoints.push(rect)
+    console.log(this.getAllPoints);
+    this.isDrawingEnabled=!this.isDrawingEnabled
   }
-addRectDataInArray(){
-  const rect = {
-    startX: this.shape.attrs.x,
-    startY: this.shape.attrs.y,
-    endX: this.shape.attrs.x + this.shape.attrs.width,
-    endY: this.shape.attrs.y + this.shape.attrs.height,
-    shape: this.shape,
-    // xPercentage: this.shape.attrs.x/ this.customWidth,
-    // yPercentage: this.shape.attrs.y/ this.customHeight,
-    // widthPercentage: this.shape.attrs.width / this.customWidth,
-    // heightPercentage:this.shape.attrs.height / this.customHeight
-  };
-  this.getAllPoints.push(rect)
-  console.log(this.getAllPoints);
-  const rectBorder=this.layer.find('.rect-transform');
-  rectBorder.forEach(rectangle => {
-    rectangle.destroy(); // Remove the rectangle from the layer
-  });
-
-}
-  seatDrawing: boolean = false;
-  isSeatDrawingEnabled = false;
-  drawSeatAndGetHW() {
-    // this.isSeatDrawingInProgress = false;
-    this.isSeatDrawingEnabled = !this.isSeatDrawingEnabled;
-    this.startDrawingSeat();
-    if (!this.isSeatDrawingEnabled) {
-      this.seatDrawing = false; // Stop ongoing drawing if disabled
-    }
-  }
-  // getHeightWidthOfSeat() {
-  //   const rect = this.stage.find('.seat-layer');
-  //   // console.log(rect);
-  // }
-
-  seatDrawn = 0;
-
-  handleMouseDownForSeat(e: Konva.KonvaEventObject<MouseEvent>): void {
-    if (this.isSeatDrawingEnabled && this.seatDrawn == 0) {
-      const pos: any = this.stage.getPointerPosition();
-      this.startPoint = pos;
-      this.seatDrawing = true;
-      //  this.isSeatDrawingInProgress = true;
-      this.seatShape = new Konva.Rect({
-        x: pos.x,
-        y: pos.y,
-        width: 0,
-        height: 0,
-        fill: 'red',
-        opacity: 0.3,
-        stroke: '#000000',
-        strokeWidth: 0.3,
-        draggable: true,
-        name: 'seat-layer',
-      });
-
-      const transformer = new Konva.Transformer({
-        name:'seat-transform'
-      });
-      transformer.on('transform', () => {
-        const scaleX = this.seatShape.scaleX();
-        const scaleY = this.seatShape.scaleY();
-        const newWidth = this.seatShape.width() * scaleX;
-        const newHeight = this.seatShape.height() * scaleY;
-        this.seatShape.width(newWidth);
-        this.seatShape.height(newHeight);
-        if (this.isSeatDrawingEnabled) {
-          this.seatHeight = Number(newHeight.toFixed(2));
-          this.seatWidth = Number(newWidth.toFixed(2));
-        }
-        this.layer.batchDraw();
-      });
-
-      this.layer.add(this.seatShape, transformer);
-      transformer.attachTo(this.seatShape);
-    } else {
-      // console.log('MouseDown: Drawing is disabled Seat');
-    }
-  }
-
-  handleMouseMoveForSeat(e: Konva.KonvaEventObject<MouseEvent>): void {
-    if (this.isSeatDrawingEnabled && this.seatDrawn == 0 && this.seatDrawing) {
-      const pos: any = this.stage.getPointerPosition();
-      const width = pos.x - this.startPoint.x;
-      const height = pos.y - this.startPoint.y;
-
-      this.seatShape.width(width);
-      this.seatShape.height(height);
-
-      this.layer.batchDraw();
-    }
-  }
-
-  handleMouseUpForSeat(e: Konva.KonvaEventObject<MouseEvent>): void {
-    if (this.isSeatDrawingEnabled && this.seatDrawn === 0 && this.seatDrawing) {
-      this.seatDrawing = false;
-      //  this.isSeatDrawingInProgress = false;
-      const rect = {
-        startX: this.seatShape.attrs.x,
-        startY: this.seatShape.attrs.y,
-        endX: this.seatShape.attrs.x + this.seatShape.attrs.width,
-        endY: this.seatShape.attrs.y + this.seatShape.attrs.height,
-        shape: this.seatShape,
-        // xPercentage: this.shape.attrs.x/ this.customWidth,
-        // yPercentage: this.shape.attrs.y/ this.customHeight,
-        // widthPercentage: this.shape.attrs.width / this.customWidth,
-        // heightPercentage:this.shape.attrs.height / this.customHeight
-      };
-      this.seatDrawn = 1;
-      // this.getHeightWidthOfSeat();
-    } else {
-      // console.log('MouseUp: Drawing is disabled Seat');
-    }
-  }
-
+ 
+//get the seatSize and updates it
   updateSeatsSize() {
     this.seatSizeWidth = this.seatWidth;
     this.seatSizeHeight = this.seatHeight;
@@ -403,7 +349,104 @@ addRectDataInArray(){
     console.log(this.seatHeight,this.seatWidth)
   }
 
+  totalNumber:any
+  drawingEnabled: boolean = true;
+  drawnSeats:any[]=[]
+  //onclick activates the function and when clicked in certain area the seats are drawn
+  drawRectangles() {
+    let count = 0;
+    this.stage.on('click', (e: any) => {
+      const x = e.evt.offsetX; // X coordinate of the click
+      const y = e.evt.offsetY; // Y coordinate of the click
+   this.totalNumber=this.clientForm.get('totalNumberOfSeats')
+    if (!this.stage || !this.layer) return;
+    if (this.drawingEnabled === true) {
+      let remainingSeats = this.totalNumber.value;
+  console.log(this.getAllPoints,"Seat Click",this.totalNumber.value)
+      for (const point of this.getAllPoints) {
+        const minX = point.startX;
+        const minY = point.startY;
+        const maxX = point.endX;
+        const maxY = point.endY;
+  
+        const availableWidth = maxX - minX;
+        const availableHeight = maxY - minY;
+        const maxHorizontalRectangles = Math.floor(availableWidth / this.seatSizeWidth);
+        const maxVerticalRectangles = Math.floor(availableHeight / this.seatSizeHeight);
+  
+        const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
+        // console.log("HEllO==>",maxRectangles);
+        const flowOfData = this.flowOfDrawingSeats;
+        if (x < maxX && x > minX && y > minY && y < maxY) {
+          const polygon = new Konva.Line({
+            points: this.getAllPoints,
+            fill: 'transparent',
+            stroke: 'black',
+            strokeWidth:0.3,
+            // draggable:true,
+          });
+          this.layer.add(polygon);
+        if (flowOfData == 'vertical') {
+          const columns = Math.min(Math.ceil(remainingSeats / maxVerticalRectangles), maxHorizontalRectangles);
+  
+          for (let column = 0; column < columns; column++) {
+            for (let y = minY; y < maxY - 10  ; y += this.seatSizeHeight) {
+              const x = minX + column * this.seatSizeWidth;
+  
+              if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: this.seatSizeWidth, height: this.seatSizeHeight }, polygon.getClientRect())) {
+                this.drawSeatRectangle(x, y);
+                //drawnSeats it stores the seat data that all are drawn
+                this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + this.seatSizeWidth, y: y + this.seatSizeHeight },workStatkionID: point._id });
 
+                remainingSeats--;
+                count++;
+            
+              }
+            }
+          }
+        } else {
+      
+          const rows = Math.min(Math.ceil(remainingSeats / maxHorizontalRectangles), maxVerticalRectangles);
+  
+          for (let row = 0; row < rows; row++) {
+            for (let x = minX; x < maxX - 10; x += this.seatSizeWidth) {
+              const y = minY + row * this.seatSizeHeight;
+  
+              if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: this.seatSizeWidth, height: this.seatSizeHeight }, polygon.getClientRect())) {
+                this.drawSeatRectangle(x, y);
+                this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + this.seatSizeWidth, y: y + this.seatSizeHeight },workStatkionID: point._id });
+
+                remainingSeats--;
+              }
+            }
+          }
+        }
+        this.totalNumber=remainingSeats;
+        if (remainingSeats === 0) {
+          this.drawingEnabled = false;
+          break;
+        }
+      }
+  
+      this.layer.draw();
+    }
+    }})
+  }
+  //seat rect draw fucntion
+  drawSeatRectangle(x:number, y:number) {
+    const rect = new Konva.Rect({
+      x: x,
+      y: y,
+      width: this.seatSizeWidth,
+      height: this.seatSizeHeight,
+      fill: 'red',
+      opacity: 0.3,
+      stroke: 'red',
+      strokeWidth: 0.4,
+      name: 'seat-rectangle',
+    });
+    this.layer.add(rect);
+  }
 }
 
 

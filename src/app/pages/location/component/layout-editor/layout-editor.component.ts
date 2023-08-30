@@ -65,7 +65,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
           res.layoutArray[0].layoutBorder.forEach((item:any) => {
             const {_id, startX, startY, endX, endY, shape } = item;
             this.getAllPoints.push({_id, startX, startY, endX, endY, shape });
-            // console.log("ARRAY DATAAAAAA--",this.getAllPoints,this.seatSizeHeight,this.seatSizeWidth)
+          
           });
             for (const layoutBorderObj of res.shapes) {
 
@@ -85,6 +85,8 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
               });
   
               this.layer.add(rect);
+              let rectAll= this.layer.find('.workstation-layer');
+              console.log("RECT===>",rectAll);
       }
         
         }
@@ -194,6 +196,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         height: 0,
         fill: 'lightblue',
         opacity: 0.3,
+        draggable:true,
         stroke: '#000000',
         strokeWidth: 0.8,
         name: 'workstation-layer',

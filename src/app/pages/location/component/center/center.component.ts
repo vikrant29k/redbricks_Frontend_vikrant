@@ -25,18 +25,6 @@ export class LocationCenterComponent implements OnInit {
         this.getCenter(locationName);
 
     }
-
-    // getFloor(floorName: string) {
-    //   console.log("Center ID in floors", floorName);
-    //   this.locationService.getFloorsInLocation(floorName).subscribe({
-    //     next: (result: any) => {
-    //         this.floors = [...result];
-
-    //         this.onCenterSelected(floorName);
-    //     }
-    // })
-
-    // }
     getCenter = (locationName: string) => {
 
         this.locationService.getCentersInLocation(locationName).subscribe({
