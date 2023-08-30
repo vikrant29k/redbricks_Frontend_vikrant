@@ -30,7 +30,7 @@ export class LocationListComponent implements OnInit {
   height!: string;
   Locations: any;
   editMode: boolean = false;
-  displayedColumns: string[] = ['location', 'center','floor', 'availableNoOfWorkstation', 'totalNoOfWorkstation', 'edit', 'delete','setBorder'];
+  displayedColumns: string[] = ['location', 'center','floor', 'availableNoOfWorkstation', 'totalNoOfWorkstation', 'edit', 'delete','setBorder','setLayout'];
   dataSource!: MatTableDataSource<LocationData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -110,6 +110,8 @@ export class LocationListComponent implements OnInit {
     }
   }
 
-
+  previewAll(id:any){
+    this.router.navigate(['/admin', 'old-proposal', 'preview-all',id]);
+  }
 
 }
