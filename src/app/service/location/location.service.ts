@@ -9,6 +9,7 @@ import { Observable } from "rxjs";
     providedIn: 'root'
 })
 export class LocationService {
+  [x: string]: any;
 
     private baseUrl: string = environment.baseUrl + 'location/';
 
@@ -16,6 +17,7 @@ export class LocationService {
     selectedCenter!: string;
     selectedAddress!:string
     selectedFloor!:string;
+    totalWorkstation!:number;
     locationId!:string;
     constructor(
         private headerService: HeaderService,
@@ -88,7 +90,7 @@ export class LocationService {
             })
         );
     }
-    
+
     getImageById(id: any): Observable<any> {
         let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl + 'getImage/' + id, {
