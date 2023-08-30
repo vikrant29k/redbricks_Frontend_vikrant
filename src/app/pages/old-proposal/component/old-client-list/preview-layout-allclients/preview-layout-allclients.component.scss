@@ -1,34 +1,31 @@
+
 .contain{
-    width: 800px;
-    height: 566px;
-    border: 1px solid black;
-  }
-  .changeContain{
-    width: 800px;
-    height: 566px;
-    border: 1px solid black;
-  
-      user-select: none;
-      cursor: move;
-  
-  }
-  .main{
+  width: 800px;
+  height: 566px;
+  border: 1px solid black;
+}
+.changeContain{
+  width: 800px;
+  height: 566px;
+  border: 1px solid black;
+
+    user-select: none;
+    cursor: move;
+
+}
+  .canvas-container{
     display: flex;
-  
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 3rem;
+
     button{
-      margin: 10px;
-    }
-    .canvas-container{
-      margin-left: 6rem;
-      padding-top:3rem;
-  
-    }
-    .sub-container{
-      display: flex;
-      flex-direction: column;
-      margin-left:6rem;
-      padding-top:3rem;
-      width:15rem;
-      align-items: center;
+     margin:1rem;
     }
   }
+
+
+
+
+

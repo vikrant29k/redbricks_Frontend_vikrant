@@ -41,7 +41,6 @@
         @include for-mobile() {
           width:35rem;
         }
-
         th {
           background-color: #c3343a;
           padding-inline: 1rem;
@@ -64,7 +63,6 @@
           td {
             color: #fff;
           }
-
           &:has(> .white) {
             background-color: #fff;
             td {

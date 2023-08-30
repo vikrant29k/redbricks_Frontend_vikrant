@@ -14,6 +14,7 @@ import { Location } from '@angular/common'
   styleUrls: ['./space-availability.component.scss'],
 })
 export class NewProposalSpaceAvailabilityComponent implements OnInit {
+  setButtonDisable: boolean = false;
   goBack(){
     this.location.back();
   }
@@ -84,11 +85,14 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     const dialogRef = this.dialog.open(NewProposalLayoutPreviewComponent, {
       width: '800px',
       height: '600px',
+      panelClass: 'my-panel-class',
       data: { locationId: this.locationId, proposalId: this.proposalId, totalNoOfSeat:this.totalNumberofSeat },
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log('Dialog closed Successfully!');
+      if(result === true){
+        this.setButtonDisable= true
+      }
     });
 
   };

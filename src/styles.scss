@@ -153,4 +153,7 @@ mat-expansion-panel{
 }
 
 }
-
+.my-panel-class .mat-dialog-container{
+  padding: 0px;
+  overflow: auto;
+}

@@ -76,10 +76,11 @@ previewAll(){
   let id='64ec8d1bc6acddf0eba41677'
   this.router.navigate(['/admin', 'old-proposal', 'preview-all',id]);
 }
+
   deleteLocation(id: string) {
     Swal.fire({
-      title: 'Delete Location',
-      text: 'Are you sure you want to delete this location?',
+      title: 'Delete Proposal',
+      text: 'Are you sure you want to delete this proposal?',
       icon: 'question',
       showCancelButton: true,
       showConfirmButton: true,

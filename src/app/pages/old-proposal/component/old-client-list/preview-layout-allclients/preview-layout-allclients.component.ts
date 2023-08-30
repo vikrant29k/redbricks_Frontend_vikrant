@@ -32,7 +32,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
       // console.log(res)
       this.extractProposalData(res);
       // console.log(this.proposalData)
-    
+
     })
   }
   private extractProposalData(res: any): void {
@@ -40,6 +40,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
       if (proposal.seatsData && proposal.seatsData.length > 0 && proposal.seatSize) {
         const proposalObject = {
             clientName:proposal.clientName,
+            totalNumberOfSeats:proposal.totalNumberOfSeats,
             seatsData: proposal.seatsData.map((seat:any, index:any) => ({
                 ...seat,
                 first: index === 0, // Set "first" to true for the first object, false for others
@@ -59,7 +60,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
         const imageObj = new Image();
     imageObj.onload = () => {
       this.initializeKonva(imageObj);
-      this.enableZoom(); // Add this line to enable zoom 
+      this.enableZoom(); // Add this line to enable zoom
       this.drawTHeSeat()
     };
 
@@ -71,7 +72,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
       }
     );
 
-    
+
   }
 
   backgroundImage!: Konva.Image;
@@ -137,14 +138,14 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
     this.proposalData.forEach(dataOfSeats=>{
    console.log(dataOfSeats)
       for (const seat of dataOfSeats.seatsData) {
-      
-        this.drawSeatsBetweenPoints(seat.start, seat.end,dataOfSeats.seatSize, dataOfSeats.color, seat.first,dataOfSeats.clientName);
+
+        this.drawSeatsBetweenPoints(seat.start, seat.end,dataOfSeats.seatSize, dataOfSeats.color, seat.first,dataOfSeats.clientName,dataOfSeats.totalNumberOfSeats);
       }
     })
-    
+
   }
-  drawSeatsBetweenPoints(start:any, end:any,seatSize:any,color:any, index:any, clientName:string) {
-  
+  drawSeatsBetweenPoints(start:any, end:any,seatSize:any,color:any, index:any, clientName:string,totalNumberOfSeats:number) {
+
     const startX = Math.min(start.x, end.x);
     const startY = Math.min(start.y, end.y);
     const endX = Math.max(start.x, end.x);
@@ -153,12 +154,12 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
     const seatSizeHeight = seatSize[0].height; // Extract height from seatSize
     for (let x = startX; x < endX; x += seatSizeWidth) {
       for (let y = startY; y < endY; y += seatSizeHeight) {
-        this.drawSeatRectangle(x, y,color,seatSizeHeight,seatSizeWidth,index,clientName);
+        this.drawSeatRectangle(x, y,color,seatSizeHeight,seatSizeWidth,index,clientName,totalNumberOfSeats);
       }
     }
   }
 
-  drawSeatRectangle(x:any, y:any, fill:string, height:number, width:number, index:any, clientName:string) {
+  drawSeatRectangle(x:any, y:any, fill:string, height:number, width:number, index:any, clientName:string,totalNumberOfSeats:number) {
     // console.log(x,y)
 
     console.log(fill)
@@ -181,10 +182,20 @@ if(index==true){
     fill: 'black',
     align: 'center',
 });
+const totalSeatsText = new Konva.Text({
+  x: x,
+  y: y + height + 10, // Adjust the y value as needed
+  text: `Total Seats: ${totalNumberOfSeats}`,
+  fontSize: 14,
+  fill: 'black',
+  align: 'center',
+});
+totalSeatsText.offsetX(totalSeatsText.width() / 2);
+this.layer.add(totalSeatsText);
 text.offsetX(text.width() / 2);
 text.offsetY(text.height() / 2);
 this.layer.add(text);
 }
-    
+
   }
 }
