@@ -29,6 +29,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
     totalNumber!:number;
   seatSizeWidth!: number;
   seatSizeHeight!: number;
+  setButtonDisable: boolean= false;
     ngAfterViewInit(): void { 
         
       }
@@ -257,6 +258,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
           }]
         }
         this.proposalService.saveImage(this.data.proposalId,data).subscribe(res=>{
+          this.dialogRef.close(true)
               console.log(res)
             })
       }

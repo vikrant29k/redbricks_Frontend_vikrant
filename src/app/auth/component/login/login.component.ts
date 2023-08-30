@@ -29,7 +29,7 @@ export class AuthLoginComponent implements OnInit{
     }
 
     loginForm = new FormGroup({
-        'userName': new FormControl('shruti@admin.com', [Validators.required, Validators.email]),
+        'userName': new FormControl('architecturalteam@gmail.com', [Validators.required, Validators.email]),
         'password': new FormControl('admin', Validators.required)
     });
 
