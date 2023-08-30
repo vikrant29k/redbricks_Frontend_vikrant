@@ -31,4 +31,12 @@
     width:15rem;
     align-items: center;
   }
+  .label{
+    display: flex;
+    gap:1rem;
+
+    mat-card{
+      width:8rem;
+    }
+  }
 }

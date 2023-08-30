@@ -8,29 +8,27 @@ import { LocationService } from 'src/app/service/location/location.service';
 import { Router } from "@angular/router";
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
+import { ProposalService } from 'src/app/service/proposal/proposal.service';
 export interface LocationData {
-  _id: any,
-  city: string,
-  state: string,
-  area: string,
-  locality: string,
-  dimension: string,
-  address: string,
-  pinCode: string,
-  images?: string
+  proposal_id: any,
+  location: string,
+  center: string,
+  floor: string,
+  selectedWorkstation: string,
+  edit: string,
+  delete: string,
+  view: string
 }
-
 @Component({
-  selector: 'app-location-list',
-  templateUrl: './location-list.component.html',
-  styleUrls: ['./location-list.component.scss']
+  selector: 'app-old-client-list',
+  templateUrl: './old-client-list.component.html',
+  styleUrls: ['./old-client-list.component.scss']
 })
-export class LocationListComponent implements OnInit {
-
+export class OldClientListComponent implements OnInit {
   height!: string;
   Locations: any;
   editMode: boolean = false;
-  displayedColumns: string[] = ['location', 'center','floor', 'availableNoOfWorkstation', 'totalNoOfWorkstation', 'edit', 'delete','setBorder'];
+  displayedColumns: string[] = ['proposal_id','location', 'center','floor', 'selectedWorkstation', 'edit', 'delete','view'];
   dataSource!: MatTableDataSource<LocationData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -40,6 +38,7 @@ export class LocationListComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private locationService: LocationService,
+    private proposalService:ProposalService,
     private authService: AuthenticationService,
     private router: Router,
     private dialog:MatDialog
@@ -53,17 +52,30 @@ export class LocationListComponent implements OnInit {
   }
 
   getAllLocations() {
-    this.locationService.getAllLocation().subscribe({
-      next: (locations: any) => {
-        this.Locations = locations
-        this.tableDataSource(this.Locations);
-      },
-      error: (err: any) => {
-        this.authService.handleAuthError(err);
-      }
-    });
+    // this.locationService.getAllLocation().subscribe({
+    //   next: (locations: any) => {
+    //     this.Locations = locations
+    //     this.tableDataSource(this.Locations);
+    //   },
+    //   error: (err: any) => {
+    //     this.authService.handleAuthError(err);
+    //   }
+    // });
   }
-
+getAllProposals(){
+  this.proposalService.getAllLockedProposal().subscribe({
+    next:(proposal:any)=>{
+      this.tableDataSource(proposal)
+    },
+    error: (err: any) => {
+      this.authService.handleAuthError(err);
+    }
+  })
+}
+previewAll(){
+  let id='64ec8d1bc6acddf0eba41677'
+  this.router.navigate(['/admin', 'old-proposal', 'preview-all',id]);
+}
   deleteLocation(id: string) {
     Swal.fire({
       title: 'Delete Location',
@@ -97,7 +109,8 @@ export class LocationListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllLocations()
+    // this.getAllLocations()
+    this.getAllProposals()
   }
 
 

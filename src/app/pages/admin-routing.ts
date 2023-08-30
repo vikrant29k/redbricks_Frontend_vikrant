@@ -1,5 +1,4 @@
 import { Routes } from "@angular/router";
-import { ShowLayoutComponent } from "./location/component/show-layout/show-layout.component";
 
 const AdminRouting: Routes = [
     {

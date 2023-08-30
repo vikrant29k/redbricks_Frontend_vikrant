@@ -42,8 +42,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   imageUrl:any;
   ngOnInit(): void {
     this.id = this.route.snapshot.params['Id'];
-   
-    // console.log(this.id,"HELOOOOOOOOOOOOOOo")
+
   }
   ngAfterViewInit(): void {
    this.getInitialViewLayout()    

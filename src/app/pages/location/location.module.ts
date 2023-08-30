@@ -17,12 +17,10 @@ import { ShowLayoutComponent } from './component/show-layout/show-layout.compone
 import { ShowGalleryComponent } from './component/show-gallery/show-gallery.component';
 import { FloorsComponent } from './component/floors/floors.component';
 import { LayoutEditorComponent } from "./component/layout-editor/layout-editor.component";
-import { AddClientComponent } from "./component/add-client/add-client.component";
 import { LockLayoutEditorComponent } from "./component/locking the layout/locking the layout-editor.component";
 @NgModule({
     declarations: [
         LocationComponent,
-        AddClientComponent,
         LocationLocationComponent,
         LocationCenterComponent,
         LocationLocationDetailComponent,

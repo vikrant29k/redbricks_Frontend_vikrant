@@ -46,23 +46,30 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
         private proposalService: ProposalService,
         private locationService:LocationService
     ) { }
-
+    proposalData:any[]=[]
+    private extractProposalData(res: any): void {
+      for (const proposal of res) {
+        if (proposal.seatsData && proposal.seatsData.length > 0 && proposal.seatSize) {
+          const proposalObject = {
+              seatsData: proposal.seatsData,
+              seatSize: proposal.seatSize,
+          };
+          this.proposalData.push(proposalObject);
+      }
+      }
+    }
     ngOnInit(): void {
-        // this.id=this.data.locationId;
         this.totalNumber=this.data.totalNoOfSeat;
-
         this.proposalService.generateLayout(this.data.proposalId).subscribe((res:any)=>{
-            // console.log(res)
-            this.getImageAndInitialize(res.locationId,res.shapes)
-            const sizeOfSeat = res.seatSize;
+              this.getImageAndInitialize(res.locationId,res.shapes)
+              // console.log(this.proposalData)
+              const sizeOfSeat = res.seatSize;
               this.seatSizeHeight=sizeOfSeat[0].height;
               this.seatSizeWidth=sizeOfSeat[0].width;
               res.layoutArray.forEach((item:any) => {
                 const { startX, startY, endX, endY, _id } = item;
                 this.getAllPoints.push({ _id,startX, startY, endX, endY });
             });
-              
-            console.log(this.getAllPoints);
         })
         
     }
@@ -86,18 +93,22 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
     
         this.layer.add(this.backgroundImage);
         this.layer.draw();
+        
       }
 //intialize the image and stage and layer
       getImageAndInitialize(locationId:any, drawRect:any){
         this.locationService.getImageById(locationId).subscribe(
             (imageUrl) => {
+              this.proposalService.getProposalByLocationId(locationId).subscribe((result:any)=>{
+                // console.log(res)
+                this.extractProposalData(result);
+              
               this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
             //   console.log(this.imageUrl);
               const imageObj = new Image();
           imageObj.onload = () => {
             this.initializeKonva(imageObj);
-            // this.enableZoom(); // Add this line to enable zoom
-            // this.enablePanning(); // Add this line to enable panning
+            this.drawTheBlankSeat()
             this.transformer = new Konva.Transformer(); // Initialize transformer
             this.layer.add(this.transformer);
             for (const layoutBorderObj of drawRect) {
@@ -126,6 +137,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
           //   this.getLayout();
           };
       
+          
           imageObj.src = this.imageUrl;
           imageObj.crossOrigin = 'Anonymous';
           // this.drawRectangles()
@@ -135,6 +147,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               // Handle the error as needed
             }
           );
+        });
       }
       //drawSeats 
       drawingEnabled: boolean = true;
@@ -148,14 +161,6 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
        
         if (!this.stage || !this.layer) return;
         if (this.drawingEnabled === true) {
-          // const polygon = new Konva.Line({
-          //   points: this.getAllPoints,
-          //   fill: 'transparent',
-          //   stroke: 'black',
-          //   strokeWidth: 0.3,
-          // });
-          // this.layer.add(polygon);
-      
           let remainingSeats = this.totalNumber;
       
           for (const point of this.getAllPoints) {
@@ -263,5 +268,45 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
             })
       }
       
+      drawTheBlankSeat(){
+        // let dataOfDrawingSeats = this.proposalData.
+        this.proposalData.forEach(dataOfSeats=>{
+       console.log(dataOfSeats)
+          for (const seat of dataOfSeats.seatsData) {
+          
+            this.drawSeatsBetweenPoints(seat.start, seat.end,dataOfSeats.seatSize);
+          }
+        })
+        
+      }
+      drawSeatsBetweenPoints(start:any, end:any,seatSize:any) {
       
+        const startX = Math.min(start.x, end.x);
+        const startY = Math.min(start.y, end.y);
+        const endX = Math.max(start.x, end.x);
+        const endY = Math.max(start.y, end.y);
+        const seatSizeWidth = 13.5; // Extract width from seatSize
+        const seatSizeHeight = 16.5; // Extract height from seatSize
+        for (let x = startX; x < endX; x += seatSizeWidth) {
+          for (let y = startY; y < endY; y += seatSizeHeight) {
+            this.drawBlankSeatRect(x, y,seatSizeHeight,seatSizeWidth);
+          }
+        }
+      }
+ 
+      drawBlankSeatRect(x:any, y:any, height:number, width:number) {
+        // console.log(x,y)
+
+        const rect = new Konva.Rect({
+          x: x,
+          y: y,
+          width: width,
+          height: height,
+          fill: 'white',
+          opacity: 1,
+          name: 'blank-rectangle',
+        });
+        this.layer.add(rect);
+    
+      }
 }

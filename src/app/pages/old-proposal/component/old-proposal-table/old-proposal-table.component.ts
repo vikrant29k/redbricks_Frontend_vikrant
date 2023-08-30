@@ -7,7 +7,6 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DeselectUpdateComponent } from '../deselect-update/deselect-update.component';
 import Swal from 'sweetalert2';
 export interface OldProposalData {
   _id: any;
@@ -116,30 +115,6 @@ export class OldProposalTableComponent implements OnInit {
 
   };
 
-showPopOver(data_id:any){
-var location;
-var center;
- for(let i = 0; i < this.allData.length;i++){
-if(data_id == this.allData[i]._id){
-  this.selectedSeat=this.allData[i].totalNoOfSeatsSelected;
-  location = this.allData[i].location;
-  center = this.allData[i].center;
-}
- }
-  const dialogRef = this.dialog.open(DeselectUpdateComponent, {
-  width: '20rem',
-  hasBackdrop: true,
-  data: {
-    info:{
-      idForDeselect:data_id,
-      location:location,
-      center:center,
-      seatSelected:this.selectedSeat
-    }
 
-},
-
-});
-}
 
 }

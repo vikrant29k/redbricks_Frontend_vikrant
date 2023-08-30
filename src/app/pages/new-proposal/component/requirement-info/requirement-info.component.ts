@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import Swal from 'sweetalert2';
+import { LocationService } from 'src/app/service/location/location.service';
+
 @Component({
   selector: 'new-proposal-requirement-info',
   templateUrl: './requirement-info.component.html',
@@ -15,16 +17,17 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     this.active=!this.active;
   }
   proposalId: string = 'lasdfoawefalsdfalskdf';
+
   totalWorkStationBalance: any = 373;
   totalWorkstationBooked: any = 0;
-  totalAvailableWorkstation: any = 373;
+  totalAvailableWorkstation: any;
   totalSelectedWorkstation: any = 0;
   areaOfCoreSelectedSeat:any;
   areaOfUsableSelectedSeat:any;
 
   valueToBeDivided:any;
   valueOfDinominator:any=1152;
-
+id:any;
   requirementInfoForm:any = new FormGroup({
     areaOfCoreSelectedSeat:new FormControl(),
     areaOfUsableSelectedSeat:new FormControl(),
@@ -72,6 +75,7 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     gameRoomNumber: new FormControl(),
     content:new FormControl(),
     totalNumberOfSeats: new FormControl()
+
   });
 
 
@@ -79,19 +83,23 @@ export class NewProposalRequirementInfoComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private proposalService: ProposalService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private locationService:LocationService
   ) {}
 
   ngOnInit(): void {
 
     (window as any).scrollTo(top);
+
     this.totalWorkStationBalance = this.proposalService.TotalNoOfSets;
-    // this.totalAvailableWorkstation = this.proposalService.AvailableNoOfSeats;
+     this.totalAvailableWorkstation = this.locationService.totalWorkstation;
+     console.log(this.totalAvailableWorkstation)
 const numberOfseats =localStorage.getItem('selectedSeat');
-this.totalAvailableWorkstation=this.proposalService.AvailableNoOfSeats - Number(numberOfseats) ;
+// this.totalAvailableWorkstation=this.proposalService.AvailableNoOfSeats - Number(numberOfseats) ;
+
     this.proposalId = this.getProposaId();
     this.proposalService.getProposalById(this.proposalId).subscribe((res:any)=>{
-      // console.log(res)
+       console.log(res)
 
       this.requirementInfoForm.patchValue(res[0]);
       console.log( this.requirementInfoForm.value,"gt the data")
@@ -157,7 +165,9 @@ this.totalAvailableWorkstation=this.proposalService.AvailableNoOfSeats - Number(
     return this.route.snapshot.params['proposalId'];
   };
 
+totalWorkstation(){
 
+}
 
   watchFormValue = () => {
     this.requirementInfoForm.valueChanges.subscribe(() => {
@@ -207,7 +217,8 @@ this.totalAvailableWorkstation=this.proposalService.AvailableNoOfSeats - Number(
     value.gameRoomNumber;
     this.totalSelectedWorkstation = (this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1)).toFixed(2);
     this.areaOfCoreSelectedSeat = (this.totalSelectedWorkstation*19.00).toFixed(2);
-    this.areaOfUsableSelectedSeat = (this.areaOfCoreSelectedSeat *1.85).toFixed(2)
+    this.areaOfUsableSelectedSeat = (this.areaOfCoreSelectedSeat *1.85).toFixed(2);
+
     // let circulation = totalNoOfSeats*0.1;
     // let netBillableSeat = totalNoOfSeats + circulation;
     });

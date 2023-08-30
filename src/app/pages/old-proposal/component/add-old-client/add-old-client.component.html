@@ -1,0 +1,93 @@
+<div class="main">
+    <div class="sub-container">
+      <div class="title">
+        <h1>Add Client Data</h1>
+      </div>
+      <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="form-group">
+        <section>
+          <mat-form-field appearance="outline">
+            <mat-label>Client Name</mat-label>
+            <input type="text" matInput formControlName="clientName" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <input type="text" matInput formControlName="location" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Center</mat-label>
+            <input type="text" matInput formControlName="center" />
+          </mat-form-field>
+        </section> 
+  
+        <section>
+          <mat-form-field appearance="outline">
+            <mat-label>Floor</mat-label>
+            <input type="text" matInput formControlName="floor" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Finalized Price</mat-label>
+            <input type="number" matInput formControlName="finalOfferAmmount" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Salesperson Name</mat-label>
+            <input type="text" matInput formControlName="salesPerson" />
+          </mat-form-field>
+        </section>
+        <section>
+          <mat-form-field appearance="outline">
+            <mat-label>Tenure</mat-label>
+            <input type="text" matInput formControlName="Tenure" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>LockIn</mat-label>
+            <input type="text" matInput formControlName="LockIn" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Depoist Term</mat-label>
+            <input type="text" matInput formControlName="depoistTerm" />
+          </mat-form-field>
+        </section>
+        
+        <section>
+          <mat-form-field appearance="outline">
+            <mat-label>Notice Period</mat-label>
+            <input type="text" matInput formControlName="noticePeriod" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Rent Commencement Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="rentCommencmentDate"  autocomplete="off">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Non Standard Requirement(if any)</mat-label>
+            <input type="text" matInput formControlName="NonStandardRequirement" />
+          </mat-form-field>
+        </section>
+        <section>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Serviced or Non-serviced</mat-label>
+            <mat-select formControlName="Serviced">
+                <mat-option value="serviced">Serviced</mat-option>
+              <mat-option value="Non serviced">Non serviced</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Total Seat No</mat-label>
+            <input type="number" matInput formControlName="totalNumberOfSeats" />
+          </mat-form-field>
+        </section>
+  
+        <div class="form-action">
+          <button type="reset" mat-raised-button color="primary">Reset</button>
+          <button type="submit" mat-raised-button color="primary">Save
+          </button>
+        </div>
+    </form>
+    </div>
+    <div class="canvas-container">
+      <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled ?'contain':'changeContain'"></div>
+    </div>
+  </div>
