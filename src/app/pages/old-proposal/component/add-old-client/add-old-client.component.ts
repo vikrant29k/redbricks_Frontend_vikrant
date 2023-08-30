@@ -3,13 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Konva from 'konva';
 import { LocationService } from 'src/app/service/location/location.service';
-
+import { ProposalService } from 'src/app/service/proposal/proposal.service';
 @Component({
-  selector: 'app-add-client',
-  templateUrl: './add-client.component.html',
-  styleUrls: ['./add-client.component.scss']
+  selector: 'app-add-old-client',
+  templateUrl: './add-old-client.component.html',
+  styleUrls: ['./add-old-client.component.scss']
 })
-export class AddClientComponent implements OnInit {
+export class AddOldClientComponent implements OnInit {
   stage!: Konva.Stage;
   layer!: Konva.Layer;
   line!: Konva.Line;
@@ -36,6 +36,7 @@ export class AddClientComponent implements OnInit {
 
   constructor(private router: Router,
                private route: ActivatedRoute,
+               private proposalService:ProposalService,
                private locationService: LocationService
              ) {}
   id!: string;
@@ -54,7 +55,6 @@ export class AddClientComponent implements OnInit {
     imageObj.onload = () => {
       this.initializeKonva(imageObj);
       this.enableZoom(); // Add this line to enable zoom
-      // this.enablePanning(); // Add this line to enable panning
       this.transformer = new Konva.Transformer(); // Initialize transformer
       this.layer.add(this.transformer);
     };
@@ -87,7 +87,10 @@ export class AddClientComponent implements OnInit {
   })
 
 onSubmit(){
-  console.log(this.clientForm.value)
+  // console.log(this.clientForm.value);
+  this.proposalService.addOldClient(this.clientForm.value).subscribe(res=>{
+    console.log(res)
+  })
 }
 
 

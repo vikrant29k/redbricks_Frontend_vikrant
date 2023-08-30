@@ -9,14 +9,44 @@ import { ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { DatePipe } from '@angular/common';
 import { GenerateRackValueComponent } from '../generate-rack-value/generate-rack-value.component';
+import {
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import * as _moment from 'moment';
+import { default as _rollupMoment, Moment } from 'moment';
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'YYYY',
+  },
+  display: {
+    dateInput: 'YYYY',
+    monthYearLabel: 'YYYY',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
+const moment = _rollupMoment || _moment;
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
   styleUrls: ['./add-location.component.scss'],
+  providers:[ {
+    provide: DateAdapter,
+    useClass: MomentDateAdapter,
+    deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+  },
+  { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+]
 })
 export class AddLocationComponent implements OnInit {
-  // JSONFile!: File;
+  date = new FormControl(moment());
+  myFiles:any [] = [];
   layoutImage!: File;
   jsonUploaded: boolean = false;
   layoutImageUploaded: boolean = false;
@@ -26,8 +56,8 @@ export class AddLocationComponent implements OnInit {
   salesHeads: any = [];
   toDate:any;
   rentCamArray:any;
+  selectMultipleImages: any = false;
   constructor(
-    // private calculateService: CalculationDataService,
     private dialog:MatDialog,
     private datepipe: DatePipe,
     private loactionService: LocationService,
@@ -134,6 +164,12 @@ export class AddLocationComponent implements OnInit {
     if (this.layoutImageUploaded) {
       formData.append('layoutImage', this.layoutImage);
     }
+    if(this.selectMultipleImages && this.myFiles.length>0){
+      for  (var i =  0; i <  this.myFiles.length; i++)  {  
+        formData.append("centerImage",  this.myFiles[i]);
+    } 
+      // formData.append('centerImage',JSON.stringify(this.myFiles))
+    }
 
     return formData;
   };
@@ -191,7 +227,6 @@ allData:any
           this.onAddFromGroup();
           this.rentSheet[index].patchValue(element);
         })
-        // debugger;
         // let rentSheet = JSON.parse(result.rentSheet);
         // rentSheet.forEach((element: any,index: number) => {
 
@@ -282,4 +317,24 @@ allData:any
       }
     }
   };
+  chosenYearHandler(normalizedYear: any, dp: any,index:any) {
+    const ctrlValue:any = this.date.value ;
+    ctrlValue.year(normalizedYear.year());
+    this.date.setValue(ctrlValue);
+  console.log(this.locationForm)
+  this.rentSheet[index].patchValue({year:ctrlValue});
+    dp.close()
+  }
+  // add new method select image
+  getFileDetails (e:any) {
+    //console.log (e.target.files);
+    this.selectMultipleImages =true
+    for (var i = 0; i < e.target.files.length; i++) { 
+      this.myFiles.push(e.target.files[i]);
+    }
+    console.log(this.myFiles)
+  }
+  deleteImageFromList = (index:number) =>{
+      this.myFiles.splice(index,1)
+  }
 }

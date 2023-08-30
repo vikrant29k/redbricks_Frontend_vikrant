@@ -153,4 +153,9 @@ export class LocationService {
         );
     }
 
+    getAllImageOfCenter = (id:string) =>{
+      let httpOptions = this.headerService.updateHeader();
+        return this.http.get(this.baseUrl+'getCenterImages/'+id,httpOptions)
+    }
+
 }

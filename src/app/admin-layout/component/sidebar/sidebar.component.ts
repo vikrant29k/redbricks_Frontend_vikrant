@@ -26,12 +26,14 @@ export class AdminLayoutSidebarComponent implements OnInit {
     userExpanded: boolean = false;
     locationExpanded: boolean = false;
     brokerExpand: boolean = false;
+    clientExpand:boolean=false;
     calculation:boolean = false;
     expandAccording = (title?: string) => {
         switch (title) {
             case 'log':
                 this.logExpanded = !this.logExpanded;
                 this.userExpanded = false;
+                this.clientExpand=false;
                 this.locationExpanded = false;
                 this.brokerExpand = false;
                 this.calculation = false;
@@ -40,6 +42,7 @@ export class AdminLayoutSidebarComponent implements OnInit {
             case 'user':
                 this.userExpanded = !this.userExpanded;
                 this.logExpanded = false;
+                this.clientExpand=false;
                 this.locationExpanded = false;
                 this.calculation = false;
                 this.brokerExpand = false;
@@ -48,6 +51,7 @@ export class AdminLayoutSidebarComponent implements OnInit {
             case 'location':
                 this.locationExpanded = !this.locationExpanded;
                 this.logExpanded = false;
+                this.clientExpand=false;
                 this.userExpanded = false;
                 this.brokerExpand = false;
                 this.calculation = false;
@@ -58,6 +62,7 @@ export class AdminLayoutSidebarComponent implements OnInit {
                 this.locationExpanded = false;
                 this.calculation = false;
                 this.logExpanded = false;
+                this.clientExpand=false;
                 this.userExpanded = false;
                 break;
 
@@ -66,14 +71,26 @@ export class AdminLayoutSidebarComponent implements OnInit {
                   this.locationExpanded = false;
                   this.brokerExpand = false;
                   this.logExpanded = false;
+                  this.clientExpand=false;
                   this.userExpanded = false;
                   break;
+            
+            case 'client':
+                    this.clientExpand = !this.clientExpand;
+                    this.locationExpanded = false;
+                    this.brokerExpand = false;
+                    this.logExpanded = false;
+                    this.calculation=false;
+                    this.userExpanded = false;
+                    break;
+
             default:
                 this.logExpanded = false;
                 this.calculation = false;
                 this.userExpanded = false;
                 this.locationExpanded = false;
                 this.brokerExpand = false;
+                this.clientExpand=false
                 this.drawerClicked.emit();
                 break;
         }

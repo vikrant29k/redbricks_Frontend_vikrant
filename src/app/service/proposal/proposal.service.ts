@@ -132,7 +132,37 @@ export class ProposalService {
       })
     );
   };
-
+  getAllLockedProposal = () => {
+    let httpOptions = this.headerService.updateHeader();
+    return this.http.get(this.baseUrl + 'getAllLockedProposal', httpOptions).pipe(
+      this.toster.observe({
+        success: 'Proposal List Loaded Successfully',
+        loading: 'Loading All Old Proposal Data...',
+        error: ({ error }) => `${error.Message}`,
+      })
+    );
+  };
+  
+  getProposalByLocationId(Id:any){
+    let httpOptions = this.headerService.updateHeader();
+    return this.http.get(this.baseUrl+'getLayoutDataOfSameLocation/'+Id,httpOptions).pipe(
+      this.toster.observe({
+        success: 'Location Layout Loaded Successfully',
+        loading: 'Loading Location...',
+        error: ({ error }) => `${error.Message}`,
+      })
+    );
+  }
+  addOldClient(data:any){
+    let httpOptions = this.headerService.updateHeader();
+    return this.http.post(this.baseUrl+'addOldProposal/',data,httpOptions).pipe(
+      this.toster.observe({
+        success: 'Client Data Added Successfully',
+        loading: 'Adding Client...',
+        error: ({ error }) => `${error.Message}`,
+      })
+    );
+  }
   getProposalById = (Id:any) => {
     let httpOptions = this.headerService.updateHeader();
     return this.http.get(this.baseUrl+'getProposalById/'+Id,httpOptions).pipe(
