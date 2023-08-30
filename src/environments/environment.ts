@@ -10,8 +10,9 @@ export const environment = {
   // baseUrl: 'http://139.59.35.190:3000/'
 
   baseUrl:'http://192.168.29.233:3000/'
+  // baseUrl:'http://192.168.29.203:3000/'
 };
-
+// 192.168.29.203
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
