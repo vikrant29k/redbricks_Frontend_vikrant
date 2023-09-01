@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Konva from 'konva';
 import { Rect } from 'konva/lib/shapes/Rect';
 import { LocationService } from 'src/app/service/location/location.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-layout-editor',
   templateUrl: './layout-editor.component.html',
@@ -13,6 +14,8 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   layer!: Konva.Layer;
   line!: Konva.Line;
   selectedShape!: Konva.Shape;
+  isEnableSaveBtn:boolean =false
+  isEnableDrowSeatBtn:boolean = false
   customWidth = 800;
   customHeight = 566;
   getAllPoints: any[] = [];
@@ -50,7 +53,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   getInitialViewLayout = () =>{
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
-        this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
+        this.imageUrl = environment.baseUrl+'images/' + imageUrl;
         console.log(this.imageUrl);
         const imageObj = new Image();
     imageObj.onload = () => {
@@ -66,14 +69,15 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         }else
         {
           this.allSelectedLayout = res
-          this.seatSizeHeight=res.layoutArray[0].seatSize[0].height;
-          this.seatSizeWidth=res.layoutArray[0].seatSize[0].width;
-          this.seatHeight=this.seatSizeHeight;
-          this.seatWidth=this.seatSizeWidth;
-          this.updateSeatsSize()
+          // this.seatSizeHeight=res.layoutArray[0]?.seatSize[0]?.height;
+          // this.seatSizeWidth=res.layoutArray[0]?.seatSize[0]?.width;
+          this.seatHeight=15;
+          this.seatWidth=20;
+          // commment for adding new seat as per rectangle
+          // this.updateSeatsSize()
           res.layoutArray[0].layoutBorder.forEach((item:any) => {
-            const {_id, startX, startY, endX, endY, shape } = item;
-            this.getAllPoints.push({_id, startX, startY, endX, endY, shape });
+            const {_id, startX, startY, endX, endY, shape,seatHeight,seatWidth } = item;
+            this.getAllPoints.push({_id, startX, startY, endX, endY, shape ,seatHeight,seatWidth });
           
           });
           // this.layer.clearBeforeDraw
@@ -142,6 +146,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
     this.stage.on('mousedown', this.handleMouseDown.bind(this));
     this.stage.on('mousemove', this.handleMouseMove.bind(this));
     this.stage.on('mouseup', this.handleMouseUp.bind(this));
+    
   }
   enableZoom(): void {
     const scaleBy = 1.1; // Adjust the scale factor as needed
@@ -202,7 +207,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         height: 0,
         fill: 'lightblue',
         opacity: 0.3,
-        draggable:true,
+        draggable:false,
         stroke: '#000000',
         strokeWidth: 0.8,
         name: 'workstation-layer',
@@ -222,10 +227,6 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
       });
       this.layer.add(this.shape,transformer);
       transformer.attachTo(this.shape);
-    
-    
-      // this.layer.add(this.shape)
-
     } 
   }
 
@@ -248,20 +249,13 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
     if (this.isDrawingEnabled && this.isDrawing) {
       this.isDrawing = false;
       this.isDrawingEnabled=!this.isDrawingEnabled
+      this.isEnableDrowSeatBtn = true
 
     } 
   }
 
 addRectDataInArray(){
-  const rect = {
-    _id:Date.now(),
-    startX: this.shape.attrs.x,
-    startY: this.shape.attrs.y,
-    endX: this.shape.attrs.x + this.shape.attrs.width,
-    endY: this.shape.attrs.y + this.shape.attrs.height,
-    shape: this.shape,
-  };
-  this.getAllPoints.push(rect)
+
   console.log(this.getAllPoints);
   this.isDrawingEnabled=!this.isDrawingEnabled
 }
@@ -350,6 +344,7 @@ addRectDataInArray(){
         // widthPercentage: this.shape.attrs.width / this.customWidth,
         // heightPercentage:this.shape.attrs.height / this.customHeight
       };
+      this.isEnableSaveBtn =true
       this.seatDrawn = 1;
       // this.getHeightWidthOfSeat();
     } else {
@@ -373,6 +368,17 @@ seatArray:any[]=[]
       width:this.seatWidth,
       height:this.seatHeight
     }]
+    const rect = {
+      _id:Date.now(),
+      startX: this.shape.attrs.x,
+      startY: this.shape.attrs.y,
+      endX: this.shape.attrs.x + this.shape.attrs.width,
+      endY: this.shape.attrs.y + this.shape.attrs.height,
+      shape: this.shape,
+      seatWidth:this.seatWidth,
+      seatHeight:this.seatHeight
+    };
+    this.getAllPoints.push(rect)
     console.log(this.seatHeight,this.seatWidth)
 
   }
@@ -380,7 +386,7 @@ seatArray:any[]=[]
   addLayout(){
     let data = { 
         LayoutData:{layoutBorder:this.getAllPoints,
-             seatSize:this.seatArray}
+             }
            }
     
     this.locationService.addLayoutData(this.id,data).subscribe(res=>{
@@ -400,6 +406,7 @@ this.stage.on('dblclick',(e)=>{
               if(((e.evt.offsetX<=el.endX && e.evt.offsetX >= el.startX))&& ((e.evt.offsetY<=el.endY && e.evt.offsetY >= el.startY))){
                 let index=this.allSelectedLayout.layoutArray[0].layoutBorder.indexOf(el)
                 this.selectedIdOfLayout =el._id
+                console.log(el,"selected element")
                 this.isDeleteShape = true
                 this.allSelectedLayout.shapes[index]
             this.transformer = new Konva.Transformer();
@@ -414,6 +421,7 @@ this.stage.on('dblclick',(e)=>{
         this.transformer.attachTo(rect);
               }
             }
+            console.log('1',this.getAllPoints)
 })
   }
   
@@ -431,6 +439,7 @@ this.stage.on('dblclick',(e)=>{
         if(el._id === this.selectedIdOfLayout) {
         let index = this.getAllPoints.indexOf(el)
         this.getAllPoints.splice(index,1);
+        console.log('2',this.getAllPoints)
         this.transformer.destroy()
         let data = { 
           LayoutData:{layoutBorder:this.getAllPoints,
