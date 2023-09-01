@@ -48,8 +48,17 @@
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Salesperson Name</mat-label>
-            <input type="text" matInput formControlName="salesPerson" />
+            <mat-select formControlName="salesPerson">
+              <ng-container *ngFor="let person of salesPersons">
+                <mat-option [value]="person.firstName+' '+person.lastName">{{ person.firstName +' '+ person.lastName }}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>Sales Person is required</mat-error>
           </mat-form-field>
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Salesperson Name</mat-label>
+            <input type="text" matInput formControlName="salesPerson" />
+          </mat-form-field> -->
         </section>
         <section>
           <mat-form-field appearance="outline">

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Konva from 'konva';
 import { LocationService } from 'src/app/service/location/location.service';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
+import { DashboardService } from 'src/app/service/dashboard/dashboard.service';
 @Component({
   selector: 'app-add-old-client',
   templateUrl: './add-old-client.component.html',
@@ -36,15 +37,18 @@ export class AddOldClientComponent implements OnInit {
   constructor(private router: Router,
                private route: ActivatedRoute,
                private proposalService:ProposalService,
-               private locationService: LocationService
+               private locationService: LocationService,
+               private dashboardService: DashboardService
              ) {}
   id!: string;
   imageUrl:any;
+
   ngOnInit(): void {
     this.id = this.route.snapshot.params['Id'];
     this.watchValueChangesInForm();
     this.getLocationList();
-
+    this.getSalesPersonList();
+    
   }
 ngAfterViewInit():void{
 
@@ -95,6 +99,18 @@ locationList:any[]=[]
 centerList:any[]=[]
 floorList:any[]=[]
 locationId!:string
+salesPersons:any[]=[]
+//getSalesperson list
+getSalesPersonList(){
+  this.dashboardService.getUserData().subscribe((res:any)=>{
+    for (const person of res) {
+      const { firstName, lastName } = person;
+      // Create an object with extracted data and push it into the array
+      this.salesPersons.push({ firstName, lastName });
+  }
+  })
+
+}
 //gets the all location
 getLocationList(){
   this.locationService.getLocationList().subscribe((res:any)=>{

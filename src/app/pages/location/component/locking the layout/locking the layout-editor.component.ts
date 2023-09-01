@@ -68,30 +68,56 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
         if(res.Message==='No data'){
           console.log("NO DATAA")
         }else{
-          res.layoutArray.forEach((item:any) => {
-            const { startX, startY, endX, endY, shape } = item;
-            this.getAllPoints.push({ startX, startY, endX, endY, shape });
-            for (const layoutBorderObj of res.shapes) {
+          res.layoutArray[0].layoutBorder.forEach((item:any) => {
+            const {_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight } = item;
+            this.getAllPoints.push({_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight });
+          
+          });
+          // res.layoutArray.forEach((item:any) => {
+          //   const { startX, startY, endX, endY, shape } = item;
+          //   this.getAllPoints.push({ startX, startY, endX, endY, shape });
+      //       for (const layoutBorderObj of res.shapes) {
 
-              const shape  = layoutBorderObj.attrs
+      //         const shape  = layoutBorderObj.attrs
        
-              const rect = new Konva.Rect({
-                  x: shape.x,
-                  y: shape.y,
-                  width: shape.width,
-                  height: shape.height,
-                  fill: shape.fill,
-                  opacity: shape.opacity,
-                  stroke: shape.stroke,
-                  strokeWidth: shape.strokeWidth,
-                  name: shape.name,
-                  draggable: false // Set draggable as needed
-              });
+      //         const rect = new Konva.Rect({
+      //             x: shape.x,
+      //             y: shape.y,
+      //             width: shape.width,
+      //             height: shape.height,
+      //             fill: shape.fill,
+      //             opacity: shape.opacity,
+      //             stroke: shape.stroke,
+      //             strokeWidth: shape.strokeWidth,
+      //             name: shape.name,
+      //             draggable: false // Set draggable as needed
+      //         });
   
-              this.layer.add(rect);
+      //         this.layer.add(rect);
               
-      }
+      // }
+      for (const shape of res.layoutArray[0].layoutBorder) {
+
+        // const shape  = layoutBorderObj.attrs
+ 
+       const rect = new Konva.Rect({
+          x: shape.startX,
+          y: shape.startY,
+          width: shape.rectWidth,
+          height: shape.rectHeight,
+          fill: 'blue',
+          opacity: 0.3,
+            draggable: false, // Set draggable as needed
+           
         });
+        this.layer.add(rect);
+        rect.on('mousedown', () =>{
+          console.log("GETSFAFSFSAF")
+          this.transformer.attachTo(rect)
+        });
+        
+}
+        // });
         }
         
       })
@@ -201,34 +227,40 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
 
   transformer!: Konva.Transformer;
  
-  updateGetAllPointsAfterTransformation(): void {
-    // Find the index of the shape in getAllPoints based on the shape instance
-    const index = this.getAllPoints.findIndex(
-      (point) => point.shape === this.shape
-    );
+  // updateGetAllPointsAfterTransformation(): void {
+  //   // Find the index of the shape in getAllPoints based on the shape instance
+  //   const index = this.getAllPoints.findIndex(
+  //     (point) => point.shape === this.shape
+  //   );
 
-    if (index !== -1) {
-      // Update the corresponding rectangle in getAllPoints with new dimensions
-      this.getAllPoints[index] = {
-        ...this.getAllPoints[index],
-        startX: this.shape.attrs.x,
-        startY: this.shape.attrs.y,
-        endX: this.shape.attrs.x + this.shape.attrs.width,
-        endY: this.shape.attrs.y + this.shape.attrs.height,
-        shape: this.shape,
-      };
+  //   if (index !== -1) {
+  //     // Update the corresponding rectangle in getAllPoints with new dimensions
+  //     this.getAllPoints[index] = {
+  //       ...this.getAllPoints[index],
+  //       startX: this.shape.attrs.x,
+  //       startY: this.shape.attrs.y,
+  //       endX: this.shape.attrs.x + this.shape.attrs.width,
+  //       endY: this.shape.attrs.y + this.shape.attrs.height,
+  //       shape: this.shape,
+  //     };
 
-      console.log('Updated getAllPoints:', this.getAllPoints);
-    }
-  }
+  //     console.log('Updated getAllPoints:', this.getAllPoints);
+  //   }
+  // }
 addRectDataInArray(){
+  let childerenOfTransformer = this.transformer.getChildren()
+let nodes = this.transformer._nodes[0].attrs
   const rect = {
     _id:Date.now(),
-    startX: this.shape.attrs.x,
-    startY: this.shape.attrs.y,
-    endX: this.shape.attrs.x + this.shape.attrs.width,
-    endY: this.shape.attrs.y + this.shape.attrs.height,
-    shape: this.shape,
+    startX: nodes.x,
+    startY: nodes.y,
+    endX: nodes.x + childerenOfTransformer[0].attrs.width,
+    endY: nodes.y + childerenOfTransformer[0].attrs.height,
+    rectWidth:childerenOfTransformer[0].attrs.width,
+    rectHeight:childerenOfTransformer[0].attrs.height,
+    shape: childerenOfTransformer[0],
+    seatHeight:13,
+    seatWidth:16
   };
   this.getAllPoints.push(rect)
   console.log(this.getAllPoints);
@@ -241,38 +273,9 @@ addRectDataInArray(){
   seatDrawing: boolean = false;
   isSeatDrawingEnabled = false;
  
-seatArray:any[]=[]
-  updateSeatsSize() {
-    this.seatSizeWidth = this.seatWidth;
-    this.seatSizeHeight = this.seatHeight;
-    const rectanglesToRemove = this.layer.find('.seat-layer'); // Assuming you've given your rectangles a class name like 'seat-rectangle'
-    const transform = this.layer.find('.seat-transform')
-   
-    rectanglesToRemove.forEach(rectangle => {
-      rectangle.destroy(); // Remove the rectangle from the layer
-    });
-    transform.forEach(rectangle => {
-      rectangle.destroy(); // Remove the rectangle from the layer
-    });
-    this.layer.batchDraw();
-    this.seatArray=[{
-      width:this.seatWidth,
-      height:this.seatHeight
-    }]
-    console.log(this.seatHeight,this.seatWidth)
 
-  }
 
-  addLayout(){
-    let data = { 
-        LayoutData:{layoutBorder:this.getAllPoints,
-             seatSize:this.seatArray}
-           }
-    
-    this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-      console.log(res)
-    })
-  }
+
 
   displayRectangles() {
     this.drawTHeSeat()
@@ -304,57 +307,96 @@ seatArray:any[]=[]
     // Redraw the layer to reflect the changes
     this.layer.batchDraw();
   }
-  updateStoredValues() {
-    // Find all rectangles with the attribute name 'workstation-layer'
-    this.getAllPoints=[]
-    const workstationRectangles = this.layer.find('.workstation-layer');
+  updateStoredValues(){
+    // this.getAllPoints=[]
+   let childerenOfTransformer= this.transformer.getChildren()
+   let nodes = this.transformer._nodes[0].attrs
+   console.log("+++++++++",childerenOfTransformer,"============",nodes)
+   const rect = {
+    _id:Date.now(),
+    startX: nodes.x,
+    startY: nodes.y,
+    endX: nodes.x + childerenOfTransformer[0].attrs.width,
+    endY: nodes.y + childerenOfTransformer[0].attrs.height,
+    rectWidth:childerenOfTransformer[0].attrs.width,
+    rectHeight:childerenOfTransformer[0].attrs.height,
+    shape: childerenOfTransformer[0],
+    seatHeight:13,
+    seatWidth:16
+  };
+  this.getAllPoints.push(rect)
+  let data = { 
+        LayoutData:{layoutBorder:this.getAllPoints,
+             seatSize:{
+              width:13.5,
+              height:16.2
+             }}
+           }
+          console.log(data)
+    // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
+    //   console.log(res);
+    //   this.proposalService.lockProposal(this.proposalId, { lockProposal:true })
+    //         .subscribe((res:any) => {
+    //           console.log(res,"Locked Proposal")
+    //         });
+    //   this.router.navigate(['/admin','location','location-list'])
+    // })
+  }
+  // updateStoredValues() {
+  //   // Find all rectangles with the attribute name 'workstation-layer'
+  //   this.getAllPoints=[]
+  //   const workstationRectangles = this.layer.find('.workstation-layer');
   
-    // Update the stored values for each transformed rectangle
-    workstationRectangles.forEach(rectangle => {
-      if(!rectangle){
-        console.log('NULL')
-      }else{
-        const name = rectangle.name();
-        const x = rectangle.x();
-        const y = rectangle.y();
-        const width = rectangle.width();
-        const height = rectangle.height();
+  //   // Update the stored values for each transformed rectangle
+  //   workstationRectangles.forEach(rectangle => {
+  //     if(!rectangle){
+  //       console.log('NULL')
+  //     }else{
+  //       const name = rectangle.name();
+  //       const x = rectangle.x();
+  //       const y = rectangle.y();
+  //       const width = rectangle.width();
+  //       const height = rectangle.height();
         
-      // console.log('Updated stored values:', rectangle);
-      const rect = {
-        _id:Date.now(),
-        startX: rectangle.x(),
-        startY: rectangle.y(),
-        endX: rectangle.x() +  rectangle.width(),
-        endY: rectangle.y() +  rectangle.height(),
-        shape: rectangle,
-      };
-      this.getAllPoints.push(rect)
-      }
+  //     // console.log('Updated stored values:', rectangle);
+  //     const rect = {
+  //       _id:Date.now(),
+  //       startX: nodes.x,
+  //       startY: nodes.y,
+  //       endX: nodes.x + childerenOfTransformer[0].attrs.width,
+  //       endY: nodes.y + childerenOfTransformer[0].attrs.height,
+  //       rectWidth:childerenOfTransformer[0].attrs.width,
+  //       rectHeight:childerenOfTransformer[0].attrs.height,
+  //       shape: childerenOfTransformer[0],
+  //       seatHeight:13,
+  //       seatWidth:16
+  //     };
+  //     this.getAllPoints.push(rect)
+  //     }
      
     
-    });
+  //   });
   
-    console.log(this.getAllPoints);
-    this.seatArray=[{
-      width:this.seatSizeWidth,
-      height:this.seatSizeHeight
-    }]
-    let data = { 
-      LayoutData:{layoutBorder:this.getAllPoints,
-           seatSize:this.seatArray}
-         }
+  //   console.log(this.getAllPoints);
+  //   let seatData=[{
+  //     width:this.seatSizeWidth,
+  //     height:this.seatSizeHeight
+  //   }]
+  //   let data = { 
+  //     LayoutData:{layoutBorder:this.getAllPoints,
+  //          seatSize:seatData}
+  //        }
         
-  this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-    console.log(res);
-    this.proposalService.lockProposal(this.proposalId, { lockProposal:true })
-          .subscribe((res:any) => {
-            console.log(res,"Locked Proposal")
-          });
-    this.router.navigate(['/admin','location','location-list'])
-  })
+  // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
+  //   console.log(res);
+  //   this.proposalService.lockProposal(this.proposalId, { lockProposal:true })
+  //         .subscribe((res:any) => {
+  //           console.log(res,"Locked Proposal")
+  //         });
+  //   this.router.navigate(['/admin','location','location-list'])
+  // })
     
-  }
+  // }
 
     //creating locked seats.....
   isDrawingLockEnabled = false;
