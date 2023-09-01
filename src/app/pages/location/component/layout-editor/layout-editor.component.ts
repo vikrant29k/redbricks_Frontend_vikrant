@@ -4,6 +4,7 @@ import Konva from 'konva';
 import { Rect } from 'konva/lib/shapes/Rect';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { LocationService } from 'src/app/service/location/location.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-layout-editor',
   templateUrl: './layout-editor.component.html',
@@ -14,6 +15,8 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   layer!: Konva.Layer;
   line!: Konva.Line;
   selectedShape!: Konva.Shape;
+  isEnableSaveBtn:boolean =false
+  isEnableDrowSeatBtn:boolean = false
   customWidth = 800;
   customHeight = 566;
   getAllPoints: any[] = [];
@@ -63,7 +66,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   getInitialViewLayout = () =>{
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
-        this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
+        this.imageUrl = environment.baseUrl+'images/' + imageUrl;
         console.log(this.imageUrl);
         const imageObj = new Image();
     imageObj.onload = () => {
@@ -157,6 +160,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
     this.stage.on('mousedown', this.handleMouseDown.bind(this));
     this.stage.on('mousemove', this.handleMouseMove.bind(this));
     this.stage.on('mouseup', this.handleMouseUp.bind(this));
+    
   }
   enableZoom(): void {
     const scaleBy = 1.1; // Adjust the scale factor as needed
@@ -288,6 +292,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         this.transformer.attachTo(this.shape); // Reattach transformer
       }
       this.isDrawingEnabled=!this.isDrawingEnabled
+      this.isEnableDrowSeatBtn = true
 
     } 
   }
@@ -403,6 +408,7 @@ let nodes = this.transformer._nodes[0].attrs
         endY: this.seatShape.attrs.y + this.seatShape.attrs.height,
         shape: this.seatShape,
       };
+      this.isEnableSaveBtn =true
       this.seatDrawn = 1;
       // this.getHeightWidthOfSeat();
     } else {
@@ -426,6 +432,17 @@ seatArray:any[]=[]
       width:this.seatWidth,
       height:this.seatHeight
     }]
+    const rect = {
+      _id:Date.now(),
+      startX: this.shape.attrs.x,
+      startY: this.shape.attrs.y,
+      endX: this.shape.attrs.x + this.shape.attrs.width,
+      endY: this.shape.attrs.y + this.shape.attrs.height,
+      shape: this.shape,
+      seatWidth:this.seatWidth,
+      seatHeight:this.seatHeight
+    };
+    this.getAllPoints.push(rect)
     console.log(this.seatHeight,this.seatWidth)
 
   }
@@ -445,7 +462,32 @@ seatArray:any[]=[]
   
 
  
-  
+  eventEmitDoubleClick(event:MouseEvent){
+this.stage.on('dblclick',(e)=>{
+  this.transformer.destroy()
+  console.log(e.evt.offsetX,e.evt.offsetY,"selectpoint of stage")
+  for(let el of this.allSelectedLayout.layoutArray[0].layoutBorder){
+              if(((e.evt.offsetX<=el.endX && e.evt.offsetX >= el.startX))&& ((e.evt.offsetY<=el.endY && e.evt.offsetY >= el.startY))){
+                let index=this.allSelectedLayout.layoutArray[0].layoutBorder.indexOf(el)
+                this.selectedIdOfLayout =el._id
+                console.log(el,"selected element")
+                this.isDeleteShape = true
+                this.allSelectedLayout.shapes[index]
+            this.transformer = new Konva.Transformer();
+              this.layer.add(this.transformer)
+        this.stage.add(this.layer);
+        // Create and add shapes to the layer
+        const rect = new Konva.Rect(this.allSelectedLayout.shapes[index].attrs);
+          this.selectedShape 
+        rect.on('click', () => {
+          this.selectShape(rect);
+        });
+        this.transformer.attachTo(rect);
+              }
+            }
+            console.log('1',this.getAllPoints)
+})
+  }
   
   
   selectShape(shape: Konva.Shape): void {
@@ -461,6 +503,7 @@ seatArray:any[]=[]
         if(el._id === this.selectedIdOfLayout) {
         let index = this.getAllPoints.indexOf(el)
         this.getAllPoints.splice(index,1);
+        console.log('2',this.getAllPoints)
         this.transformer.destroy()
         let data = { 
           LayoutData:{layoutBorder:this.getAllPoints,
