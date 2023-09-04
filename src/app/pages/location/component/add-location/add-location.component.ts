@@ -20,6 +20,8 @@ import {
 } from '@angular/material/core';
 import * as _moment from 'moment';
 import { default as _rollupMoment, Moment } from 'moment';
+import { environment } from 'src/environments/environment';
+import { take } from 'rxjs';
 
 export const MY_FORMATS = {
   parse: {
@@ -47,6 +49,7 @@ const moment = _rollupMoment || _moment;
 export class AddLocationComponent implements OnInit {
   date = new FormControl(moment());
   myFiles:any [] = [];
+  myFileImageLink:any[]=[]
   layoutImage!: File;
   jsonUploaded: boolean = false;
   layoutImageUploaded: boolean = false;
@@ -57,6 +60,7 @@ export class AddLocationComponent implements OnInit {
   toDate:any;
   rentCamArray:any;
   selectMultipleImages: any = false;
+  baseUrl:string = environment.baseUrl+'images/'
   constructor(
     private dialog:MatDialog,
     private datepipe: DatePipe,
@@ -82,7 +86,7 @@ export class AddLocationComponent implements OnInit {
     // yearnew: new FormControl('', Validators.required),
     // rent: new FormControl('', Validators.required),
     // cam: new FormControl('', Validators.required),
-    imageLinks: new FormArray([]),
+    // imageLinks: new FormArray([]),
     // videoLinks: new FormArray([]),
   });
 
@@ -103,9 +107,9 @@ export class AddLocationComponent implements OnInit {
     });
   }
 
-  get imageLinks() {
-    return (this.locationForm.get('imageLinks') as FormArray).controls;
-  }
+  // get imageLinks() {
+  //   return (this.locationForm.get('imageLinks') as FormArray).controls;
+  // }
   get rentSheet() {
     return (this.locationForm.get('rentSheet') as FormArray).controls;
   }
@@ -208,17 +212,17 @@ allData:any
           address: result.address,
           perSeatPrice: result.perSeatPrice,
           // videoLinks: result.videoLinks,
-          imageLinks: result.imageLinks,
+          // imageLinks: result.imageLinks,
           rentSheet: result.rentSheet,
           carParkCharge: result.carParkCharge,
           rackRate: result.rackRate,
 
           // bookingPriceUptilNow:result.bookingPriceUptilNow
         });
-        result.imageLinks.forEach((element: string, index: number) => {
-          this.onAdd('imageLinks');
-          this.imageLinks[index].patchValue(element);
-        });
+        // result.imageLinks.forEach((element: string, index: number) => {
+        //   this.onAdd('imageLinks');
+        //   // this.imageLinks[index].patchValue(element);
+        // });
         // result.videoLinks.forEach((element: string, index: number) => {
         //   this.onAdd('videoLinks');
         //   this.videoLinks[index].patchValue(element);
@@ -328,13 +332,44 @@ allData:any
   // add new method select image
   getFileDetails (e:any) {
     //console.log (e.target.files);
+    let reader = new FileReader();
     this.selectMultipleImages =true
     for (var i = 0; i < e.target.files.length; i++) { 
+      let file = e.target.files[i];
+      if (e.target.files && e.target.files[i]) {
+        reader.readAsDataURL(file);
+  
+        // When file uploads set it to file formcontrol
+        reader.onload = () => {
+          let imgeUrl
+          imgeUrl = reader.result;
+          this.myFileImageLink.push(imgeUrl)
+          // this.editFile = false;
+          // this.removeUpload = true;
+        }
+        // ChangeDetectorRef since file is loading outside the zone
+        this.cd.markForCheck();        
+      }
       this.myFiles.push(e.target.files[i]);
     }
     console.log(this.myFiles)
   }
   deleteImageFromList = (index:number) =>{
       this.myFiles.splice(index,1)
+  }
+  deleteSelectedImage = (path:string,index:number,istrue?:any) =>{
+    if(istrue){
+      this.myFileImageLink.splice(index,1);
+      this.myFiles.splice(index,1)
+    }else{
+
+      const data={
+        imgPath:path
+      }
+      this.loactionService.deleteSelectedImage(data,this.locationId).pipe(take(1)).subscribe((res:any)=>{
+        console.log(res)
+        this.allData.centerImage.splice(index,1)
+      })
+    }
   }
 }
