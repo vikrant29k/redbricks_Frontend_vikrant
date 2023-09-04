@@ -1,11 +1,11 @@
 .contain{
-  width: 800px;
-  height: 566px;
+  width: 1080px;
+  height: 734px;
   border: 1px solid black;
 }
 .changeContain{
-  width: 800px;
-  height: 566px;
+  width: 1080px;
+  height: 734px;
   border: 1px solid black;
 
     user-select: none;
@@ -14,22 +14,24 @@
 }
 .main{
   display: flex;
+  justify-content: space-around;
+  align-items: center;
 
   button{
     margin: 10px;
   }
   .canvas-container{
     margin-left: 6rem;
-    padding-top:3rem;
+    padding-block:0.5rem 2rem;
 
   }
   .sub-container{
     display: flex;
     flex-direction: column;
-    margin-left:6rem;
-    padding-top:3rem;
-    width:15rem;
-    align-items: center;
+    // margin-left:6rem;
+    // padding-top:3rem;
+    // width:15rem;
+    // align-items: center;
   }
   .label{
     display: flex;

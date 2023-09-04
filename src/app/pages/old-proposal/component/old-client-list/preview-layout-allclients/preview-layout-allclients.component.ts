@@ -12,8 +12,8 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
   stage!: Konva.Stage;
   layer!: Konva.Layer;
   line!: Konva.Line;
-  customWidth = 800;
-  customHeight = 566;
+  customWidth = 1080;
+  customHeight = 734;
   getAllPoints: any[] = [];
 
   imageName!: string;
@@ -55,7 +55,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
-        this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
+        this.imageUrl = 'http://localhost:3000/images/' + imageUrl;
         // console.log(this.imageUrl);
         const imageObj = new Image();
     imageObj.onload = () => {

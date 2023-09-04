@@ -1,16 +1,16 @@
 .contain{
-    width: 800px;
+    width: 1080px;
     height: 566px;
     border: 1px solid black;
   }
   .changeContain{
-    width: 800px;
+    width: 1080px;
     height: 566px;
     border: 1px solid black;
-  
+
       user-select: none;
       cursor: move;
-  
+
   }
   .main{
     display: flex;
@@ -24,7 +24,7 @@
     .canvas-container{
       margin-block: 1.5rem;
     }
-  
+
     .sub-container{
       display: flex;
       justify-content: center;
@@ -75,7 +75,7 @@
     .label{
       display: flex;
       gap:1rem;
-  
+
       mat-card{
         margin-block: 0.5rem;
         width: 9rem;
@@ -87,5 +87,4 @@
       }
     }
   }
-  
-  
+

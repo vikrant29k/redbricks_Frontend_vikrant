@@ -1,4 +1,4 @@
-<!-- 
+<!--
 <div class="main">
     <div class="canvas-container">
       <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled ?'contain':'changeContain'"></div>
@@ -7,7 +7,7 @@
   flex-direction: column;">
   <button (click)="toggleDrawing()">{{isDrawingEnabled?'Stop':'Start'}} Drawing Rectangle</button>
   <button (click)="toggleLockDrawing()"> DRAW LOCKD SEAT</button>
-  
+
   <button (click)='addRectDataInArray()'>Update Border</button>
   <!-- <button (click)="drawSeatAndGetHW()">{{isSeatDrawingEnabled?'Stop':'Start'}} Drawing Seat</button> -->
   <!-- <label>Width={{seatWidth}}</label>
@@ -35,9 +35,8 @@
 <!-- <button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button> -->
 <button mat-raised-button (click)="resetZoomAndPosition()" color="primary">Reset Zoom and Position</button>
 <!-- <button mat-raised-button (click)='addLayout()' color="primary">Final the layout</button> -->
-<button mat-raised-button (click)="displayRectangles()" color="primary">Display Rectangles</button>
+<!-- <button mat-raised-button (click)="displayRectangles()" color="primary">Display Seats</button> -->
 <button mat-raised-button (click)="updateStoredValues()" color="primary">Update Rectangels</button>
 </div>
 </div>
-  
-  
+

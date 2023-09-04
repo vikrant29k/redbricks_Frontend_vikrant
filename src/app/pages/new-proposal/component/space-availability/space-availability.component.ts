@@ -83,8 +83,8 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
 
   openDialog = () => {
     const dialogRef = this.dialog.open(NewProposalLayoutPreviewComponent, {
-      width: '800px',
-      height: '600px',
+      width: '1080px',
+      height: '734px',
       panelClass: 'my-panel-class',
       data: { locationId: this.locationId, proposalId: this.proposalId, totalNoOfSeat:this.totalNumberofSeat },
     });

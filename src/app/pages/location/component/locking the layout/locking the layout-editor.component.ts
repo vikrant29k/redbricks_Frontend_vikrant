@@ -12,8 +12,8 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
   stage!: Konva.Stage;
   layer!: Konva.Layer;
   line!: Konva.Line;
-  customWidth = 800;
-  customHeight = 566;
+  customWidth = 1080;
+  customHeight = 734;
   getAllPoints: any[] = [];
   flowOfDrawingSeats: string = 'vertical';
   seatSizeWidth: any;
@@ -54,8 +54,8 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
   this.seatSizeWidth=res[0].seatSize[0].width;
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
-        this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
-        console.log(this.imageUrl);
+        this.imageUrl = 'http://localhost:3000/images/' + imageUrl;
+        // console.log(this.imageUrl);
         const imageObj = new Image();
     imageObj.onload = () => {
       this.initializeKonva(imageObj);
@@ -71,35 +71,11 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
           res.layoutArray[0].layoutBorder.forEach((item:any) => {
             const {_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight } = item;
             this.getAllPoints.push({_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight });
-          
-          });
-          // res.layoutArray.forEach((item:any) => {
-          //   const { startX, startY, endX, endY, shape } = item;
-          //   this.getAllPoints.push({ startX, startY, endX, endY, shape });
-      //       for (const layoutBorderObj of res.shapes) {
 
-      //         const shape  = layoutBorderObj.attrs
-       
-      //         const rect = new Konva.Rect({
-      //             x: shape.x,
-      //             y: shape.y,
-      //             width: shape.width,
-      //             height: shape.height,
-      //             fill: shape.fill,
-      //             opacity: shape.opacity,
-      //             stroke: shape.stroke,
-      //             strokeWidth: shape.strokeWidth,
-      //             name: shape.name,
-      //             draggable: false // Set draggable as needed
-      //         });
-  
-      //         this.layer.add(rect);
-              
-      // }
+          });
+this.displayRectangles()
       for (const shape of res.layoutArray[0].layoutBorder) {
 
-        // const shape  = layoutBorderObj.attrs
- 
        const rect = new Konva.Rect({
           x: shape.startX,
           y: shape.startY,
@@ -107,19 +83,46 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
           height: shape.rectHeight,
           fill: 'blue',
           opacity: 0.3,
-            draggable: false, // Set draggable as needed
-           
+          name:shape._id,
+          draggable: false,
         });
         this.layer.add(rect);
-        rect.on('mousedown', () =>{
-          console.log("GETSFAFSFSAF")
-          this.transformer.attachTo(rect)
+
+        rect.on('mousedown',()=>{
+          let transformNew = new Konva.Transformer()
+        this.layer.add(transformNew);
+        transformNew.nodes([rect])
+          this.transformer=transformNew
+          console.log("FIRST BEFORE",rect)
+        rect.on('transformend', () => {
+          // if (this.selectedShape) {
+            // console.log('RECT NAME',rect.attrs())
+            const updatedWidth = rect.width() * rect.scaleX();
+            const updatedHeight = rect.height() * rect.scaleY();
+            const updatedX = rect.x();
+            const updatedY = rect.y();
+            const indexToUpdate = this.getAllPoints.findIndex((point) => point._id === rect.name());
+
+            if (indexToUpdate !== -1) {
+              // Update the object at the found index
+              this.getAllPoints[indexToUpdate] = {
+                ...this.getAllPoints[indexToUpdate], // Copy existing properties
+                startX: updatedX,
+                startY: updatedY,
+                rectWidth: updatedWidth,
+                rectHeight: updatedHeight,
+                endX: updatedX + updatedWidth,
+                endY: updatedY + updatedHeight,
+              };
+
+              console.log("AFTER UPDATE", this.getAllPoints[indexToUpdate]);
+            }
+
         });
-        
+        })
 }
-        // });
         }
-        
+
       })
     };
 
@@ -143,7 +146,7 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
     const startY = Math.min(start.y, end.y);
     const endX = Math.max(start.x, end.x);
     const endY = Math.max(start.y, end.y);
-  
+
     for (let x = startX; x < endX; x += this.seatSizeWidth) {
       for (let y = startY; y < endY; y += this.seatSizeHeight) {
         this.drawSeatRectangle(x, y);
@@ -151,7 +154,6 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
     }
   }
   drawSeatRectangle(x:any, y:any) {
-    console.log(x,y)
     const rect = new Konva.Rect({
       x: x,
       y: y,
@@ -226,177 +228,34 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
   }
 
   transformer!: Konva.Transformer;
- 
-  // updateGetAllPointsAfterTransformation(): void {
-  //   // Find the index of the shape in getAllPoints based on the shape instance
-  //   const index = this.getAllPoints.findIndex(
-  //     (point) => point.shape === this.shape
-  //   );
 
-  //   if (index !== -1) {
-  //     // Update the corresponding rectangle in getAllPoints with new dimensions
-  //     this.getAllPoints[index] = {
-  //       ...this.getAllPoints[index],
-  //       startX: this.shape.attrs.x,
-  //       startY: this.shape.attrs.y,
-  //       endX: this.shape.attrs.x + this.shape.attrs.width,
-  //       endY: this.shape.attrs.y + this.shape.attrs.height,
-  //       shape: this.shape,
-  //     };
-
-  //     console.log('Updated getAllPoints:', this.getAllPoints);
-  //   }
-  // }
-addRectDataInArray(){
-  let childerenOfTransformer = this.transformer.getChildren()
-let nodes = this.transformer._nodes[0].attrs
-  const rect = {
-    _id:Date.now(),
-    startX: nodes.x,
-    startY: nodes.y,
-    endX: nodes.x + childerenOfTransformer[0].attrs.width,
-    endY: nodes.y + childerenOfTransformer[0].attrs.height,
-    rectWidth:childerenOfTransformer[0].attrs.width,
-    rectHeight:childerenOfTransformer[0].attrs.height,
-    shape: childerenOfTransformer[0],
-    seatHeight:13,
-    seatWidth:16
-  };
-  this.getAllPoints.push(rect)
-  console.log(this.getAllPoints);
-  const rectBorder=this.layer.find('.rect-transform');
-  rectBorder.forEach(rectangle => {
-    rectangle.destroy(); // Remove the rectangle from the layer
-  });
-
-}
   seatDrawing: boolean = false;
   isSeatDrawingEnabled = false;
- 
+
 
 
 
 
   displayRectangles() {
     this.drawTHeSeat()
-    // Find all rectangles with the attribute name 'workstation-layer'
-    const workstationRectangles = this.layer.find('.workstation-layer');
-  
-    // Make each found rectangle draggable and transformable
-    workstationRectangles.forEach(rectangle => {
-      rectangle.draggable(true);
-      // console.log(rectangle)
-      // Create a transformer for each rectangle and attach it
-      const transformer = new Konva.Transformer();
-     
-      transformer.on('transform', () => {
-        const scaleX = rectangle.scaleX();
-        const scaleY = rectangle.scaleY();
-        const newWidth = rectangle.width() * scaleX;
-        const newHeight = rectangle.height() * scaleY;
-        rectangle.width(newWidth);
-        rectangle.height(newHeight);
-     
-        this.layer.batchDraw();
-      });
-      this.layer.add(transformer);
-      transformer.attachTo(rectangle);
-    
-    });
-  
-    // Redraw the layer to reflect the changes
-    this.layer.batchDraw();
   }
   updateStoredValues(){
-    // this.getAllPoints=[]
-   let childerenOfTransformer= this.transformer.getChildren()
-   let nodes = this.transformer._nodes[0].attrs
-   console.log("+++++++++",childerenOfTransformer,"============",nodes)
-   const rect = {
-    _id:Date.now(),
-    startX: nodes.x,
-    startY: nodes.y,
-    endX: nodes.x + childerenOfTransformer[0].attrs.width,
-    endY: nodes.y + childerenOfTransformer[0].attrs.height,
-    rectWidth:childerenOfTransformer[0].attrs.width,
-    rectHeight:childerenOfTransformer[0].attrs.height,
-    shape: childerenOfTransformer[0],
-    seatHeight:13,
-    seatWidth:16
-  };
-  this.getAllPoints.push(rect)
-  let data = { 
-        LayoutData:{layoutBorder:this.getAllPoints,
-             seatSize:{
-              width:13.5,
-              height:16.2
-             }}
-           }
-          console.log(data)
-    // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-    //   console.log(res);
-    //   this.proposalService.lockProposal(this.proposalId, { lockProposal:true })
-    //         .subscribe((res:any) => {
-    //           console.log(res,"Locked Proposal")
-    //         });
-    //   this.router.navigate(['/admin','location','location-list'])
-    // })
+    let data = {
+      LayoutData:{
+                layoutBorder:this.getAllPoints
+                }
+         }
+
+  this.locationService.addLayoutData(this.id,data).subscribe(res=>{
+      console.log(res);
+      this.proposalService.lockProposal(this.proposalId, { lockProposal:true })
+            .subscribe((res:any) => {
+              console.log(res,"Locked Proposal")
+            });
+      this.router.navigate(['/admin','location','location-list'])
+    })
   }
-  // updateStoredValues() {
-  //   // Find all rectangles with the attribute name 'workstation-layer'
-  //   this.getAllPoints=[]
-  //   const workstationRectangles = this.layer.find('.workstation-layer');
-  
-  //   // Update the stored values for each transformed rectangle
-  //   workstationRectangles.forEach(rectangle => {
-  //     if(!rectangle){
-  //       console.log('NULL')
-  //     }else{
-  //       const name = rectangle.name();
-  //       const x = rectangle.x();
-  //       const y = rectangle.y();
-  //       const width = rectangle.width();
-  //       const height = rectangle.height();
-        
-  //     // console.log('Updated stored values:', rectangle);
-  //     const rect = {
-  //       _id:Date.now(),
-  //       startX: nodes.x,
-  //       startY: nodes.y,
-  //       endX: nodes.x + childerenOfTransformer[0].attrs.width,
-  //       endY: nodes.y + childerenOfTransformer[0].attrs.height,
-  //       rectWidth:childerenOfTransformer[0].attrs.width,
-  //       rectHeight:childerenOfTransformer[0].attrs.height,
-  //       shape: childerenOfTransformer[0],
-  //       seatHeight:13,
-  //       seatWidth:16
-  //     };
-  //     this.getAllPoints.push(rect)
-  //     }
-     
-    
-  //   });
-  
-  //   console.log(this.getAllPoints);
-  //   let seatData=[{
-  //     width:this.seatSizeWidth,
-  //     height:this.seatSizeHeight
-  //   }]
-  //   let data = { 
-  //     LayoutData:{layoutBorder:this.getAllPoints,
-  //          seatSize:seatData}
-  //        }
-        
-  // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-  //   console.log(res);
-  //   this.proposalService.lockProposal(this.proposalId, { lockProposal:true })
-  //         .subscribe((res:any) => {
-  //           console.log(res,"Locked Proposal")
-  //         });
-  //   this.router.navigate(['/admin','location','location-list'])
-  // })
-    
-  // }
+
 
     //creating locked seats.....
   isDrawingLockEnabled = false;
@@ -432,9 +291,9 @@ let nodes = this.transformer._nodes[0].attrs
         strokeWidth: 0.8,
         name: 'locked-layer',
       });
-     
+
       this.layer.add(this.lockedshape)
-    } 
+    }
   }
 
   handleMouseLOCKMove(e: Konva.KonvaEventObject<MouseEvent>): void {
@@ -452,9 +311,9 @@ let nodes = this.transformer._nodes[0].attrs
   handleMouseLOCKUp(e: Konva.KonvaEventObject<MouseEvent>): void {
     if (this.isDrawingLockEnabled && this.isLockDrawing) {
       this.isLockDrawing = false;
-     
+
     }
     console.log(this.lockedshape,"SHAPE OF LOCKED")
   }
-  
+
 }

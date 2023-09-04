@@ -11,12 +11,12 @@ import { DashboardService } from 'src/app/service/dashboard/dashboard.service';
   styleUrls: ['./add-old-client.component.scss']
 })
 export class AddOldClientComponent implements OnInit {
- 
+
   stage!: Konva.Stage;
   layer!: Konva.Layer;
   line!: Konva.Line;
-  customWidth = 800;
-  customHeight = 566;
+  customWidth = 1080;
+  customHeight = 734;
   getAllPoints: any[] = [];
   flowOfDrawingSeats: string = 'vertical';
   seatSizeWidth: any;
@@ -30,7 +30,7 @@ export class AddOldClientComponent implements OnInit {
   seatHeight: number = 0;
   rectWidth: number = 0;
   rectHeight: number = 0;
-  shape!: Konva.Rect; 
+  shape!: Konva.Rect;
   seatShape!: Konva.Rect;
   startPoint: any | { x: number; y: number };
   isDrawing: boolean = false;
@@ -48,7 +48,7 @@ export class AddOldClientComponent implements OnInit {
     this.watchValueChangesInForm();
     this.getLocationList();
     this.getSalesPersonList();
-    
+
   }
 ngAfterViewInit():void{
 
@@ -76,7 +76,7 @@ ngAfterViewInit():void{
     color:new FormControl('',Validators.required),
   })
 
-  
+
 onSubmit(){
   this.clientForm.patchValue({
     seatsData:this.drawnSeats,
@@ -91,7 +91,7 @@ onSubmit(){
   this.proposalService.addOldClient(this.clientForm.value).subscribe(res=>{
     console.log(res)
   })
-  
+
 }
 
 //Get Location List
@@ -145,7 +145,7 @@ getLocationIdFromFloor(id:string){
   this.locationId=id;
   this.locationService.getImageById(id).subscribe(
     (imageUrl) => {
-      this.imageUrl = 'http://192.168.29.233:3000/images/' + imageUrl;
+      this.imageUrl = 'http://localhost:3000/images/' + imageUrl;
       console.log(this.imageUrl);
       const imageObj = new Image();
   imageObj.onload = () => {
@@ -164,7 +164,7 @@ getLocationIdFromFloor(id:string){
       //  =this.seatSizeWidth;
         this.updateSeatsSize()
       }
-      
+
     })
   };
 
@@ -271,7 +271,7 @@ backgroundImage!: Konva.Image;
       this.isDrawing = false; // Stop ongoing drawing if disabled
     }
   }
-  // starts drawing rect 
+  // starts drawing rect
   handleMouseDown(e: Konva.KonvaEventObject<MouseEvent>): void {
     if (this.isDrawingEnabled) {
       const pos: any = this.stage.getPointerPosition();
@@ -289,9 +289,9 @@ backgroundImage!: Konva.Image;
         strokeWidth: 0.8,
         name: 'workstation-layer',
       });
-     
+
       const transformer = new Konva.Transformer();
-     
+
       transformer.on('transform', () => {
         const scaleX = this.shape.scaleX();
         const scaleY = this.shape.scaleY();
@@ -299,16 +299,16 @@ backgroundImage!: Konva.Image;
         const newHeight = this.shape.height() * scaleY;
         this.shape.width(newWidth);
         this.shape.height(newHeight);
-     
+
         this.layer.batchDraw();
       });
       this.layer.add(this.shape,transformer);
       transformer.attachTo(this.shape);
-    
-    
+
+
       // this.layer.add(this.shape)
 
-    } 
+    }
   }
 
   handleMouseMove(e: Konva.KonvaEventObject<MouseEvent>): void {
@@ -331,9 +331,9 @@ backgroundImage!: Konva.Image;
       this.isDrawing = false;
       this.isDrawingEnabled=!this.isDrawingEnabled
 
-    } 
+    }
   }
-  //rect is added in this.getAllpoints 
+  //rect is added in this.getAllpoints
   addRectDataInArray(){
     const rect = {
       _id:Date.now(),
@@ -347,7 +347,7 @@ backgroundImage!: Konva.Image;
     console.log(this.getAllPoints);
     this.isDrawingEnabled=!this.isDrawingEnabled
   }
- 
+
 //get the seatSize and updates it
   updateSeatsSize() {
     this.seatSizeWidth = this.seatWidth;
@@ -384,12 +384,12 @@ backgroundImage!: Konva.Image;
         const minY = point.startY;
         const maxX = point.endX;
         const maxY = point.endY;
-  
+
         const availableWidth = maxX - minX;
         const availableHeight = maxY - minY;
         const maxHorizontalRectangles = Math.floor(availableWidth / this.seatSizeWidth);
         const maxVerticalRectangles = Math.floor(availableHeight / this.seatSizeHeight);
-  
+
         const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
         // console.log("HEllO==>",maxRectangles);
         const flowOfData = this.flowOfDrawingSeats;
@@ -404,11 +404,11 @@ backgroundImage!: Konva.Image;
           this.layer.add(polygon);
         if (flowOfData == 'vertical') {
           const columns = Math.min(Math.ceil(remainingSeats / maxVerticalRectangles), maxHorizontalRectangles);
-  
+
           for (let column = 0; column < columns; column++) {
             for (let y = minY; y < maxY - 10  ; y += this.seatSizeHeight) {
               const x = minX + column * this.seatSizeWidth;
-  
+
               if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: this.seatSizeWidth, height: this.seatSizeHeight }, polygon.getClientRect())) {
                 this.drawSeatRectangle(x, y);
                 //drawnSeats it stores the seat data that all are drawn
@@ -416,18 +416,18 @@ backgroundImage!: Konva.Image;
 
                 remainingSeats--;
                 count++;
-            
+
               }
             }
           }
         } else {
-      
+
           const rows = Math.min(Math.ceil(remainingSeats / maxHorizontalRectangles), maxVerticalRectangles);
-  
+
           for (let row = 0; row < rows; row++) {
             for (let x = minX; x < maxX - 10; x += this.seatSizeWidth) {
               const y = minY + row * this.seatSizeHeight;
-  
+
               if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: this.seatSizeWidth, height: this.seatSizeHeight }, polygon.getClientRect())) {
                 this.drawSeatRectangle(x, y);
                 this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + this.seatSizeWidth, y: y + this.seatSizeHeight },workStatkionID: point._id });
@@ -443,7 +443,7 @@ backgroundImage!: Konva.Image;
           break;
         }
       }
-  
+
       this.layer.draw();
     }
     }})
