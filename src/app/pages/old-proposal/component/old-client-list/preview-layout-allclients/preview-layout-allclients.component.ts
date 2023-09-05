@@ -55,7 +55,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
-        this.imageUrl = 'http://localhost:3000/images/' + imageUrl;
+        this.imageUrl = 'http://192.168.29.28:3000/images/' + imageUrl;
         // console.log(this.imageUrl);
         const imageObj = new Image();
     imageObj.onload = () => {

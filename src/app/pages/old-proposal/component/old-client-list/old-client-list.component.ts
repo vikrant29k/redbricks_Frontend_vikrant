@@ -15,6 +15,7 @@ export interface LocationData {
   center: string,
   floor: string,
   selectedWorkstation: string,
+  color:string;
   edit: string,
   delete: string,
   view: string
@@ -28,7 +29,7 @@ export class OldClientListComponent implements OnInit {
   height!: string;
   Locations: any;
   editMode: boolean = false;
-  displayedColumns: string[] = ['proposal_id','location', 'center','floor', 'selectedWorkstation', 'edit', 'delete','view'];
+  displayedColumns: string[] = ['proposal_id','location', 'center','floor', 'selectedWorkstation','color','delete','view'];
   dataSource!: MatTableDataSource<LocationData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -99,15 +100,17 @@ previewAll(){
       }
     })
   }
+
+
   setBorder(id: any) {
        this.router.navigate(['/admin','location','layout-editor',id])
           }
 
-  editLocation(id: any) {
-    this.router.navigate(['/admin','location','edit-location',id])
-    // this.editMode = true;
-    // this.openDialog();
-  }
+  // editLocation(id: any) {
+  //   this.router.navigate(['/admin','location','edit-location',id])
+  //   // this.editMode = true;
+  //   // this.openDialog();
+  // }
 
   ngOnInit(): void {
     // this.getAllLocations()
@@ -123,6 +126,16 @@ previewAll(){
       this.dataSource.paginator.firstPage();
     }
   }
+
+  viewDetails = (Id: string) => {
+    let currentRoute = this.router.url.split('/')[1];
+    if (currentRoute === 'sales') {
+        this.router.navigate(['/sales', 'new-proposal', 'proposal-preview', Id]);
+    }
+    else {
+        this.router.navigate(['/admin', 'new-proposal', 'proposal-preview', Id]);
+    }
+}
 
 
 

@@ -165,9 +165,9 @@ export class AddLocationComponent implements OnInit {
       formData.append('layoutImage', this.layoutImage);
     }
     if(this.selectMultipleImages && this.myFiles.length>0){
-      for  (var i =  0; i <  this.myFiles.length; i++)  {  
+      for  (var i =  0; i <  this.myFiles.length; i++)  {
         formData.append("centerImage",  this.myFiles[i]);
-    } 
+    }
       // formData.append('centerImage',JSON.stringify(this.myFiles))
     }
 
@@ -183,11 +183,12 @@ export class AddLocationComponent implements OnInit {
       this.editMode = true;
       this.getLocationDataToUpdate(this.locationId);
     }
-    if(this.editMode==false){
+    if(this.editMode==true){
       this.onAddFromGroup()
     }
     this.selectSalesHead();
   }
+
 allData:any
   getLocationDataToUpdate = (Id: string) => {
 
@@ -195,6 +196,7 @@ allData:any
       next: (result: any) => {
         this.allData=result;
         this.rentCamArray=result.rentSheet;
+
         console.log("asdfsadsdaa",result);
         // this.calculateService.objectValueUpdated.emit(this.rentCamArray[0])
         // this.calculateService.objectValue = this.rentCamArray
@@ -221,12 +223,23 @@ allData:any
         });
         // result.videoLinks.forEach((element: string, index: number) => {
         //   this.onAdd('videoLinks');
-        //   this.videoLinks[index].patchValue(element);
+          // this.videoLinks[index].patchValue(element);
         // });
+
         result.rentSheet.forEach((element: any,index: number) => {
           this.onAddFromGroup();
           this.rentSheet[index].patchValue(element);
         })
+
+
+
+
+
+
+      //   }
+
+
+
         // let rentSheet = JSON.parse(result.rentSheet);
         // rentSheet.forEach((element: any,index: number) => {
 
@@ -329,7 +342,7 @@ allData:any
   getFileDetails (e:any) {
     //console.log (e.target.files);
     this.selectMultipleImages =true
-    for (var i = 0; i < e.target.files.length; i++) { 
+    for (var i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
     console.log(this.myFiles)
