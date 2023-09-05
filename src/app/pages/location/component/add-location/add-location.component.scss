@@ -221,3 +221,13 @@ table {
     cursor: pointer;
   }
 }
+.flexbox{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction:row;
+  img{
+    width: 100px;
+  margin: 10px;
+  text-align: center;
+  }
+}
