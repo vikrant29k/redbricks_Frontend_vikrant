@@ -18,6 +18,7 @@ import { ShowGalleryComponent } from './component/show-gallery/show-gallery.comp
 import { FloorsComponent } from './component/floors/floors.component';
 import { LayoutEditorComponent } from "./component/layout-editor/layout-editor.component";
 import { LockLayoutEditorComponent } from "./component/locking the layout/locking the layout-editor.component";
+import { PreviewSeatsComponent } from './component/layout-editor/preview-seats/preview-seats.component';
 @NgModule({
     declarations: [
         LocationComponent,
@@ -31,7 +32,8 @@ import { LockLayoutEditorComponent } from "./component/locking the layout/lockin
         ShowGalleryComponent,
         FloorsComponent,
         LayoutEditorComponent,
-        LockLayoutEditorComponent
+        LockLayoutEditorComponent,
+        PreviewSeatsComponent
     ],
     imports: [
         CommonModule,

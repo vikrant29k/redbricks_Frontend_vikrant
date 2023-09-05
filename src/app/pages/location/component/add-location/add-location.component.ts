@@ -94,9 +94,7 @@ export class AddLocationComponent implements OnInit {
         this.locationForm.addControl('salesHead', new FormControl(''));
         if (this.editMode) {
           // console.log(this.userDataBeforeEdit);
-          this.locationForm
-            .get('salesHead')
-            ?.patchValue(this.userDataBeforeEdit.salesHead);
+          this.locationForm.get('salesHead')?.patchValue(this.userDataBeforeEdit.salesHead);
           this.cd.detectChanges();
         }
       },
@@ -165,9 +163,9 @@ export class AddLocationComponent implements OnInit {
       formData.append('layoutImage', this.layoutImage);
     }
     if(this.selectMultipleImages && this.myFiles.length>0){
-      for  (var i =  0; i <  this.myFiles.length; i++)  {  
+      for  (var i =  0; i <  this.myFiles.length; i++)  {
         formData.append("centerImage",  this.myFiles[i]);
-    } 
+    }
       // formData.append('centerImage',JSON.stringify(this.myFiles))
     }
 
@@ -183,7 +181,7 @@ export class AddLocationComponent implements OnInit {
       this.editMode = true;
       this.getLocationDataToUpdate(this.locationId);
     }
-    if(this.editMode==false){
+    if(this.editMode==true){
       this.onAddFromGroup()
     }
     this.selectSalesHead();
@@ -250,7 +248,7 @@ allData:any
     if (this.locationForm.invalid)
     {
       return;
-    } else if (!this.jsonUploaded && !this.layoutImageUploaded && !this.editMode)
+    } else if (!this.layoutImageUploaded && !this.editMode)
     {
       Swal.fire({
         title: 'File Upload Require!',
@@ -329,7 +327,7 @@ allData:any
   getFileDetails (e:any) {
     //console.log (e.target.files);
     this.selectMultipleImages =true
-    for (var i = 0; i < e.target.files.length; i++) { 
+    for (var i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
     console.log(this.myFiles)
