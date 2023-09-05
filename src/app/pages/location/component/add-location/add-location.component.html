@@ -162,7 +162,28 @@
         </section>
         </div>
       </section>
+      <div>
+        <div class="flexbox">
+          <ng-container *ngFor="let file of allData?.centerImage;let i = index">
+            <img src="{{baseUrl}}{{file}}" alt="" >
+            <mat-icon (click)="deleteSelectedImage(file,i)">
+              close
+            </mat-icon>
+          </ng-container>
+        </div>
+      </div>
+      <div *ngIf="myFiles.length>0">
+        <div class="flexbox">
+          <ng-container *ngFor="let file of myFileImageLink;let i = index">
+            <img src="{{file}}" height="100px" width="100px" alt="">
+            <mat-icon (click)="deleteSelectedImage(file,i,true)">
+              close
+            </mat-icon>
+          </ng-container>
+        </div>
+      </div>
       <div class="sub-section">
+        
       <section>
 
         <div class="form-field">
@@ -206,27 +227,8 @@
             #multimagesSelect
            
           />
-          <table *ngIf="myFiles.length>0">
-            <thead>
-                <tr>
-                    <th>Sr.</th>
-                    <th>Image Name</th>
-                    <!-- <th>Image</th> -->
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let file of myFiles;let i = index">
-                    <td>{{i+1}}</td>
-                    <td>{{file.name}}</td>
-                    <!-- <td>James Bond</td> -->
-                    <td><mat-icon fontSet="material-icons-round" (click)="deleteImageFromList(i)">delete</mat-icon></td>
-                </tr>
-                
-               
-                
-            </tbody>
-        </table>
+          
+          
         </div>
         <!-- <div class="form-field">
           <button type="button" mat-raised-button (click)="onAdd('imageLinks')" color="primary">
@@ -263,7 +265,9 @@
             </mat-form-field>
           </ng-container>
         </div> -->
+      
       </section>
+      
     </div>
       <div class="form-action">
         <button type="reset" mat-raised-button color="primary">Reset</button>

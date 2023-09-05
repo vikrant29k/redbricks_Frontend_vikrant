@@ -13,6 +13,7 @@ import { ShowGalleryComponent } from "../../component/show-gallery/show-gallery.
 import { FloorsComponent } from "../../component/floors/floors.component";
 import { LayoutEditorComponent } from "../../component/layout-editor/layout-editor.component";
 import { LockLayoutEditorComponent } from "../../component/locking the layout/locking the layout-editor.component";
+import { PreviewSeatsComponent } from "../../component/layout-editor/preview-seats/preview-seats.component";
 const routes: Routes = [
     {
         path: '',
@@ -76,8 +77,12 @@ const routes: Routes = [
               path:'show-gallery/:Id',
               canActivate:[LocationSalesChildRouteGuard],
               component:ShowGalleryComponent
+            },
+            {
+              path:'preview-seats/:Id',
+              component:PreviewSeatsComponent
             }
-           
+
         ]
     }
 ]

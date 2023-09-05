@@ -94,7 +94,8 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
           res.layoutArray[0].layoutBorder.forEach((item:any) => {
             const {_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight } = item;
             this.getAllPoints.push({_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight });
-
+            this.seatWidth=seatWidth;
+            this.seatHeight=seatHeight;
           });
           // this.layer.clearBeforeDraw
             for (const shape of res.layoutArray[0].layoutBorder) {
@@ -455,12 +456,19 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
 seatArray:any[]=[]
   updateSeatsSize() {
 console.log("WIDTH==>",this.seatShape.width(),"\nHEIGHT==>",this.seatShape.height())
+const height=this.seatShape.height()
+const width=this.seatShape.width();
+this.seatHeight= Math.round(height);
+this.seatWidth =Math.round(width) ;
+for (const point of this.getAllPoints) {
+  point.seatHeight = this.seatHeight;
+  point.seatWidth = this.seatWidth;
+}
   }
 //finals all layout and save the data..
   addLayout(){
     let data = {
-        LayoutData:{layoutBorder:this.getAllPoints
-    }
+        LayoutData:{layoutBorder:this.getAllPoints}
            }
 
     this.locationService.addLayoutData(this.id,data).subscribe(res=>{
@@ -585,5 +593,8 @@ this.layer.add(text);
 
     // }
 
+    goToDrawSeat(){
+      this.router.navigate(['/admin','location','preview-seats',this.id])
+    }
 
 }

@@ -187,17 +187,22 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
           let remainingSeats = this.totalNumber;
 
           for (const point of this.getAllPoints) {
-            console.log(point)
+
             const minX = point.startX;
             const minY = point.startY;
             const maxX = point.endX;
             const maxY = point.endY;
+            console.log("name of rect",point._id,
+                        // "\n minX=",point.startX,
+                        // "\n maxX=>",point.endX,
+                        "\n width of rect=>", point.endX-point.startX);
+            console.log("MAX Columns can be added==>",Math.round((maxX-minX)/point.seatWidth))
       this.seatSizeHeight=point.seatHeight;
       this.seatSizeWidth=point.seatWidth;
             const availableWidth = maxX - minX;
             const availableHeight = maxY - minY;
-            const maxHorizontalRectangles = Math.floor(availableWidth / point.seatHeight);
-            const maxVerticalRectangles = Math.floor(availableHeight / point.seatWidth);
+            const maxHorizontalRectangles = Math.floor(availableWidth / point.seatWidth);
+            const maxVerticalRectangles = Math.floor(availableHeight / point.seatHeight);
 
             const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
             const flowOfData = this.flowOfDrawingSeats;
@@ -212,8 +217,9 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               this.layer.add(polygon);
             if (flowOfData == 'vertical') {
               const columns = Math.min(Math.ceil(remainingSeats / maxVerticalRectangles), maxHorizontalRectangles);
-              console.log(columns,"================NO IDEA")
-              for (let column = 0; column <= columns; column++) {
+              const columns2 = Math.ceil(maxHorizontalRectangles);
+              console.log("NUMBER OF COLUMNS==>",columns,"MYYY CODE COlumn==>",columns2)
+              for (let column = 0; column < columns; column++) {
                 for (let y = minY; y < maxY-10  ; y += point.seatHeight) {
                   const x = minX + column * point.seatWidth;
 

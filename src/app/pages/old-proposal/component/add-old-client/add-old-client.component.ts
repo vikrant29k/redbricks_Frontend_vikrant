@@ -158,8 +158,8 @@ getLocationIdFromFloor(id:string){
       if(res.Message==='No data'){
         console.log("NO DATAA")
       }else{
-        this.seatSizeHeight= this.seatHeight = res.layoutArray[0].seatSize[0].height;
-        this.seatSizeWidth= this.seatWidth= res.layoutArray[0].seatSize[0].width;
+        this.seatSizeHeight= this.seatHeight = 26;
+        this.seatSizeWidth= this.seatWidth= 22;
       //   =this.seatSizeHeight;
       //  =this.seatSizeWidth;
         this.updateSeatsSize()
