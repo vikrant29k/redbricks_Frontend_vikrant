@@ -71,6 +71,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
         this.imageUrl = environment.baseUrl+'images/' + imageUrl;
         // console.log(this.imageUrl);
         const imageObj = new Image();
+
     imageObj.onload = () => {
       this.initializeKonva(imageObj);
       this.enableZoom(); // Add this line to enable zoom
