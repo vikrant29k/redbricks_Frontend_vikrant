@@ -346,8 +346,7 @@ allData:any
     let reader = new FileReader();
     this.selectMultipleImages =true
     for (var i = 0; i < e.target.files.length; i++) {
-<<<<<<< HEAD
-=======
+
       let file = e.target.files[i];
       if (e.target.files && e.target.files[i]) {
         reader.readAsDataURL(file);
@@ -363,7 +362,6 @@ allData:any
         // ChangeDetectorRef since file is loading outside the zone
         this.cd.markForCheck();
       }
->>>>>>> 8368ae023f85c48192bb13ffada4a29a25f573d9
       this.myFiles.push(e.target.files[i]);
     }
     console.log(this.myFiles)

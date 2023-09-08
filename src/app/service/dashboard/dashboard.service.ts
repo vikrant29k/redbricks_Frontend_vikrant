@@ -28,4 +28,8 @@ export class DashboardService {
   getSaleData(id:any){
     return this.http.get('http://192.168.29.203:3000/salesChart/getSalesPersonProposals/'+id)
   }
+  getProposalData = (id:any) => {
+    const httpOptions = this.headerService.updateHeader();
+    return this.http.get(this.baseUrl + 'recentProposalData/'+id, httpOptions);
+  };
 }

@@ -11,6 +11,7 @@ import { AdminDashboardExpandComponent } from './component/admin-dashboard-expan
 import { ShowStatsComponent } from './component/admin-dashboard-expand/show-stats/show-stats.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { ShowChartComponent } from './component/admin-dashboard/show-chart/show-chart.component';
+import { SalesHeadApprovalComponent } from './component/admin-dashboard/sales-head-approval/sales-head-approval.component';
 // import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
@@ -21,7 +22,8 @@ import { ShowChartComponent } from './component/admin-dashboard/show-chart/show-
         DashboardAdminDashboard,
         AdminDashboardExpandComponent,
         ShowStatsComponent,
-        ShowChartComponent
+        ShowChartComponent,
+        SalesHeadApprovalComponent
     ],
     imports: [
         CommonModule,
