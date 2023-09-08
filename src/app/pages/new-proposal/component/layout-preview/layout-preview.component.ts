@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { ProposalService } from "src/app/service/proposal/proposal.service";
 import { LocationService } from "src/app/service/location/location.service";
 import Konva from "konva";
+import { environment } from "src/environments/environment";
 export interface DialogData {
     locationId: string,
     proposalId:string,
@@ -96,7 +97,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
     });
         this.locationService.getImageById(locationId).subscribe(
             (imageUrl) => {
-              this.imageUrl = 'http://localhost:3000/images/' + imageUrl;
+              this.imageUrl = environment.baseUrl+'images/' + imageUrl;
               this.proposalService.getProposalByLocationId(locationId).subscribe(
                 (result:any)=>{
                   if(result.message=='no data'){

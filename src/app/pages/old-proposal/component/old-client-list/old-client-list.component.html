@@ -3,11 +3,19 @@
       <div class="title">
         <h1>Clients List</h1>
         <div class="filter">
-
           <mat-form-field appearance="standard">
-            <input matInput (keyup)="applyFilter($event)" autocomplete="off" placeholder="Filter" #input>
+            <mat-select [(ngModel)]="selectedValue"   placeholder="Select Location" #inputMat (selectionChange)="applyFilter(inputMat.value,true)">
+              <mat-option *ngFor="let location of locations" [value]="location">
+                {{location}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
-
+  
+          <mat-form-field appearance="standard">
+            <input matInput (keyup)="applyFilter(input.value)" autocomplete="off" placeholder="Filter" #input>
+          </mat-form-field> 
+          
+  
         </div>
       </div>
 
@@ -63,7 +71,7 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
           <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="8">No data matching the filter "{{input.value}}"</td>
+            <td class="mat-cell" colspan="8">No data matching the filter "{{input.value || inputMat.value}}"</td>
           </tr>
         </table>
       </div>

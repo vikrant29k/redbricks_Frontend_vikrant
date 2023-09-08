@@ -31,10 +31,12 @@ export class OldClientListComponent implements OnInit {
   editMode: boolean = false;
   displayedColumns: string[] = ['proposal_id','location', 'center','floor', 'selectedWorkstation','color','delete','view'];
   dataSource!: MatTableDataSource<LocationData>;
+  selectedValue!: string;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<LocationData>;
+  locations!: any[];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -114,16 +116,27 @@ previewAll(){
 
   ngOnInit(): void {
     // this.getAllLocations()
-    this.getAllProposals()
+    this.getAllProposals();
+    this.getLocation();
   }
 
 
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  applyFilter(event:string,isSelecct?:boolean) {
+    if(isSelecct){
+      const filterValue = event;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }  
+    }
+    else{
+      this.selectedValue=""
+      const filterValue = event;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
     }
   }
 
@@ -137,6 +150,13 @@ previewAll(){
     }
 }
 
-
+getLocation = () => {
+    this.locationService.getLocationList().subscribe({
+        next: (result: any) => {
+            this.locations = [...result]
+            // console.log(this.locations)
+        }
+    })
+}
 
 }

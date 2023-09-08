@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Konva from 'konva';
 import { LocationService } from 'src/app/service/location/location.service';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-preview-layout-allclients',
   templateUrl: './preview-layout-allclients.component.html',
@@ -55,7 +56,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
-        this.imageUrl = 'http://192.168.29.28:3000/images/' + imageUrl;
+        this.imageUrl = environment.baseUrl+'images/' + imageUrl;
         // console.log(this.imageUrl);
         const imageObj = new Image();
     imageObj.onload = () => {

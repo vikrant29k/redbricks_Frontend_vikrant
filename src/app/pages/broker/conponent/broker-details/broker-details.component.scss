@@ -1,0 +1,185 @@
+@mixin for-desktop {
+    @media (max-width: 1440px) {
+      @content;
+    }
+  }
+  @mixin for-mobile {
+    @media (max-width: 450px) {
+      @content;
+    }
+  }
+  @keyframes fadeInUp{
+    0%{transform:translate(0px, 100px); opacity: 0;}
+    100%{transform:translate(0px, 0); opacity: 1;}
+  }
+  @mixin tooltip {
+    visibility: hidden;
+    background-color: #c3343a;
+    color: #fff;
+    text-align: center;
+    padding-block: 0.5rem;
+    border-radius: 1rem;
+    left: 0rem;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  // @if $firsttime=="true" {
+  //   .container{
+  //     transition: 1s ease-in-out ;
+  //   }
+  // }
+  
+  .container {
+    // box-sizing: border-box;
+    height: 100vh;
+  
+    background-color: #dad7d7;
+    .title {
+      h1 {
+        text-transform: capitalize;
+        margin: 10px;
+        font-size: 2rem;
+        @include for-mobile() {
+          font-size: 1.5rem;
+        }
+      }
+      color: #c3343a;
+      padding-block: 0.1rem;
+      text-align: center;
+    }
+  
+    .main-content {
+      background-color: #dad7d7;
+      width: 100%;
+      display: flex;
+    justify-content: space-around;
+      margin-block-start: 1rem;
+      // justify-content: center;
+      align-items: flex-start;
+      @include for-mobile() {
+        display: flex;
+        flex-direction: column;
+      }
+      .sales-proposal {
+        display: flex;
+        //  width: 100%;
+        margin-inline: 1rem;
+        justify-content: space-between;
+        .sales {
+         
+          display: flex;
+          flex-direction: column;
+          text-align: initial;
+          background-color: #c3343a;
+          color: white;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.484),
+            0 6px 15px 0 rgba(0, 0, 0, 0.19);
+          width:40rem;
+          margin-inline: 1rem 0rem;
+          margin-block: 0.5rem;
+          @include for-mobile() {
+             width: 82vw;
+             margin-inline: 0rem 0rem;
+  
+          }
+         
+        }
+       
+        .approval-lists {
+          margin-block-start: 1rem;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          @include for-mobile(){
+            margin-block-start: 0.2rem;
+          }
+          h3 {
+            margin-block: 1rem 0.2rem;
+            @include for-mobile(){
+              margin-block: 0.5rem 0.2rem;
+            }
+          }
+          // margin-inline-start: 1rem;
+        .tableContain{
+            // overflow-x: scroll;
+          .tableclass {
+            width: 36rem;
+            border-radius: 6px;
+            overflow: hidden !important;
+            margin-block: 0rem 0.4;
+            background-color: #c3343a;
+            border: 2px solid white;
+            th {
+              text-align: center;
+              font-weight: 600;
+              color: rgb(255, 255, 255);
+              font-size: 1.1rem;
+              // width: 6rem;
+            }
+  
+            td {
+              background-color: #8b8c8d;
+              font-size: 1rem;
+              color: rgb(0, 0, 0);
+              text-align: center;
+              // width: 10rem;
+              mat-icon {
+                font-weight: 500;
+              }
+             
+            }
+          }
+  
+       
+        }
+      }
+      }
+      .card-container {
+        display: flex;
+        justify-content: space-between;
+        padding-inline-start: 0rem;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+        .card-wrapper-wrap {
+          width: 40rem;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+        }
+  
+        .card-wrapper {
+          border-radius: 6px;
+          margin: 0.5rem 0.5rem;
+          // padding-inline-end: 1rem;
+          text-align: center;
+          font-size: 1rem;
+          p {
+            margin: 0;
+          }
+        }
+      }
+  
+    
+    }
+  
+    
+  }
+ 
+  
+  .totals {
+    padding-top: 1rem;
+    padding-left: 4rem;
+font-weight: 500;
+    p {
+      margin-block: 0.3rem 0.2rem;
+      @include for-mobile(){
+        font-size: 1.2rem;
+      }
+    }
+  }
+  mat-card{
+    background: #c3343a;
+    margin-top: .5rem
+  }

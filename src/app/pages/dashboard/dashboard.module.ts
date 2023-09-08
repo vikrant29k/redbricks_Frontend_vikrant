@@ -33,6 +33,10 @@ import { ShowChartComponent } from './component/admin-dashboard/show-chart/show-
     providers: [
         DashboardAdminChildRouteGuard,
         DashboardSalesChildRouteGuard
+    ],
+    exports:[
+        AdminDashboardExpandComponent,
+        DashboardAdminDashboard
     ]
 })
 export class DashboardModule {}

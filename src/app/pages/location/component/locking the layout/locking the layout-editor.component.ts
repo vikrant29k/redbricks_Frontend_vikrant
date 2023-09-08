@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Konva from 'konva';
 import { LocationService } from 'src/app/service/location/location.service';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-lock-layout-editor',
   templateUrl: './locking the layout-editor.component.html',
@@ -54,7 +55,7 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
   this.seatSizeWidth=res[0].seatSize[0].width;
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
-        this.imageUrl = 'http://localhost:3000/images/' + imageUrl;
+        this.imageUrl = environment.baseUrl+'images/' + imageUrl;
         // console.log(this.imageUrl);
         const imageObj = new Image();
     imageObj.onload = () => {

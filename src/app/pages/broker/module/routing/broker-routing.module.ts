@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { BrokerComponent } from "../../broker.component";
 import { BrokerAddBrokerComponent } from "../../conponent/add-broker/add-broker.component";
 import { BrokerBrokerListComponent } from "../../conponent/broker-list/broker-list.component";
+import { BrokerDetailsComponent } from "../../conponent/broker-details/broker-details.component";
 
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
             {
                 path: 'update-borker/:brokerId',
                 component: BrokerAddBrokerComponent
+            },
+            {
+                path:'broker-details/:bId',
+                component:BrokerDetailsComponent
             }
         ]
     }
