@@ -91,10 +91,11 @@ id:any;
 
     (window as any).scrollTo(top);
 
-    this.totalWorkStationBalance = this.proposalService.TotalNoOfSets;
-     this.totalAvailableWorkstation = this.locationService.totalWorkstation;
+    this.totalWorkStationBalance = this.proposalService.AvailableNoOfSeats;
+    console.log(this.totalWorkStationBalance)
+     this.totalAvailableWorkstation = this.locationService.totalWorkstation - this.locationService.selectedSeats;
      console.log(this.totalAvailableWorkstation)
-const numberOfseats =localStorage.getItem('selectedSeat');
+// const numberOfseats =localStorage.getItem('selectedSeat');
 // this.totalAvailableWorkstation=this.proposalService.AvailableNoOfSeats - Number(numberOfseats) ;
 
     this.proposalId = this.getProposaId();
@@ -129,6 +130,7 @@ const numberOfseats =localStorage.getItem('selectedSeat');
             this.proposalService.consolidatedSeats = result.consolidatedSeats;
             this.proposalService.seatAvailability = result.seatsAvailability;
             this.proposalService.conflict = result.conflict;
+
             // console.log(this.proposalService.conflict);
             // this.router.navigate(['/sales','new-proposal','space-availability',this.proposalId]);
           }
@@ -168,6 +170,7 @@ const numberOfseats =localStorage.getItem('selectedSeat');
 totalWorkstation(){
 
 }
+
 
   watchFormValue = () => {
     this.requirementInfoForm.valueChanges.subscribe(() => {

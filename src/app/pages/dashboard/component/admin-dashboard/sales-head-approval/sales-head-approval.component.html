@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="title">
+    <h1> ID : {{id}}</h1>
+  </div>
+  <mat-card class="card">
+    <div class="content" >
+      <div *ngIf="dta" class="section">
+        <p >Center: {{dta.center}}</p>
+        <p >Client Final Offer Amount: {{dta.clientFinalOfferAmmount}}</p>
+        <p>current Rack Rate: {{dta.currentRackRate}}</p>
+        <p>Floor: {{dta.floor}}</p>
+        <p>Location: {{dta.location}}</p>
+        <p>Booking Price: {{dta.locationData.bookingPriceUptilNow}}</p>
+        <p>Rack Rate: {{dta.locationData.rackRate}}</p>
+        <p>System Price: {{dta.locationData.systemPrice}}</p>
+        <p>Location Id: {{dta.locationId}}</p>
+        <p>Loss: {{dta.loss}}</p>
+        <p>Rack Value As Per Client: {{dta.rackValueAsPerClient}}</p>
+        <p>Total Number Of Seats: {{dta.totalNumberOfSeats}}</p>
+    </div>
+      <div *ngFor="let data of proposalData" class="section1">
+        <p >Tenure: {{data.Tenure}}</p>
+
+        <p >LockIn: {{data.LockIn}}</p>
+
+        <p >Core Seats Selected: {{data.areaOfCoreSelectedSeat}}</p>
+
+        <p >Usable Seats Selected: {{data.areaOfUsableSelectedSeat}}</p>
+
+      </div>
+      <div class="sub-content">
+
+          <p >Average Seat Price : 12</p>
+
+      </div>
+    </div>
+  </mat-card>
+  <div class="form-action">
+    <button type="reset" mat-raised-button  color="primary" (click)="approveProposal()">Approve</button>
+    <button type="submit" mat-raised-button color="primary" (click)="declineProposal()">Decline</button>
+  </div>
+
+  </div>

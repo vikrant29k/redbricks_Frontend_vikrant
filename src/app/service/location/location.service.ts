@@ -18,7 +18,8 @@ export class LocationService {
     selectedAddress!:string
     selectedFloor!:string;
     totalWorkstation!:number;
-    locationId!:string;
+    selectedSeats!:number;
+    locationId!:string;;
     constructor(
         private headerService: HeaderService,
         private http: HttpClient,
@@ -152,12 +153,12 @@ export class LocationService {
             })
         );
     }
-    
+
     getAllImageOfCenter = (id:string) =>{
       let httpOptions = this.headerService.updateHeader();
         return this.http.get(this.baseUrl+'getCenterImages/'+id,httpOptions)
     }
-    
+
     deleteSelectedImage(path:{},id:any){
         let httpOptions = this.headerService.updateHeader();
         return this.http.post(this.baseUrl+'/deleteImg/'+id,path,httpOptions)

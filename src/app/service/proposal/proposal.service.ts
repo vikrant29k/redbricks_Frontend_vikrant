@@ -12,7 +12,7 @@ export class ProposalService {
   consolidatedSeats: boolean = false;
   seatAvailability: boolean = true;
   conflict: boolean = false;
-  AvailableNoOfSeats: number = 0;
+  AvailableNoOfSeats!: number;
   TotalNoOfSets: number = 0;
 
   constructor(
@@ -142,7 +142,7 @@ export class ProposalService {
       })
     );
   };
-  
+
   getProposalByLocationId(Id:any){
     let httpOptions = this.headerService.updateHeader();
     return this.http.get(this.baseUrl+'getLayoutDataOfSameLocation/'+Id,httpOptions).pipe(
@@ -279,7 +279,7 @@ export class ProposalService {
 
   saveImage(Id:string,data:any): Observable<any>{
     let httpOptions = this.headerService.updateHeader();
-    
+
     return this.http
       .post(this.baseUrl + 'saveImage/' + Id, data, httpOptions)
       .pipe(
