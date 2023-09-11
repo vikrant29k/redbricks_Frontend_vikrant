@@ -334,8 +334,8 @@ dayBeforeYesterday:any;
 
 salesHead(id:any){
   this.dialog.open(SalesHeadApprovalComponent,{
-    width: '1000px',
-    height:' 715px',
+    width: '900px',
+    height:'615px',
     data:{id:id}
 
   })

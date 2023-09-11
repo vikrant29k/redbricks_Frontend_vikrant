@@ -19,26 +19,26 @@
             <table mat-table [dataSource]="dataSource" matSort class="w-100">
 
                 <ng-container matColumnDef="brokerType">
-                    <th mat-header-cell *matHeaderCellDef>Location </th>
+                    <th mat-header-cell *matHeaderCellDef>Broker Type </th>
                     <td mat-cell *matCellDef="let row"> {{row.brokerType }} </td>
                 </ng-container>
                 <ng-container matColumnDef="brokerCategory">
-                    <th mat-header-cell *matHeaderCellDef>Center</th>
+                    <th mat-header-cell *matHeaderCellDef>Broker Category</th>
                     <td mat-cell *matCellDef="let row"> {{row.brokerCategory}} </td>
                 </ng-container>
                 <ng-container matColumnDef="SPOCName">
-                    <th mat-header-cell *matHeaderCellDef>Available workstation</th>
+                    <th mat-header-cell *matHeaderCellDef>SPOC Name</th>
                     <td mat-cell *matCellDef="let row"> {{row.SPOCName}} </td>
                 </ng-container>
                 <ng-container matColumnDef="SPOCEmail">
-                    <th mat-header-cell *matHeaderCellDef> Total workstation </th>
+                    <th mat-header-cell *matHeaderCellDef>SPOC Email </th>
                     <td mat-cell *matCellDef="let row"> {{ row.SPOCEmail}} </td>
                 </ng-container>
                 <ng-container matColumnDef="SPOCAprove">
                     <th mat-header-cell *matHeaderCellDef> View </th>
-                    <td mat-cell class="edit" *matCellDef="let row" (click)="brokerDetails(row._id)"> 
+                    <td mat-cell class="edit" *matCellDef="let row" (click)="brokerDetails(row._id)">
                         <button type="button" mat-icon-button>
-                        <mat-icon>visibility</mat-icon>    
+                        <mat-icon>visibility</mat-icon>
                         </button>
                     </td>
                 </ng-container>
