@@ -33,8 +33,12 @@
 .container {
   // box-sizing: border-box;
   height: 100vh;
-
-  background-color: #dad7d7;
+  background-color: #fddede;
+  background-image: url('../../../../../assets/images/location/location-background.png');
+  background-size: cover;
+        background-repeat: no-repeat;
+        transition: background-image 0.5s, transform 0.5s;
+        transform-origin: center center;
   .title {
     h1 {
       text-transform: capitalize;
@@ -50,9 +54,11 @@
   }
 
   .main-content {
-    background-color: #dad7d7;
+    // background-color: #dad7d7;
     width: 100%;
     display: flex;
+    flex-direction: column;
+
     margin-block-start: 1rem;
     align-items: flex-start;
     @include for-mobile() {
@@ -64,6 +70,12 @@
       //  width: 100%;
       margin-inline: 1rem;
       justify-content: space-between;
+      .dashboard_icon{
+        width: 4rem;
+        height: 4rem;
+        font-size: 4rem;
+        cursor: pointer;
+      }
       .sales {
         .totals {
           display: flex;
@@ -219,9 +231,116 @@
       padding-inline-start: 0rem;
       flex-wrap: wrap;
       width: 100%;
-      justify-content: center;
+      justify-content: space-evenly;
+      .location{
+        position: fixed;
+        top: 14%;
+        left: 12%;
+
+          // transition: transform 0.3s ease-in-out;
+          // transform: translateX(100%);
+
+
+
+
+        .closeButton{
+          position: absolute;
+          top:-2rem;
+          left:-3rem;
+          z-index: 1;
+          background-color: rgb(205 82 88);
+          color: white;
+          font-size: 1.5rem;
+        }
+      }
+      .location.in {
+        transform: translateX(0);
+      }
+      .icon {
+
+        .hover-info{
+          width: 9rem;
+          min-height: 11rem;
+          background-color: #feefefc4;
+          position: relative;
+          top: -14rem;
+          /* left: 0rem; */
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          justify-content: center;
+        }
+        .hover-info2{
+          width: 6rem;
+          min-height: 2rem;
+          background-color: #feefefc4;
+          position: relative;
+          top: -17rem;
+          left: -7rem;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          justify-content: space-between;
+          p{
+            background-color: #000000;
+            width: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            height: 2rem;
+            border-radius: 50%;
+            color: white
+          }
+        }
+        display: flex;
+        justify-content: flex-start;
+        width: 11rem;
+        height: 15rem;
+        cursor: pointer;
+        align-items: center;
+        flex-direction: column;
+        @include for-desktop(){
+            width: 23rem;
+            height: 20rem;
+        }
+        @include for-mobile() {
+          width: 16rem;
+          height: 20rem;
+        }
+        cursor: pointer;
+
+        svg {
+          // width: inherit;
+          // height: inherit;
+          overflow: visible;
+          @include for-mobile() {
+            // transform: matrix(1.17, 1.1, -1.1, 1.17, 71.3, 142);
+            // transform: matrix(0.8, 0, 0, 0.4, 74, 173);
+            transform: matrix(0.8, 0, 0, 0.8, 3, 19);
+          }
+        }
+
+
+        p {
+          color: #c3343a;
+          margin-block: 0rem 0.5rem;
+          font-size: 1.6rem;
+          font-weight: 500;
+          @include for-mobile() {
+            margin-block: 0rem 0.5rem;
+            font-size: 1rem;
+          }
+        }
+        .seat-counts{
+          font-size: 1.3rem;
+        }
+
+      }
       .card-wrapper-wrap {
-        width: 40rem;
+        width: inherit;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
@@ -502,3 +621,10 @@
   }
 }
 
+.icon {
+  @for $i from 0 to 40 {
+    &:nth-child(#{$i}) {
+      fill: rgb(random(255), random(255), random(255));
+    }
+  }
+}

@@ -37,16 +37,12 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
   // getRackValue:any;
   proposalExtraDetailForm = new FormGroup({
     consolidated: new FormControl(''),
-    Tenure: new FormControl('', Validators.required),
-    LockIn: new FormControl('', Validators.required),
-    depositTerm:new FormControl('',Validators.required),
-    noticePeriod:new FormControl('',Validators.required),
+    Tenure: new FormControl('60', Validators.required),
+    LockIn: new FormControl('36', Validators.required),
+    depositTerm:new FormControl('12',Validators.required),
+    noticePeriod:new FormControl('6',Validators.required),
     NonStandardRequirement: new FormControl(''),
     Serviced: new FormControl('', Validators.required),
-    // serviceCosts: new FormControl(''),
-    // finalOfferAmmount: new FormControl(''),
-    // rackValue: new FormControl(''),
-    // systemValue: new FormControl(''),
     rentCommencmentDate: new FormControl('',Validators.required),
   });
 
@@ -55,8 +51,6 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
-    private costService:CostService,
-    private locationService: LocationService,
     private proposalService: ProposalService,
   ) {}
 

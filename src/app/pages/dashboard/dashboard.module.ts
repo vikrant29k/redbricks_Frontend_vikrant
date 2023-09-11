@@ -11,7 +11,6 @@ import { AdminDashboardExpandComponent } from './component/admin-dashboard-expan
 import { ShowStatsComponent } from './component/admin-dashboard-expand/show-stats/show-stats.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { ShowChartComponent } from './component/admin-dashboard/show-chart/show-chart.component';
-// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({

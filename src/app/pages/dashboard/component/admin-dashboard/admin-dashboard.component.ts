@@ -6,30 +6,37 @@ import { Router } from '@angular/router';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { JWTService } from 'src/app/service/jwt/jwt.service';
 import Swal from 'sweetalert2';
-import {
-  trigger,
-  animate,
-  transition,
-  style,
-  query,
-} from '@angular/animations';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { fadeOut, blub } from 'src/assets/animation/template.animation';
 import { LocationService } from 'src/app/service/location/location.service';
 import { DashboardService } from 'src/app/service/dashboard/dashboard.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { AuthGuardService } from 'src/app/service/auth-guard/auth-guard.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ShowChartComponent } from './show-chart/show-chart.component';
 import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'dashboard-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
-  animations: [fadeOut, blub],
+  animations: [fadeOut, blub,
+    trigger('slideInOut', [
+    state('in', style({ transform:'translateX(0)',width:'80vw',height:'34rem'})),
+    state('out', style({ transform: 'translateX(50%)',width:'0',height:'0' })),
+    transition('in => out', animate('2s ease-in-out')),
+    transition('out => in', animate('2s ease-in-out')),
+  ]),
+  trigger('cardAnimation', [
+    state('hidden', style({ opacity: 0, transform: 'translateY(100%)' })),
+    state('visible', style({ opacity: 1, transform: 'translateY(0)' })),
+    transition('hidden => visible', animate('300ms ease-in')),
+    transition('visible => hidden', animate('300ms ease-out')),
+  ])]
 })
 export class DashboardAdminDashboard implements OnInit {
+  showCard = false
+  selectedCenter: string | null = null;
+  locations:any[]=["Pune",'Hyderabad'];
   constructor(
     private proposalService: ProposalService,
     private dashboardService: DashboardService,
@@ -40,7 +47,9 @@ export class DashboardAdminDashboard implements OnInit {
     private location: LocationService,
     private dialog:MatDialog
   ) {}
+  onLocationSelected = (location: any) => {
 
+}
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   // @ViewChild(MatTable) table!: MatTable;
@@ -59,14 +68,7 @@ export class DashboardAdminDashboard implements OnInit {
    selectedSeatOfCurrentProposal:any;
   UpdateAmount: any;
   dataSourceConflict: any;
-  //  =[
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'}
-  // ];
+
   notifications: any;
   deselect:any;
   //  = this.dataSourceConflict.length
@@ -80,6 +82,11 @@ export class DashboardAdminDashboard implements OnInit {
   //  city_center:any;
   clickEvent() {
     this.status = !this.status;
+  }
+  toggleLocation(location: any): void {
+    this.selectedCenter = location;
+    location.showLocation = !location.showLocation;
+    location.isHovered=!location.isHovered
   }
   // get conflicts
   getConflict() {
@@ -116,12 +123,13 @@ export class DashboardAdminDashboard implements OnInit {
 
     // })
   }
-
+today:any;
+yesterDay:any;
+dayBeforeYesterday:any;
   ngOnInit(): void {
     this.dashboardService.getRecentProposal().subscribe((res) => {
       console.log('recent', res);
     });
-
     this.getConflict();
     //  this.resolveConflict('RBOHYSA26121133')
     if (this.title === 'sales head') {
@@ -180,7 +188,7 @@ export class DashboardAdminDashboard implements OnInit {
       this.city = res;
       // this.city_center=res;
       // console.log("centers",[...this.city_center.centers])
-      // console.log('loaction', res);
+      console.log('loaction', res);
     });
     this.dashboardService.getRecentProposal().subscribe((res) => {
       // console.log(res)
@@ -247,7 +255,7 @@ export class DashboardAdminDashboard implements OnInit {
         //     console.log(res,"Locked Proposal")
 
                  this.route.navigate(['/admin','location','lock-layout',id])
-              
+
           // });
           this.deleteRow(id)
       }
