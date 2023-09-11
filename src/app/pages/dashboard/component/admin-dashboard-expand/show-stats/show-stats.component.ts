@@ -8,8 +8,6 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
-// import { ChartConfiguration, ChartOptions, ChartType } from "chart.js";
-// import { CalculationDataService } from 'src/app/service/Calculate Data/calculation-data.service';
 import { CostService } from 'src/app/service/cost/cost.service';
 declare var google: any;
 export interface DialogData {

@@ -82,12 +82,6 @@ export class AddLocationComponent implements OnInit {
     totalNoOfWorkstation: new FormControl('', Validators.required),
     rentSheet: new FormArray([]),
     carParkCharge: new FormControl(''),
-    // bookingPriceUptilNow:new FormControl(''),
-    // yearnew: new FormControl('', Validators.required),
-    // rent: new FormControl('', Validators.required),
-    // cam: new FormControl('', Validators.required),
-    // imageLinks: new FormArray([]),
-    // videoLinks: new FormArray([]),
   });
 
 
@@ -97,7 +91,6 @@ export class AddLocationComponent implements OnInit {
         this.salesHeads = [...result];
         this.locationForm.addControl('salesHead', new FormControl(''));
         if (this.editMode) {
-          // console.log(this.userDataBeforeEdit);
           this.locationForm.get('salesHead')?.patchValue(this.userDataBeforeEdit.salesHead);
           this.cd.detectChanges();
         }
@@ -105,21 +98,9 @@ export class AddLocationComponent implements OnInit {
     });
   }
 
-  // get imageLinks() {
-  //   return (this.locationForm.get('imageLinks') as FormArray).controls;
-  // }
   get rentSheet() {
     return (this.locationForm.get('rentSheet') as FormArray).controls;
   }
-  // get videoLinks() {
-  //   return (this.locationForm.get('videoLinks') as FormArray).controls;
-  // }
-
-  // jsonUploadHandler = (event: any) => {
-  //   this.JSONFile = event.target.files[0];
-  //   this.jsonUploaded = true;
-
-  // };
 
   layoutImageUploadHandler = (event: any) => {
     this.layoutImage = event.target.files[0];
@@ -160,9 +141,6 @@ export class AddLocationComponent implements OnInit {
       }
     }
 
-    // if (this.jsonUploaded) {
-    //   formData.append('jsonFile', this.JSONFile);
-    // }
     if (this.layoutImageUploaded) {
       formData.append('layoutImage', this.layoutImage);
     }
@@ -170,7 +148,7 @@ export class AddLocationComponent implements OnInit {
       for  (var i =  0; i <  this.myFiles.length; i++)  {
         formData.append("centerImage",  this.myFiles[i]);
     }
-      // formData.append('centerImage',JSON.stringify(this.myFiles))
+
     }
 
     return formData;
@@ -200,8 +178,6 @@ allData:any
         this.rentCamArray=result.rentSheet;
 
         console.log("asdfsadsdaa",result);
-        // this.calculateService.objectValueUpdated.emit(this.rentCamArray[0])
-        // this.calculateService.objectValue = this.rentCamArray
         this.locationForm.patchValue({
           location: result.location,
           selectedNoOfSeats:result.selectedNoOfSeats||0,
@@ -211,48 +187,14 @@ allData:any
           salesHead: result.salesHead,
           address: result.address,
           perSeatPrice: result.perSeatPrice,
-          // videoLinks: result.videoLinks,
-          // imageLinks: result.imageLinks,
           rentSheet: result.rentSheet,
           carParkCharge: result.carParkCharge,
           rackRate: result.rackRate,
-
-          // bookingPriceUptilNow:result.bookingPriceUptilNow
         });
-        // result.imageLinks.forEach((element: string, index: number) => {
-        //   this.onAdd('imageLinks');
-        //   // this.imageLinks[index].patchValue(element);
-        // });
-        // result.videoLinks.forEach((element: string, index: number) => {
-        //   this.onAdd('videoLinks');
-          // this.videoLinks[index].patchValue(element);
-        // });
-
         result.rentSheet.forEach((element: any,index: number) => {
           this.onAddFromGroup();
           this.rentSheet[index].patchValue(element);
         })
-
-
-
-
-
-
-      //   }
-
-
-
-        // let rentSheet = JSON.parse(result.rentSheet);
-        // rentSheet.forEach((element: any,index: number) => {
-
-        // })
-        // ((element: any, index: number) => {
-        //   element=JSON.parse(element)?.[index];
-        //   console.log(result.rentSheet[index]);
-
-        //   this.onAddFromGroup();
-        //   this.rentSheet[index].patchValue({year:element.year, rent:element.rent, cam:element.cam})
-        // });
 
       },
     });

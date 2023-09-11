@@ -55,24 +55,54 @@
         <!-- Sales Persons Lists -->
         <div class="sales-persons">
 
-          <div class="sales-list" *ngFor="let userData of users; let i = index">
-            <!-- <div  *ngIf="userData.role==='sales'"> -->
-              <mat-card>
-            <!-- <mat-card  (click)="openDialog()"> -->
-              <p [ngClass]="i === 0 ? 'font' : ''">
-                <mat-icon>person_outline</mat-icon>
-              </p>
-              <p [ngClass]="i === 0 ? 'font' : ''">
-                {{ userData.firstName }}
-                {{ userData.lastName.slice(0, 1) }}
-              </p>
+  <div class="main-content">
+    <div mat-card class="card-container">
+      <ng-container *ngFor="let location of city">
+        <div class="icon" (click)="toggleLocation(location)" (mouseenter)="location.isHovered = true" (mouseleave)="location.isHovered = false">
+          <ng-container [ngTemplateOutlet]="locationIcon"></ng-container>
+          <p>{{ location.location }}</p>
 
-              <p [ngClass]="i === 0 ? 'font' : ''">
-                Total: {{ userData.totalProposalCount }}
-              </p>
-            </mat-card>
+          <div class="hover-info" *ngIf="location.isHovered">
+            <p>{{ location.proposalsData.today }}</p>
+          </div>
+          <div class="hover-info2" *ngIf="location.isHovered">
+            <p>{{ location.proposalsData.yesterday }}</p>
+            <p>{{ location.proposalsData.dayBeforeYesterday }}</p>
           </div>
         </div>
+        <div class="location" *ngIf="location.showLocation">
+          <button class="closeButton" mat-icon-button (click)="location.showLocation = false"> <mat-icon>arrow_back</mat-icon></button>
+          <app-admin-dashboard-expand [cardData]="location.location"></app-admin-dashboard-expand>
+        </div>
+      </ng-container>
+
+
+<ng-template #locationIcon  >
+  <svg
+  xmlns="http://www.w3.org/2000/svg"
+  color="currentColor"
+  width="150.873"
+  height="200.534"
+  viewBox="0 0 150 250"
+>
+
+  <g transform="matrix(1.2 0 0 1 75 125)">
+    <path
+      vector-effect="non-scaling-stroke"
+      transform=" translate(-6692, -3383.76)"
+      d="M 6692.195 3473.041 C 6673.735 3450.141 6655.402 3428.034 6641.862 3402.5150000000003 C 6635.662 3390.838 6631.106 3378.6230000000005 6629.277 3365.3990000000003 C 6624.669 3332.0850000000005 6649.354 3299.5250000000005 6682.81 3295.0840000000003 C 6716.618 3290.5960000000005 6746.871 3311.702 6753.923000000001 3344.804 C 6756.8550000000005 3358.562 6754.7390000000005 3371.904 6750.039000000001 3384.947 C 6744.063000000001 3401.538 6735.029 3416.493 6724.6630000000005 3430.594 C 6714.4130000000005 3444.5370000000003 6703.536 3458.0190000000002 6692.942000000001 3471.709 C 6692.6655193829265 3472.1370197057768 6692.416033989725 3472.581885226183 6692.195 3473.041 Z M 6691.94 3391.141 C 6705.515817246488 3391.176595819539 6717.775384650377 3383.0281464872223 6722.9988562577855 3370.497407269641 C 6728.222327865193 3357.9666680520595 6725.380309450676 3343.5230829436664 6715.7987782688615 3333.9054771509363 C 6706.217247087047 3324.2878713582068 6691.784444064809 3321.391595063877 6679.234163898991 3326.5679401771704 C 6666.683883733173 3331.7442852904637 6658.489421370391 3343.9731448463176 6658.473999999999 3357.549 C 6658.503943615656 3376.0399158756795 6673.448339197132 3391.0423652872937 6691.939 3391.144 Z"
+      stroke-linecap="round"
+    />
+  </g>
+</svg>
+    </ng-template>
+
+    </div>
+    <div class="sales-proposal"  >
+
+     <mat-icon class="dashboard_icon" (click)="showCard = !showCard">dashboard</mat-icon>
+     <div  [@cardAnimation]="showCard ? 'visible' : 'hidden'"  class="card-container">
+      <mat-card class="sales">
         <div class="approval-lists">
           <h3>Recent Proposals</h3>
           <div class="tableContain">
@@ -151,50 +181,9 @@
         </div>
         </div>
       </mat-card>
-    </div>
-    <!-- Total Proposal Generated View  -->
-    <!-- <div>
-      <mat-card class="Proposal">
-        <span class="tabs">
-          <div>
-            <mat-icon class="done">check_circle_outline</mat-icon>
-            <p class="tooltiptext1">Total Proposal Completed 100</p>
-            <p class="icon-text">Completed 100</p>
-          </div>
-          <div>
-            <mat-icon class="pending">access_time</mat-icon>
-            <p class="tooltiptext2">Total Proposal Pending 50</p>
-            <p class="icon-text">In-progress 50</p>
-          </div>
-          <div>
-            <mat-icon class="cancel">block</mat-icon>
-            <p class="tooltiptext3">Total Proposal Expired 10</p>
-            <p class="icon-text">
-              Expired <br />
-              10
-            </p>
-          </div>
-        </span>
-      </mat-card>
-    </div> -->
-    <!-- Locations and total cities -->
-
-    <div mat-card class="card-container">
-      <!-- porposal view recent generated -->
-
-      <!-- proposal views table -->
-      <div class="card-wrapper-wrap">
-        <div
-          class="card-wrapper"
-          (click)="clickEvent()"
-          *ngFor="let city_name of city"
-        >
-          <app-admin-dashboard-expand
-            [cardData]="city_name"
-          ></app-admin-dashboard-expand>
-        </div>
       </div>
     </div>
+
   </div>
 <!-- Notification conflict -->
   <div class="notify  " [ngClass]="shownotification ? 'notify' : 'notify-none'" >
@@ -262,72 +251,4 @@
       </div>
     </div>
   </div>
-
-
-  <!-- deslection approval -->
-  <div class="notify  " [ngClass]="deselect ? 'notify' : 'notify'" >
-    <!-- <div class="icon" (click)="menuOpen = !menuOpen" matRipple>
-      <mat-icon matBadge="{{ notifications }}">{{menuOpen ? "close" : "notification_important"}}</mat-icon>
-    </div>
-    <div class="sub-icon" [ngClass]="menuOpen ? 'home-icon' : ''" (autofocus)="true">
-      <div class="tableConflictClass">
-        <table mat-table [dataSource]="dataSourceConflict" class="fadeInUp">
-          <ng-container matColumnDef="salesPerson">
-            <th mat-header-cell *matHeaderCellDef>Sales Person</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.salesPerson.firstName }}
-              {{ element.salesPerson.lastName }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="_id">
-            <th mat-header-cell *matHeaderCellDef>Proposal Id</th>
-            <td mat-cell *matCellDef="let element">{{ element._id }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="resolve">
-            <th mat-header-cell *matHeaderCellDef style="width: 7rem">
-              Resolve
-            </th>
-            <td
-              mat-cell
-              class="resolve"
-              *matCellDef="let element"
-              style="display: flex"
-            >
-              <mat-icon
-                class="green"
-                matTooltip="Same"
-                matTooltipPosition="left"
-                (click)="resolveConflict(element._id)"
-                >check_circle</mat-icon
-              >
-              <mat-icon
-                class="red"
-                matTooltip="Not Same"
-                matTooltipPosition="below"
-                >cancel</mat-icon
-              >
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsConflict"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsConflict"
-          ></tr>
-        </table>
-      </div>
-    </div> -->
-    <div>
-
-    </div>
-  </div>
 </div>
-<!-- <div style="position: fixed;
-z-index: 2;
-bottom: 6px;
-width: 90%;
-text-align: center;"><p style="font-weight: 600; padding-inline-start: 10rem;">
-  Copyright @Redbricks <br>
-  Developed By Mobicloud Technologies PVT. LTD.
-</p></div> -->

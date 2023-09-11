@@ -28,6 +28,16 @@ export class DashboardService {
   getSaleData(id:any){
     return this.http.get('http://192.168.29.203:3000/salesChart/getSalesPersonProposals/'+id)
   }
+
+  getCenters(lcoationName:any){
+    const httpOptions  = this.headerService.updateHeader();
+    return this.http.get(this.baseUrl + 'centers/'+ lcoationName, httpOptions )
+  }
+  getFloorData(locationName:any,centerName:any){
+    const httpOptions  = this.headerService.updateHeader();
+    return this.http.get(this.baseUrl + 'floorData/'+ locationName+'/'+centerName, httpOptions )
+  }
+
   getProposalData = (id:any) => {
     const httpOptions = this.headerService.updateHeader();
     return this.http.get(this.baseUrl + 'recentProposalData/'+id, httpOptions);
