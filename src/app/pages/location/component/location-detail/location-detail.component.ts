@@ -117,9 +117,12 @@ this.changeImageAuto();
                     this.locationService.selectedLocation = this.centerData.location;
                     this.locationService.selectedCenter = this.centerData.center;
                     this.locationService.selectedAddress = this.centerData.address;
-                    this.locationService.totalWorkstation=this.centerData.totalNoOfWorkstation
+                    this.locationService.totalWorkstation=this.centerData.totalNoOfWorkstation;
+                    this.locationService.selectedSeats=this.centerData.selectedNoOfSeats;
                     this.locationService.selectedFloor = this.centerData.floor;
                     this.locationService.locationId = this.centerData._id;
+
+
                     // console.log(this.centerData);
                     // this.router.navigate(['/new-proposal/add', this.location, result.Id]);
                     this.router.navigate(['/sales','new-proposal', 'client-info',result.Id]);

@@ -240,3 +240,14 @@
 .displaynon {
     display: none;
 }
+.filter{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+.example-button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}

@@ -1,0 +1,124 @@
+<div class="container">
+    <div class="title" *ngIf="brokerDetails">
+      <h1>{{brokerDetails.SPOCName}}</h1>
+    </div>
+    <div class="totals" *ngIf="brokerDetails">
+      <!-- <mat-icon>people</mat-icon> -->
+      <p matTooltip="Total Users Availabel">Total Proposal By <span style="text-transform: uppercase;">{{brokerDetails.SPOCName}}</span> : {{brokerDetails.totalProposalCount}}</p>
+      <p>Current Month Total Proposals : {{monthlyPropCount.totalProposalsCount}}</p>
+    </div>
+  
+    <div class="main-content">
+      <div class="sales-proposal">
+        <mat-card class="sales">
+          <!-- total users  -->
+        
+          <!-- Sales Persons Lists -->
+          
+          <div class="approval-lists">
+            <h3>Proposals Details</h3>
+            <div class="tableContain">
+                <div   class="tableConflictClass">
+                    <table
+                      mat-table
+                      [dataSource]="salesPersonDetails"
+                      class="tableclass"
+                    >
+                      <ng-container matColumnDef="salesPerson">
+                        <th mat-header-cell *matHeaderCellDef>Sales Person Name</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.salesPersonData[0].firstName }}
+                          {{ element.salesPersonData[0].lastName }}
+                        </td>
+                      </ng-container>
+            
+                      <ng-container matColumnDef="_id">
+                        <th mat-header-cell *matHeaderCellDef>Total Proposal</th>
+                        <td mat-cell *matCellDef="let element">{{ element.totalProposals }}</td>
+                      </ng-container>
+            
+                      <ng-container matColumnDef="resolve">
+                        <th mat-header-cell *matHeaderCellDef style="width: 7rem">
+                         Approve Proposal
+                        </th>
+                        <td
+                          mat-cell
+                          class="resolve"
+                          *matCellDef="let element"
+                         
+                        >
+                          <!-- <mat-icon
+                            class="green"
+                            matTooltip="Same"
+                            matTooltipPosition="left"
+                            (click)="resolveConflict(element._id)"
+                            >check_circle</mat-icon
+                          >
+                          <mat-icon
+                            class="red"
+                            matTooltip="Not Same"
+                            matTooltipPosition="below"
+                            (click)="deleteConflict(element._id)"
+                            >cancel</mat-icon
+                          > -->
+                          {{element.approveCount + element.lockedCount}}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="count">
+                          <th mat-header-cell *matHeaderCellDef style="width: 7rem">
+                           In-progress Proposal
+                          </th>
+                          <td
+                            mat-cell
+                            class="resolve"
+                            *matCellDef="let element"
+                            
+                          >
+                            <!-- <mat-icon
+                              class="green"
+                              matTooltip="Same"
+                              matTooltipPosition="left"
+                              (click)="resolveConflict(element._id)"
+                              >check_circle</mat-icon
+                            >
+                            <mat-icon
+                              class="red"
+                              matTooltip="Not Same"
+                              matTooltipPosition="below"
+                              (click)="deleteConflict(element._id)"
+                              >cancel</mat-icon
+                            > -->
+                            {{ element.totalProposals - element.approveCount + element.lockedCount}}
+                          </td>
+                        </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsConflict"></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumnsConflict"
+                      ></tr>
+                    </table>
+                  </div>
+            <!-- <mat-paginator
+              [pageSizeOptions]="[3, 6, 12, 24]"
+              aria-label="Select page of recent"
+            ></mat-paginator> -->
+          </div>
+          </div>
+        </mat-card>
+      </div>
+      
+
+        <div class="pichart" >
+          <mat-card>
+          <div class="chart" #chartContainer>
+            <div #pieChart style="width: 25rem; height: 20rem ; border-radius: 10px;"></div>
+          </div>
+        </mat-card>
+        </div>
+    </div>
+ 
+      <div>
+  
+      </div>
+    </div>
+ 

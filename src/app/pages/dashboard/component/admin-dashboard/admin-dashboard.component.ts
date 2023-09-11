@@ -15,6 +15,7 @@ import { DashboardService } from 'src/app/service/dashboard/dashboard.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { ShowChartComponent } from './show-chart/show-chart.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SalesHeadApprovalComponent } from './sales-head-approval/sales-head-approval.component';
 @Component({
   selector: 'dashboard-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -68,7 +69,15 @@ export class DashboardAdminDashboard implements OnInit {
    selectedSeatOfCurrentProposal:any;
   UpdateAmount: any;
   dataSourceConflict: any;
-
+  isHidden: boolean = false;
+  //  =[
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
+  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'}
+  // ];
   notifications: any;
   deselect:any;
   //  = this.dataSourceConflict.length
@@ -223,11 +232,11 @@ dayBeforeYesterday:any;
       cancelButtonColor: '#7D7E80',
     }).then((confirmation) => {
       if (confirmation.isConfirmed) {
-        this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value, salesHeadFinalOfferAmmount: confirmation.value })
-          .subscribe((res) => {
-            // console.log(res,"Final offer amount sales head dashboard approve")
-           this.deleteRow(id)
-          });
+        // this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value, salesHeadFinalOfferAmmount: confirmation.value })
+        //   .subscribe((res) => {
+        //     // console.log(res,"Final offer amount sales head dashboard approve")
+        //    this.deleteRow(id)
+        //   });
       }
     });
   }
@@ -320,15 +329,16 @@ dayBeforeYesterday:any;
     this.dialog.open(ShowChartComponent, {
       width: '900px',
       height:' 615px',
-
     });
   }
 
+salesHead(id:any){
+  this.dialog.open(SalesHeadApprovalComponent,{
+    width: '1000px',
+    height:' 715px',
+    data:{id:id}
 
-
-
-
-
-
+  })
+}
 
 }

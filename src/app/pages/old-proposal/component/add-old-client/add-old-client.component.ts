@@ -5,6 +5,7 @@ import Konva from 'konva';
 import { LocationService } from 'src/app/service/location/location.service';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { DashboardService } from 'src/app/service/dashboard/dashboard.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-add-old-client',
   templateUrl: './add-old-client.component.html',
@@ -145,7 +146,7 @@ getLocationIdFromFloor(id:string){
   this.locationId=id;
   this.locationService.getImageById(id).subscribe(
     (imageUrl) => {
-      this.imageUrl = 'http://localhost:3000/images/' + imageUrl;
+      this.imageUrl = environment.baseUrl+'images/' + imageUrl;
       console.log(this.imageUrl);
       const imageObj = new Image();
   imageObj.onload = () => {

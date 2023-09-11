@@ -15,6 +15,7 @@ export interface LocationData {
   center: string,
   floor: string,
   selectedWorkstation: string,
+  color:string;
   edit: string,
   delete: string,
   view: string
@@ -28,12 +29,14 @@ export class OldClientListComponent implements OnInit {
   height!: string;
   Locations: any;
   editMode: boolean = false;
-  displayedColumns: string[] = ['proposal_id','location', 'center','floor', 'selectedWorkstation', 'edit', 'delete','view'];
+  displayedColumns: string[] = ['proposal_id','location', 'center','floor', 'selectedWorkstation','color','delete','view'];
   dataSource!: MatTableDataSource<LocationData>;
+  selectedValue!: string;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<LocationData>;
+  locations!: any[];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -99,31 +102,61 @@ previewAll(){
       }
     })
   }
+
+
   setBorder(id: any) {
        this.router.navigate(['/admin','location','layout-editor',id])
           }
 
-  editLocation(id: any) {
-    this.router.navigate(['/admin','location','edit-location',id])
-    // this.editMode = true;
-    // this.openDialog();
-  }
+  // editLocation(id: any) {
+  //   this.router.navigate(['/admin','location','edit-location',id])
+  //   // this.editMode = true;
+  //   // this.openDialog();
+  // }
 
   ngOnInit(): void {
     // this.getAllLocations()
-    this.getAllProposals()
+    this.getAllProposals();
+    this.getLocation();
   }
 
 
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  applyFilter(event:string,isSelecct?:boolean) {
+    if(isSelecct){
+      const filterValue = event;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }  
+    }
+    else{
+      this.selectedValue=""
+      const filterValue = event;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
     }
   }
 
+  viewDetails = (Id: string) => {
+    let currentRoute = this.router.url.split('/')[1];
+    if (currentRoute === 'sales') {
+        this.router.navigate(['/sales', 'new-proposal', 'proposal-preview', Id]);
+    }
+    else {
+        this.router.navigate(['/admin', 'new-proposal', 'proposal-preview', Id]);
+    }
+}
 
+getLocation = () => {
+    this.locationService.getLocationList().subscribe({
+        next: (result: any) => {
+            this.locations = [...result]
+            // console.log(this.locations)
+        }
+    })
+}
 
 }

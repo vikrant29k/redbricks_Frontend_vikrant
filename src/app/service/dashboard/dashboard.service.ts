@@ -38,4 +38,8 @@ export class DashboardService {
     return this.http.get(this.baseUrl + 'floorData/'+ locationName+'/'+centerName, httpOptions )
   }
 
+  getProposalData = (id:any) => {
+    const httpOptions = this.headerService.updateHeader();
+    return this.http.get(this.baseUrl + 'recentProposalData/'+id, httpOptions);
+  };
 }

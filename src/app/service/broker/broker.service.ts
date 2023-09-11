@@ -83,12 +83,30 @@ export class BrokerService {
 
     getBrokerById = (brokerId: string) => {
         let httpOptions = this.headerService.updateHeader();
-        return this.http.get(this.baseUrl + 'getById/' + brokerId, httpOptions).pipe(
+        return this.http.get(this.baseUrl + 'getById/' + brokerId, httpOptions);
+    }
+    getProposalCount = (id:string) =>{
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.get(environment.baseUrl+'brokerDashboard/proposalCount/'+id,httpOptions).pipe(
             this.toster.observe({
-                success: 'Broker Data Loaded Successfully',
-                loading: 'Loading Broker Data...',
-                error: ({ error }) => `${error.Message}`
+               success:'Preposal Data Of Broker Loaded Successfully',
+               error: ({ error }) => `${error.Message}`
+
             })
-        );
+        )
+    }
+
+    getBrokerProposalAvg = (id:string,data:any) =>{
+        let httpOptions = this.headerService.updateHeader()
+        return this.http.post(environment.baseUrl+'brokerDashboard/average/'+id,data,httpOptions)
+    
+    }
+    getProposalCountAsPerLocation = (id:string) =>{
+        let httpOptions = this.headerService.updateHeader();
+        return this.http.get(environment.baseUrl+'brokerDashboard/locations/'+id,httpOptions)
+    }
+    getProposalSelsePerson = (id:string) =>{
+     let httpOptions = this.headerService.updateHeader();
+     return this.http.get(environment.baseUrl+'brokerDashboard/salesPersons/'+id,httpOptions)
     }
 }

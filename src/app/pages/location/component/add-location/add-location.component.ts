@@ -168,6 +168,7 @@ export class AddLocationComponent implements OnInit {
     }
     this.selectSalesHead();
   }
+
 allData:any
   getLocationDataToUpdate = (Id: string) => {
 
@@ -175,6 +176,7 @@ allData:any
       next: (result: any) => {
         this.allData=result;
         this.rentCamArray=result.rentSheet;
+
         console.log("asdfsadsdaa",result);
         this.locationForm.patchValue({
           location: result.location,

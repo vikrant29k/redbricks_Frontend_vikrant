@@ -22,7 +22,7 @@ export class BrokerBrokerListComponent implements OnInit{
     @ViewChild(MatTable) table!: MatTable<BrokerData>;
 
     dataSource!: MatTableDataSource<BrokerData>;
-    displayedColumns: string[] = ['brokerType', 'brokerCategory', 'SPOCName', 'SPOCEmail','edit','delete'];
+    displayedColumns: string[] = ['brokerType', 'brokerCategory', 'SPOCName', 'SPOCEmail','SPOCAprove','edit','delete'];
 
 
     constructor(
@@ -87,6 +87,10 @@ export class BrokerBrokerListComponent implements OnInit{
 
     editBroker = (id: string) => {
         this.router.navigate(['/admin', 'broker', 'update-borker', id]);
+    }
+    brokerDetails = (id:string) =>{
+      this.router.navigate(['/admin','broker','broker-details',id])
+
     }
 
 
