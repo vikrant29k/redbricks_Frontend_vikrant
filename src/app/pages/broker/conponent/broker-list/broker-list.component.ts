@@ -8,6 +8,7 @@ import { BrokerData, BrokerService } from "src/app/service/broker/broker.service
 import { AuthenticationService } from "src/app/service/authentication/authentication.service";
 import Swal from "sweetalert2";
 import { OnInit } from "@angular/core";
+import { take } from "rxjs";
 
 
 
@@ -93,6 +94,12 @@ export class BrokerBrokerListComponent implements OnInit{
 
     }
 
+
+    sendMailOfBrokerReport = () =>{
+        this.brokerService.getMailReportOfBroker().pipe(take(1)).subscribe((res:any)=>{
+          console.log("===========>",res)
+        })
+    }
 
     
 }

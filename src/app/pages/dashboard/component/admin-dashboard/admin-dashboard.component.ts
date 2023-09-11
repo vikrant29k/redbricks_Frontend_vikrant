@@ -24,6 +24,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ShowChartComponent } from './show-chart/show-chart.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SalesHeadApprovalComponent } from './sales-head-approval/sales-head-approval.component';
+import { TooltipComponent } from '@angular/material/tooltip';
 @Component({
   selector: 'dashboard-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -79,6 +80,8 @@ export class DashboardAdminDashboard implements OnInit {
   users: any;
   status: boolean = false;
   city: any;
+  isShowTooltip:boolean = false
+  isshowUserList:boolean =false;
   //  city_center:any;
   clickEvent() {
     this.status = !this.status;

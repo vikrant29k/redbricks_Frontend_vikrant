@@ -537,4 +537,115 @@
       opacity: 1
   }
 }
+.inner_div{
+  display: flex;
+  justify-content: start;
+  gap: 2rem;
+  position: relative;
+  margin-left: 8rem;
+  align-items: center;
+.tooltip {
+  cursor: pointer !important;
+    background: #c3343a;
+    bottom: 0%;
+    width: 3rem;
+    color: #fff;
+    display: block;
+    left: 4rem;
+    margin-bottom: 15px;
+    padding: 20px;
+    pointer-events: all;
+    position: absolute;
+    transform: translateY(10px);
+    transition: all 0.25s ease-out;
+    -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+    -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+  }
+   .tooltip:before {
+  bottom: -20px;
+  content: " ";
+  display: block;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  }
+  
+  /* CSS Triangles - see Trevor's post */
+.tooltip:after {
+    border-top: solid transparent 10px;
+    border-bottom: solid transparent 10px;
+    border-left: solid transparent 10px;
+    border-right: solid #c3343a 10px;
+    bottom: 1rem;
+    content: " ";
+    height: 0;
+    left: -4%;
+    margin-left: -13px;
+    position: absolute;
+    width: 0;
+  }
+
+.card {
+  position: relative;
+  text-align: center;
+  background: white;
+  overflow: hidden;
+  border-radius: 10px;
+  height: 100px;
+  width: 100px;
+  transition: 0.5s;
+  left: 5rem;
+}
+.card:hover{
+  transform: translateY(10px);
+  box-shadow: 0 20px 20px rgba(0,0,0,.2);
+  animation: animate 1.5s ease-in-out both infinite;
+}
+@keyframes animate {
+  0% {
+    transform: translateY(0)
+  }
+  50% {
+    transform: translateY(10px) scale(.98);
+  }
+  100% {
+    transform: translateY(0)
+  }
+}
+.card .img-box {
+  position: absolute;
+  top: 0;
+  left: 0; width: 100%; height: 100%;
+  transition: .5s;
+}
+.card:hover .img-box {
+  opacity: 0.5;
+}
+.card .img-box img{
+  width: 100%;
+}
+
+.card .content {
+  position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: -100%;
+    padding: 20px;
+    padding-top: 60px;
+    box-sizing: border-box;
+    text-align: center;
+    transition: 0.5s;
+    // color: white;
+    background: linear-gradient(0deg, #c21833, transparent);
+}
+.card:hover .content {
+  bottom: 0;
+  padding-top: 2rem;
+  position: relative;
+  background: linear-gradient(0deg, #c21833, transparent);
+
+}
+}
 
