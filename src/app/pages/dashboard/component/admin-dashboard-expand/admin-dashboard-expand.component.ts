@@ -25,58 +25,14 @@ declare var google: any;
   styleUrls: ['./admin-dashboard-expand.component.scss'],
   animations: [
     trigger('slideInOut', [
-      state(
-        'floorin',
-        style({
-          transform: 'translate(0)',
-          background: 'rgb(228 226 226)',
-          width: 'inherit',
-          height: '31rem',
-          position: 'relative',
-          top: '-8.1rem',
-          'border-radius': ' 30px ',
-        })
-      ),
-      state(
-        'floorout',
-        style({
-          transform: 'translate(0,0)',
-          display: 'none',
-          width: '0rem',
-          height: '0rem',
-          position: 'relative',
-          top: '-8.1rem',
-        })
-      ),
+      state('floorin', style({ transform: 'translate(0)',background: 'rgb(228 226 226)', width:'104%',height: '36rem',position: 'relative',top: '-12.1rem', 'border-radius':' 15px ','z-index':1,left:'-1.3rem'})),
+      state('floorout', style({ transform: 'translate(0,0)',display:'none', width:'0rem', height:'0rem',position: 'relative',top: '-12.1rem',left:'-1.3rem' })),
       transition('floorin => floorout', animate('0.6s ease-in-out')),
       transition('floorout => floorin', animate('0.6s ease-in-out')),
     ]),
     trigger('dataInOut', [
-      state(
-        'in',
-        style({
-          transform: 'translate(0)',
-          background: 'rgb(205 82 88)',
-          width: '97%',
-          height: '26.5rem',
-          position: 'relative',
-          top: '-35.5rem',
-          left: '1rem',
-          'border-radius': ' 30px ',
-        })
-      ),
-      state(
-        'out',
-        style({
-          transform: 'translate(0,0)',
-          display: 'none',
-          width: '0rem',
-          height: '0rem',
-          position: 'relative',
-          top: '-35.5rem',
-          left: '1rem',
-        })
-      ),
+      state('in', style({ transform: 'translate(0)',background: 'rgb(205 82 88)', width:'104%',height: '36.5rem',position: 'relative',top: '-48.1rem',left:'-1rem', 'border-radius':' 15px '})),
+      state('out', style({ transform: 'translate(0,0)',display:'none', width:'0rem', height:'0rem',position: 'relative',top: '-48.1rem',left:'-1rem',  })),
       transition('in => out', animate('0.6s ease-in-out')),
       transition('out => in', animate('0.6s ease-in-out')),
     ]),
