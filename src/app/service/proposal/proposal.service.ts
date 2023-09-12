@@ -70,39 +70,13 @@ export class ProposalService {
         })
       );
   };
-  // sendOtp = (mobileNo: string, Id: string) => {
-  //     let httpOptions = this.headerService.updateHeader();
-  //     return this.http.post(this.baseUrl + 'send-otp/' + Id, { mobileNo: mobileNo },httpOptions).pipe(
-  //         this.toster.observe({
-  //             success: 'OTP Send Successfully',
-  //             loading: 'Sending OTP...',
-  //             error: ({ error }) => `${error.Message}`
-  //         })
-  //     )
-  // }
 
-  // verifyOtp = (OTP: any, Id: string) => {
-  //     let httpOptions = this.headerService.updateHeader();
-  //     return this.http.post(this.baseUrl + 'verify-otp/' + Id, {OTP: OTP},httpOptions).pipe(
-  //         this.toster.observe({
-  //             success: 'OTP Verified Successfully',
-  //             loading: 'Verifying OTP...',
-  //             error: ({ error }) => `${error.Message}`
-  //         })
-  //     )
-  // }
 
   generateLayout = (Id: string) => {
     let httpOptions = this.headerService.updateHeader();
     return this.http
       .get(this.baseUrl + 'layout/' + Id , httpOptions)
-      // .pipe(
-      //   this.toster.observe({
-      //     success: 'Layout Preview Generated Successfully',
-      //     loading: 'Generating Layout...',
-      //     error: ({ error }) => `${error.Message}`,
-      //   })
-      // );
+
   };
 
   generateProposal = (Id: string, selectFrom: string, data: any) => {
@@ -176,11 +150,7 @@ export class ProposalService {
   updateProposalById = (Id:any) => {
     let httpOptions = this.headerService.updateHeader();
     return this.http.post(this.baseUrl+'updateProposalId/'+Id,httpOptions).pipe(
-      // this.toster.observe({
-      //   success: 'Proposal ID Updated Successfully',
-      //   loading: 'Loading Proposal...',
-      //   error: ({ error }) => `${error.Message}`,
-      // })
+
     );
   }
 
@@ -286,6 +256,22 @@ export class ProposalService {
         this.toster.observe({
           success: 'Layout Saved Successfully',
           loading: 'Saving Layout...',
+          error: ({ error }) => `${error.Message}`,
+        })
+      );
+  }
+
+  declineProposal(Id:any,note:any){
+    let data={
+      note:note
+    }
+    let httpOptions=  this.headerService.updateHeader()
+    return this.http
+      .post(this.baseUrl + 'declineProposal/' + Id, data, httpOptions)
+      .pipe(
+        this.toster.observe({
+          success: 'Proposal Declined',
+          loading: 'Sending Note...',
           error: ({ error }) => `${error.Message}`,
         })
       );

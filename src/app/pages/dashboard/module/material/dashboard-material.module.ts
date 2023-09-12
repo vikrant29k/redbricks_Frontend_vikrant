@@ -13,9 +13,10 @@ import {MatExpansionModule} from '@angular/material/expansion'
 import {MatTooltipModule}   from '@angular/material/tooltip'
 import { MatRippleModule  } from "@angular/material/core";
 import {MatBadgeModule} from "@angular/material/badge"
-
+import { FormsModule } from "@angular/forms";
 const material = [
     MatTableModule,
+    FormsModule,
     MatBadgeModule,
     MatRippleModule,
     MatInputModule,

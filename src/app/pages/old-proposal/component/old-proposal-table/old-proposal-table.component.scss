@@ -33,6 +33,7 @@
             width: 20rem;
             overflow-x: scroll;
           }
+
             table {
                 color: #fff;
                 background-color: #ececec;
@@ -58,6 +59,8 @@
                     padding-inline: 1rem;
                     text-align: center;
                     background-color: #8B8C8D;
+
+
 
                 }
 
@@ -87,4 +90,19 @@
 
 mat-dialog{
   width: 20rem!important;
+}
+.custom-tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1;
+  display: none;
+}
+
+/* Show the tooltip when showTooltip is true */
+.custom-tooltip.show {
+  display: block;
 }

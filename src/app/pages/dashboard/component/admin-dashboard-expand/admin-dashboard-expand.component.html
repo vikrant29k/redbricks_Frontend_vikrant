@@ -23,7 +23,7 @@
 
     <ng-container *ngFor="let floor of floorData">
       <div class="floor-card-data-div">
-        <div class="icon" (mouseenter)="floor.isHovered=true" (mouseleave)="floor.isHovered=false" (click)="detailFloor(floor.floorName)">
+        <div class="icon" (mouseenter)="floor.isHovered=true" (mouseleave)="floor.isHovered=false" (click)="detailFloor(floor.floorName,floor.floorData)">
           <p>{{ floor.floorName }}</p>
           <!-- <div class="floorHoverData" [ngClass]="{'show': floor.isHovered}"> -->
             <span class="sub-icon" [ngClass]="floor.isHovered ? 'totalWs-icon': ''">Total WS- <br> {{ floor.floorData.totalNoOfWorkstation }}</span>
@@ -42,7 +42,33 @@
   <div class="detailedFloor" [@dataInOut]="details === null ? 'out' : 'in'">
     <button mat-icon-button (click)="closeFloordetails()" class="detailfloorClose">  <mat-icon>arrow_back</mat-icon> </button>
     <h2 class="detailedFloor-title"><mat-icon>layers</mat-icon> {{details}}</h2>
-    <div class="">
+    <div class="detailPie">
+          <div class="cardSection">
+            <section>
+              <p style="width: 70% !important">System Current Price:</p>
+              <p>Rs.{{ currentValue || 0 }} per seat</p>
+            </section>
+            <section>
+              <p style="width: 70% !important">Minimum Rack Value:</p>
+              <p>Rs.{{ rackValue || 0 }} per seat</p>
+              <!-- //<mat-icon>sync</mat-icon> -->
+            </section>
+            <section>
+              <p style="width: 70% !important">Total Sales Price Until Now :</p>
+              <p>Rs.{{ bookingPriceUptilNow || 0 }}</p>
+            </section>
+            <section>
+              <p style="width: 70% !important">Current Rack Rate Acheived :</p>
+              <p>Rs.{{ currentSeatPrice || 0 }} per seat</p>
+            </section>
+
+
+          </div>
+
+
+          <div class="chart" #chartContainer>
+            <div #pieChart ></div>
+          </div>
 
   </div>
   </div>

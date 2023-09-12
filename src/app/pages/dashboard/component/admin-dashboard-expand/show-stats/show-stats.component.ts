@@ -97,58 +97,11 @@ export class ShowStatsComponent implements OnInit, AfterViewInit {
 
     chart.draw(data, options);
   };
-  public line_ChartData = [
-    ['Days', 'S1', 'S2'],
-    ['Mon', 5, 4],
-    ['Tue', 10, 6],
-    ['Thur', 8, 9],
-    ['Wed', 4, 6]
-  ];
-  @ViewChild('lineChart', { static: false }) lineChart!: ElementRef;
-  drawLineChart = () => {
-    const data = google.visualization.arrayToDataTable(this.line_ChartData);
 
-    const options: any = {
-      title: 'Sales and Expenses Over Years',
-      titleTextStyle: {
-        color: 'white',
-        fontSize: 25,
-        bold: true
-      },
-      backgroundColor: '#c3343a',
-      colors: ['#b0022d', '#ed8882'],
-      legend: {
-        position: 'top',
-        textStyle: {
-          color: 'white',
-          fontSize: 18
-        }
-      },
-      curveType: 'function', // This creates a smooth curve for the line chart
-      hAxis: {
-        title: 'Year',
-        textStyle: {
-          color: 'white'
-        }
-      },
-      vAxis: {
-        title: 'Value',
-        textStyle: {
-          color: 'white'
-        }
-      }
-    };
 
-    const chart = new google.visualization.LineChart(
-      this.lineChart.nativeElement
-    );
-
-    chart.draw(data, options);
-  };
   ngAfterViewInit() {
     google.charts.load('current', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(this.drawChart);
     // google.charts.load('current', { packages: ['corechart'] });
-    google.charts.setOnLoadCallback(this.drawLineChart);
   }
 }
