@@ -13,10 +13,11 @@ import { GoogleChartsModule } from 'angular-google-charts';
 import { ShowChartComponent } from './component/admin-dashboard/show-chart/show-chart.component';
 import { SalesHeadApprovalComponent } from './component/admin-dashboard/sales-head-approval/sales-head-approval.component';
 // import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import { IndianNumberPipe } from "./component/admin-dashboard/sales-head-approval/india-number.pipe";
 
 @NgModule({
     declarations: [
+      IndianNumberPipe,
         DashboardComponent,
         DashboardSalesDashboardComponent,
         DashboardAdminDashboard,

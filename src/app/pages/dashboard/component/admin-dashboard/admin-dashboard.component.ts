@@ -30,8 +30,8 @@ import { AuthenticationService } from 'src/app/service/authentication/authentica
     transition('out => in', animate('2s ease-in-out')),
   ]),
   trigger('cardAnimation', [
-    state('hidden', style({ opacity: 0, transform: 'translateY(100%)' })),
-    state('visible', style({ opacity: 1, transform: 'translateY(0)' })),
+    state('hidden', style({ opacity: 0,display:'none', transform: 'translateX(-50px)' })),
+    state('visible', style({ opacity: 1,display:'block', transform: 'translateX(0)' })),
     transition('hidden => visible', animate('300ms ease-in')),
     transition('visible => hidden', animate('300ms ease-out')),
   ]),
@@ -185,7 +185,7 @@ dayBeforeYesterday:any;
         'salesPerson',
         '_id',
         'view',
-        'approve',
+        // 'approve',
         'delete',
       ];
       this.displayedColumnsConflict = ['_id', 'salesPerson', 'resolve'];
@@ -236,49 +236,49 @@ dayBeforeYesterday:any;
       // console.log("centers",[...this.city_center.centers])
       console.log('loaction', res);
     });
-    this.dashboardService.getRecentProposal().subscribe((res) => {
+    this.dashboardService.getRecentProposal().subscribe((res:any) => {
       // console.log(res)
       this.tableDataSource(res);
+      this.countOfRecentProposal=res.length
+      console.log("COUNTT",this.countOfRecentProposal)
       this.Amount = res;
 
     });
 
   }
-
+countOfRecentProposal!:number
   // Approve proposal
-  approvePropsal(id: string) {
-    
-    this.System_value = this.Amount.find((x:any) => x._id === id).previousFinalOfferAmmount ;
-    this.client_value =  this.Amount.find((x:any) => x._id === id).clientFinalOfferAmmount ;
-    console.log(this.System_value, 'System_value');
-    console.log(this.client_value, 'client_value');
+  // approvePropsal(id: string) {
+  //   this.System_value = this.Amount.find((x:any) => x._id === id).previousFinalOfferAmmount ;
+  //   this.client_value =  this.Amount.find((x:any) => x._id === id).clientFinalOfferAmmount ;
+  //   // console.log(this.System_value, 'System_value');
+  //   // console.log(this.client_value, 'client_value');
 
-    var a = 'myprice';
-    
-    Swal.fire({
-      title: 'Approve Proposal',
-      html: `Client Price = ${(this.client_value).toFixed(2)} <br> System Price = ${(this.System_value).toFixed(2)}`,
-      icon: 'info',
-      showConfirmButton: true,
-      confirmButtonText: 'Confirm',
-      confirmButtonColor: '#C3343A',
-      input: 'number',
-      inputAttributes:{
-        required:'true'
-      } ,
-      inputLabel: 'Enter Final Amount',
-      showCancelButton: true,
-      cancelButtonColor: '#7D7E80',
-    }).then((confirmation) => {
-      if (confirmation.isConfirmed) {
-        // this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value, salesHeadFinalOfferAmmount: confirmation.value })
-        //   .subscribe((res) => {
-        //     // console.log(res,"Final offer amount sales head dashboard approve")
-        //    this.deleteRow(id)
-        //   });
-      }
-    });
-  }
+  //   var a = 'myprice';
+  //   Swal.fire({
+  //     title: 'Approve Proposal',
+  //     html: `Client Price = ${(this.client_value).toFixed(2)} <br> System Price = ${(this.System_value).toFixed(2)}`,
+  //     icon: 'info',
+  //     showConfirmButton: true,
+  //     confirmButtonText: 'Confirm',
+  //     confirmButtonColor: '#C3343A',
+  //     input: 'number',
+  //     inputAttributes:{
+  //       required:'true'
+  //     } ,
+  //     inputLabel: 'Enter Final Amount',
+  //     showCancelButton: true,
+  //     cancelButtonColor: '#7D7E80',
+  //   }).then((confirmation) => {
+  //     if (confirmation.isConfirmed) {
+  //       // this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value, salesHeadFinalOfferAmmount: confirmation.value })
+  //       //   .subscribe((res) => {
+  //       //     // console.log(res,"Final offer amount sales head dashboard approve")
+  //       //    this.deleteRow(id)
+  //       //   });
+  //     }
+  //   });
+  // }
 
   //lock proposal
   lockProposal(id: string) {
@@ -370,8 +370,9 @@ dayBeforeYesterday:any;
 
 salesHead(id:any){
   this.dialog.open(SalesHeadApprovalComponent,{
-    width: '900px',
+    width: '1000px',
     height:'615px',
+    panelClass:'salesHead',
     data:{id:id}
 
   })

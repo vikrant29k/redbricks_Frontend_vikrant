@@ -1,40 +1,106 @@
 <div class="container">
   <div class="title">
-    <h1> ID : {{id}}</h1>
+    <h1 style="font-size: 1.8rem; color:#c3343a;"> Proposal ID : {{id}}</h1>
   </div>
-  <mat-card class="card">
+  <!-- <mat-card class="card"> -->
     <div class="content" >
-      <div *ngIf="dta" class="section">
-        <p >Center: {{dta.center}}</p>
-        <p >Client Final Offer Amount: {{dta.clientFinalOfferAmmount}}</p>
-        <p>current Rack Rate: {{dta.currentRackRate}}</p>
-        <p>Floor: {{dta.floor}}</p>
-        <p>Location: {{dta.location}}</p>
-        <p>Booking Price: {{dta.locationData.bookingPriceUptilNow}}</p>
-        <p>Rack Rate: {{dta.locationData.rackRate}}</p>
-        <p>System Price: {{dta.locationData.systemPrice}}</p>
-        <p>Location Id: {{dta.locationId}}</p>
-        <p>Loss: {{dta.loss}}</p>
-        <p>Rack Value As Per Client: {{dta.rackValueAsPerClient}}</p>
-        <p>Total Number Of Seats: {{dta.totalNumberOfSeats}}</p>
+
+    <div *ngIf="dta" class="newSections">
+      <!-- location name sction -->
+      <section>
+        <mat-form-field appearance="fill">
+          <mat-label>Location</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.location}}">
+      </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Center</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.center}}">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+
+        <mat-label>Floor</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.floor}}">
+    </mat-form-field>
+      </section>
+
+<!-- tenure and locking section -->
+      <section>
+        <mat-form-field appearance="fill">
+          <mat-label>Tenure</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.Tenure}}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Lock In</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.LockIn}}">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Deposit Term</mat-label>
+      <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.depositTerm}}">
+  </mat-form-field>
+      </section>
+
+<!-- area section -->
+      <section>
+        <mat-form-field appearance="fill">
+          <mat-label>Area Of Core Selected Seat</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.areaOfCoreSelectedSeat}} Sq.Ft.">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Area Of Usable Selected Seat</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.areaOfUsableSelectedSeat}} Sq.Ft.">
+    </mat-form-field>
+      </section>
+
+<!-- system and client price -->
+      <section>
+      <mat-form-field appearance="fill">
+        <mat-label>System Genrated Price</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true"    value="Rs. {{ dta.previousFinalOfferAmmount | indianNumber}}">
+    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Client Final Offer Amount</mat-label>
+        <input type="text"  matInput autocomplete="off" [readonly]="true" value="Rs. {{ dta.clientFinalOfferAmmount | indianNumber}}">
+    </mat-form-field>
+      </section>
+
+      <!-- total selected seat -->
+<section>
+  <mat-form-field appearance="fill">
+    <mat-label>Total Number Of Seats</mat-label>
+    <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.totalNumberOfSeats }}">
+</mat-form-field>
+</section>
+
+<!-- rack rates -->
+      <section>
+        <mat-form-field appearance="fill">
+          <mat-label>System's Rack Rate</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{ dta.locationData.rackRate | indianNumber}}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Client's Rack Rate</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{ dta.rackRateAsPerClient | indianNumber}}">
+    </mat-form-field>
+<!-- after upates prices -->
+      </section>
+      <section>
+        <mat-form-field appearance="fill">
+          <mat-label>Sales Price(After adding client price)</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.updatingThePrice | indianNumber}}">
+      </mat-form-field>
+    </section>
+    <!-- rack rate of total -->
+      <section>
+      <mat-form-field appearance="fill">
+        <mat-label>Rack Value(Updated)</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.afterUpdate | indianNumber}}">
+    </mat-form-field>
+
+      </section>
     </div>
-      <div *ngFor="let data of proposalData" class="section1">
-        <p >Tenure: {{data.Tenure}}</p>
-
-        <p >LockIn: {{data.LockIn}}</p>
-
-        <p >Core Seats Selected: {{data.areaOfCoreSelectedSeat}}</p>
-
-        <p >Usable Seats Selected: {{data.areaOfUsableSelectedSeat}}</p>
-
-      </div>
-      <div class="sub-content">
-
-          <p >Average Seat Price : 12</p>
-
-      </div>
     </div>
-  </mat-card>
+  <!-- </mat-card>,\ -->
   <div class="form-action">
     <button type="reset" mat-raised-button  color="primary" (click)="approveProposal()">Approve</button>
     <button type="submit" mat-raised-button color="primary" (click)="declineProposal()">Decline</button>

@@ -14,9 +14,10 @@ import {MatTooltipModule}   from '@angular/material/tooltip'
 import { MatRippleModule  } from "@angular/material/core";
 import {MatBadgeModule} from "@angular/material/badge"
 import {DragDropModule} from '@angular/cdk/drag-drop';
-
+import { FormsModule } from "@angular/forms";
 const material = [
     MatTableModule,
+    FormsModule,
     MatBadgeModule,
     MatRippleModule,
     MatInputModule,
