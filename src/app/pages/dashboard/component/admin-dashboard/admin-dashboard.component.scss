@@ -775,3 +775,75 @@
     }
   }
 }
+.menu {
+  position: relative;
+  text-align: end;
+ 
+}
+
+.menu-toggle {
+  z-index: 1;
+}
+
+.menu-items {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right:0%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu-item {
+  background-color: #C3343A;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 5px 0;
+  border-radius: 5px;
+  text-align: center;
+  span{
+    cursor: pointer;
+pointer-events: all;    
+text-decoration: none;
+color: white;
+font-weight: 500;
+  }
+}
+.menu-items .menu-item:nth-child(1) {
+  transform: translate3d(1em,-7em,0);
+  border-right: 1px solid black;
+
+}
+.menu-items .menu-item:nth-child(2) {
+  transform: translate3d(-3.5em,-6.3em,0);
+  border-right: 1px solid black;
+}
+
+.menu-items .menu-item:nth-child(3) {
+  transform: translate3d(-6.5em,-3.2em,0);
+  border-right: 1px solid black;
+}
+
+.menu-items.active .menu-item:nth-child(4) {
+  transform: translate3d(-7em,1em,0);
+  border-right: 1px solid black;
+}
+
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  // z-index: 2;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+

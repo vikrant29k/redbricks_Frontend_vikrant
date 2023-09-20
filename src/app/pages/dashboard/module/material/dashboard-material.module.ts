@@ -13,6 +13,7 @@ import {MatExpansionModule} from '@angular/material/expansion'
 import {MatTooltipModule}   from '@angular/material/tooltip'
 import { MatRippleModule  } from "@angular/material/core";
 import {MatBadgeModule} from "@angular/material/badge"
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 const material = [
     MatTableModule,
@@ -29,7 +30,8 @@ const material = [
     MatFormFieldModule,
     MatSelectModule,
    MatDialogModule,
-   MatIconModule
+   MatIconModule,
+   DragDropModule
 
 ];
 

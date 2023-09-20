@@ -2,59 +2,24 @@
   <div class="title">
     <h1>{{ title }} Dashboard</h1>
   </div>
-  <div class="inner_div">
-    <div class="example-button-container">
-      <button mat-fab color="primary"  (click)="isShowTooltip = true">
-        <mat-icon>person</mat-icon>
-      </button>   
-    </div>
-    <div [style.bottom] = "(!isshowUserList && isShowTooltip)? '0%':'20%'" *ngIf="isShowTooltip" class="tooltip" (click)="isshowUserList = true">User</div>
-    <ng-container *ngIf="isshowUserList && isShowTooltip">
-      <div class="card" *ngFor="let userData of users; let i = index" >
-        <div class="img-box">
-          <p [ngClass]="i === 0 ? 'font' : ''">
-            <mat-icon>person_outline</mat-icon>
-          </p>  
-        </div>
-        <div class="content">
-          <!-- <h2> -->
-           
-            <p [ngClass]="i === 0 ? 'font' : ''">
-              {{ userData.firstName }}
-              {{ userData.lastName}}
-            </p>
-          <!-- </h2> -->
-          <!-- <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </p>
-            <ul>
-            <li><a href=""><i class="fa fa-facebook"></i></a></li>
-            <li><a href=""><i class="fa fa-twitter"></i></a></li>
-            <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-          </ul> -->
-        </div>
+  <div [style.display]="menuState == 'hidden'? 'none':'block'"  id="overlay" ></div>
+  
+  <div class="menu" >
+      <button  class="menu-toggle" (click)="toggleMenu()"   type="button"  mat-fab  color="primary" >
+        <mat-icon >person</mat-icon>
+      </button>
+     <div [@menuAnimation]="menuState" class="menu-items">
+      <!-- Add your menu items here -->
+      <div class="menu-item" *ngFor="let el of userList">
+        <span  (click)="openChartDialog('1000ms', '1500ms',el._id)">
+        {{el.firstName}} {{el.lastName}}
+        </span>
       </div>
-    </ng-container>
+      
+      <!-- Add more menu items as needed -->
+    </div>
   </div>
-<!-- <div class="sale">
- <mat-icon (click)="isHidden = !isHidden">person_outline</mat-icon>
-<ng-container *ngIf="isHidden">
-  <div>
-    <br>
-   <mat-card><p>name</p></mat-card>
-  </div>
-</ng-container>
-</div> -->
-  <div class="main-content">
-    <div class="sales-proposal">
-      <mat-card class="sales">
-        <!-- total users  -->
-        <div class="totals">
-          <!-- <mat-icon>people</mat-icon> -->
-          <p matTooltip="Total Users Availabel">Total Users: {{ totalUser }}</p>
-          <p>Top Sales Persons</p>
-        </div>
-        <!-- Sales Persons Lists -->
-        <div class="sales-persons">
-
+ 
   <div class="main-content">
     <div mat-card class="card-container">
       <ng-container *ngFor="let location of city">
