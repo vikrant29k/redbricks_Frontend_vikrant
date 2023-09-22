@@ -63,6 +63,7 @@
     padding-block: 2rem;
     @include for-desktop() {
       width: 50rem;
+      height:34rem;
       padding-block: 1rem;
     }
     @include for-mobile() {

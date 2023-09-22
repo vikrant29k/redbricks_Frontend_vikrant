@@ -1,3 +1,13 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .contain{
   width: 1080px;
   height: 734px;
@@ -14,31 +24,42 @@
 }
 .main{
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-
+  margin-top:3rem;
+  // justify-content: space-around;
+  // align-items: center;
+//1366 651
+  @include for-mobile(){
+    flex-direction: column;
+  }
   button{
     margin: 10px;
+    width:13rem;
   }
   .canvas-container{
-    margin-left: 6rem;
+    margin-left: 2rem;
+    margin-top:3rem;
     padding-block:0.5rem 2rem;
 
   }
   .sub-container{
     display: flex;
     flex-direction: column;
-    // margin-left:6rem;
+    margin-top:3rem;
     // padding-top:3rem;
     // width:15rem;
     // align-items: center;
+    @include for-mobile(){
+      justify-content: center;
+      align-items: center;
+      margin-left: 2rem;
+    }
   }
   .label{
     display: flex;
-    gap:1rem;
+    gap:0.6rem;
 
     mat-card{
-      width:8rem;
+      width:5.8rem;
     }
   }
 }

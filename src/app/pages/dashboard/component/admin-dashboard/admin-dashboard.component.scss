@@ -35,6 +35,7 @@
 
 .container {
   // box-sizing: border-box;
+  overflow-y: scroll;
   height: 100vh;
   background-color: #fddede;
   background-image: url('../../../../../assets/images/location/location-background.png');
@@ -112,6 +113,9 @@
         height: 4rem;
         font-size: 4rem;
         cursor: pointer;
+        @include for-mobile(){
+          bottom:5rem;
+        }
       }
       .sales {
 
@@ -125,10 +129,13 @@
         width: 50rem;
         margin-inline: 1rem 0rem;
         margin-block: 0.5rem;
+        @include for-desktop(){
+          bottom:1.7rem;
+        }
         @include for-mobile() {
-           width: 82vw;
+           width: 66vw;
            margin-inline: 0rem 0rem;
-
+           bottom:2.7rem;
         }
         .totals {
           display: flex;
@@ -216,7 +223,11 @@
         }
         // margin-inline-start: 1rem;
       .tableContain{
-          // overflow-x: scroll;
+        @include  for-mobile(){
+          overflow-x: scroll;
+          width:12rem;
+        }
+
         .tableclass {
           width: 50rem;
           border-radius: 6px;
@@ -224,6 +235,9 @@
           margin-block: 0rem 0.4;
           background-color: #c3343a;
           border: 2px solid white;
+          // @include for-mobile(){
+          //   width:12rem;
+          // }
           th {
             text-align: center;
             font-weight: 600;
@@ -291,6 +305,9 @@
           background-color: rgb(205 82 88);
           color: white;
           font-size: 1.5rem;
+          @include for-mobile(){
+            left:-1rem;
+          }
         }
       }
       .location.in {
@@ -369,7 +386,7 @@
           @include for-mobile() {
             // transform: matrix(1.17, 1.1, -1.1, 1.17, 71.3, 142);
             // transform: matrix(0.8, 0, 0, 0.4, 74, 173);
-            transform: matrix(0.8, 0, 0, 0.8, 3, 19);
+            //transform: matrix(0.8, 0, 0, 0.8, 3, 19);
           }
         }
 

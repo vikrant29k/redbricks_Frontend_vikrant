@@ -1,7 +1,7 @@
 
 <div class="main">
   <div class="canvas-container">
-    <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled ?'contain':'changeContain'"></div>
+    <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled ?'contain':'changeContain'" ></div>
   </div>
 <div class="sub-container">
   <button mat-raised-button (click)="drawTHeSeat()">Get Clients</button>
@@ -11,7 +11,7 @@
 <button mat-raised-button (click)='addLayout()' color="primary">Final the layout</button>
 <!-- <button *ngIf="isDeleteShape" mat-raised-button (click)="deleteSelectedShape(seatShape)" color="primary">delete Selected Layout</button> -->
 <button mat-raised-button color="secondary" (click)="deleteSelectedRect()" [disabled]="!selectedShape">Delete Selected Rectangle</button>
-<label> For Drawing Seats</label>
+<label style="margin-left:10px"> For Drawing Seats</label>
 <button mat-raised-button (click)="drawSeatAndGetHW()" color="primary">{{isSeatDrawingEnabled?'Stop':'Start'}} Drawing Seat</button>
 <button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button>
 <div class="label">

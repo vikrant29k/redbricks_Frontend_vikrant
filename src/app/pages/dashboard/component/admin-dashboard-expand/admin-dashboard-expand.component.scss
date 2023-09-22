@@ -1,8 +1,18 @@
+
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
 @mixin for-mobile {
   @media (max-width: 450px) {
     @content;
   }
 }
+
+
+
+
 .card {
   border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -17,7 +27,15 @@
     transition: 600ms ease-out;
     top: -2rem;
     left: -3rem;
-
+    @include for-desktop(){
+      height:32rem;
+    }
+    @include for-mobile(){
+      // height: 16rem;
+      display: flex;
+      flex-direction: column;
+      margin-left: 1.5rem;
+    }
     cursor: pointer;
     h2{
       font-size: 2.5rem;
@@ -60,7 +78,6 @@
   .sub_card {
   width: inherit;
   display: flex;
-
   flex-wrap: wrap;
   justify-content: space-evenly;
   // overflow: hidden;
@@ -79,19 +96,18 @@
     align-items: center;
     background-color: #d8d8d8;
   }
+
   .floor-card {
     transition: transform 0.3s ease-in-out;
     transform: translateX(100%);
 
   }
 
-  .floor-card.in {
-    transform: translateX(0);
-  }
 
   .center-card {
     /* Your center card styles here */
     cursor: pointer;
+    margin: 60px 10px;;
   }
   .sub {
 
@@ -150,27 +166,35 @@
   top: -2rem;
   color: #cd5258;
 }
+
+.floor-card.in {
+  transform: translateX(0);
+}
+
 .floor-data{
-display: flex;
-justify-content: space-around;
-}
-.floor-card-data-div{
   display: flex;
-  flex-direction: column;
-}
-.floor-card-data{
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #fdfdfd;
-  width: 10rem;
-  height: 10rem;
-  background-color: #cd5258;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
+  justify-content: space-around;
+  @include for-mobile(){
+    justify-content: center;
+  }
+  }
+  .floor-card-data-div{
+    display: flex;
+    flex-direction: column;
+  }
+  .floor-card-data{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #fdfdfd;
+    width: 10rem;
+    height: 10rem;
+    background-color: #cd5258;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
 .floorHoverData{
   display: flex;
   width: 20rem;
@@ -277,12 +301,17 @@ justify-content: space-around;
   width: 20rem;
   z-index: 2;
 }
+
 .detailedFloor{
   transition: transform 0.3s ease-in-out;
   transform: translateX(100%);
+
   .detailPie{
     display: flex;
     justify-content: space-around;
+    @include for-mobile(){
+      flex-direction: column;
+    }
     .cardSection{
 
       // width: 45rem;
@@ -301,10 +330,12 @@ justify-content: space-around;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap:2rem;
       p{
         margin-block: 15px;
         width: 46%;
         text-align: left;
+        font-weight: 500;
         mat-icon{
           height: 20px;
           width: 20px;
@@ -333,7 +364,7 @@ justify-content: space-around;
       /* text-align: center; */
       display: flex;
       overflow: hidden;
-      height: 25rem;
+      height:11rem;
       justify-content: center;
     margin-left: -6px;
     }

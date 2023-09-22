@@ -18,6 +18,7 @@ export class SalesHeadApprovalComponent implements OnInit {
 id:any;
 proposalData: any;
 dta:any;
+dataSourceRecent: any;
   constructor(private proposalService:ProposalService,
     public dialogRef: MatDialogRef<SalesHeadApprovalComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: DialogData,
@@ -47,7 +48,7 @@ getData(){
 }
 clientPrice:any;
 System_value:any
-  approveProposal() {
+  approveProposal(id:string) {
     console.log('data:',this.clientPrice)
     Swal.fire({
       title: 'Approve Proposal',
@@ -69,11 +70,18 @@ System_value:any
       this.proposalService.approveProposal(this.id, { finalOfferAmmount: confirmation.value, salesHeadFinalOfferAmmount: confirmation.value })
           .subscribe((res) => {
             this.dialogRef.close();
+            this.deleteRow(id)
           });
+
       }
     })
   }
 
+  deleteRow(id: any) {
+    // console.log(this.dataSourceRecent.value[id]);
+    this.dataSourceRecent = this.dataSourceRecent.filter((u:any) => u._id !== id);
+    // console.log(this.dataSourceRecent)
+  }
  declineProposal(){
   Swal.fire({
     title: 'Decline Proposal',
