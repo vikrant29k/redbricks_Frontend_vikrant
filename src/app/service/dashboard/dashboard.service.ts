@@ -42,4 +42,14 @@ export class DashboardService {
     const httpOptions = this.headerService.updateHeader();
     return this.http.get(this.baseUrl + 'recentProposalData/'+id, httpOptions);
   };
+
+  getUserListArray = () =>{
+    let httpOptions = this.headerService.updateHeader()
+    return this.http.get(this.baseUrl+'userData/1',httpOptions)
+  }
+  getSelsProposalCount = (id:any) =>{
+    let httpOptions = this.headerService.updateHeader();
+    return this.http.get(this.baseUrl+'salesProposalCount/'+id,httpOptions)
+
+  }
 }

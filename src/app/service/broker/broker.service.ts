@@ -109,4 +109,12 @@ export class BrokerService {
      let httpOptions = this.headerService.updateHeader();
      return this.http.get(environment.baseUrl+'brokerDashboard/salesPersons/'+id,httpOptions)
     }
+    getMailReportOfBroker = () =>{
+        let httpOptions =this.headerService.updateHeader()
+        return this.http.get(environment.baseUrl+'report/brokerReport',httpOptions).pipe(
+            this.toster.observe({
+                success:'Email Send Successfully'
+            })
+        )
+    }
 }
