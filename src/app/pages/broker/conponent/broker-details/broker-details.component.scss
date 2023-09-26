@@ -83,7 +83,7 @@
           @include for-mobile() {
              width: 82vw;
              margin-inline: 0rem 0rem;
-
+            margin-top:-1rem;
           }
 
         }
@@ -166,26 +166,78 @@
         }
       }
 
+      .pichart{
+        display: flex;
+        flex-direction: column;
+        text-align: initial;
+        background-color: #c3343a;
+        color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.484),
+          0 6px 15px 0 rgba(0, 0, 0, 0.19);
+        width:25rem;
+        height:14rem;
+        margin-inline: 1rem 0rem;
+        margin-block: -1.5rem;
+        @include for-mobile(){
+          margin-top:1rem;
+          width:18.5rem;
+          height:12rem;
+         }
+         .chart{
+           width:25rem;
+           height:20rem;
+           @include for-mobile(){
+             width: 17rem;
+             height: 17rem ;
+             margin-left:1rem;
+
+           }
+         }
+      }
+
     }
+
 
 
   }
 
 
-  .totals {
+  .brokerdetail{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.484),
+      0 6px 15px 0 rgba(0, 0, 0, 0.19);
+    margin-inline: 1rem 0rem;
+    margin-block: 0.5rem;
     font-weight: 500;
     background: #c3343a;
-    width: 300px;
+    width: 19rem;
     padding: 1rem;
     border-radius: 5px;
-    margin: 0 31%;
+    margin: 0 36%;
     p {
+      font-size: 1.2rem;
+      color: white;
       margin-block: 0.3rem 0.2rem;
       @include for-mobile(){
         font-size: 1.2rem;
+        color: white;
+
       }
     }
+    @include for-mobile(){
+      width:15rem;
+      margin-left:3rem;
+    }
   }
+  // .totals {
+
+  //   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.484),
+  //           0 6px 15px 0 rgba(0, 0, 0, 0.19);
+  //   @include for-mobile(){
+  //     width:16rem;
+  //     margin-left:2.3rem;
+  //   }
+
+  // }
   mat-card{
     background: #c3343a;
     margin-top: 1.5rem;
@@ -194,14 +246,4 @@
     }
 
   }
-  .chart{
-    width:25rem;
-    height:20rem;
-    @include for-mobile(){
-      width: 17rem;
-      height: 17rem ;
-      margin-left: 3rem;
-      margin-top:2rem;
-    }
 
-  }

@@ -32,6 +32,9 @@
 
     button{
       margin: 10px;
+      @include for-mobile(){
+        width:13rem;
+      }
     }
     .canvas-container{
       margin-block: 1.5rem;

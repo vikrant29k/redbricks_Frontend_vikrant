@@ -2,11 +2,14 @@
     <div class="title" *ngIf="brokerDetails">
       <h1>{{brokerDetails.SPOCName}}</h1>
     </div>
-    <div class="totals" *ngIf="brokerDetails">
-      <!-- <mat-icon>people</mat-icon> -->
-      <p matTooltip="Total Users Availabel">Total Proposal By <span style="text-transform: uppercase;">{{brokerDetails.SPOCName}}</span> : {{brokerDetails.totalProposalCount}}</p>
-      <p>Current Month Total Proposals : {{monthlyPropCount.totalProposalsCount}}</p>
-    </div>
+    <mat-card class="brokerdetail">
+      <div *ngIf="brokerDetails">
+        <!-- <mat-icon>people</mat-icon> -->
+        <p matTooltip="Total Users Availabel">Total Proposal By <span style="text-transform: uppercase;">{{brokerDetails.SPOCName}}</span> : {{brokerDetails.totalProposalCount}}</p>
+        <p>Current Month Total Proposals : {{monthlyPropCount.totalProposalsCount}}</p>
+      </div>
+    </mat-card>
+
 
     <div class="main-content">
       <div class="sales-proposal">
@@ -107,10 +110,12 @@
         </mat-card>
       </div>
 
+<mat-card class="pichart">
+  <div class="chart" #chartContainer>
+    <div #pieChart ></div>
+  </div>
+</mat-card>
 
-          <div class="chart" #chartContainer>
-            <div #pieChart ></div>
-          </div>
 
     </div>
 

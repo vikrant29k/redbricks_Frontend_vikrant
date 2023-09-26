@@ -31,10 +31,11 @@
       height:32rem;
     }
     @include for-mobile(){
-      // height: 16rem;
+      height: 34rem;
       display: flex;
       flex-direction: column;
       margin-left: 1.5rem;
+      top:0.1rem;
     }
     cursor: pointer;
     h2{

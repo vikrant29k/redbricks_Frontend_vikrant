@@ -46,7 +46,7 @@ import { AuthenticationService } from 'src/app/service/authentication/authentica
     })),
     transition('hidden => visible', animate('300ms ease-in')),
     transition('visible => hidden', animate('300ms ease-out'))
-  ]) 
+  ])
 ]
 })
 export class DashboardAdminDashboard implements OnInit {
@@ -101,9 +101,12 @@ export class DashboardAdminDashboard implements OnInit {
     { label: 'Contact', link: '/contact' },
   ];
   menuState = 'hidden';
-
+state='hidden';
   toggleMenu() {
     this.menuState = this.menuState === 'hidden' ? 'visible' : 'hidden';
+  }
+  toggleMenus() {
+    this.state = this.state === 'hidden' ? 'visible' : 'hidden';
   }
   //  =[
   //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
@@ -127,7 +130,7 @@ export class DashboardAdminDashboard implements OnInit {
   isshowUserList:boolean =false;
   //  city_center:any;
 
- 
+
 
   clickEvent() {
     this.status = !this.status;
@@ -166,7 +169,7 @@ export class DashboardAdminDashboard implements OnInit {
         });
       }
     });
-   
+
   }
 today:any;
 yesterDay:any;
@@ -392,5 +395,5 @@ openChartDialog(enterAnimationDuration: string, exitAnimationDuration: string,id
       exitAnimationDuration,
       data:res
   })
-  }) 
+  })
 }}
