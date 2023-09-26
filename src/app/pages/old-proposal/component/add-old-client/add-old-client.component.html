@@ -35,7 +35,7 @@
             </mat-select>
             <mat-error>Floor is required</mat-error>
           </mat-form-field>
-        </section> 
+        </section>
         <ng-container *ngIf="showContainer">
         <section>
           <mat-form-field appearance="outline">
@@ -74,7 +74,7 @@
             <input type="text" matInput formControlName="depoistTerm" />
           </mat-form-field>
         </section>
-        
+
         <section>
           <mat-form-field appearance="outline">
             <mat-label>Notice Period</mat-label>
@@ -92,7 +92,7 @@
           </mat-form-field>
         </section>
         <section>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Serviced or Non-serviced</mat-label>
             <mat-select formControlName="Serviced">
@@ -100,7 +100,7 @@
               <mat-option value="Non serviced">Non serviced</mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Total Workstations</mat-label>
             <input type="number" matInput formControlName="totalNumberOfSeats" />
@@ -111,20 +111,21 @@
           </mat-form-field>
         </section>
         <div class="controllers">
-          <button mat-raised-button type="button" (click)="toggleDrawing()" color="primary">{{isDrawingEnabled?'Stop':'Start'}} Drawing Border</button>
-          <button mat-raised-button type="button" (click)='addRectDataInArray()' color="primary">Update Border</button>
+          <label>Seats to be Selected: {{totalNumebrOfSeat}}</label>
+          <button mat-raised-button type="button" (click)="changeTheFlow()">{{flowOfDrawingSeats?'Vertical':'Horizontal'}}</button>
           <button mat-raised-button type="button"  color="primary" (click)="drawRectangles()">Draw Seats</button>
+          <button mat-raised-button type="button" (click)="resetSeat()">Reset Seats</button>
           <!-- <div class="label">
             <mat-card><p><b>Width : {{seatWidth}}</b></p></mat-card>
             <mat-card><p><b>Height : {{seatHeight}}</b></p></mat-card>
           </div> -->
-        <button mat-raised-button type="button" (click)="resetZoomAndPosition()" color="primary">Reset Zoom and Position</button>
+        <!-- <button mat-raised-button type="button" (click)="resetZoomAndPosition()" color="primary">Reset Zoom and Position</button> -->
       </div>
         <!-- <button mat-raised-button (click)='addLayout()' color="primary">Final the layout</button> -->
         <div class="canvas-container">
           <div id="container" [ngClass]="isDrawingEnabled  ?'contain':'changeContain'"></div>
-        </div>   
- 
+        </div>
+
   </ng-container>
 
         <div class="form-action">

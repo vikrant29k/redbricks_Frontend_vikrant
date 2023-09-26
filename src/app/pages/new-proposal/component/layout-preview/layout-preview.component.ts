@@ -17,7 +17,7 @@ export interface DialogData {
 })
 export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit {
     id!: string;
-    flowOfDrawingSeats:string = 'vertical';
+    flowOfDrawingSeats:boolean=true;
     imageUrl:any;
     stage!: Konva.Stage;
     layer!: Konva.Layer;
@@ -28,8 +28,8 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
     transformer!: Konva.Transformer;
     getAllPoints:any[]=[]
     totalNumber!:number;
-  seatSizeWidth!: number;
-  seatSizeHeight!: number;
+  seatWidth!: number;
+  seatHeight!: number;
   setButtonDisable: boolean= false;
     ngAfterViewInit(): void {
 
@@ -91,10 +91,12 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
       }
 //intialize the image and stage and layer
       getImageAndInitialize(locationId:any,layoutArray:any){
+        this.seatWidth=layoutArray[0].seatWidth;
+        this.seatHeight=layoutArray[0].seatHeight;
         layoutArray[0].layoutBorder.forEach((item:any) => {
-          const {_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight } = item;
-      this.getAllPoints.push({_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight });
-    });
+          const {_id, startX, startY, endX, endY,seatHeight,seatWidth,rectWidth,rectHeight,seatPosition,isFull } = item;
+          this.getAllPoints.push({_id, startX, startY, endX, endY,seatHeight,seatWidth,rectWidth,rectHeight,seatPosition,isFull });
+});
         this.locationService.getImageById(locationId).subscribe(
             (imageUrl) => {
               this.imageUrl = environment.baseUrl+'images/' + imageUrl;
@@ -109,7 +111,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                 this.drawTheBlankSeat()
                 this.transformer = new Konva.Transformer(); // Initialize transformer
                 this.layer.add(this.transformer);
-                console.log(layoutArray,"HELOOOE")
+                // console.log(layoutArray,"HELOOOE")
                 for (const shape of layoutArray[0].layoutBorder) {
                   // this.seatSizeHeight=shape.seatHeight;
                   // this.seatSizeWidth=shape.seatWidth
@@ -119,8 +121,8 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                     y: shape.startY,
                     width: shape.rectWidth,
                     height: shape.rectHeight,
-                    fill: 'blue',
-                    opacity: 0.1,
+                    fill: 'transparent',
+                    opacity: 0.05,
                   });
 
                   this.layer.add(rect);
@@ -148,8 +150,8 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                     y: shape.startY,
                     width: shape.rectWidth,
                     height: shape.rectHeight,
-                    fill: 'blue',
-                    opacity: 0.1,
+                    fill: 'transparent',
+                    opacity: 0.05,
                   });
 
                     this.layer.add(rect);
@@ -177,6 +179,9 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
       drawingEnabled: boolean = true;
       lastCoordinate:any[]=[]
       drawnSeats:any[]=[]
+      changeTheFlow(){
+        this.flowOfDrawingSeats=!this.flowOfDrawingSeats
+      }
       drawRectangles() {
         let count = 0;
         this.stage.on('click', (e: any) => {
@@ -193,19 +198,19 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
             const minY = point.startY;
             const maxX = point.endX;
             const maxY = point.endY;
-            console.log("name of rect",point._id,
+            // console.log("name of rect",point._id,
                         // "\n minX=",point.startX,
                         // "\n maxX=>",point.endX,
-                        "\n width of rect=>", point.endX-point.startX);
-            console.log("MAX Columns can be added==>",Math.round((maxX-minX)/point.seatWidth))
-      this.seatSizeHeight=point.seatHeight;
-      this.seatSizeWidth=point.seatWidth;
+                        // "\n width of rect=>", point.endX-point.startX);
+            // console.log("MAX Columns can be added==>",Math.round((maxX-minX)/point.seatWidth))
+
             const availableWidth = maxX - minX;
             const availableHeight = maxY - minY;
             const maxHorizontalRectangles = Math.floor(availableWidth / point.seatWidth);
             const maxVerticalRectangles = Math.floor(availableHeight / point.seatHeight);
 
             const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
+            console.log(maxRectangles,"HECH TE ")
             const flowOfData = this.flowOfDrawingSeats;
             if (x < maxX && x > minX && y > minY && y < maxY) {
               const polygon = new Konva.Line({
@@ -216,47 +221,54 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                 // draggable:true,
               });
               this.layer.add(polygon);
-            if (flowOfData == 'vertical') {
-              const columns = Math.min(Math.ceil(remainingSeats / maxVerticalRectangles), maxHorizontalRectangles);
-              const columns2 = Math.ceil(maxHorizontalRectangles);
-              console.log("NUMBER OF COLUMNS==>",columns,"MYYY CODE COlumn==>",columns2)
-              for (let column = 0; column < columns; column++) {
-                for (let y = minY; y < maxY-10  ; y += point.seatHeight) {
-                  const x = minX + column * point.seatWidth;
-
-                  if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: point.seatWidth, height: point.seatHeight }, polygon.getClientRect())) {
-                    this.drawSeatRectangle(x, y,point.seatHeight,point.seatWidth);
-                    this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + point.seatWidth, y: y + point.seatHeight },workStatkionID: point._id });
+            if (flowOfData == true) {
+              const columns:number = Math.min(Math.ceil(remainingSeats / maxVerticalRectangles), maxHorizontalRectangles);
+              const seatWidth:number = point.seatPosition ? this.seatWidth : this.seatHeight; // Check seatPosition
+                const seatHeight:number = point.seatPosition ? this.seatHeight :this.seatWidth;
+              for (let column:number = 0; column < columns; column++) {
+                for (let y:number = minY; y < maxY-10  ; y += seatHeight) {
+                  const x = minX + column * seatWidth;
+                  if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width:seatWidth, height: seatHeight }, polygon.getClientRect())) {
+                    this.drawSeatRectangle(x, y,seatHeight,seatWidth);
+                    this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + seatWidth, y: y + seatHeight },workStatkionID: point._id,seatPosition:point.seatPosition });
 
                     remainingSeats--;
                     count++;
-                    if(this.totalNumber==count){
-                      this.lastCoordinate.push({
-                        lastX:x+point.seatWidth,
-                        lastY:y+point.seatHeight
-                      })
-                    }
+                    // if(this.totalNumber==count){
+                    //   this.lastCoordinate.push({
+                    //     lastX:x+seatWidth,
+                    //     lastY:y+seatHeight
+                    //   })
+                    // }
                   }
                 }
               }
             }
-            // else {
+            else {
 
-            //   const rows = Math.min(Math.ceil(remainingSeats / maxHorizontalRectangles), maxVerticalRectangles);
+              const rows = Math.min(Math.ceil(remainingSeats / maxHorizontalRectangles), maxVerticalRectangles);
+              const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight; // Check seatPosition
+              const seatHeight = point.seatPosition ? this.seatHeight :this.seatWidth;
+              for (let row = 0; row < rows; row++) {
+                for (let x = minX; x < maxX - 10; x += seatWidth) {
+                  const y = minY + row * seatHeight;
 
-            //   for (let row = 0; row < rows; row++) {
-            //     for (let x = minX; x < maxX - 8; x += this.seatSizeWidth) {
-            //       const y = minY + row * this.seatSizeHeight;
+                  if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: seatWidth, height: seatHeight }, polygon.getClientRect())) {
+                    this.drawSeatRectangle(x, y,seatHeight,seatWidth);
+                    this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + seatWidth, y: y + seatHeight },workStatkionID: point._id,seatPosition:point.seatPosition });
 
-            //       if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: this.seatSizeWidth, height: this.seatSizeHeight }, polygon.getClientRect())) {
-            //         this.drawSeatRectangle(x, y);
-            //         this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + this.seatSizeWidth, y: y + this.seatSizeHeight },workStatkionID: point._id });
-
-            //         remainingSeats--;
-            //       }
-            //     }
-            //   }
-            // }
+                    remainingSeats--;
+                    count++;
+                    // if(this.totalNumber==count){
+                    //   this.lastCoordinate.push({
+                    //     lastX:x+seatWidth,
+                    //     lastY:y+seatHeight
+                    //   })
+                    // }
+                  }
+                }
+              }
+            }
             this.totalNumber=remainingSeats;
             if (remainingSeats === 0) {
               this.drawingEnabled = false;
@@ -264,7 +276,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
             }
           }
 
-          this.layer.draw();
+          this.layer.batchDraw();
         }
         }})
       }
@@ -282,6 +294,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
           name: 'seat-rectangle',
         });
         this.layer.add(rect);
+        rect.cache() //for code optimization
       }
 
       saveImage(){
@@ -290,35 +303,35 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
           image:String(image),
           drawnSeats:this.drawnSeats,
           seatSize:[{
-           height: this.seatSizeHeight,
-           width:this.seatSizeWidth
+           height: this.seatHeight,
+           width:this.seatWidth
           }]
         }
         this.proposalService.saveImage(this.data.proposalId,data).subscribe(res=>{
           this.dialogRef.close(true)
-              console.log(res)
+              // console.log(res)
             })
       }
 
       drawTheBlankSeat(){
         // let dataOfDrawingSeats = this.proposalData.
         this.proposalData.forEach(dataOfSeats=>{
-       console.log(dataOfSeats)
+      //  console.log(dataOfSeats)
           for (const seat of dataOfSeats.seatsData) {
 
-            this.drawSeatsBetweenPoints(seat.start, seat.end,dataOfSeats.seatSize);
+            this.drawSeatsBetweenPoints(seat.start, seat.end);
           }
         })
 
       }
-      drawSeatsBetweenPoints(start:any, end:any,seatSize:any) {
+      drawSeatsBetweenPoints(start:any, end:any) {
 
         const startX = Math.min(start.x, end.x);
         const startY = Math.min(start.y, end.y);
         const endX = Math.max(start.x, end.x);
         const endY = Math.max(start.y, end.y);
-        const seatSizeWidth = 13.5; // Extract width from seatSize
-        const seatSizeHeight = 16.5; // Extract height from seatSize
+        const seatSizeWidth = this.seatWidth; // Extract width from seatSize
+        const seatSizeHeight = this.seatHeight; // Extract height from seatSize
         for (let x = startX; x < endX; x += seatSizeWidth) {
           for (let y = startY; y < endY; y += seatSizeHeight) {
             this.drawBlankSeatRect(x, y,seatSizeHeight,seatSizeWidth);

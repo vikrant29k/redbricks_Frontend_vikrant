@@ -13,7 +13,7 @@ export class PreviewSeatsComponent implements OnInit {
   flowOfDrawingSeats:string = 'vertical';
   imageUrl:any;
   stage!: Konva.Stage;
-  layer!: Konva.Layer;
+  // layer!: Konva.Layer;
   line!: Konva.Line;
   customWidth = 1080;
   customHeight = 734;
@@ -21,11 +21,12 @@ export class PreviewSeatsComponent implements OnInit {
   transformer!: Konva.Transformer;
   getAllPoints:any[]=[]
   totalNumber!:number;
-seatSizeWidth!: number;
-seatSizeHeight!: number;
 setButtonDisable: boolean= false;
 seatWidth!: number;
   seatHeight!: number;
+
+  pillarData:any[]=[]
+
   constructor(private locationService:LocationService,
     private route: ActivatedRoute,
     private router: Router) { }
@@ -48,27 +49,27 @@ seatWidth!: number;
        this.enableZoom(); // Add this line to enable zoom
        // this.enablePanning(); // Add this line to enable panning
        this.transformer = new Konva.Transformer(); // Initialize transformer
-       this.layer.add(this.transformer);
+       this.seatLayer.add(this.transformer);
        this.locationService.getBorderData(this.id).subscribe((res:any)=>{
          // console.log(res);
          if(res.Message==='No data'){
            console.log("NO DATAA")
          }else
          {
-           // this.allSelectedLayout = res
-           // this.seatSizeHeight=res.layoutArray[0].seatSize[0].height;
-           // this.seatSizeWidth=res.layoutArray[0].seatSize[0].width;
-           // this.seatHeight=this.seatSizeHeight;
-           // this.seatWidth=this.seatSizeWidth;
-           // this.updateSeatsSize()
+           this.seatWidth=res.layoutArray[0].seatWidth;
+           this.seatHeight=res.layoutArray[0].seatHeight;
            console.log("NO DATAA")
            this.totalNumber=res.totalNoOfWorkstation
            res.layoutArray[0].layoutBorder.forEach((item:any) => {
-             const {_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight } = item;
-             this.getAllPoints.push({_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight });
-             this.seatWidth=seatWidth;
-             this.seatHeight=seatHeight;
+             const {_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight,seatPosition,isFull } = item;
+             this.getAllPoints.push({_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight,seatPosition,isFull });
+
            });
+           res.layoutArray[0].pillarData.forEach((item:any) => {
+            const {_id, startX, startY, pillarRect,pilarWidth } = item;
+            this.pillarData.push({_id, startX, startY,pillarRect,pilarWidth });
+
+          });
            // this.layer.clearBeforeDraw
              for (const shape of res.layoutArray[0].layoutBorder) {
               const rect = new Konva.Rect({
@@ -76,17 +77,16 @@ seatWidth!: number;
                  y: shape.startY,
                  width: shape.rectWidth,
                  height: shape.rectHeight,
-                 fill: 'blue',
-                 opacity: 0.3,
-                   draggable: false,
+                 stroke:'red',
+                 strokeWidth:0.1,
                    name:shape._id
                });
 
-               this.layer.add(rect);
+               this.seatLayer.add(rect);
 
                rect.on('mousedown',()=>{
                  let transformNew = new Konva.Transformer()
-               this.layer.add(transformNew);
+               this.seatLayer.add(transformNew);
                transformNew.nodes([rect])
                  this.transformer=transformNew
                  console.log("FIRST BEFORE",rect)
@@ -169,6 +169,8 @@ seatWidth!: number;
     this.stage.position(initialPosition);
     this.stage.batchDraw();
   }
+  backgroundLayer!:Konva.Layer
+  seatLayer!:Konva.Layer
    initializeKonva(imageObj: HTMLImageElement): void {
      this.stage = new Konva.Stage({
        container: 'container',
@@ -176,19 +178,31 @@ seatWidth!: number;
        height: this.customHeight,
      });
 
-     this.layer = new Konva.Layer({
-       name: 'firstLayer',
-     });
-     this.stage.add(this.layer);
+    //  this.layer = new Konva.Layer({
+    //    name: 'firstLayer',
+    //  });
+    //  this.stage.add(this.layer);
+     this.backgroundLayer = new Konva.Layer({
+      name: 'backgroundLayer',
+      listening:false
+    });
+    this.stage.add(this.backgroundLayer);
 
+
+    // Create a layer for the seat rectangles
+    this.seatLayer = new Konva.Layer({
+      name: 'seatLayer',
+    });
+    this.stage.add(this.seatLayer);
      this.backgroundImage = new Konva.Image({
        image: imageObj,
        width: this.customWidth,
        height: this.customHeight,
+       name:'bgImage'
      });
 
-     this.layer.add(this.backgroundImage);
-     this.layer.draw();
+     this.backgroundLayer.add(this.backgroundImage);
+     this.backgroundLayer.draw();
      this.drawRectangles()
    }
      //drawSeats
@@ -197,7 +211,7 @@ seatWidth!: number;
      drawnSeats:any[]=[]
      drawRectangles() {
       let count = 0;
-      if (!this.stage || !this.layer) return;
+      if (!this.stage || !this.backgroundLayer || !this.seatLayer) return;
       if (this.drawingEnabled === true) {
         let remainingSeats = this.totalNumber;
 
@@ -210,36 +224,36 @@ seatWidth!: number;
           // "\n minX=",point.startX,
           // "\n maxX=>",point.endX,
           "\n width of rect=>", point.endX-point.startX);
-console.log("MAX Columns can be added==>",Math.round((maxX-minX)/point.seatWidth))
-this.seatSizeHeight=point.seatHeight;
-this.seatSizeWidth=point.seatWidth;
+console.log("MAX Columns can be added==>",Math.round((maxX-minX)/this.seatWidth))
 const availableWidth = maxX - minX;
 const availableHeight = maxY - minY;
-const maxHorizontalRectangles = Math.floor(availableWidth / point.seatWidth);
-const maxVerticalRectangles = Math.floor(availableHeight / point.seatHeight);
+const maxHorizontalRectangles = Math.floor(availableWidth / this.seatWidth);
+const maxVerticalRectangles = Math.floor(availableHeight / this.seatHeight);
 
-const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
           const polygon = new Konva.Line({
             points: this.getAllPoints,
             fill: 'transparent',
             stroke: 'black',
             strokeWidth: 0.3,
           });
-          this.layer.add(polygon);
+          this.seatLayer.add(polygon);
 
           if (this.flowOfDrawingSeats == 'vertical') {
             const columns = Math.min(Math.ceil(remainingSeats / maxVerticalRectangles), maxHorizontalRectangles);
+            const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight; // Check seatPosition
+                const seatHeight = point.seatPosition ? this.seatHeight :this.seatWidth;
             for (let column = 0; column < columns; column++) {
-              for (let y = minY; y < maxY - 10; y += point.seatHeight) {
-                const x = minX + column * point.seatWidth;
+              for (let y = minY; y < maxY - 10; y += seatHeight) {
+                const x = minX + column * seatWidth;
 
-                if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: point.seatWidth, height: point.seatHeight }, polygon.getClientRect())) {
-                  this.drawSeatRectangle(x, y, point.seatHeight, point.seatWidth);
+                if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: seatWidth, height: seatHeight }, polygon.getClientRect())) {
+                  this.drawSeatRectangle(x, y, seatHeight, seatWidth); // Swap seatHeight and seatWidth
                   remainingSeats--;
                   count++;
                 }
               }
             }
+
           }
           this.totalNumber = remainingSeats;
           if (remainingSeats === 0) {
@@ -249,7 +263,7 @@ const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
         }
 
         // Trigger rendering
-        this.layer.draw();
+        this.seatLayer.batchDraw();
       }
     }
 
@@ -261,22 +275,30 @@ const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
          width: width,
          height: height,
          fill: 'blue',
-         opacity: 0.3,
+         opacity: 0.4,
          stroke: 'red',
-         strokeWidth: 0.4,
+         strokeWidth: 0.2,
          name: 'seat-rectangle',
        });
-       this.layer.add(rect);
+       this.seatLayer.add(rect);
+      //  rect.cache()
      }
 
      addLayout(){
       let data = {
-          LayoutData:{layoutBorder:this.getAllPoints}
-             }
+        LayoutData:{layoutBorder:this.getAllPoints,
+          seatHeight:this.seatHeight,
+          seatWidth:this.seatWidth,
+          pillarData:this.pillarData}
+           }
 
       this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-        console.log(res);
-        this.router.navigate(['/admin','location','location-list'])
+        this.router.navigate(['/admin','location','layout-editor',this.id])
       })
     }
+    removeImage(){
+     this.backgroundImage.destroy();
+     this.seatLayer.draw()
+    }
+
 }

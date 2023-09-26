@@ -1,16 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { UserService } from 'src/app/service/users/user.service';
-import { pipe, map, count } from 'rxjs';
+import { map } from 'rxjs';
 import { Router } from '@angular/router';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { JWTService } from 'src/app/service/jwt/jwt.service';
 import Swal from 'sweetalert2';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { fadeOut, blub } from 'src/assets/animation/template.animation';
-import { LocationService } from 'src/app/service/location/location.service';
 import { DashboardService } from 'src/app/service/dashboard/dashboard.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { ShowChartComponent } from './show-chart/show-chart.component';
@@ -45,12 +43,9 @@ export class DashboardAdminDashboard implements OnInit {
     private route: Router,
     private jwt: JWTService,
     private cd: ChangeDetectorRef,
-    private location: LocationService,
     private dialog:MatDialog
   ) {}
-  onLocationSelected = (location: any) => {
 
-}
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   // @ViewChild(MatTable) table!: MatTable;
@@ -137,7 +132,7 @@ yesterDay:any;
 dayBeforeYesterday:any;
   ngOnInit(): void {
     this.dashboardService.getRecentProposal().subscribe((res) => {
-      console.log('recent', res);
+      // console.log('recent', res);
     });
     this.getConflict();
     //  this.resolveConflict('RBOHYSA26121133')
@@ -197,13 +192,13 @@ dayBeforeYesterday:any;
       this.city = res;
       // this.city_center=res;
       // console.log("centers",[...this.city_center.centers])
-      console.log('loaction', res);
+      // console.log('loaction', res);
     });
     this.dashboardService.getRecentProposal().subscribe((res:any) => {
       // console.log(res)
       this.tableDataSource(res);
       this.countOfRecentProposal=res.length
-      console.log("COUNTT",this.countOfRecentProposal)
+      // console.log("COUNTT",this.countOfRecentProposal)
       this.Amount = res;
 
     });
@@ -341,6 +336,9 @@ salesHead(id:any){
     panelClass:'salesHead',
     data:{id:id}
 
+  })
+  this.dialog.afterAllClosed.subscribe(()=>{
+    this.deleteRow(id)
   })
 }
 

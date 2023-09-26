@@ -11,7 +11,7 @@ export class DashboardService {
   constructor(private headerService: HeaderService, private http: HttpClient) {}
   getUserData = () => {
     const httpOptions = this.headerService.updateHeader();
-    return this.http.get(this.baseUrl + 'userData', httpOptions);
+    return this.http.get(this.baseUrl + 'userData/1', httpOptions);
   };
   getLocationData = () => {
     const httpOptions = this.headerService.updateHeader();

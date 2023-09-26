@@ -14,6 +14,7 @@ import { FloorsComponent } from "../../component/floors/floors.component";
 import { LayoutEditorComponent } from "../../component/layout-editor/layout-editor.component";
 import { LockLayoutEditorComponent } from "../../component/locking the layout/locking the layout-editor.component";
 import { PreviewSeatsComponent } from "../../component/layout-editor/preview-seats/preview-seats.component";
+import { AddExternalBorderComponent } from "../../component/layout-editor/add-external-border/add-external-border.component";
 const routes: Routes = [
     {
         path: '',
@@ -81,6 +82,10 @@ const routes: Routes = [
             {
               path:'preview-seats/:Id',
               component:PreviewSeatsComponent
+            },
+            {
+              path:'draw-border/:Id',
+              component:AddExternalBorderComponent
             }
 
         ]

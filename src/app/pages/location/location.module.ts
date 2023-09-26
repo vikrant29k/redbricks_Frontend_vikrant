@@ -19,6 +19,8 @@ import { FloorsComponent } from './component/floors/floors.component';
 import { LayoutEditorComponent } from "./component/layout-editor/layout-editor.component";
 import { LockLayoutEditorComponent } from "./component/locking the layout/locking the layout-editor.component";
 import { PreviewSeatsComponent } from './component/layout-editor/preview-seats/preview-seats.component';
+import { AddExternalBorderComponent } from './component/layout-editor/add-external-border/add-external-border.component';
+import { SeatDrawComponent } from './component/layout-editor/seat-draw/seat-draw.component';
 @NgModule({
     declarations: [
         LocationComponent,
@@ -33,7 +35,9 @@ import { PreviewSeatsComponent } from './component/layout-editor/preview-seats/p
         FloorsComponent,
         LayoutEditorComponent,
         LockLayoutEditorComponent,
-        PreviewSeatsComponent
+        PreviewSeatsComponent,
+        AddExternalBorderComponent,
+        SeatDrawComponent
     ],
     imports: [
         CommonModule,

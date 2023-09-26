@@ -1,0 +1,73 @@
+.contain{
+  width: 1080px;
+  height: 734px;
+  border: 1px solid black;
+}
+.changeContain{
+  width: 1080px;
+  height: 734px;
+  border: 1px solid black;
+
+    user-select: none;
+    cursor: move;
+
+}
+.main{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  button{
+    margin: 10px;
+  }
+  .canvas-container{
+    margin-left: 6rem;
+    padding-block:0.5rem 2rem;
+
+  }
+  .sub-container{
+    display: flex;
+    flex-direction: column;
+    // margin-left:6rem;
+    // padding-top:3rem;
+    // width:15rem;
+    // align-items: center;
+  }
+  .label{
+    display: flex;
+    gap:1rem;
+
+    mat-card{
+      width:8rem;
+    }
+  }
+}
+/* styles.css or your component's CSS file */
+.blue-option {
+  color: blue;
+}
+
+.green-option {
+  color: green;
+}
+
+.orange-option {
+  color: orange;
+}
+
+.red-option {
+  color: red;
+}
+/* In your component CSS or global styles.css */
+.detail-section{
+  display: flex;
+  align-items: center;
+  .circle-color {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+  }
+}
+

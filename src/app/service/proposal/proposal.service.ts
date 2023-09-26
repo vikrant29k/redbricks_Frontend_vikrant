@@ -133,7 +133,7 @@ export class ProposalService {
       this.toster.observe({
         success: 'Client Data Added Successfully',
         loading: 'Adding Client...',
-        error: ({ error }) => `${error.Message}`,
+        error: ({ error }) => `${error.message}`,
       })
     );
   }
@@ -153,7 +153,16 @@ export class ProposalService {
 
     );
   }
-
+deleteProposal(id:any){
+  let httpOptions = this.headerService.updateHeader();
+  return this.http.delete(this.baseUrl+'delete/'+id,httpOptions).pipe(
+    this.toster.observe({
+      success: 'Proposal Deleted Successfully',
+      loading: 'Deleting Data...',
+      error: ({ error }) => `${error.message}`,
+    })
+  );
+}
   checkSeatAvailability = (Id: string) => {
     let httpOptions = this.headerService.updateHeader();
     return this.http

@@ -10,12 +10,12 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field appearance="standard">
             <input matInput (keyup)="applyFilter(input.value)" autocomplete="off" placeholder="Filter" #input>
-          </mat-form-field> 
-          
-  
+          </mat-form-field>
+
+
         </div>
       </div>
 
@@ -55,7 +55,7 @@
           </ng-container> -->
           <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef> Delete </th>
-            <td mat-cell *matCellDef="let row" class="delete" (click)="deleteLocation(row._id)"><button type="button" mat-icon-button>
+            <td mat-cell *matCellDef="let row" class="delete" (click)="deleteProposal(row._id)"><button type="button" mat-icon-button>
                 <mat-icon>delete</mat-icon>
               </button></td>
           </ng-container>

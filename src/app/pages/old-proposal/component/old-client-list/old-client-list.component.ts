@@ -54,17 +54,6 @@ export class OldClientListComponent implements OnInit {
     this.table.renderRows();
   }
 
-  getAllLocations() {
-    // this.locationService.getAllLocation().subscribe({
-    //   next: (locations: any) => {
-    //     this.Locations = locations
-    //     this.tableDataSource(this.Locations);
-    //   },
-    //   error: (err: any) => {
-    //     this.authService.handleAuthError(err);
-    //   }
-    // });
-  }
 getAllProposals(){
   this.proposalService.getAllLockedProposal().subscribe({
     next:(proposal:any)=>{
@@ -80,7 +69,7 @@ previewAll(){
   this.router.navigate(['/admin', 'old-proposal', 'preview-all',id]);
 }
 
-  deleteLocation(id: string) {
+deleteProposal(id: string) {
     Swal.fire({
       title: 'Delete Proposal',
       text: 'Are you sure you want to delete this proposal?',
@@ -91,9 +80,9 @@ previewAll(){
       confirmButtonColor: '#C3343A'
     }).then((confirmation) => {
       if (confirmation.isConfirmed) {
-        this.locationService.deleteLocation(id).subscribe({
+        this.proposalService.deleteProposal(id).subscribe({
           next: () => {
-            this.getAllLocations();
+            this.getAllProposals()
           },
           error: (err: any) => {
             this.authService.handleAuthError(err);
@@ -128,7 +117,7 @@ previewAll(){
       this.dataSource.filter = filterValue.trim().toLowerCase();
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
-      }  
+      }
     }
     else{
       this.selectedValue=""

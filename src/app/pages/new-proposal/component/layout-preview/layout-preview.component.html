@@ -6,10 +6,11 @@
     <div>
         <button class="download_btn" (click)="drawRectangles()">Select Seats</button>
     </div>
+    <button class="download_btn" (click)="changeTheFlow()">{{flowOfDrawingSeats?'Vertical':'Horizontal'}}</button>
       <button class="download_btn"   (click)="saveImage()">Final Layout</button>
     </div>
     <!-- <div #captureContainer> -->
         <div id="container"></div>
     <!-- </div> -->
-   
+
   </div>

@@ -1,7 +1,7 @@
 
 <div class="main">
   <div class="canvas-container">
-    <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled ?'contain':'changeContain'"></div>
+    <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled || isDrawingEnabledForPillar ?'contain':'changeContain'"></div>
   </div>
 <div class="sub-container">
   <button mat-raised-button (click)="drawTHeSeat()">Get Clients</button>
@@ -10,7 +10,7 @@
 <button mat-raised-button (click)="resetZoomAndPosition()" color="primary">Reset Zoom and Position</button>
 <button mat-raised-button (click)='addLayout()' color="primary">Final the layout</button>
 <!-- <button *ngIf="isDeleteShape" mat-raised-button (click)="deleteSelectedShape(seatShape)" color="primary">delete Selected Layout</button> -->
-<button mat-raised-button color="secondary" (click)="deleteSelectedRect()" [disabled]="!selectedShape">Delete Selected Rectangle</button>
+<!-- <button mat-raised-button color="secondary" (click)="deleteSelectedRect()" [disabled]="!selectedShape">Delete Selected Rectangle</button> -->
 <label> For Drawing Seats</label>
 <button mat-raised-button (click)="drawSeatAndGetHW()" color="primary">{{isSeatDrawingEnabled?'Stop':'Start'}} Drawing Seat</button>
 <button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button>
@@ -28,5 +28,10 @@
 </div>
 <button (click)="drawCustomRect()">CUSTOM BUTTOn</button> -->
 <button mat-raised-button (click)="goToDrawSeat()">Check Seats</button>
+<button mat-raised-button (click)="drawOutsideBorder()">Draw Border</button>
+<label> Other </label>
+<button mat-raised-button (click)="toggleDrawingPillar()" color="primary" >{{isDrawingEnabledForPillar?'Stop':'Start'}} Drawing Pillar/Gap</button>
+<button mat-raised-button (click)="updatePillarData()">Update Other Data</button>
+<button mat-raised-button (click)="showOther()">Show Other Data</button>
 </div>
 </div>

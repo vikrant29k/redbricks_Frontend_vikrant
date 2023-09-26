@@ -1,11 +1,11 @@
 .contain{
     width: 1080px;
-    height: 566px;
+    height: 734;
     border: 1px solid black;
   }
   .changeContain{
     width: 1080px;
-    height: 566px;
+    height: 734;
     border: 1px solid black;
 
       user-select: none;
@@ -52,6 +52,7 @@
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
+          align-items: center;
         }
       section{
         display: flex;

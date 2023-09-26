@@ -137,33 +137,39 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
   drawTHeSeat(){
     // let dataOfDrawingSeats = this.proposalData.
     this.proposalData.forEach(dataOfSeats=>{
-   console.log(dataOfSeats)
+   console.log(dataOfSeats,"HRLOO")
       for (const seat of dataOfSeats.seatsData) {
 
-        this.drawSeatsBetweenPoints(seat.start, seat.end,dataOfSeats.seatSize, dataOfSeats.color, seat.first,dataOfSeats.clientName,dataOfSeats.totalNumberOfSeats);
+        this.drawSeatsBetweenPoints(seat.start, seat.end,seat.seatPosition,dataOfSeats.seatSize, dataOfSeats.color, seat.first,dataOfSeats.clientName,dataOfSeats.totalNumberOfSeats);
       }
     })
 
   }
-  drawSeatsBetweenPoints(start:any, end:any,seatSize:any,color:any, index:any, clientName:string,totalNumberOfSeats:number) {
-
+  drawSeatsBetweenPoints(start:any, end:any,seatPosition:any,seatSize:any,color:any, index:any, clientName:string,totalNumberOfSeats:number) {
     const startX = Math.min(start.x, end.x);
     const startY = Math.min(start.y, end.y);
     const endX = Math.max(start.x, end.x);
     const endY = Math.max(start.y, end.y);
     const seatSizeWidth = seatSize[0].width; // Extract width from seatSize
     const seatSizeHeight = seatSize[0].height; // Extract height from seatSize
-    for (let x = startX; x < endX; x += seatSizeWidth) {
-      for (let y = startY; y < endY; y += seatSizeHeight) {
-        this.drawSeatRectangle(x, y,color,seatSizeHeight,seatSizeWidth,index,clientName,totalNumberOfSeats);
+    if(seatPosition==false){
+      for (let x = startX; x < endX; x += seatSizeHeight) {
+        for (let y = startY; y < endY; y += seatSizeWidth) {
+          this.drawSeatRectangle(x, y,color,seatSizeWidth,seatSizeHeight,index,clientName,totalNumberOfSeats);
+        }
+      }
+    }else{
+      for (let x = startX; x < endX; x += seatSizeWidth) {
+        for (let y = startY; y < endY; y += seatSizeHeight) {
+          this.drawSeatRectangle(x, y,color,seatSizeHeight,seatSizeWidth,index,clientName,totalNumberOfSeats);
+        }
       }
     }
+
   }
 
   drawSeatRectangle(x:any, y:any, fill:string, height:number, width:number, index:any, clientName:string,totalNumberOfSeats:number) {
-    // console.log(x,y)
 
-    console.log(fill)
     const rect = new Konva.Rect({
       x: x,
       y: y,

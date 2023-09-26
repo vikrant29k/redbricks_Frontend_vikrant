@@ -72,7 +72,7 @@ export class AdminDashboardExpandComponent implements OnInit {
     this.dashboardService
       .getFloorData(this.cardData, centerName)
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         this.centerName = centerName;
         this.floorData = res.data;
         this.selectedCenter = centerName;
@@ -100,7 +100,7 @@ export class AdminDashboardExpandComponent implements OnInit {
     this.bookingPriceUptilNow = dataOfFloor.bookingPriceUptilNow;
     this.currentSeatPrice = dataOfFloor.currentRackRate;
     this.selectedNoOfSeats = dataOfFloor.selectedNoOfSeats;
-    console.log(dataOfFloor);
+    // console.log(dataOfFloor);
 
     google.charts.load('current', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(this.drawChart);
@@ -108,7 +108,7 @@ export class AdminDashboardExpandComponent implements OnInit {
   closeFloordetails() {
     this.details = null;
 
-    console.log(this.chartDrawn);
+    // console.log(this.chartDrawn);
   }
   openDialog(center: any) {
     this.dialog.open(ShowStatsComponent, {
@@ -152,7 +152,7 @@ export class AdminDashboardExpandComponent implements OnInit {
 
     chart.draw(data, options);
     this.chartDrawn = true;
-    console.log(this.chartDrawn);
+    // console.log(this.chartDrawn);
   };
   clearChart = () => {
     if (this.chartDrawn) {
