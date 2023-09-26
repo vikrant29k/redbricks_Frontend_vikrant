@@ -1,13 +1,24 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+
 .contain{
     width: 1080px;
-    height: 734;
+    height: 734px;
     border: 1px solid black;
+
   }
   .changeContain{
     width: 1080px;
-    height: 734;
+    height: 734px;
     border: 1px solid black;
-
       user-select: none;
       cursor: move;
 
@@ -18,8 +29,12 @@
     justify-content: center;
     align-items: center;
     margin-top: 3rem;
+
     button{
       margin: 10px;
+      @include for-mobile(){
+        width:13rem;
+      }
     }
     .canvas-container{
       margin-block: 1.5rem;
@@ -37,6 +52,9 @@
       box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
       // width: 35rem;
       padding-top:1rem;
+      @include for-mobile(){
+        width:17rem;
+      }
       .title{
         display: flex;
         justify-content: space-between;
@@ -57,6 +75,9 @@
       section{
         display: flex;
         gap:1rem;
+        @include for-mobile(){
+          flex-direction: column;
+        }
         mat-form-field {
           width: 16rem;
         }

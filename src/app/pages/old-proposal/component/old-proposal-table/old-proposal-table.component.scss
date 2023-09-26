@@ -59,6 +59,11 @@
                     padding-inline: 1rem;
                     text-align: center;
                     background-color: #8B8C8D;
+                    @include for-mobile(){
+                      .actionbtn{
+                        display: flex;
+                      }
+                    }
 
 
 

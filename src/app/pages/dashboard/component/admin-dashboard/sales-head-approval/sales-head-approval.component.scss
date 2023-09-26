@@ -1,3 +1,13 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .container{
   display: flex;
   flex-direction: column;
@@ -20,6 +30,9 @@
     flex-direction: row;
     gap: 3rem;
     align-items: center;
+    @include for-mobile(){
+      flex-direction: column;
+    }
     .mat-form-field{
       width: 16rem;
     }
@@ -35,9 +48,15 @@
   width: inherit;
   gap: 17rem;
   padding:1rem;
+  @include for-mobile(){
+    gap:4rem;
+  }
   button{
     width:7rem;
     height: 3rem;
+    @include for-mobile(){
+      width:7rem;
+    }
   }
   }
 }

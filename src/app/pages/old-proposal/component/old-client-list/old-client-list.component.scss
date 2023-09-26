@@ -25,6 +25,7 @@
         align-items: center;
         @include for-mobile() {
           font-size: 0.9rem;
+          flex-direction: column;
           }
       }
 
@@ -118,4 +119,7 @@
   .filter{
     display: flex;
       gap: 1.5rem;
+      @include for-mobile(){
+        gap:0.2rem;
+      }
   }

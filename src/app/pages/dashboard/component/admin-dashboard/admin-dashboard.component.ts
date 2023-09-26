@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { UserService } from 'src/app/service/users/user.service';
-import { map } from 'rxjs';
+import { pipe, map, count, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { JWTService } from 'src/app/service/jwt/jwt.service';
 import Swal from 'sweetalert2';
@@ -14,6 +14,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ShowChartComponent } from './show-chart/show-chart.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SalesHeadApprovalComponent } from './sales-head-approval/sales-head-approval.component';
+import { TooltipComponent } from '@angular/material/tooltip';
+import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 @Component({
   selector: 'dashboard-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -30,12 +32,32 @@ import { SalesHeadApprovalComponent } from './sales-head-approval/sales-head-app
     state('visible', style({ opacity: 1,display:'block', transform: 'translateX(0)' })),
     transition('hidden => visible', animate('300ms ease-in')),
     transition('visible => hidden', animate('300ms ease-out')),
-  ])]
+  ]),
+  trigger('menuAnimation', [
+    state('hidden', style({
+      right: '-50px',
+      opacity: 0,
+    })),
+    state('visible', style({
+      right: '50px',
+      opacity: 1,
+    })),
+    transition('hidden => visible', animate('300ms ease-in')),
+    transition('visible => hidden', animate('300ms ease-out'))
+  ])
+]
 })
 export class DashboardAdminDashboard implements OnInit {
   showCard = false
   selectedCenter: string | null = null;
   locations:any[]=["Pune",'Hyderabad'];
+  open : boolean = false;
+  buttonLogo: string = "+";
+  isToggle: boolean = true;
+  menuOpen: boolean = false;
+// hideBackButton: boolean = false;
+
+  userList: any;
   constructor(
     private proposalService: ProposalService,
     private dashboardService: DashboardService,
@@ -50,7 +72,7 @@ export class DashboardAdminDashboard implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   // @ViewChild(MatTable) table!: MatTable;
   shownotification: boolean = false;
-  menuOpen: boolean = false;
+  menuOpen1: boolean = true;
   hideBackButton: boolean = false;
   title: any = this.jwt.getUserRole();
   cityName: any;
@@ -65,6 +87,20 @@ export class DashboardAdminDashboard implements OnInit {
   UpdateAmount: any;
   dataSourceConflict: any;
   isHidden: boolean = false;
+  menuItems = [
+    { label: 'Home', link: '/' },
+    { label: 'About', link: '/about' },
+    { label: 'Services', link: '/services' },
+    { label: 'Contact', link: '/contact' },
+  ];
+  menuState = 'hidden';
+state='hidden';
+  toggleMenu() {
+    this.menuState = this.menuState === 'hidden' ? 'visible' : 'hidden';
+  }
+  toggleMenus() {
+    this.state = this.state === 'hidden' ? 'visible' : 'hidden';
+  }
   //  =[
   //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
   //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
@@ -83,7 +119,12 @@ export class DashboardAdminDashboard implements OnInit {
   users: any;
   status: boolean = false;
   city: any;
+  isShowTooltip:boolean = false
+  isshowUserList:boolean =false;
   //  city_center:any;
+
+
+
   clickEvent() {
     this.status = !this.status;
   }
@@ -121,11 +162,7 @@ export class DashboardAdminDashboard implements OnInit {
         });
       }
     });
-    // this.proposalService.resolveConflict(_id).subscribe(res=>{
 
-    //   console.log("RC",res);
-
-    // })
   }
 today:any;
 yesterDay:any;
@@ -134,6 +171,7 @@ dayBeforeYesterday:any;
     this.dashboardService.getRecentProposal().subscribe((res) => {
       // console.log('recent', res);
     });
+    this.getUserListArray()
     this.getConflict();
     //  this.resolveConflict('RBOHYSA26121133')
     if (this.title === 'sales head') {
@@ -319,9 +357,6 @@ countOfRecentProposal!:number
           position: 'bottom'
       }
   };
-
-
-
   openDialog(){
     this.dialog.open(ShowChartComponent, {
       width: '900px',
@@ -342,4 +377,19 @@ salesHead(id:any){
   })
 }
 
+getUserListArray = ()=>{
+  this.dashboardService.getUserListArray().pipe(take(1)).subscribe((res:any)=>{
+    console.log(res)
+    this.userList =res
+  })
 }
+openChartDialog(enterAnimationDuration: string, exitAnimationDuration: string,id:any){
+  this.dashboardService.getSelsProposalCount(id).subscribe((res:any)=>{
+  this.dialog.open(ShowChartComponent,{
+     hasBackdrop:false,
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data:res
+  })
+  })
+}}

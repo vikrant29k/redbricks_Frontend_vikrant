@@ -2,19 +2,22 @@
     <div class="title" *ngIf="brokerDetails">
       <h1>{{brokerDetails.SPOCName}}</h1>
     </div>
-    <div class="totals" *ngIf="brokerDetails">
-      <!-- <mat-icon>people</mat-icon> -->
-      <p matTooltip="Total Users Availabel">Total Proposal By <span style="text-transform: uppercase;">{{brokerDetails.SPOCName}}</span> : {{brokerDetails.totalProposalCount}}</p>
-      <p>Current Month Total Proposals : {{monthlyPropCount.totalProposalsCount}}</p>
-    </div>
-  
+    <mat-card class="brokerdetail">
+      <div *ngIf="brokerDetails">
+        <!-- <mat-icon>people</mat-icon> -->
+        <p matTooltip="Total Users Availabel">Total Proposal By <span style="text-transform: uppercase;">{{brokerDetails.SPOCName}}</span> : {{brokerDetails.totalProposalCount}}</p>
+        <p>Current Month Total Proposals : {{monthlyPropCount.totalProposalsCount}}</p>
+      </div>
+    </mat-card>
+
+
     <div class="main-content">
       <div class="sales-proposal">
         <mat-card class="sales">
           <!-- total users  -->
-        
+
           <!-- Sales Persons Lists -->
-          
+
           <div class="approval-lists">
             <h3>Proposals Details</h3>
             <div class="tableContain">
@@ -31,12 +34,12 @@
                           {{ element.salesPersonData[0].lastName }}
                         </td>
                       </ng-container>
-            
+
                       <ng-container matColumnDef="_id">
                         <th mat-header-cell *matHeaderCellDef>Total Proposal</th>
                         <td mat-cell *matCellDef="let element">{{ element.totalProposals }}</td>
                       </ng-container>
-            
+
                       <ng-container matColumnDef="resolve">
                         <th mat-header-cell *matHeaderCellDef style="width: 7rem">
                          Approve Proposal
@@ -45,7 +48,7 @@
                           mat-cell
                           class="resolve"
                           *matCellDef="let element"
-                         
+
                         >
                           <!-- <mat-icon
                             class="green"
@@ -72,7 +75,7 @@
                             mat-cell
                             class="resolve"
                             *matCellDef="let element"
-                            
+
                           >
                             <!-- <mat-icon
                               class="green"
@@ -106,19 +109,18 @@
           </div>
         </mat-card>
       </div>
-      
 
-        <div class="pichart" >
-          <mat-card>
-          <div class="chart" #chartContainer>
-            <div #pieChart style="width: 25rem; height: 20rem ; border-radius: 10px;"></div>
-          </div>
-        </mat-card>
-        </div>
+<mat-card class="pichart">
+  <div class="chart" #chartContainer>
+    <div #pieChart ></div>
+  </div>
+</mat-card>
+
+
     </div>
- 
+
+
       <div>
-  
+
       </div>
-    </div>
- 
+</div>

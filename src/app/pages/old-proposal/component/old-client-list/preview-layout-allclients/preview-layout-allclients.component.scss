@@ -1,4 +1,13 @@
-
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
 .contain{
   width: 1080px;
   height: 734px;
@@ -8,7 +17,7 @@
   width: 1080px;
   height: 734px;
   border: 1px solid black;
-
+  left:10px;
     user-select: none;
     cursor: move;
 
@@ -17,8 +26,10 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 3rem;
-
+    padding-top: 2rem;
+    @include for-mobile(){
+      flex-direction: column;
+    }
       button{
      margin:1rem;
     }

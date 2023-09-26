@@ -1,0 +1,40 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+
+.display_footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button{
+        height: 36px;
+    }
+
+}
+.chart{
+  width:25rem;
+  height:20rem;
+  @include for-mobile(){
+    width: 20rem;
+    height: 17rem ;
+    margin-left: -1rem;
+    margin-top:1rem;
+  }
+  .pichart{
+    width: 400px;
+    height: 300px;
+    @include for-mobile(){
+      width:275px;
+      height:200px;
+    }
+  }
+}
+

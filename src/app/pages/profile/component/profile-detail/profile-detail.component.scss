@@ -21,9 +21,9 @@
 
 .container {
   @include flex_center_center();
-  // @include for-mobile(){
-  //   height: 72rem;
-  // }
+  @include for-mobile(){
+    height: 72rem;
+  }
   .main-content {
     @include flex_center_center();
     @include flex-column();

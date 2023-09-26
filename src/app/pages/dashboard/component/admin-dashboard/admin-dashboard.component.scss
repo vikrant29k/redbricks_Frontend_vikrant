@@ -35,6 +35,7 @@
 
 .container {
   // box-sizing: border-box;
+  overflow-y: scroll;
   height: 100vh;
   background-color: #fddede;
   background-image: url('../../../../../assets/images/location/location-background.png');
@@ -49,6 +50,7 @@
       font-size: 2rem;
       @include for-mobile() {
         font-size: 1.5rem;
+        margin-left: 1.5rem;
       }
     }
     color: #c3343a;
@@ -56,39 +58,6 @@
     text-align: center;
   }
 
-  // .sale{
-  // mat-icon{
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   padding: 1rem;
-  //   border-radius: 100%;
-  //   background-color: #e65960;
-  //   color: #fff;
-  //   font-size: 1.1rem;
-  //   z-index: 1;
-  //   cursor: pointer;
-  // }
-  // mat-card{
-  //   width:6rem;
-  //   height:6rem;
-  // }
-  // .sub-icon {
-  //   position: absolute;
-  //   left: 0rem;
-  //   top: 0rem;
-  //   padding: 1rem;
-  //   background-color:  #fff;
-  //   border-radius: 40%;
-  //   color: #fff;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   z-index: -1;
-  //   transition: all 0.2s ease-in-out;
-  //   cursor: pointer;
-  // }
-  // }
   .main-content {
     // background-color: #dad7d7;
     width: 100%;
@@ -112,6 +81,10 @@
         height: 4rem;
         font-size: 4rem;
         cursor: pointer;
+        @include for-mobile(){
+          bottom:25rem;
+
+        }
       }
       .sales {
 
@@ -125,10 +98,13 @@
         width: 50rem;
         margin-inline: 1rem 0rem;
         margin-block: 0.5rem;
+        @include for-desktop(){
+          bottom:1.7rem;
+        }
         @include for-mobile() {
-           width: 82vw;
+           width: 66vw;
            margin-inline: 0rem 0rem;
-
+           bottom:23.7rem;
         }
         .totals {
           display: flex;
@@ -216,7 +192,11 @@
         }
         // margin-inline-start: 1rem;
       .tableContain{
-          // overflow-x: scroll;
+        @include  for-mobile(){
+          overflow-x: scroll;
+          width:12rem;
+        }
+
         .tableclass {
           width: 50rem;
           border-radius: 6px;
@@ -224,6 +204,9 @@
           margin-block: 0rem 0.4;
           background-color: #c3343a;
           border: 2px solid white;
+          // @include for-mobile(){
+          //   width:12rem;
+          // }
           th {
             text-align: center;
             font-weight: 600;
@@ -291,13 +274,16 @@
           background-color: rgb(205 82 88);
           color: white;
           font-size: 1.5rem;
+          @include for-mobile(){
+            left:-1.1rem;
+            top:0.1rem;
+          }
         }
       }
       .location.in {
         transform: translateX(0);
       }
       .icon {
-
         .hover-info{
           width: 9rem;
           min-height: 11rem;
@@ -369,7 +355,7 @@
           @include for-mobile() {
             // transform: matrix(1.17, 1.1, -1.1, 1.17, 71.3, 142);
             // transform: matrix(0.8, 0, 0, 0.4, 74, 173);
-            transform: matrix(0.8, 0, 0, 0.8, 3, 19);
+            //transform: matrix(0.8, 0, 0, 0.8, 3, 19);
           }
         }
 
@@ -482,13 +468,12 @@
   .notify {
 
     display: block;
-    position: fixed;
+    position:relative;
     .icon {
       position: fixed;
       bottom: 3rem;
       right: 2rem;
       overflow: hidden;
-
       border: none;
       display: flex;
       justify-content: center;
@@ -500,6 +485,10 @@
       font-size: 1.1rem;
       z-index: 1;
       cursor: pointer;
+      @include for-mobile(){
+        bottom:2.8rem;
+
+      }
       mat-icon {
         mat-badge {
           top: 0.3rem;
@@ -581,7 +570,7 @@
 
       &.home-icon {
         position: fixed;
-        width: 26rem;
+        width: 25rem;
         overflow-y: auto;
         overflow-x: hidden;
         max-height: 12.5rem;
@@ -591,7 +580,13 @@
         bottom: 10rem;
         justify-content: center;
         // transition: width 300ms ease-in;
+        @include for-mobile(){
+          width:21rem;
+          left:6vw;
+          bottom:6.8rem;
+        }
         .tableConflictClass {
+
           .resolve {
             mat-icon {
               margin-inline-start: 0.6rem;
@@ -603,6 +598,10 @@
           width: 26rem;
           // border: 1rem solid white;
           background-color: #c3343a;
+          @include for-mobile(){
+            width:21rem;
+            // overflow-x: scroll;
+          }
           th {
             text-align: center;
             font-weight: 600;
@@ -670,6 +669,117 @@
       opacity: 1
   }
 }
+.inner_div{
+  display: flex;
+  justify-content: start;
+  gap: 2rem;
+  position: relative;
+  margin-left: 8rem;
+  align-items: center;
+.tooltip {
+  cursor: pointer !important;
+    background: #c3343a;
+    bottom: 0%;
+    width: 3rem;
+    color: #fff;
+    display: block;
+    left: 4rem;
+    margin-bottom: 15px;
+    padding: 20px;
+    pointer-events: all;
+    position: absolute;
+    transform: translateY(10px);
+    transition: all 0.25s ease-out;
+    -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+    -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+  }
+   .tooltip:before {
+  bottom: -20px;
+  content: " ";
+  display: block;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  }
+
+  /* CSS Triangles - see Trevor's post */
+.tooltip:after {
+    border-top: solid transparent 10px;
+    border-bottom: solid transparent 10px;
+    border-left: solid transparent 10px;
+    border-right: solid #c3343a 10px;
+    bottom: 1rem;
+    content: " ";
+    height: 0;
+    left: -4%;
+    margin-left: -13px;
+    position: absolute;
+    width: 0;
+  }
+
+.card {
+  position: relative;
+  text-align: center;
+  background: white;
+  overflow: hidden;
+  border-radius: 10px;
+  height: 100px;
+  width: 100px;
+  transition: 0.5s;
+  left: 5rem;
+}
+.card:hover{
+  transform: translateY(10px);
+  box-shadow: 0 20px 20px rgba(0,0,0,.2);
+  animation: animate 1.5s ease-in-out both infinite;
+}
+@keyframes animate {
+  0% {
+    transform: translateY(0)
+  }
+  50% {
+    transform: translateY(10px) scale(.98);
+  }
+  100% {
+    transform: translateY(0)
+  }
+}
+.card .img-box {
+  position: absolute;
+  top: 0;
+  left: 0; width: 100%; height: 100%;
+  transition: .5s;
+}
+.card:hover .img-box {
+  opacity: 0.5;
+}
+.card .img-box img{
+  width: 100%;
+}
+
+.card .content {
+  position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: -100%;
+    padding: 20px;
+    padding-top: 60px;
+    box-sizing: border-box;
+    text-align: center;
+    transition: 0.5s;
+    // color: white;
+    background: linear-gradient(0deg, #c21833, transparent);
+}
+.card:hover .content {
+  bottom: 0;
+  padding-top: 2rem;
+  position: relative;
+  background: linear-gradient(0deg, #c21833, transparent);
+
+}
+}
 
 .icon {
   @for $i from 0 to 40 {
@@ -677,6 +787,106 @@
       fill: rgb(random(255), random(255), random(255));
     }
   }
+}
+.menu {
+  position: relative;
+  text-align: end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  left: -0.5rem;
+ @include for-mobile(){
+  left: -0.5rem;
+ }
+}
+
+.menu-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 100%;
+  background-color: #c3343a;
+  color: #fff;
+  font-size: 1.1rem;
+  z-index: 1;
+  cursor: pointer;
+  @include for-mobile(){
+    margin-left: 2px;
+    padding: 1.2rem;
+    height: 20px;
+    width: 20px;
+    .material-icons {
+    font-size: 20px;
+    }
+  }
+}
+
+.menu-items {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right:0%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+
+}
+
+.menu-item {
+  background-color: #C3343A;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 22px 0;
+  border-radius: 5px;
+  text-align: center;
+  @include for-mobile(){
+    padding: 10px 20px;
+    margin: 4.5rem -2rem;
+  }
+  span{
+    cursor: pointer;
+pointer-events: all;
+text-decoration: none;
+color: white;
+font-weight: 500;
+
+  }
+}
+.menu-items .menu-item:nth-child(1) {
+  transform: translate3d(1em,-7em,0);
+  border-right: 1px solid black;
+
+}
+.menu-items .menu-item:nth-child(2) {
+  transform: translate3d(-3.5em,-6.3em,0);
+  border-right: 1px solid black;
+}
+
+.menu-items .menu-item:nth-child(3) {
+  transform: translate3d(-6.5em,-3.2em,0);
+  border-right: 1px solid black;
+}
+
+.menu-items.active .menu-item:nth-child(4) {
+  transform: translate3d(-7em,1em,0);
+  border-right: 1px solid black;
+}
+
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  // z-index: 2;
+  cursor: pointer;
+  pointer-events: all;
 }
 
 

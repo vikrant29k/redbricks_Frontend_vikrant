@@ -16,7 +16,8 @@
     </ng-container>
   </div>
 
-  <div class="floor-card" [@slideInOut]="selectedCenter === null ? 'floorout' : 'floorin'">
+
+  <div class="floor-card" [@slideInOut]="selectedCenter === null ? 'floorout' : 'floorin'" >
     <button mat-icon-button (click)="closeFloor()" class="floorClose">  <mat-icon>arrow_back</mat-icon> </button>
     <h2 class="floorTitle"><mat-icon>location_city</mat-icon> {{centerName}}</h2>
     <div class="floor-data">
@@ -32,8 +33,8 @@
             <span class="sub-icon" [ngClass]="floor.isHovered ? 'rackRate-icon': ''">Rack Rate- <br> Rs.{{ floor.floorData.rackRate }}</span>
             <span class="sub-icon" [ngClass]="floor.isHovered ? 'final-icon': ''">Final Proposal- <br>{{ floor.floorData.totalProposals }}</span>
             <span class="sub-icon" [ngClass]="floor.isHovered ? 'booking-icon': ''">Total Price- <br>Rs.{{ floor.floorData.bookingPriceUptilNow }}</span>
-          <!-- </div> -->
-        </div>
+          </div>
+        <!-- </div> -->
       </div>
     </ng-container>
   </div>
@@ -45,11 +46,11 @@
     <div class="detailPie">
           <div class="cardSection">
             <section>
-              <p style="width: 70% !important">System Current Price:</p>
+              <p style="width: 70% !important">System Current Price :</p>
               <p>Rs.{{ currentValue || 0 }} per seat</p>
             </section>
             <section>
-              <p style="width: 70% !important">Minimum Rack Value:</p>
+              <p style="width: 70% !important">Minimum Rack Value :</p>
               <p>Rs.{{ rackValue || 0 }} per seat</p>
               <!-- //<mat-icon>sync</mat-icon> -->
             </section>

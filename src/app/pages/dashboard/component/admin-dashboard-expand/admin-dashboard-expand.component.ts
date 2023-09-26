@@ -25,20 +25,21 @@ declare var google: any;
   styleUrls: ['./admin-dashboard-expand.component.scss'],
   animations: [
     trigger('slideInOut', [
-      state('floorin', style({ transform: 'translate(0)',background: 'rgb(228 226 226)', width:'104%',height: '36rem',position: 'relative',top: '-12.1rem', 'border-radius':' 15px ','z-index':1,left:'-1.3rem'})),
-      state('floorout', style({ transform: 'translate(0,0)',display:'none', width:'0rem', height:'0rem',position: 'relative',top: '-12.1rem',left:'-1.3rem' })),
+      state('floorin', style({ transform: 'translate(0)',background: 'rgb(228 226 226)', width:'104%',height: '36rem',position: 'relative',top: '-19.6rem', 'border-radius':' 15px ','z-index':1,left:'-1.3rem'})),
+      state('floorout', style({ transform: 'translate(0,0)',display:'none', width:'0rem', height:'0rem',position: 'relative',top: '-19.6rem',left:'-1.3rem' })),
       transition('floorin => floorout', animate('0.6s ease-in-out')),
       transition('floorout => floorin', animate('0.6s ease-in-out')),
     ]),
     trigger('dataInOut', [
-      state('in', style({ transform: 'translate(0)',background: 'rgb(205 82 88)', width:'104%',height: '36.5rem',position: 'relative',top: '-48.1rem',left:'-1rem', 'border-radius':' 15px '})),
-      state('out', style({ transform: 'translate(0,0)',display:'none', width:'0rem', height:'0rem',position: 'relative',top: '-48.1rem',left:'-1rem',  })),
+      state('in', style({ transform: 'translate(0)',background: 'rgb(205 82 88)', width:'104%',height: '36.5rem',position: 'relative',top: '-55.6rem',left:'-1rem', 'border-radius':' 15px '})),
+      state('out', style({ transform: 'translate(0,0)',display:'none', width:'0rem', height:'0rem',position: 'relative',top: '-55.6rem',left:'-1rem',  })),
       transition('in => out', animate('0.6s ease-in-out')),
       transition('out => in', animate('0.6s ease-in-out')),
     ]),
   ],
 })
 export class AdminDashboardExpandComponent implements OnInit {
+
   floorHover: any = false;
   selectedCenter: string | null = null;
   @Input() cardData: any;
@@ -46,6 +47,7 @@ export class AdminDashboardExpandComponent implements OnInit {
   city: any;
   centers: any;
   data: any;
+  mobileStyles: any = {};
   constructor(
     private dialog: MatDialog,
     private dashboardService: DashboardService
@@ -62,8 +64,16 @@ export class AdminDashboardExpandComponent implements OnInit {
     this.dashboardService.getCenters(this.cardData).subscribe((res: any) => {
       this.centerList = res.centers;
       // console.log(res)
+
     });
+
+
+
   }
+
+
+
+
   floorData: any[] = [];
   closeFloor() {
     this.selectedCenter = null;

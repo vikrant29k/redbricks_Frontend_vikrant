@@ -31,6 +31,18 @@
         />
         <mat-error>Center is required</mat-error>
       </mat-form-field>
+       <!-- Floor -->
+      <mat-form-field appearance="fill">
+        <mat-label>Floor</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="floor"
+          autocomplete="off"
+          [readonly]="true"
+        />
+        <mat-error>Floor is required</mat-error>
+      </mat-form-field>
       <!-- Broker Type -->
       <mat-form-field appearance="fill">
         <mat-label>Broker Type</mat-label>
@@ -57,7 +69,7 @@
           <mat-error>Broker Category is required</mat-error>
         </mat-form-field>
       </ng-container>
- 
+
       <!-- Client Name -->
       <ng-container *ngIf="clientInfoForm.get('clientName')">
         <mat-form-field appearance="fill">
@@ -66,7 +78,7 @@
           <mat-error>Client Name is required</mat-error>
         </mat-form-field>
       </ng-container>
-      
+
 
       <div class="form-action">
         <button type="submit" mat-raised-button color="primary">
