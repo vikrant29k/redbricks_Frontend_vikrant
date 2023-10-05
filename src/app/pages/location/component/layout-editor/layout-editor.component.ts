@@ -544,9 +544,9 @@ for (const point of this.getAllPoints) {
           pillarData:this.pillarData}
            }
 
-    this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-      this.router.navigate(['/admin','location','location-list'])
-    })
+    // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
+    //   this.router.navigate(['/admin','location','location-list'])
+    // })
   }
 
 
@@ -785,7 +785,9 @@ transformerPilar!: Konva.Transformer;
         shadowOpacity: 0.5,
               name:String(data._id)
           })
+          rect.cache()
           rect.on('mousedown',()=>{
+            rect.clearCache()
             let transformNew = new Konva.Transformer()
             this.pillarGapLayer.add(transformNew);
             transformNew.nodes([rect])

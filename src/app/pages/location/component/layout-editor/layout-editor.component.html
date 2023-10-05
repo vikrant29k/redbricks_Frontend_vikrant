@@ -4,16 +4,27 @@
     <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled || isDrawingEnabledForPillar ?'contain':'changeContain'"></div>
   </div>
 <div class="sub-container">
-  <button mat-raised-button (click)="drawTHeSeat()">Get Clients</button>
-  <button mat-raised-button (click)="toggleDrawing()" color="primary" >{{isDrawingEnabled?'Stop':'Start'}} Drawing Border</button>
-  <button mat-raised-button (click)='addRectDataInArray()' color="primary">Update Border</button>
-<button mat-raised-button (click)="resetZoomAndPosition()" color="primary">Reset Zoom and Position</button>
-<button mat-raised-button (click)='addLayout()' color="primary">Final the layout</button>
+<div class="icons">
+  <button mat-raised-button  matTooltip="Drawing Border" color="primary"  (click)="toggleDrawing()"><mat-icon  >border_inner</mat-icon> {{isDrawingEnabled?'Stop':'Start'}}</button>
+  <button mat-raised-button  matTooltip="Reset Zoom and Position" color="primary" (click)="resetZoomAndPosition()"><mat-icon >refresh</mat-icon></button>
+</div>
+
+<div class="sub-icon">
+  <button mat-raised-button (click)="drawTHeSeat()" matTooltip="Get Clients"><mat-icon>people</mat-icon></button>
+<button mat-raised-button (click)='addLayout()' matTooltip="Final the layout"><mat-icon>border_all</mat-icon></button>
+</div>
+
+<button mat-raised-button (click)='addRectDataInArray()' color="primary">Update Border</button>
+
 <!-- <button *ngIf="isDeleteShape" mat-raised-button (click)="deleteSelectedShape(seatShape)" color="primary">delete Selected Layout</button> -->
 <!-- <button mat-raised-button color="secondary" (click)="deleteSelectedRect()" [disabled]="!selectedShape">Delete Selected Rectangle</button> -->
-<label> For Drawing Seats</label>
-<button mat-raised-button (click)="drawSeatAndGetHW()" color="primary">{{isSeatDrawingEnabled?'Stop':'Start'}} Drawing Seat</button>
-<button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button>
+<label><b>For Drawing Seats</b></label>
+<div class="seats">
+  <button mat-raised-button matTooltip="Drawing Seat" color="primary"  (click)="drawSeatAndGetHW()"><mat-icon >chair_alt</mat-icon> {{isSeatDrawingEnabled?'Stop':'Start'}}</button>
+  <button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button>
+</div>
+
+
 <div class="label">
   <mat-card><p><b>Width : {{seatWidth}}</b></p></mat-card>
   <mat-card><p><b>Height : {{seatHeight}}</b></p></mat-card>
@@ -27,9 +38,10 @@
   <input type="number" id="height" [(ngModel)]="height" name="height">
 </div>
 <button (click)="drawCustomRect()">CUSTOM BUTTOn</button> -->
+
 <button mat-raised-button (click)="goToDrawSeat()">Check Seats</button>
 <button mat-raised-button (click)="drawOutsideBorder()">Draw Border</button>
-<label> Other </label>
+<label><b>Other</b> </label>
 <button mat-raised-button (click)="toggleDrawingPillar()" color="primary" >{{isDrawingEnabledForPillar?'Stop':'Start'}} Drawing Pillar/Gap</button>
 <button mat-raised-button (click)="updatePillarData()">Update Other Data</button>
 <button mat-raised-button (click)="showOther()">Show Other Data</button>
