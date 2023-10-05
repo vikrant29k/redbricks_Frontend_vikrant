@@ -15,8 +15,8 @@ export class ShowChartComponent implements OnInit,AfterViewInit {
   dataChart:any;
 
   @ViewChild('pieChart') pieChart!:  | ElementRef;
-  
-  constructor(private dashboardService:DashboardService,@Inject(MAT_DIALOG_DATA) public data: any) { 
+
+  constructor(private dashboardService:DashboardService,@Inject(MAT_DIALOG_DATA) public data: any) {
     if(data){
       this.dataChart = data
     }
@@ -27,9 +27,9 @@ export class ShowChartComponent implements OnInit,AfterViewInit {
     google.charts.setOnLoadCallback(this.drawPieChart);
    }
   }
- 
+
   ngOnInit(): void {
-    
+
     google.charts.load('current', { 'packages': ['corechart'] });
 
     google.charts.setOnLoadCallback(() => {
@@ -57,8 +57,7 @@ export class ShowChartComponent implements OnInit,AfterViewInit {
 
 
   drawChart() {
-    console.log(this.chartdata);
-     console.log(this.dataChart,)
+
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Task');
     data.addColumn('number', 'Count');
@@ -105,7 +104,7 @@ export class ShowChartComponent implements OnInit,AfterViewInit {
       ['Inprogress Proposal',this.dataChart.InProgressProposals]
     ]
     );
-  
+
     const options: any = {
       title: 'Sales Chart',
       titleTextStyle: {
@@ -113,7 +112,7 @@ export class ShowChartComponent implements OnInit,AfterViewInit {
         fontSize: 25, // Optional: Adjust the font size of the title
         bold: true, // Optional: Set the title to bold
       },
-  
+
       backgroundColor: '#c3343a',
       colors: ['#b0022d', '#ed8882','#562424','#460012','#69011b','#dfab99'], // Set the slice colors here
       legend: {
@@ -124,17 +123,17 @@ export class ShowChartComponent implements OnInit,AfterViewInit {
         },
       },
       is3D: true,
-  
+
     };
-     
+
     console.log(this.pieChart)
   if(this.pieChart){
-     
+
     const chart = new google.visualization.PieChart(
       this.pieChart.nativeElement
     );
     chart.draw(data, options);
   }
-  
+
   };
 }

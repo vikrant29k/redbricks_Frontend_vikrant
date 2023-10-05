@@ -139,27 +139,41 @@ this.displayRectangles()
   }
   drawTHeSeat(){
     for (const seat of this.drawnSeats) {
-      this.drawSeatsBetweenPoints(seat.start, seat.end);
+      this.drawSeatsBetweenPoints(seat.start, seat.end,seat.seatPosition);
     }
   }
-  drawSeatsBetweenPoints(start:any, end:any) {
+  drawSeatsBetweenPoints(start:any, end:any,seatPosition:any) {
     const startX = Math.min(start.x, end.x);
     const startY = Math.min(start.y, end.y);
     const endX = Math.max(start.x, end.x);
     const endY = Math.max(start.y, end.y);
-
-    for (let x = startX; x < endX; x += this.seatSizeWidth) {
-      for (let y = startY; y < endY; y += this.seatSizeHeight) {
-        this.drawSeatRectangle(x, y);
+    const seatSizeWidth = this.seatSizeWidth; // Extract width from seatSize
+    const seatSizeHeight = this.seatSizeHeight; // Extract height from seatSize
+    if(seatPosition==false){
+      for (let x = startX; x < endX; x += seatSizeHeight) {
+        for (let y = startY; y < endY; y += seatSizeWidth) {
+          this.drawSeatRectangle(x, y,seatSizeHeight,seatSizeWidth);
+        }
+      }
+    }else{
+      for (let x = startX; x < endX; x += seatSizeWidth) {
+        for (let y = startY; y < endY; y += seatSizeHeight) {
+          this.drawSeatRectangle(x, y,seatSizeWidth,seatSizeHeight);
+        }
       }
     }
+    // for (let x = startX; x < endX; x += this.seatSizeWidth) {
+    //   for (let y = startY; y < endY; y += this.seatSizeHeight) {
+    //     this.drawSeatRectangle(x, y);
+    //   }
+    // }
   }
-  drawSeatRectangle(x:any, y:any) {
+  drawSeatRectangle(x:any, y:any,width:any,height:any) {
     const rect = new Konva.Rect({
       x: x,
       y: y,
-      width: this.seatSizeWidth,
-      height: this.seatSizeHeight,
+      width: width,
+      height:height,
       fill: 'red',
       opacity: 0.5,
       stroke: 'red',
@@ -241,20 +255,16 @@ this.displayRectangles()
     this.drawTHeSeat()
   }
   updateStoredValues(){
-    let data = {
-      LayoutData:{
-                layoutBorder:this.getAllPoints
-                }
-         }
 
-  this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-      console.log(res);
+
+  // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
+      // console.log(res);
       this.proposalService.lockProposal(this.proposalId, { lockProposal:true })
             .subscribe((res:any) => {
               console.log(res,"Locked Proposal")
             });
       this.router.navigate(['/admin','location','location-list'])
-    })
+    // })
   }
 
 

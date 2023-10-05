@@ -69,18 +69,19 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
         this.selectedLocation = result.location;
         this.selectedCenter = result.center;
         this.locationId=result.locationId;
+        this.content=result.content
       },
       error: (err: any) => {},
     });
 
   }
-
+content:any;
   openDialog = () => {
     const dialogRef = this.dialog.open(NewProposalLayoutPreviewComponent, {
       width: '1080px',
       height: '734px',
       panelClass: 'my-panel-class',
-      data: { locationId: this.locationId, proposalId: this.proposalId, totalNoOfSeat:this.totalNumberofSeat },
+      data: { locationId: this.locationId, proposalId: this.proposalId, totalNoOfSeat:this.totalNumberofSeat, content:this.content },
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {

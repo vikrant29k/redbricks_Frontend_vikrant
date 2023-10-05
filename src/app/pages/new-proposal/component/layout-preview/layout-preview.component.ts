@@ -4,10 +4,18 @@ import { ProposalService } from "src/app/service/proposal/proposal.service";
 import { LocationService } from "src/app/service/location/location.service";
 import Konva from "konva";
 import { environment } from "src/environments/environment";
+import * as roomsData from '../../../location/component/layout-editor/seat-draw/roomCountsData.json'
+export interface RoomData {
+  [key: string]: {
+    count: number;
+    color: string;
+  };
+}
 export interface DialogData {
     locationId: string,
     proposalId:string,
-    totalNoOfSeat:number
+    totalNoOfSeat:number,
+    content:any;
 }
 
 @Component({
@@ -61,6 +69,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
     }
     ngOnInit(): void {
         this.totalNumber=this.data.totalNoOfSeat;
+        this.content=this.data.content;
         this.proposalService.generateLayout(this.data.proposalId).subscribe((res:any)=>{
               this.getImageAndInitialize(res.locationId,res.layoutArray)
 
@@ -102,7 +111,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               this.imageUrl = environment.baseUrl+'images/' + imageUrl;
               this.proposalService.getProposalByLocationId(locationId).subscribe(
                 (result:any)=>{
-                  if(result.message=='no data'){
+                  if(result.Message=='No Data'){
                     // console.log("Ny tyt data ky")
                          //   console.log(this.imageUrl);
               const imageObj = new Image();
@@ -111,7 +120,6 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                 this.drawTheBlankSeat()
                 this.transformer = new Konva.Transformer(); // Initialize transformer
                 this.layer.add(this.transformer);
-                // console.log(layoutArray,"HELOOOE")
                 for (const shape of layoutArray[0].layoutBorder) {
                   // this.seatSizeHeight=shape.seatHeight;
                   // this.seatSizeWidth=shape.seatWidth
@@ -124,17 +132,16 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                     fill: 'transparent',
                     opacity: 0.05,
                   });
-
+                  rect.on('click', (e) => {
+                    this.drawSeatsInRectangle(shape, e.evt.offsetX, e.evt.offsetY);
+                  });
                   this.layer.add(rect);
               }
-
               };
               imageObj.src = this.imageUrl;
               imageObj.crossOrigin = 'Anonymous';
-              // this.drawRectangles()
                   }else{
                     this.extractProposalData(result);
-                         //   console.log(this.imageUrl);
               const imageObj = new Image();
               imageObj.onload = () => {
                 this.initializeKonva(imageObj);
@@ -142,9 +149,6 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                 this.transformer = new Konva.Transformer(); // Initialize transformer
                 this.layer.add(this.transformer);
                 for (const shape of layoutArray[0].layoutBorder) {
-                  // this.seatSizeHeight=shape.seatHeight;
-                  // this.seatSizeWidth=shape.seatWidth
-                  // const shape  = layoutBorderObj.attrs
                   const rect = new Konva.Rect({
                     x: shape.startX,
                     y: shape.startY,
@@ -153,20 +157,17 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                     fill: 'transparent',
                     opacity: 0.05,
                   });
-
+                  rect.on('click', (e) => {
+                    // console.log(e,"RUNNINNG")
+                    this.drawSeatsInRectangle(shape, e.evt.offsetX, e.evt.offsetY);
+                  });
                     this.layer.add(rect);
             }
-
               };
-
-
               imageObj.src = this.imageUrl;
               imageObj.crossOrigin = 'Anonymous';
               // this.drawRectangles()
                   }
-
-
-
             },
             error => {
               console.error('Error loading image data:', error);
@@ -182,35 +183,27 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
       changeTheFlow(){
         this.flowOfDrawingSeats=!this.flowOfDrawingSeats
       }
-      drawRectangles() {
+      drawSeatsInRectangle(point: any, clickX: number, clickY: number) {
+        // console.log(point,"YUPP")
         let count = 0;
-        this.stage.on('click', (e: any) => {
-          const x = e.evt.offsetX; // X coordinate of the click
-          const y = e.evt.offsetY; // Y coordinate of the click
-
+          const x = clickX; // X coordinate of the click
+          const y = clickY; // Y coordinate of the click
         if (!this.stage || !this.layer) return;
         if (this.drawingEnabled === true) {
           let remainingSeats = this.totalNumber;
-
-          for (const point of this.getAllPoints) {
-
             const minX = point.startX;
             const minY = point.startY;
             const maxX = point.endX;
             const maxY = point.endY;
-            // console.log("name of rect",point._id,
-                        // "\n minX=",point.startX,
-                        // "\n maxX=>",point.endX,
-                        // "\n width of rect=>", point.endX-point.startX);
-            // console.log("MAX Columns can be added==>",Math.round((maxX-minX)/point.seatWidth))
+
 
             const availableWidth = maxX - minX;
             const availableHeight = maxY - minY;
-            const maxHorizontalRectangles = Math.floor(availableWidth / point.seatWidth);
-            const maxVerticalRectangles = Math.floor(availableHeight / point.seatHeight);
+            const maxHorizontalRectangles = Math.round(availableWidth / this.seatWidth);
+            const maxVerticalRectangles = Math.round(availableHeight / this.seatHeight);
 
             const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
-            console.log(maxRectangles,"HECH TE ")
+
             const flowOfData = this.flowOfDrawingSeats;
             if (x < maxX && x > minX && y > minY && y < maxY) {
               const polygon = new Konva.Line({
@@ -218,7 +211,6 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                 fill: 'transparent',
                 stroke: 'black',
                 strokeWidth:0.3,
-                // draggable:true,
               });
               this.layer.add(polygon);
             if (flowOfData == true) {
@@ -234,12 +226,6 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
 
                     remainingSeats--;
                     count++;
-                    // if(this.totalNumber==count){
-                    //   this.lastCoordinate.push({
-                    //     lastX:x+seatWidth,
-                    //     lastY:y+seatHeight
-                    //   })
-                    // }
                   }
                 }
               }
@@ -259,27 +245,17 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
 
                     remainingSeats--;
                     count++;
-                    // if(this.totalNumber==count){
-                    //   this.lastCoordinate.push({
-                    //     lastX:x+seatWidth,
-                    //     lastY:y+seatHeight
-                    //   })
-                    // }
+
                   }
                 }
               }
             }
             this.totalNumber=remainingSeats;
-            if (remainingSeats === 0) {
-              this.drawingEnabled = false;
-              break;
-            }
-          }
-
           this.layer.batchDraw();
         }
-        }})
+        }
       }
+
 
       drawSeatRectangle(x:number, y:number,height:number,width:number) {
         const rect = new Konva.Rect({
@@ -294,7 +270,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
           name: 'seat-rectangle',
         });
         this.layer.add(rect);
-        rect.cache() //for code optimization
+        // rect.cache() //for code optimization
       }
 
       saveImage(){
@@ -314,12 +290,9 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
       }
 
       drawTheBlankSeat(){
-        // let dataOfDrawingSeats = this.proposalData.
-        this.proposalData.forEach(dataOfSeats=>{
-      //  console.log(dataOfSeats)
+         this.proposalData.forEach(dataOfSeats=>{
           for (const seat of dataOfSeats.seatsData) {
-
-            this.drawSeatsBetweenPoints(seat.start, seat.end);
+           this.drawSeatsBetweenPoints(seat.start, seat.end);
           }
         })
 
@@ -354,4 +327,75 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
         this.layer.add(rect);
 
       }
+      content:any;
+
+  sepratedContent:any[]=[]
+      roomsDataObject: RoomData = roomsData;
+
+      seprateData(){
+        console.log(this.content)
+        const contentArray = this.content.split(','); // Split the string into an array
+        contentArray.forEach((item:any) => {
+          const keyValue = item.trim().split('=');
+          if (keyValue.length === 2) {
+            const key = keyValue[0].trim();
+            const value = parseInt(keyValue[1].trim()); // Assuming the values are integers
+            this.sepratedContent[key] = value;
+          }
+        });
+
+        // Now you have separated content as an object with individual properties
+        console.log("YEP",this.sepratedContent);
+
+
+        const commonObjectsWithCounts = [];
+
+        for (const key in this.sepratedContent) {
+          if (this.sepratedContent.hasOwnProperty(key)) {
+            // Check if the key exists in the JSON data
+            if (this.roomsDataObject[key]) {
+              const count = this.sepratedContent[key];
+              const jsonData = this.roomsDataObject[key];
+
+              // Create a new object with the multiplied count and color
+              const commonObject = {
+                title: key,
+                count: jsonData.count * count,
+                color: jsonData.color,
+              };
+
+              // Add the common object to the array
+              commonObjectsWithCounts.push(commonObject);
+            }
+          }
+        }
+
+        // Now you have an array commonObjectsWithCounts containing common objects
+        console.log(commonObjectsWithCounts);
+        this.assignRoomsToSeats(commonObjectsWithCounts)
+          }
+          assignRoomsToSeats(commonObjectsWithCounts: any[]) {
+            // Find all seat rectangles in the layer
+            const seatRectangles = this.layer.find('.seat-rectangle');
+
+            let currentSeatIndex = 0;
+
+            commonObjectsWithCounts.forEach((room: any) => {
+              const roomSeats = [];
+              for (let i = 0; i < room.count; i++) {
+                const seat: any = seatRectangles[currentSeatIndex];
+                if (seat) {
+                  roomSeats.push(seat);
+                  seat.fill(room.color); // Assign the room's color to the seat
+                } else {
+                  break; // No more seats available for this room
+                }
+                currentSeatIndex++;
+              }
+              // You can do something with roomSeats (e.g., save them in a data structure)
+            });
+
+            // Redraw the layer to apply the changes to seat colors
+            this.layer.batchDraw();
+          }
 }

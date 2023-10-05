@@ -21,7 +21,8 @@ export class NewProposalRequirementInfoComponent implements OnInit {
   totalWorkStationBalance: any = 373;
   totalWorkstationBooked: any = 0;
   totalAvailableWorkstation: any;
-  totalSelectedWorkstation: any = 0;
+  totalSelectedWorkstation: number = 0;
+  billableSeats!:number
   areaOfCoreSelectedSeat:any;
   areaOfUsableSelectedSeat:any;
 
@@ -74,7 +75,8 @@ id:any;
     trainingRoomNumber: new FormControl(),
     gameRoomNumber: new FormControl(),
     content:new FormControl(),
-    totalNumberOfSeats: new FormControl()
+    totalNumberOfSeats: new FormControl(),
+    billableSeats:new FormControl()
 
   });
 
@@ -110,11 +112,12 @@ id:any;
 
   onSubmit = () => {
     // console.log(this.requirementInfoForm.get('createWithArea'))
-    let finalSeat = Math.ceil(this.totalSelectedWorkstation);
+    let finalSeat = Math.ceil(this.billableSeats);
+    let totalSeat = Math.ceil(this.totalSelectedWorkstation)
     this.requirementInfoForm.patchValue({
-      totalNumberOfSeats:finalSeat
+      billableSeats:finalSeat,
+      totalNumberOfSeats:totalSeat
     });
-
     let contentt =  document.getElementById('datadiv')?.textContent;
     this.requirementInfoForm.patchValue({
       content:contentt
@@ -218,8 +221,8 @@ totalWorkstation(){
     (value.wellnessRoomNumber * 4.50)  +
     value.trainingRoomNumber +
     value.gameRoomNumber;
-    this.totalSelectedWorkstation = (this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1)).toFixed(2);
-    this.areaOfCoreSelectedSeat = (this.totalSelectedWorkstation*19.00).toFixed(2);
+    this.billableSeats  = Number((this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1)).toFixed(2));
+    this.areaOfCoreSelectedSeat = (this.billableSeats*19.00).toFixed(2);
     this.areaOfUsableSelectedSeat = (this.areaOfCoreSelectedSeat *1.85).toFixed(2);
 
     // let circulation = totalNoOfSeats*0.1;

@@ -24,13 +24,10 @@ export class AuthLoginComponent implements OnInit{
     ngOnInit(): void {
 
     }
-    clickHome(){
-      alert("Hello")
-    }
 
     loginForm = new FormGroup({
-        'userName': new FormControl('', [Validators.required, Validators.email]),
-        'password': new FormControl('', Validators.required)
+        'userName': new FormControl('vkalbhor85@gmail.com', [Validators.required, Validators.email]),
+        'password': new FormControl('admin', Validators.required)
     });
 
     get userName() {

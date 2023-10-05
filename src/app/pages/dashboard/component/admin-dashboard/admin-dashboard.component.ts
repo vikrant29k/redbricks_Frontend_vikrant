@@ -21,12 +21,6 @@ import { AuthenticationService } from 'src/app/service/authentication/authentica
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
   animations: [fadeOut, blub,
-    trigger('slideInOut', [
-    state('in', style({ transform:'translateX(0)',width:'80vw',height:'34rem'})),
-    state('out', style({ transform: 'translateX(50%)',width:'0',height:'0' })),
-    transition('in => out', animate('2s ease-in-out')),
-    transition('out => in', animate('2s ease-in-out')),
-  ]),
   trigger('cardAnimation', [
     state('hidden', style({ opacity: 0,display:'none', transform: 'translateX(-50px)' })),
     state('visible', style({ opacity: 1,display:'block', transform: 'translateX(0)' })),
@@ -57,7 +51,7 @@ export class DashboardAdminDashboard implements OnInit {
   menuOpen: boolean = false;
 // hideBackButton: boolean = false;
 
-  userList: any;
+
   constructor(
     private proposalService: ProposalService,
     private dashboardService: DashboardService,
@@ -101,14 +95,7 @@ state='hidden';
   toggleMenus() {
     this.state = this.state === 'hidden' ? 'visible' : 'hidden';
   }
-  //  =[
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'},
-  //   {_id:"RAHAY124551",salesPerson:"Rahul K",clientName:'CBRE'}
-  // ];
+
   notifications: any;
   deselect:any;
   //  = this.dataSourceConflict.length
@@ -135,11 +122,20 @@ state='hidden';
   }
   // get conflicts
   getConflict() {
-    this.dashboardService.getCoflicts().subscribe((res) => {
-      this.dataSourceConflict = res;
-      this.notifications = this.dataSourceConflict.length
-      // console.log(res);
-    });
+    this.dashboardService.getCoflicts().subscribe(
+      (res) => {
+        // Handle the successful response
+        this.dataSourceConflict = res;
+        this.notifications = this.dataSourceConflict.length;
+        // console.log(res);
+      },
+      (error) => {
+        // Handle the error here
+        // console.error('An error occurred:', error);
+
+      }
+    );
+
   }
   resolveConflict(_id: string) {
     Swal.fire({
@@ -243,39 +239,6 @@ dayBeforeYesterday:any;
 
   }
 countOfRecentProposal!:number
-  // Approve proposal
-  // approvePropsal(id: string) {
-  //   this.System_value = this.Amount.find((x:any) => x._id === id).previousFinalOfferAmmount ;
-  //   this.client_value =  this.Amount.find((x:any) => x._id === id).clientFinalOfferAmmount ;
-  //   // console.log(this.System_value, 'System_value');
-  //   // console.log(this.client_value, 'client_value');
-
-  //   var a = 'myprice';
-  //   Swal.fire({
-  //     title: 'Approve Proposal',
-  //     html: `Client Price = ${(this.client_value).toFixed(2)} <br> System Price = ${(this.System_value).toFixed(2)}`,
-  //     icon: 'info',
-  //     showConfirmButton: true,
-  //     confirmButtonText: 'Confirm',
-  //     confirmButtonColor: '#C3343A',
-  //     input: 'number',
-  //     inputAttributes:{
-  //       required:'true'
-  //     } ,
-  //     inputLabel: 'Enter Final Amount',
-  //     showCancelButton: true,
-  //     cancelButtonColor: '#7D7E80',
-  //   }).then((confirmation) => {
-  //     if (confirmation.isConfirmed) {
-  //       // this.proposalService.approveProposal(id, { finalOfferAmmount: confirmation.value, salesHeadFinalOfferAmmount: confirmation.value })
-  //       //   .subscribe((res) => {
-  //       //     // console.log(res,"Final offer amount sales head dashboard approve")
-  //       //    this.deleteRow(id)
-  //       //   });
-  //     }
-  //   });
-  // }
-
   //lock proposal
   lockProposal(id: string) {
     this.selectedSeatOfCurrentProposal =  this.Amount.find((x:any) => x._id === id).totalNumberOfSeats ;
@@ -366,17 +329,17 @@ countOfRecentProposal!:number
 
 salesHead(id:any){
   this.dialog.open(SalesHeadApprovalComponent,{
-    width: '1000px',
+    width: '1200px',
     height:'615px',
     panelClass:'salesHead',
     data:{id:id}
 
   })
-  this.dialog.afterAllClosed.subscribe(()=>{
-    this.deleteRow(id)
-  })
+  // this.dialog.afterAllClosed.subscribe(()=>{
+  //   this.deleteRow(id)
+  // })
 }
-
+userList: any[]=[];
 getUserListArray = ()=>{
   this.dashboardService.getUserListArray().pipe(take(1)).subscribe((res:any)=>{
     console.log(res)

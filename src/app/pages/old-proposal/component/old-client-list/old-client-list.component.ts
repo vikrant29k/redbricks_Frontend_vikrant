@@ -29,7 +29,7 @@ export class OldClientListComponent implements OnInit {
   height!: string;
   Locations: any;
   editMode: boolean = false;
-  displayedColumns: string[] = ['proposal_id','location', 'center','floor', 'selectedWorkstation','color','delete','view'];
+  displayedColumns: string[] = ['proposal_id','location', 'center','floor', 'selectedWorkstation','color','delete','view','draw'];
   dataSource!: MatTableDataSource<LocationData>;
   selectedValue!: string;
 
@@ -146,6 +146,10 @@ getLocation = () => {
             // console.log(this.locations)
         }
     })
+}
+
+designClient = (Id: string) => {
+  this.router.navigate(['/admin','location','designSeat',Id])
 }
 
 }

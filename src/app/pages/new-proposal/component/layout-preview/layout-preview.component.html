@@ -4,8 +4,9 @@
 
     <label>Seats to be Selected: {{totalNumber}}</label>
     <div>
-        <button class="download_btn" (click)="drawRectangles()">Select Seats</button>
+        <!-- <button class="download_btn" (click)="drawRectangles()">Select Seats</button> -->
     </div>
+    <button class="download_btn" (click)="seprateData()">check room</button>
     <button class="download_btn" (click)="changeTheFlow()">{{flowOfDrawingSeats?'Vertical':'Horizontal'}}</button>
       <button class="download_btn"   (click)="saveImage()">Final Layout</button>
     </div>

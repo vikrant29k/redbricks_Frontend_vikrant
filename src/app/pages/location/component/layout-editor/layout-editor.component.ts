@@ -785,7 +785,9 @@ transformerPilar!: Konva.Transformer;
         shadowOpacity: 0.5,
               name:String(data._id)
           })
+          rect.cache()
           rect.on('mousedown',()=>{
+            rect.clearCache()
             let transformNew = new Konva.Transformer()
             this.pillarGapLayer.add(transformNew);
             transformNew.nodes([rect])
