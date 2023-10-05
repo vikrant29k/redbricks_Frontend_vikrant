@@ -330,7 +330,7 @@ countOfRecentProposal!:number
 salesHead(id:any){
   if (this.title === 'sales head'){
     this.dialog.open(SalesHeadApprovalComponent,{
-      width: '1000px',
+      width: '1200px',
       height:'615px',
       panelClass:'salesHead',
       data:{id:id}

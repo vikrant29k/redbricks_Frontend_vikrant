@@ -61,6 +61,7 @@
   }
   .right-content{
     width: 40%;
+    padding-inline-start: 5px;
     border-left: 3px dashed #c3343a;
     .title{
       display: flex;
@@ -72,6 +73,7 @@
       justify-content: space-evenly;
       .mat-form-field{
         width: 12rem;
+        text-align: center;
       }
     }
   }
