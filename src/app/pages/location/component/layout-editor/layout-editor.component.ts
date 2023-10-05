@@ -544,9 +544,9 @@ for (const point of this.getAllPoints) {
           pillarData:this.pillarData}
            }
 
-    this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-      this.router.navigate(['/admin','location','location-list'])
-    })
+    // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
+    //   this.router.navigate(['/admin','location','location-list'])
+    // })
   }
 
 

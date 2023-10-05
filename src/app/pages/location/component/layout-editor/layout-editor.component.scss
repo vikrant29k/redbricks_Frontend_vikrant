@@ -27,14 +27,14 @@
   gap: 2rem;
   margin-block:1.5rem 1rem;
   // justify-content: space-around;
-  // align-items: center;
-//1366 651
+  //align-items: center;
+//1536 739
   @include for-mobile(){
     flex-direction: column;
   }
   button{
     margin: 10px;
-    width:13rem;
+    // width:13rem;
   }
   .canvas-container{
     margin-left: 2rem;
@@ -54,13 +54,36 @@
       align-items: center;
       margin-left: 2rem;
     }
-  }
-  .label{
-    display: flex;
-    gap:0.6rem;
+    .icons{
+      display: flex;
+      gap:2.5rem;
+      button{
+        width:6rem;
+      }
+    }
+    .sub-icon{
+      display: flex;
+      gap:2.5rem;
+      button{
+        width:6rem;
+      }
+    }
+    .seats{
+      display:flex;
+      gap:1rem;
+      button{
+        width:8rem;
+      }
+    }
 
-    mat-card{
-      width:5.8rem;
+    .label{
+      display: flex;
+      gap:0.6rem;
+
+      mat-card{
+        width:6.8rem;
+      }
     }
   }
+
 }

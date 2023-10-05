@@ -328,16 +328,20 @@ countOfRecentProposal!:number
   }
 
 salesHead(id:any){
-  this.dialog.open(SalesHeadApprovalComponent,{
-    width: '1200px',
-    height:'615px',
-    panelClass:'salesHead',
-    data:{id:id}
+  if (this.title === 'sales head'){
+    this.dialog.open(SalesHeadApprovalComponent,{
+      width: '1000px',
+      height:'615px',
+      panelClass:'salesHead',
+      data:{id:id}
 
   })
-  // this.dialog.afterAllClosed.subscribe(()=>{
-  //   this.deleteRow(id)
-  // })
+
+    this.dialog.afterAllClosed.subscribe(()=>{
+      this.deleteRow(id)
+    })
+  }
+
 }
 userList: any[]=[];
 getUserListArray = ()=>{
