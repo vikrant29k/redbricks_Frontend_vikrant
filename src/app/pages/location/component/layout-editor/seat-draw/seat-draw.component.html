@@ -17,6 +17,13 @@
       </mat-option>
     </mat-select>
   </mat-form-field> -->
+
+
+  <mat-select placeholder="Select Image" [(ngModel)]="selectedImage">
+    <mat-option *ngFor="let image of imageOptions" [value]="image.value">{{ image.label }}</mat-option>
+  </mat-select>
+  <button  mat-raised-button (click)="loadImage()">Draw Image</button>
+
 </div>
 </div>
 

@@ -35,6 +35,8 @@ export class SeatDrawComponent implements OnInit {
   seatHeight!:number;
   seatWidth!:number;
   content:any;
+  selectedImage!: string;
+  imageSrc!: string;
   ngOnInit(): void {
     this.id = this.route.snapshot.params['Id'];
     this.proposalService.getProposalById(this.id).subscribe((res:any)=>{
@@ -102,7 +104,73 @@ export class SeatDrawComponent implements OnInit {
 
     this.layer.add(this.backgroundImage);
     this.layer.draw();
+    // this.backgroundImage.on('click', () => {
+    //   this.loadImage();
+    // });
   }
+
+  loadImage() {
+    const image = new Image();
+    image.src =this.getImagePath();
+
+    image.onload = () => {
+      const konvaImage = new Konva.Image({
+        x: 0,
+        y: 0,
+        image: image,
+        width: image.width,
+        height: image.height,
+        draggable:true
+      });
+
+      const layer = new Konva.Layer();
+      layer.add(konvaImage);
+      const transformer = new Konva.Transformer({
+        nodes: [konvaImage], // Add the image to the transformer
+
+      });
+      layer.on('dblclick',()=>{
+        transformer.destroy();
+      })
+      layer.add(transformer);
+      this.stage.add(layer);
+
+      layer.draw();
+    };
+  }
+
+  imageOptions = [
+    { label: '4p meeting room', value: 'image1' },
+    { label: '6p meeting room', value: 'image2' },
+    { label: '8p meeting room', value: 'image3' },
+    { label: '10p meeting room', value: 'image4' },
+    { label: '12p meeting room', value: 'image5' },
+    { label: '16p meeting room', value: 'image6' },
+    { label: '20p meeting room', value: 'image7' },
+    { label: '24p meeting room', value: 'image8' },
+    { label: 'MD cabin', value: 'image9' },
+    { label: 'server room', value: 'image10' },
+    { label: '3p cabin', value: 'image11' },
+  ];
+
+  imageSources: { [key: string]: string } = {
+    'image1': 'assets/images/rooms/4p meeting room.png',
+    'image2': 'assets/images/rooms/6p meeting room.png',
+    'image3': 'assets/images/rooms/8p meeting room.png',
+    'image4': 'assets/images/rooms/10p meeting room.png',
+    'image5': 'assets/images/rooms/12p meeting room.png',
+    'image6': 'assets/images/rooms/16p meeting room.png',
+    'image7': 'assets/images/rooms/20p meeting room.png',
+    'image8': 'assets/images/rooms/24p meeting room.png',
+    'image9': 'assets/images/rooms/MD cabin.png',
+    'image10': 'assets/images/rooms/server room.png',
+    'image11': 'assets/images/rooms/3p cabin.png',
+  };
+
+  getImagePath(): string {
+    return this.imageSources[this.selectedImage];
+  }
+
   //for Zooming REQUIRED
   enableZoom(): void {
     const scaleBy = 1.1; // Adjust the scale factor as needed
