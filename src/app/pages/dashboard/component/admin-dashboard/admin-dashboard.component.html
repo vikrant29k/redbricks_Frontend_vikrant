@@ -22,23 +22,30 @@
 
   <div class="main-content">
     <div mat-card class="card-container">
-      <ng-container *ngFor="let location of city">
-        <div class="icon" (click)="toggleLocation(location)" (mouseenter)="location.isHovered = true" (mouseleave)="location.isHovered = false">
-          <ng-container [ngTemplateOutlet]="locationIcon"></ng-container>
-          <p>{{ location.location }}</p>
 
-          <div class="hover-info" *ngIf="location.isHovered">
-            <p matTooltip="Today's Count">{{ location.proposalsData.today }}</p>
+      <ng-container *ngFor="let location of city">
+
+
+          <div class="icon" (click)="toggleLocation(location)" (mouseenter)="location.isHovered = true" (mouseleave)="location.isHovered = false">
+
+            <ng-container [ngTemplateOutlet]="locationIcon"></ng-container>
+            <p>{{ location.location }}</p>
+            <div class="hover-info" *ngIf="location.isHovered">
+              <p matTooltip="Selected/Total" style="font-size:1.5rem">{{location.selectedNoOfSeats}}/{{location.totalNoOfWorkstation}}</p>
+              <p matTooltip="Today's Count">{{ location.proposalsData.today }}</p>
+            </div>
+
+            <div class="hover-info2" *ngIf="location.isHovered">
+              <p matTooltip="Day Before Yesterday Proposal Count">
+                {{ location.proposalsData.dayBeforeYesterday }}
+              </p>
+              <p matTooltip="Yesterday's Proposal Count" [ngClass]="{'green-bg': location.proposalsData.yesterday > location.proposalsData.dayBeforeYesterday, 'red-bg': location.proposalsData.yesterday < location.proposalsData.dayBeforeYesterday}">
+                {{ location.proposalsData.yesterday }}
+              </p>
+            </div>
           </div>
-          <div class="hover-info2" *ngIf="location.isHovered">
-            <p matTooltip="Day Before Yesterday Proposal Count">
-              {{ location.proposalsData.dayBeforeYesterday }}
-            </p>
-            <p matTooltip="Yesterday's Proposal Count" [ngClass]="{'green-bg': location.proposalsData.yesterday > location.proposalsData.dayBeforeYesterday, 'red-bg': location.proposalsData.yesterday < location.proposalsData.dayBeforeYesterday}">
-              {{ location.proposalsData.yesterday }}
-            </p>
-          </div>
-        </div>
+
+
         <div class="location" *ngIf="location.showLocation">
           <button class="closeButton" mat-icon-button (click)="location.showLocation = false"> <mat-icon>arrow_back</mat-icon></button>
           <app-admin-dashboard-expand [cardData]="location.location"></app-admin-dashboard-expand>
