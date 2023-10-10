@@ -32,14 +32,7 @@ dataSourceRecent: any;
     // Calculate the rack value based on the final price (you can adjust the calculation as needed)
     this.rackValue = Math.round(this.finalPrice /totalSeat); // For example, add 10 to the final price
   }
-  // getProposalData() {
-  //   this.proposalService.getProposalById(this.id).subscribe(
-  //     (data:any) => {
-  //         this.proposalData = data;
-  //         console.log('Proposal Data:', this.proposalData);
-  //       },
-  //     );
-  // }
+
 
 getData(){
   this.dashboardService.getProposalData(this.id).subscribe((res:any)=>{
@@ -54,26 +47,20 @@ System_value:any
     console.log('data:',this.clientPrice)
     Swal.fire({
       title: 'Approve Proposal',
-      // text: 'Are you sure you want to approve this proposal?',
-      html: `Client Price ${this.clientPrice} <br> System Price = ${(this.System_value)}`,
+      text: `Are you sure you want to Finalize this proposal at Rs.${this.finalPrice}?`,
       icon: 'question',
       showCancelButton: true,
       showConfirmButton: true,
-      input: 'number',
-      inputAttributes:{
-        required:'true'
-      } ,
-      inputLabel: 'Enter Final Amount',
       cancelButtonText: 'No',
       confirmButtonText: 'Yes',
       confirmButtonColor: '#C3343A'
     }).then((confirmation) => {
       if (confirmation.isConfirmed) {
-      // this.proposalService.approveProposal(this.id, { finalOfferAmmount: confirmation.value, salesHeadFinalOfferAmmount: confirmation.value })
-      //     .subscribe((res) => {
-      //       this.dialogRef.close();
-      //       this.deleteRow(id)
-      //     });
+      this.proposalService.approveProposal(this.id, { finalOfferAmmount: this.finalPrice, salesHeadFinalOfferAmmount: this.finalPrice })
+          .subscribe((res) => {
+            this.dialogRef.close();
+            this.deleteRow(id)
+          });
 
       }
     })
