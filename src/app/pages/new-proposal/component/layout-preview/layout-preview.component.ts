@@ -117,6 +117,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               const imageObj = new Image();
               imageObj.onload = () => {
                 this.initializeKonva(imageObj);
+                this.enableZoom();
                 this.drawTheBlankSeat()
                 this.transformer = new Konva.Transformer(); // Initialize transformer
                 this.layer.add(this.transformer);
@@ -145,6 +146,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               const imageObj = new Image();
               imageObj.onload = () => {
                 this.initializeKonva(imageObj);
+                this.enableZoom();
                 this.drawTheBlankSeat()
                 this.transformer = new Konva.Transformer(); // Initialize transformer
                 this.layer.add(this.transformer);
@@ -311,7 +313,42 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
           }
         }
       }
+      enableZoom(): void {
+        const scaleBy = 1.1; // Adjust the scale factor as needed
+        this.stage.on('wheel', (e) => {
+          e.evt.preventDefault();
+console.log(e)
+          const oldScale = this.stage.scaleX();
+          const pointer: any = this.stage.getPointerPosition();
 
+          const mousePointTo = {
+            x: (pointer.x - this.stage.x()) / oldScale,
+            y: (pointer.y - this.stage.y()) / oldScale,
+          };
+
+          const direction = e.evt.deltaY > 0 ? -1 : 1; // Adjust the direction for standard zoom behavior
+
+          const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+
+          this.stage.scale({ x: newScale, y: newScale });
+
+          const newPos = {
+            x: pointer.x - mousePointTo.x * newScale,
+            y: pointer.y - mousePointTo.y * newScale,
+          };
+          this.stage.position(newPos);
+          this.stage.batchDraw();
+        });
+      }
+      resetZoomAndPosition(): void {
+        // Set the initial scale and position values as per your original configuration
+        const initialScale = 1;
+        const initialPosition = { x: 0, y: 0 };
+
+        this.stage.scale({ x: initialScale, y: initialScale });
+        this.stage.position(initialPosition);
+        this.stage.batchDraw();
+      }
       drawBlankSeatRect(x:any, y:any, height:number, width:number) {
         // console.log(x,y)
 

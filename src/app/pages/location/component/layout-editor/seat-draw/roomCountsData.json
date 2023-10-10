@@ -1,7 +1,7 @@
 {
   "Workstation2x1": {"count": 0.60, "color": "red"},
   "Workstation3x2": {"count": 0.70, "color": "blue"},
-  "Workstation4x2": {"count": 1, "color": "green"},
+  "Workstation4x2": {"count": 1, "color": "transparent"},
   "Workstation4x4": {"count": 0.80, "color": "yellow"},
   "Workstation5x2.5": {"count": 0.90, "color": "orange"},
   "Workstation5x2": {"count": 1.00, "color": "purple"},

@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import Swal from "sweetalert2";
-import { ElectronApiService } from "../electron-api/electron-api.service";
 import { environment } from "src/environments/environment";
 import { HotToastService } from "@ngneat/hot-toast";
 import { HeaderService } from "../header/header.service";
@@ -17,7 +16,6 @@ export class AuthenticationService {
     constructor(
         private router: Router,
         private headerService: HeaderService,
-        private electronApiService: ElectronApiService,
         private http: HttpClient,
         private toster: HotToastService
     ) { }

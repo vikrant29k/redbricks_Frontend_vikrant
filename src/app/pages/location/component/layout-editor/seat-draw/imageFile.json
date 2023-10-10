@@ -1,0 +1,13 @@
+{
+  "4P Meeting":{"width":2,"height":2,"path":"assets/images/rooms/4p meeting room.png"},
+  "6P Meeting":{"width":3,"height":2,"path":"assets/images/rooms/6p meeting room.png"},
+  "8P Meeting":{"width":4,"height":2,"path":"assets/images/rooms/8p meeting room.png"},
+  "10P Meeting":{"width":3,"height":4,"path":"assets/images/rooms/10p meeting room.png"},
+  "12P Meeting":{"width":3,"height":5,"path":"assets/images/rooms/12p meeting room.png"},
+  "16P Meeting":{"width":3,"height":6,"path":"assets/images/rooms/16p meeting room.png"},
+  "20P Board Room":{"width":4,"height":6,"path":"assets/images/rooms/20p meeting room.png"},
+  "24P Board Room":{"width":4,"height":7,"path":"assets/images/rooms/24p meeting room.png"},
+  "MD Cabin":{"width":3,"height":4,"path":"assets/images/rooms/MD cabin.png"},
+  "1 Rack Server":{"width":2,"height":2,"path":"assets/images/rooms/server room.png"},
+  "Regular Cabin":{"width":2,"height":2,"path": "assets/images/rooms/3p cabin.png"}
+}

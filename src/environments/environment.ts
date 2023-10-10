@@ -6,7 +6,7 @@ export const environment = {
   production: false,
 
   // baseUrl: 'https://redbricks-server.herokuapp.com/'
-  baseUrl: 'http://192.168.29.29:3000/'
+  baseUrl: 'http://192.168.29.28:3000/'
   // baseUrl: 'http://139.59.35.190:3000/'
 
   // baseUrl:'http://localhost:3000/'
