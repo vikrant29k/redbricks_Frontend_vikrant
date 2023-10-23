@@ -54,7 +54,13 @@ const AdminRouting: Routes = [
         loadChildren: () => {
             return import('./cost/cost.module').then((m) => m.CostModule);
         }
-    }
+    },
+    {
+      path: 'diagram',
+      loadChildren: () => {
+          return import('./diagram/diagram.module').then((m) => m.DiagramModule);
+      }
+  }
 
 ];
 

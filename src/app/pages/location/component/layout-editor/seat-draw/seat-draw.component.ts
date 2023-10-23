@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { LocationService } from 'src/app/service/location/location.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Route,Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { BorderDataService } from '../../../module/service/border-data.service';
 import Konva from 'konva';
 import * as imageSize from '../seat-draw/imageFile.json'
 import * as roomsData from '../seat-draw/roomCountsData.json'
@@ -40,6 +41,8 @@ export class SeatDrawComponent implements OnInit {
   constructor( private route: ActivatedRoute,
                private locationService: LocationService,
                private proposalService: ProposalService,
+               private router:Router,
+               private borderDataService:BorderDataService
              ) {}
   id!: string;
   imageUrl:any;
@@ -235,7 +238,7 @@ export class SeatDrawComponent implements OnInit {
   }
 
   sepratedContent:any[]=[]
-  selectedRoom:any;
+  selectedRoom:any[]=[];
   showDataInHml:any[]=[]
   // roomTitles:any
 
@@ -266,6 +269,7 @@ export class SeatDrawComponent implements OnInit {
         const commonObject = {
           title: key,
           count: jsonData.count * count,
+          selectedCount:count,
           color: jsonData.color,
         };
 
@@ -278,7 +282,9 @@ export class SeatDrawComponent implements OnInit {
   // Now you have an array commonObjectsWithCounts containing common objects
   // console.log(commonObjectsWithCounts);
   this.showDataInHml=commonObjectsWithCounts
+
   this.assignRoomsToSeats(commonObjectsWithCounts)
+  // this.drawImages(commonObjectsWithCounts)
     }
     assignRoomsToSeats(commonObjectsWithCounts: any[]) {
       console.log(commonObjectsWithCounts)
@@ -363,7 +369,7 @@ loadImage() {
   };
 }
 drawImages(commonObjectsWithCounts:any[]) {
-  const layer = new Konva.Layer(); // Create a new layer for the images
+  // const layer = new Konva.Layer(); // Create a new layer for the images
 
   // Loop through the array of image data
   commonObjectsWithCounts.forEach((imageData) => {
@@ -372,8 +378,8 @@ drawImages(commonObjectsWithCounts:any[]) {
 
     // Create a Konva.Image for each image
     const konvaImage = new Konva.Image({
-      x: imageData.x, // Set the x position
-      y: imageData.y, // Set the y position
+      x: this.startingPointOfSeatX, // Set the x position
+      y: this.startingPointOfSeatY, // Set the y position
       image: image,
       width: imageData.width,
       height: imageData.height,
@@ -381,12 +387,11 @@ drawImages(commonObjectsWithCounts:any[]) {
     });
 
     // Add the Konva.Image to the layer
-    layer.add(konvaImage);
+   this.layer.add(konvaImage);
   });
 
   // Add the layer to the stage and draw it
-  this.stage.add(layer);
-  layer.draw();
+  this.layer.draw();
 }
 
     imgWidth!:number;
@@ -512,10 +517,11 @@ drawBorder() {
   this.layer.batchDraw();
 }
 
-
+pointsOfBorder:any;
 updateBorderPolygon() {
   const points = this.circles.map(circle => [circle.x(), circle.y()]).flat();
   this.borderPolygon.points(points);
+  this.pointsOfBorder=points
   this.layer.batchDraw();
   this.fillthePolygon()
 }
@@ -554,5 +560,13 @@ showOther(){
   this.pillarGapLayer.add(rect)
 })
 this.pillarGapLayer.batchDraw()
+}
+
+
+gotoDrawImage(){
+  this.borderDataService.setData(this.pointsOfBorder)
+  this.borderDataService.setDataforrooms(this.showDataInHml)
+  this.router.navigate(['/admin','location','addImage',this.id])
+
 }
 }

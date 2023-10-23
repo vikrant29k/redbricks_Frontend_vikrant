@@ -1,4 +1,3 @@
-
 @mixin for-desktop {
   @media (max-width: 1440px) {
     @content;
@@ -10,9 +9,6 @@
   }
 }
 
-
-
-
 .card {
   border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -22,16 +18,25 @@
     overflow: hidden;
     padding-inline: 1rem;
     width: 80vw;
-    height: 34rem;
+    height: 70vh;
     position: relative;
     transition: 600ms ease-out;
     top: -2rem;
     left: -3rem;
+    .floor-card {
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(100%);
+      @include  for-mobile(){
+        height: 76vh !important;
+        width: 90.5vw !important;
+      }
+  }
     @include for-desktop(){
-      height:32rem;
+      height:70vh;
+
     }
     @include for-mobile(){
-      height: 34rem;
+      height: 70vh;
       display: flex;
       flex-direction: column;
       margin-left: 1.5rem;
@@ -98,13 +103,8 @@
     background-color: #d8d8d8;
   }
 
-  .floor-card {
-    transition: transform 0.3s ease-in-out;
-    transform: translateX(100%);
 
   }
-
-
   .center-card {
     /* Your center card styles here */
     cursor: pointer;
@@ -137,13 +137,13 @@
         color: white;
     }
   }
-}
 
-  .chart{
-    width: 10rem;
-    height: 10rem;
-    background-color: #c3343a;
-    }
+
+  // .chart{
+  //   width: 10rem;
+  //   height: 10rem;
+  //   background-color: #c3343a;
+  //   }
 }
 
 ::-webkit-scrollbar {
@@ -177,6 +177,7 @@
   justify-content: space-around;
   @include for-mobile(){
     justify-content: center;
+    height: 75.5vh;
   }
   }
   .floor-card-data-div{
@@ -306,16 +307,27 @@
 .detailedFloor{
   transition: transform 0.3s ease-in-out;
   transform: translateX(100%);
-
+  @include for-mobile(){
+    flex-direction: column;
+    height: 76vh !important;
+    width: 90.5vw !important;
+  }
   .detailPie{
     display: flex;
     justify-content: space-around;
+    width: 100%;
+    // gap: 5rem;
     @include for-mobile(){
       flex-direction: column;
+      height: 64vh !important;
     }
     .cardSection{
 
-      // width: 45rem;
+      width: 40%;
+      @include for-mobile(){
+        margin-inline-start: 4px;
+        width: 100%;
+      }
       h2{
         font-size: 1.5rem;
         margin: 0;
@@ -332,11 +344,17 @@
       align-items: center;
       justify-content: space-between;
       gap:2rem;
+      @include for-mobile(){
+        gap: 1rem;
+      }
       p{
         margin-block: 15px;
         width: 46%;
         text-align: left;
         font-weight: 500;
+        @include for-mobile(){
+          margin-block: 10px;
+        }
         mat-icon{
           height: 20px;
           width: 20px;
@@ -346,7 +364,7 @@
     }
     #chartContainer {
       position: relative;
-    }
+        }
 
     #chartContainer path {
       transition: transform 0.8s ease;
@@ -356,18 +374,18 @@
       transform: translateY(-10px);
     }
     .chart{
-      width: 25rem;
+      // width: 40%;
       height: 20rem;
       overflow: hidden;
     background-color: #cd5258;
     @include for-mobile(){
-      width: 16rem;
+      // width: 16rem;
       /* text-align: center; */
       display: flex;
       overflow: hidden;
       height:11rem;
       justify-content: center;
-    margin-left: -6px;
+    // margin-left: -6px;
     }
     }
   }

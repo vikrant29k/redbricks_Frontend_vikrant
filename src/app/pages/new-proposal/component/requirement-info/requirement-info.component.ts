@@ -180,12 +180,12 @@ totalWorkstation(){
       let value = this.requirementInfoForm.value;
 
       this.totalSelectedWorkstation =
-   (value.workstation2x1 * 0.60) +
+  //  (value.workstation2x1 * 0.60) +
     (value.workstation3x2 * 0.75) +
     (value.workstation4x2 * 1.00) +
     (value.workstation5x2 * 1.25) +
-    (value.workstation5x2_5 * 1.50) +
-    (value.workstation4x4 * 1.25) +
+    // (value.workstation5x2_5 * 1.50) +
+    // (value.workstation4x4 * 1.25) +
     (value.workstation5x4 * 1.50) +
     (value.workstation5x5 * 1.75) +
     (value.cubicalCount * 3.75) +

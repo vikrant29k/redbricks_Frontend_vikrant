@@ -21,6 +21,8 @@ import { LockLayoutEditorComponent } from "./component/locking the layout/lockin
 import { PreviewSeatsComponent } from './component/layout-editor/preview-seats/preview-seats.component';
 import { AddExternalBorderComponent } from './component/layout-editor/add-external-border/add-external-border.component';
 import { SeatDrawComponent } from './component/layout-editor/seat-draw/seat-draw.component';
+import { AddImageComponent } from './component/layout-editor/add-image/add-image.component';
+
 @NgModule({
     declarations: [
         LocationComponent,
@@ -37,7 +39,8 @@ import { SeatDrawComponent } from './component/layout-editor/seat-draw/seat-draw
         LockLayoutEditorComponent,
         PreviewSeatsComponent,
         AddExternalBorderComponent,
-        SeatDrawComponent
+        SeatDrawComponent,
+        AddImageComponent
     ],
     imports: [
         CommonModule,

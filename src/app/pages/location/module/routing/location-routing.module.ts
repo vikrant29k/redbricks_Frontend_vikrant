@@ -16,6 +16,7 @@ import { LockLayoutEditorComponent } from "../../component/locking the layout/lo
 import { PreviewSeatsComponent } from "../../component/layout-editor/preview-seats/preview-seats.component";
 import { AddExternalBorderComponent } from "../../component/layout-editor/add-external-border/add-external-border.component";
 import { SeatDrawComponent } from "../../component/layout-editor/seat-draw/seat-draw.component";
+import { AddImageComponent } from "../../component/layout-editor/add-image/add-image.component";
 const routes: Routes = [
     {
         path: '',
@@ -91,6 +92,10 @@ const routes: Routes = [
             {
               path:'designSeat/:Id',
               component:SeatDrawComponent
+            },
+            {
+              path:'addImage/:Id',
+              component:AddImageComponent
             }
 
         ]

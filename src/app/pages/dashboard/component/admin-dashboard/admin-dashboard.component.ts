@@ -346,7 +346,7 @@ salesHead(id:any){
 userList: any[]=[];
 getUserListArray = ()=>{
   this.dashboardService.getUserListArray().pipe(take(1)).subscribe((res:any)=>{
-    console.log(res)
+    // console.log(res)
     this.userList =res
   })
 }

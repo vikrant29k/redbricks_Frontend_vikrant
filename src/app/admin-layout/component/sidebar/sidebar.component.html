@@ -29,6 +29,18 @@
                 </div>
             </div>
         </div>
+        <div class="section">
+          <div class="title" routerLink="/admin/diagram/" routerLinkActive="active" (click)="expandAccording()">
+              <div class="main">
+                  <div class="title-icon">
+                      <mat-icon fontSet="material-icons-round">person</mat-icon>
+                  </div>
+                  <div class="title-text">
+                      <p>Add Diagram</p>
+                  </div>
+              </div>
+          </div>
+      </div>
         <div class="section" *ngIf="user!=='sales head'">
             <div class="title" [ngClass]="userExpanded ? 'expanded': ''" (click)="expandAccording('user')">
                 <div class="main">

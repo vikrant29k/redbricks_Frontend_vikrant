@@ -22,6 +22,7 @@ export class UserService {
 
   getAllUser = () => {
     let httpOptions = this.headerService.updateHeader();
+    console.log(httpOptions)
     return this.http.get(this.baseUrl + 'getAll', httpOptions);
   }
 
