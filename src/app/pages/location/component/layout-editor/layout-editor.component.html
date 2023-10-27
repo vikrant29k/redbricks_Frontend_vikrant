@@ -10,19 +10,27 @@
 </div>
 
 <div class="sub-icon">
+  <!-- <button mat-raised-button (click)="drawTHeSeat()" matTooltip="Get Clients"><mat-icon>people</mat-icon></button> -->
 <button mat-raised-button (click)="addLayout()" matTooltip="Final the layout"><mat-icon>border_all</mat-icon></button>
 </div>
 
+<!-- <button mat-raised-button (click)='addRectDataInArray()' color="primary">Update Border</button> -->
 <!-- <button mat-raised-button (click)='addRectDataInArray()' color="primary">Update Border</button> -->
 
 <!-- <button *ngIf="isDeleteShape" mat-raised-button (click)="deleteSelectedShape(seatShape)" color="primary">delete Selected Layout</button> -->
 <!-- <button mat-raised-button color="secondary" (click)="deleteSelectedRect()" [disabled]="!selectedShape">Delete Selected Rectangle</button> -->
 <label><b>For Drawing Seats</b></label>
+<div class="seats">
+  <button mat-raised-button matTooltip="Drawing Seat" color="primary"  (click)="drawSeatAndGetHW()"><mat-icon >chair_alt</mat-icon>Draw</button>
+  <label><b>Width:</b></label>
+  <input type="number" id="widthInput" [(ngModel)]=" seatWidth" (input)="updateWidth()">
 
-<div class="label">
-  <mat-card><p><b>Width : {{seatWidth}}</b></p></mat-card>
-  <mat-card><p><b>Height : {{seatHeight}}</b></p></mat-card>
+  <label><b>Height:</b></label>
+  <input type="number" id="heightInput" [(ngModel)]=" seatHeight" (input)="updateHeight()">
+  <!-- <button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button> -->
 </div>
+
+
 <!-- <div>
   <label for="width">Width:</label>
   <input type="number" id="width" [(ngModel)]="width" name="width">
@@ -33,7 +41,11 @@
 </div>
 <button (click)="drawCustomRect()">CUSTOM BUTTOn</button> -->
 
+<!-- <button mat-raised-button (click)="goToDrawSeat()">Check Seats</button> -->
+<!-- <button mat-raised-button (click)="drawOutsideBorder()">Draw Border</button>
 <label><b>Other</b> </label>
-
+<button mat-raised-button (click)="toggleDrawingPillar()" color="primary" >{{isDrawingEnabledForPillar?'Stop':'Start'}} Drawing Pillar/Gap</button>
+<button mat-raised-button (click)="updatePillarData()">Update Other Data</button>
+<button mat-raised-button (click)="showOther()">Show Other Data</button> -->
 </div>
 </div>

@@ -1,7 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Konva from 'konva';
-
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { LocationService } from 'src/app/service/location/location.service';
 import { environment } from 'src/environments/environment';
@@ -14,7 +13,6 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   stage!: Konva.Stage;
   layer!: Konva.Layer;
   line!: Konva.Line;
-  // selectedShape!: Konva.Shape;
   isEnableSaveBtn:boolean =false
   customWidth = 1080;
   customHeight = 734;
@@ -42,16 +40,29 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
                private route: ActivatedRoute,
                private proposalService:ProposalService,
-               private locationService: LocationService
+               private locationService: LocationService,private changeDetectorRef: ChangeDetectorRef
              ) {}
   id!: string;
   imageUrl:any;
   ngOnInit(): void {
     this.id = this.route.snapshot.params['Id'];
+    this.proposalService.getProposalByLocationId(this.id).subscribe((res:any)=>{
+      // console.log(res)
+      if(res.message=='no data'){
+        // console.log("NOTHING")
+      }else{
+        this.extractProposalData(res);
+        // console.log(this.proposalData)
+      }
+
+
+    })
   }
   ngAfterViewInit(): void {
    this.getInitialViewLayout()
+
   }
+
   drawRect:any;
   getInitialViewLayout = () =>{
     this.locationService.getImageById(this.id).subscribe(
@@ -67,7 +78,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
       this.transformer = new Konva.Transformer(); // Initialize transformer
       this.layer.add(this.transformer);
       this.locationService.getBorderData(this.id).subscribe((res:any)=>{
-
+        // console.log(res);
         if(res.Message==='No data'){
 
         }else
@@ -77,7 +88,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
           this.seatHeight=res.layoutArray[0].seatHeight;
           //getAllpoints array is been updated with old data
           res.layoutArray[0].layoutBorder.forEach((item:any) => {
-            debugger
+            //debugger
 
             const {_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull } = item;
             this.getAllPoints.push({_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull });
@@ -188,6 +199,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
 
   }
 
+
    backgroundImage!: Konva.Image;
   initializeKonva(imageObj: HTMLImageElement): void {
     this.stage = new Konva.Stage({
@@ -213,13 +225,13 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
     this.layer.draw();
 
   }
-
   startDrawingRect() {
     this.stage.on('mousedown', this.handleMouseDown.bind(this));
     this.stage.on('mousemove', this.handleMouseMove.bind(this));
     this.stage.on('mouseup', this.handleMouseUp.bind(this));
 
   }
+
   enableZoom(): void {
     const scaleBy = 1.1; // Adjust the scale factor as needed
     this.stage.on('wheel', (e:any) => {
@@ -247,11 +259,11 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
       this.stage.batchDraw();
     });
   }
+
   resetZoomAndPosition(): void {
     // Set the initial scale and position values as per your original configuration
     const initialScale = 1;
     const initialPosition = { x: 0, y: 0 };
-
     this.stage.scale({ x: initialScale, y: initialScale });
     this.stage.position(initialPosition);
     this.stage.batchDraw();
@@ -268,7 +280,27 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   }
     //function for getting all proposal data
     proposalData:any[]=[]
-    // seatsDrawn:boolean=false;
+    private extractProposalData(res: any): void {
+
+      for (const proposal of res) {
+        if (proposal.seatsData && proposal.seatsData.length > 0 && proposal.seatSize) {
+          const proposalObject = {
+              clientName:proposal.clientName,
+              totalNumberOfSeats:proposal.totalNumberOfSeats,
+              seatsData: proposal.seatsData.map((seat:any, index:any) => ({
+                  ...seat,
+                  first: index === 0, // Set "first" to true for the first object, false for others
+              })),
+              seatSize: proposal.seatSize,
+              color: proposal.color,
+          };
+          this.proposalData.push(proposalObject);
+      }
+      }
+    }
+
+  letSeatMove:boolean=true
+  seatsDrawn:boolean=false;
   timesofRectDrawn=0
   updatedX!:number;
   updatedY!:number;
@@ -416,7 +448,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
             });
             seatPositionCircle.on('mouseenter',()=>{
               tooltip.x(seatPositionCircle.x()-10);
-              tooltip.y(seatPositionCircle.y()-10);
+              tooltip.y(seatPositionCircle.y()-25);
               tooltip.text('Rotate Seats')
               tooltip.show()
             })
@@ -456,7 +488,11 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
     }
 }
 
+drawingEnabled:boolean=true
+totalNumebr:number=40
+
 drawRectangles(array:any) {
+  console.log(array,"DATAAA")
   let count = 0;
   if (!this.stage) return;
   if (this.drawingEnabled === true) {
@@ -467,11 +503,16 @@ drawRectangles(array:any) {
       const minY = array.startY;
       const maxX = array.endX;
       const maxY = array.endY;
-const availableWidth = maxX - minX;
-const availableHeight = maxY - minY;
-const maxHorizontalRectangles = Math.floor(availableWidth / this.seatWidth);
-const maxVerticalRectangles = Math.floor(availableHeight / this.seatHeight);
-const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
+      console.log("name of rect",array._id,
+      // "\n minX=",array.startX,
+      // "\n maxX=>",array.endX,
+      "\n width of rect=>", array.endX-array.startX);
+      console.log("MAX Columns can be added==>",Math.round((maxX-minX)/this.seatWidth))
+      const availableWidth = maxX - minX;
+      const availableHeight = maxY - minY;
+      const maxHorizontalRectangles = Math.floor(availableWidth / this.seatWidth);
+      const maxVerticalRectangles = Math.floor(availableHeight / this.seatHeight);
+      const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
 
       const polygon = new Konva.Line({
         points: array,
@@ -536,6 +577,77 @@ const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
   }
 
 
+
+  seatDrawing: boolean = false;
+  isSeatDrawingEnabled = false;
+
+
+
+seatArray:any[]=[]
+drawSeatAndGetHW() {
+  this.seatShape = new Konva.Rect({
+    x:0,
+    y:0,
+    width: this.seatWidth,
+    height: this.seatHeight,
+    fill: 'red',
+    opacity: 0.5,
+    draggable: true,
+  });
+
+  this.layer.add(this.seatShape);
+  this.stage.draw();
+  this.seatShape.on('mousedown', () => {
+    let transformNewShape = new Konva.Transformer();
+    this.layer.add(transformNewShape);
+    transformNewShape.nodes([this.seatShape]);
+    this.seatShape.on('transformend', () => {
+      // Get the updated properties from the transformed shape
+
+      this.seatWidth = this.seatShape.width() * this.seatShape.scaleX();
+      this.seatHeight = this.seatShape.height() * this.seatShape.scaleY();
+      this.layer.batchDraw();
+      this.updateInputFields();
+    });
+  });
+  this.seatShape.on('click', () => {
+    if (this.transformer.getNode() === this.seatShape) {
+      this.transformer.detach();
+    } else {
+      this.transformer.attachTo(this.seatShape);
+    }
+    this.layer.batchDraw();
+  });
+}
+
+updateWidth() {
+  if (this.seatShape) {
+    const newWidth = parseFloat(this.seatWidth.toString());
+    this.seatShape.width(newWidth);
+    this.layer.batchDraw();
+  }
+}
+updateHeight() {
+  if (this.seatShape) {
+    const newHeight = parseFloat(this.seatHeight.toString());
+    this.seatShape.height(newHeight);
+    this.layer.batchDraw();
+  }
+}
+updateInputFields() {
+const widthInput = document.getElementById('widthInput') as HTMLInputElement | null;
+const heightInput = document.getElementById('heightInput') as HTMLInputElement | null;
+
+if (widthInput) {
+  widthInput.value = this.seatWidth.toString();
+}
+
+if (heightInput) {
+  heightInput.value = this.seatHeight.toString();
+}
+}
+
+
 //finals all layout and save the data..
   addLayout(){
     let data = {
@@ -550,6 +662,7 @@ const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
       this.router.navigate(['/admin','location','location-list'])
     })
   }
+
   //delete the selected rect
   deleteSelectedRect(): void {
     if (this.selectedShape) {
@@ -572,8 +685,6 @@ const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
       }
     }
   }
-  drawingEnabled:boolean=true
-  totalNumebr:number=40
 
 
    drawSeatRectangle(x:number, y:number,height:number,width:number) {
@@ -589,7 +700,7 @@ const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
        name: 'seat-rectangle',
      });
      this.layer.add(rect);
-rect.setZIndex(2);
+
    }
    removeSeats(){
     let allShapes=this.layer.find('.seat-rectangle');
@@ -598,4 +709,325 @@ rect.setZIndex(2);
     })
     this.layer.batchDraw()
    }
+
+  // draws the clients seats
+  // drawTHeSeat(){
+  //   this.proposalData.forEach(dataOfSeats=>{
+  // //  console.log(dataOfSeats)
+  //     for (const seat of dataOfSeats.seatsData) {
+
+  //       this.drawSeatsBetweenPoints(seat.start, seat.end,seat.seatPosition,dataOfSeats.seatSize, dataOfSeats.color, seat.first,dataOfSeats.clientName,dataOfSeats.totalNumberOfSeats);
+  //     }
+  //   })
+
+  // }
+
+  // drawSeatsBetweenPoints(start:any, end:any,seatPosition:any,seatSize:any,color:any, index:any, clientName:string,totalNumberOfSeats:number) {
+
+  //   const startX = Math.min(start.x, end.x);
+  //   const startY = Math.min(start.y, end.y);
+  //   const endX = Math.max(start.x, end.x);
+  //   const endY = Math.max(start.y, end.y);
+  //   const seatSizeWidth = seatSize[0].width; // Extract width from seatSize
+  //   const seatSizeHeight = seatSize[0].height; // Extract height from seatSize
+  //   if(seatPosition==false){
+  //     for (let x = startX; x < endX; x += seatSizeHeight) {
+  //       for (let y = startY; y < endY; y += seatSizeWidth) {
+  //         this.drawSeatRectangle(x, y,color,seatSizeWidth,seatSizeHeight,index,clientName,totalNumberOfSeats);
+  //       }
+  //     }
+  //   }else{
+  //     for (let x = startX; x < endX; x += seatSizeWidth) {
+  //       for (let y = startY; y < endY; y += seatSizeHeight) {
+  //         this.drawSeatRectangle(x, y,color,seatSizeHeight,seatSizeWidth,index,clientName,totalNumberOfSeats);
+  //       }
+  //     }
+  //   }
+  // }
+
+//   drawSeatRectangle(x:any, y:any, fill:string, height:number, width:number, index:any, clientName:string,totalNumberOfSeats:number) {
+//     // console.log(x,y)
+
+//     // console.log(fill)
+//     const rect = new Konva.Rect({
+//       x: x,
+//       y: y,
+//       width: width,
+//       height: height,
+//       fill: fill,
+//       opacity: 0.5,
+//       name: 'seat-rectangle',
+//     });
+//     this.layer.add(rect);
+// if(index==true){
+//   const text = new Konva.Text({
+//     x: x - width / 2,
+//     y: y + height / 2,
+//     text: clientName,
+//     fontSize: 16,
+//     fill: 'black',
+//     align: 'center',
+// });
+// const totalSeatsText = new Konva.Text({
+//   x: x,
+//   y: y + height + 10, // Adjust the y value as needed
+//   text: `Total Seats: ${totalNumberOfSeats}`,
+//   fontSize: 14,
+//   fill: 'black',
+//   align: 'center',
+// });
+// totalSeatsText.offsetX(totalSeatsText.width() / 2);
+// this.layer.add(totalSeatsText);
+// text.offsetX(text.width() / 2);
+// text.offsetY(text.height() / 2);
+// this.layer.add(text);
+// }
+
+//   }
+
+  //seatArray:any[]=[]
+  // updateSeatsSize() {
+  //   console.log("WIDTH==>",this.seatShape.width(),"\nHEIGHT==>",this.seatShape.height())
+  //   const height=this.seatShape.height()
+  //   const width=this.seatShape.width();
+  //   this.seatHeight= height.floor(2);
+  //   this.seatWidth =width.floor(2) ;
+  //   for (const point of this.getAllPoints) {
+  //     point.seatHeight = this.seatHeight;
+  //     point.seatWidth = this.seatWidth;
+  //   }
+  // }
+
+
+
+    drawOutsideBorder(){
+      // Draw a borders of different things..
+      this.router.navigate(['/admin','location','draw-border',this.id])
+    }
+
+    //draw the exrta things like pillars and gaps in workstation
+    pillarGapLayer!:Konva.Layer
+        startDrawingPillar() {
+          this.stage.on('mousedown', this.handleMouseDownForPillar.bind(this));
+          this.stage.on('mousemove', this.handleMouseMoveForPillar.bind(this));
+          this.stage.on('mouseup', this.handleMouseUpForPillar.bind(this));
+        }
+    pillarRect!:Konva.Rect;
+    isDrawingEnabledForPillar=false
+    isDrawingForPillar: boolean = false;
+    updatedXForPillar:any;
+    updatedYForPillar:any;
+    updatedWidthForPillar:any;
+    updatedHeightForPillar:any
+    toggleDrawingPillar(): void {
+      this.isDrawingEnabledForPillar = !this.isDrawingEnabledForPillar;
+      this.pillarGapLayer=new Konva.Layer({
+        name:'pillarGapLayer',
+      })
+      this.layer.listening(false)
+      this.stage.add(this.pillarGapLayer)
+      this.startDrawingPillar();
+      if (!this.isDrawingEnabledForPillar) {
+        this.isDrawingForPillar = false; // Stop ongoing drawing if disabled
+      }
+    }
+        handleMouseDownForPillar(e: Konva.KonvaEventObject<MouseEvent>): void {
+          this.letSeatMove = true;
+          if (this.isDrawingEnabledForPillar) {
+            this.timesofRectDrawn++;
+            const pos: any = this.stage.getPointerPosition();
+            this.startPoint = pos;
+            this.isDrawingForPillar= true;
+
+            this.pillarRect = new Konva.Rect({
+              x: pos.x,
+              y: pos.y,
+              width: 0,
+              height: 0,
+              fill: 'green',
+              opacity: 0.5,
+              stroke: '#000000',
+              strokeWidth: 0.8,
+            });
+
+
+            this.pillarGapLayer.add(this.pillarRect);
+            this.pillarGapLayer.batchDraw();
+
+            this.pillarRect.on('mousedown', () => {
+              let transformNewShape = new Konva.Transformer();
+              this.pillarGapLayer.add(transformNewShape);
+              transformNewShape.nodes([this.pillarRect]);
+              this.pillarRect.on('transformend', () => {
+                // Get the updated properties from the transformed shape
+                this.updatedXForPillar = this.pillarRect.x();
+                this.updatedYForPillar = this.pillarRect.y();
+                this.updatedWidthForPillar = this.pillarRect.width() * this.pillarRect.scaleX();
+                this.updatedHeightForPillar = this.pillarRect.height() * this.pillarRect.scaleY();
+              });
+            });
+          }
+        }
+
+
+        handleMouseMoveForPillar(e: Konva.KonvaEventObject<MouseEvent>): void {
+
+          if (this.isDrawingEnabledForPillar && this.isDrawingForPillar) {
+            const pos: any = this.stage.getPointerPosition();
+            const width = pos.x - this.startPoint.x;
+            const height = pos.y - this.startPoint.y;
+            this.pillarRect.width(width);
+            this.pillarRect.height(height);
+
+            this.pillarGapLayer.batchDraw();
+          }
+        }
+
+        handleMouseUpForPillar(e: Konva.KonvaEventObject<MouseEvent>): void {
+          if (this.isDrawingEnabledForPillar && this.isDrawingForPillar) {
+            this.isDrawingForPillar= false;
+            this.isDrawingEnabledForPillar=!this.isDrawingEnabledForPillar
+
+          }
+        }
+        pillarData:any[]=[]
+        updatePillarData(){
+
+          const pillar = {
+            _id: Date.now(),
+            startX: this.updatedXForPillar,
+            startY: this.updatedYForPillar,
+            pilarWidth: this.updatedWidthForPillar,
+            pillarRect: this.updatedHeightForPillar,
+          };
+
+          // Push the new pillar into the pillarData array
+          this.pillarData.push(pillar);
+
+          this.isDrawingEnabledForPillar = !this.isDrawingEnabledForPillar;
+        }
+selectedPillar:any;
+transformerPilar!: Konva.Transformer;
+        showOther(){
+          this.pillarGapLayer=new Konva.Layer({
+            name:'pillarGapLayer',
+          })
+          this.layer.listening(false)
+          this.stage.add(this.pillarGapLayer)
+          this.pillarData.forEach(data=>{
+            let rect = new Konva.Rect({
+              x: data.startX,
+              y: data.startY,
+              width: data.pilarWidth,
+              height: data.pillarRect,
+              fill: 'gray',
+              opacity: 0.7,
+              stroke: 'transparent',
+              strokeWidth: 0.01,
+              shadowColor: 'black',
+        shadowBlur: 7,
+        shadowOffset: { x: 0, y: 1 },
+        shadowOpacity: 0.5,
+              name:String(data._id)
+          })
+          rect.cache()
+          rect.on('mousedown',()=>{
+            rect.clearCache()
+            let transformNew = new Konva.Transformer()
+            this.pillarGapLayer.add(transformNew);
+            transformNew.nodes([rect])
+              this.selectedPillar=rect
+              this.transformerPilar=transformNew
+
+              //transform data capture
+            rect.on('transformend', () => {
+              // if (this.selectedShape) {
+                // console.log('RECT NAME',rect.attrs())
+                const updatedWidth = rect.width() * rect.scaleX();
+                const updatedHeight = rect.height() * rect.scaleY();
+                const updatedX = rect.x();
+                const updatedY = rect.y();
+                const indexToUpdate = this.pillarData.findIndex((point:any) => String(point._id) === rect.name());
+
+                if (indexToUpdate !== -1) {
+                  // Update the object at the found index
+                  this.pillarData[indexToUpdate] = {
+                    ...this.pillarData[indexToUpdate], // Copy existing properties
+                    startX: updatedX,
+                    startY: updatedY,
+                    pilarWidth: updatedWidth,
+                    pillarRect: updatedHeight,
+
+                  };
+
+                  // console.log("AFTER UPDATE", this.pillarData[indexToUpdate]);
+                }
+
+            });
+            let tooltip = new Konva.Text({
+              text: '',
+              fontFamily: 'Calibri',
+              fontSize: 12,
+              padding: 5,
+              textFill: 'white',
+              fill: 'black',
+              alpha: 0.75,
+              visible: false,
+            });
+
+            this.pillarGapLayer.add(tooltip);
+
+            let deletePillar =new Konva.Rect({
+              x:rect.x()-10,
+              y:rect.y()-10,
+              width:10,
+              height:10,
+              fill:'red',
+              opacity:1
+            })
+            this.pillarGapLayer.add(deletePillar)
+            deletePillar.on('mousemove',()=>{
+              var mousePos:any = this.stage.getPointerPosition();
+              tooltip.position({
+                x: mousePos.x + 5,
+                y: mousePos.y + 5,
+              });
+              tooltip.text('Delete Pillar');
+              tooltip.show();
+            })
+            deletePillar.on('mouseout',()=> {
+              tooltip.hide();
+            });
+            deletePillar.on('click',()=>{
+              this.deleteSelectedPillar()
+              deletePillar.destroy();
+             tooltip.destroy();
+            })
+          })
+
+          this.pillarGapLayer.add(rect)
+        })
+       this.pillarGapLayer.batchDraw()
+        }
+
+        deleteSelectedPillar(): void {
+          if (this.selectedPillar) {
+            // Find the index of the selected rectangle in this.pillarData
+            const indexToDelete = this.pillarData.findIndex((rect) => {
+              return rect.startX === this.selectedPillar.x() && rect.startY === this.selectedPillar.y();
+            });
+
+            if (indexToDelete !== -1) {
+              // Remove the selected rectangle from this.pillarData
+              this.pillarData.splice(indexToDelete, 1);
+
+              // Destroy the selected shape (rectangle) and transformer
+              this.selectedPillar.destroy();
+              this.transformerPilar.destroy();
+
+              // Clear the selection
+              this.selectedPillar = null;
+            }
+          }
+        }
 }
