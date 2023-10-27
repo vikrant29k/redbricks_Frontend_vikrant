@@ -203,7 +203,7 @@ seatWidth!: number;
 
      this.backgroundLayer.add(this.backgroundImage);
      this.backgroundLayer.draw();
-     this.drawRectangles()
+    //  this.drawRectangles()
    }
      //drawSeats
      drawingEnabled: boolean = true;

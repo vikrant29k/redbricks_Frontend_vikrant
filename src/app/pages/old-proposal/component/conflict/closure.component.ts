@@ -32,7 +32,7 @@ export class ClosureComponent implements OnInit {
     let Id = this.route.snapshot.params['Id'];
     this.proposalService.finalOfferAmount(Id).subscribe((res) => {
       var finalAmount: any = res;
-      this.finalOfferAmount = (finalAmount.finalOfferAmmount).toFixed(2);
+      this.finalOfferAmount = (finalAmount.previousFinalOfferAmmount).toFixed(2);
       // console.log(this.finalOfferAmount);
     });
   }

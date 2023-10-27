@@ -1,7 +1,11 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Konva from 'konva';
+import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 import { LayoutDataService } from 'src/app/service/layout data/layoutData.service';
+import { DiagramService } from 'src/app/service/diagram/digram.service';
+import { LocationService } from 'src/app/service/location/location.service';
 @Component({
   selector: 'app-draw-diagram',
   templateUrl: './draw-diagram.component.html',
@@ -12,9 +16,12 @@ stage!:Konva.Stage;
 layer!:Konva.Layer;
 newLayer !: Konva.Layer;
 shapes: any[] = [];
+imageUrl:any
 selectedShape: any | null = null;
   constructor(private route:Router,
-    private dataSvaing:LayoutDataService
+    private diagramService:DiagramService,
+    private dataSvaing:LayoutDataService,
+    private locationService:LocationService
     ) { }
   getRandomColor():string {
     const letters = '0123456789ABCDEF';
@@ -36,6 +43,27 @@ selectedShape: any | null = null;
     this.newLayer = new Konva.Layer({
       name:'newLayer'
     })
+    this.locationService.getImageById('650acfe1b21f9a44876db270').subscribe(
+      (imageUrl) => {
+        this.imageUrl = environment.baseUrl+'images/' + imageUrl;
+        const imageObj = new Image();
+    imageObj.onload = () => {
+        let backgroundImage = new Konva.Image({
+          image: imageObj,
+          width: 1080,
+          height: 734,
+        });
+
+        this.newLayer.add(backgroundImage);
+        this.newLayer.draw();
+
+    };
+    imageObj.src = this.imageUrl;
+      },
+      error => {
+        console.error('Error loading image data:', error);
+      }
+    );
     this.stage.add(this.layer);
     this.stage.add(this.newLayer);
     const stageWidth = this.stage.width();
@@ -173,8 +201,8 @@ this.enableZoom()
    }
    createCircle() {
     let circle = new Konva.Circle({
-     x:0,
-     y:0,
+     x:50,
+     y:50,
      radius:70,
      stroke:'black',
      strokeWidth:1,
@@ -268,60 +296,152 @@ this.enableZoom()
     }
   }
 
-saveDiagram(){
-  const diagramState = this.shapes.map(shape => {
-    return {
-      type: shape.name,
-      shape:shape.shape.attrs
-    };
-  });
-  this.serializeData =diagramState
-  console.log(this.serializeData)
-}
-serializeData:any[]=[]
-loadDiagram(){
+   saveDiagram() {
+    Swal.fire({
+      title: 'Name The Diagram',
+      icon: 'info',
+      showConfirmButton: true,
+      input: 'text',
+      inputAttributes:{
+        required:'true'
+      } ,
+      confirmButtonText: 'Save',
+      confirmButtonColor: '#C3343A',
+      showCancelButton: true,
+      cancelButtonText: 'Cancel',
+      cancelButtonColor: '#7D7E80',
+    }).then((confirmation) => {
+      if (confirmation.isConfirmed) {
+        const diagramState = this.shapes.map(shape => {
+          return {
+            type: shape.name,
+            shape: shape.shape.attrs
+          };
+        });
+        this.serializeData = {
+          diagramName: confirmation.value,
+          data: diagramState
+        };
+        console.log(this.serializeData);
+        this.diagramService.saveDiagram(this.serializeData).subscribe(res=>{
+          console.log(res)
+        })
+      }
+    });
 
-this.newLayer.destroy();
-this.newLayer = new Konva.Layer({ name: 'newLayer' });
-this.stage.add(this.newLayer);
 
-const group = new Konva.Group();
-this.serializeData.forEach((shapeData:any) => {
-  console.log(shapeData,"HEIOLLLL")
-  let newShape:any;
 
-  switch (shapeData.type) {
-    case 'Polygon':
-      newShape = new Konva.Line(shapeData.shape);
-      newShape.draggable(false)
-      break;
-    case 'Rect':
-      newShape = new Konva.Rect(shapeData.shape);
-      newShape.draggable(false)
-      break;
-    case 'Circle':
-      newShape = new Konva.Circle(shapeData.shape);
-      newShape.draggable(false)
-      break;
   }
-  group.add(newShape);
+  scaleX=1;
+  scaleY=1;
+  loadDiagram() {
+    this.diagramService.getDiagram('workstation4x2').subscribe((res: any) => {
+      // Create a rectangle
+      let rect = new Konva.Rect({
+        x: 105,
+        y: 322,
+        width: 18.5,
+        height: 21.1,
+        fill: 'blue',
+        opacity: 0.5,
+      });
 
-  // this.newLayer.add(newShape);
+      this.newLayer.add(rect);
+
+      const group = new Konva.Group();
+      res.data.forEach((shapeData: any) => {
+        let newShape:any;
+        switch (shapeData.type) {
+          case 'Polygon':
+            newShape = new Konva.Line(shapeData.shape);
+            newShape.draggable(false);
+            break;
+          case 'Rect':
+            newShape = new Konva.Rect(shapeData.shape);
+            newShape.draggable(false);
+            break;
+          case 'Circle':
+            newShape = new Konva.Circle(shapeData.shape);
+            newShape.draggable(false);
+            break;
+        }
+
+        // Adjust the position of the shape to be relative to the rect's position
+        // console.log("BEFOREEE",newShape.x(), newShape.y());
+        // newShape.x(newShape.x() - rect.x());
+        // newShape.y(newShape.y() - rect.y());
+        // console.log(newShape.x(), newShape.y());
+        group.add(newShape);
+        console.log(newShape)
+      });
+
+      group.draggable(true);
+      group.name('group');
+
+      // Set the group's position to match the rect's position
+      group.x(rect.x());
+      group.y(rect.y());
+      console.log(group,rect)
+      this.newLayer.add(group);
+      this.newLayer.draw();
+    });
+  }
 
 
-  // Add click and double-click event handlers as before
-});
-group.draggable(true)
-this.newLayer.add(group);
 
-let groupTransformer = new Konva.Transformer({
-  nodes: [group],
-});
-this.newLayer.add(groupTransformer);
-this.newLayer.draw();
+  changeScale() {
+    const group = this.newLayer.findOne('.group');
+
+    if (group) {
+      group.scaleX(this.scaleX);
+      group.scaleY(this.scaleY);
+      this.newLayer.batchDraw();
+    }
+  }
+serializeData:any
+// loadDiagram(){
+
+// this.newLayer.destroy();
+// this.newLayer = new Konva.Layer({ name: 'newLayer' });
+// this.stage.add(this.newLayer);
+
+// const group = new Konva.Group();
+// this.serializeData.forEach((shapeData:any) => {
+//   console.log(shapeData,"HEIOLLLL")
+//   let newShape:any;
+
+//   switch (shapeData.type) {
+//     case 'Polygon':
+//       newShape = new Konva.Line(shapeData.shape);
+//       newShape.draggable(false)
+//       break;
+//     case 'Rect':
+//       newShape = new Konva.Rect(shapeData.shape);
+//       newShape.draggable(false)
+//       break;
+//     case 'Circle':
+//       newShape = new Konva.Circle(shapeData.shape);
+//       newShape.draggable(false)
+//       break;
+//   }
+//   group.add(newShape);
+
+//   // this.newLayer.add(newShape);
 
 
-}
+//   // Add click and double-click event handlers as before
+// });
+// group.draggable(true)
+// this.newLayer.add(group);
+
+// let groupTransformer = new Konva.Transformer({
+//   nodes: [group],
+// });
+// this.newLayer.add(groupTransformer);
+// this.newLayer.draw();
+
+
+// }
 
 checkDrawnSeat(){
   this.dataSvaing.setArray(this.serializeData)

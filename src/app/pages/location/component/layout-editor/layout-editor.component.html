@@ -1,7 +1,7 @@
 
 <div class="main">
   <div class="canvas-container">
-    <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled || isDrawingEnabledForPillar ?'contain':'changeContain'"></div>
+    <div id="container" [ngClass]="isDrawingEnabled ?'contain':'changeContain'"></div>
   </div>
 <div class="sub-container">
 <div class="icons">
@@ -10,20 +10,14 @@
 </div>
 
 <div class="sub-icon">
-  <button mat-raised-button (click)="drawTHeSeat()" matTooltip="Get Clients"><mat-icon>people</mat-icon></button>
 <button mat-raised-button (click)="addLayout()" matTooltip="Final the layout"><mat-icon>border_all</mat-icon></button>
 </div>
 
-<button mat-raised-button (click)='addRectDataInArray()' color="primary">Update Border</button>
+<!-- <button mat-raised-button (click)='addRectDataInArray()' color="primary">Update Border</button> -->
 
 <!-- <button *ngIf="isDeleteShape" mat-raised-button (click)="deleteSelectedShape(seatShape)" color="primary">delete Selected Layout</button> -->
 <!-- <button mat-raised-button color="secondary" (click)="deleteSelectedRect()" [disabled]="!selectedShape">Delete Selected Rectangle</button> -->
 <label><b>For Drawing Seats</b></label>
-<div class="seats">
-  <button mat-raised-button matTooltip="Drawing Seat" color="primary"  (click)="drawSeatAndGetHW()"><mat-icon >chair_alt</mat-icon> {{isSeatDrawingEnabled?'Stop':'Start'}}</button>
-  <button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button>
-</div>
-
 
 <div class="label">
   <mat-card><p><b>Width : {{seatWidth}}</b></p></mat-card>
@@ -39,11 +33,7 @@
 </div>
 <button (click)="drawCustomRect()">CUSTOM BUTTOn</button> -->
 
-<button mat-raised-button (click)="goToDrawSeat()">Check Seats</button>
-<button mat-raised-button (click)="drawOutsideBorder()">Draw Border</button>
 <label><b>Other</b> </label>
-<button mat-raised-button (click)="toggleDrawingPillar()" color="primary" >{{isDrawingEnabledForPillar?'Stop':'Start'}} Drawing Pillar/Gap</button>
-<button mat-raised-button (click)="updatePillarData()">Update Other Data</button>
-<button mat-raised-button (click)="showOther()">Show Other Data</button>
+
 </div>
 </div>

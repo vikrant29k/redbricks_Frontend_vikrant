@@ -82,7 +82,7 @@ export class AdminDashboardExpandComponent implements OnInit {
     this.dashboardService
       .getFloorData(this.cardData, centerName)
       .subscribe((res: any) => {
-        // console.log(res);
+        console.log(res);
         this.centerName = centerName;
         this.floorData = res.data;
         this.selectedCenter = centerName;

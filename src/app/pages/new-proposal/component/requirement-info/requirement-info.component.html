@@ -28,7 +28,10 @@
                             </div> -->
                             <div class="field-inputs">
                               <mat-label>3x2</mat-label>
-                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation3x2">
+                              <div style="display: flex;flex-direction: column;    align-items: flex-end;">
+                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation3x2" (change)="validateInput($event)">
+                              <mat-hint>{{hint3x2}}</mat-hint>
+                              </div>
                             </div>
                             <div class="field-inputs">
                               <mat-label>4x2</mat-label>
@@ -36,7 +39,10 @@
                             </div>
                             <div class="field-inputs">
                               <mat-label>5x2</mat-label>
-                              <input  type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation5x2">
+                              <div style="display: flex;flex-direction: column;    align-items: flex-end;">
+                              <input  type="number" min="5" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation5x2" (change)="validateInput($event)">
+                                <mat-hint>{{hint5x2}}</mat-hint>
+                            </div>
                             </div>
                             <!-- <div class="field-inputs">
                               <mat-label>5x2.5</mat-label>
@@ -46,14 +52,14 @@
                               <mat-label>4x4</mat-label>
                               <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation4x4">
                             </div> -->
-                            <div class="field-inputs">
+                            <!-- <div class="field-inputs">
                               <mat-label>5x4</mat-label>
-                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation5x4">
+                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation5x4" (change)="validateInput($event)" placeholder="Multiple of 4">
                             </div>
                             <div class="field-inputs">
                               <mat-label>5x5</mat-label>
-                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation5x5">
-                            </div>
+                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation5x5" (change)="validateInput($event)" placeholder="Multiple of 4">
+                            </div> -->
                     </div>
               </mat-expansion-panel>
             <!-- </div> -->
@@ -71,10 +77,10 @@
                     <mat-label>Regular</mat-label>
                     <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="cabinRegular" >
                   </div>
-                  <div class="field-inputs">
+                  <!-- <div class="field-inputs">
                     <mat-label>Medium</mat-label>
                     <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="cabinMedium">
-                  </div>
+                  </div> -->
                   <div class="field-inputs">
                     <mat-label>Large</mat-label>
                     <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="cabinLarge">
@@ -224,20 +230,6 @@
                 </div>
               </mat-expansion-panel>
 
-<!--------- Phone Booth ---------->
-              <mat-expansion-panel class="field-card">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <p>Phone Booth</p>
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div style="display: flex; flex-direction: column; gap:10px;">
-                  <div class="field-inputs">
-                    <mat-label>Small</mat-label>
-                    <input   type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="phoneBoothNumber">
-                  </div>
-                </div>
-              </mat-expansion-panel>
 
 
             </div>
@@ -325,7 +317,7 @@
                 </div>
               </mat-expansion-panel>
 <!-- ---------------Niche Seating ------ -->
-<mat-expansion-panel  class="field-card">
+<!-- <mat-expansion-panel  class="field-card">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <p>Niche Seating</p>
@@ -341,8 +333,22 @@
       <input   type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="nicheSeat4Pax">
     </div>
   </div>
-</mat-expansion-panel>
+</mat-expansion-panel> -->
 
+<!--------- Phone Booth ---------->
+<mat-expansion-panel class="field-card">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <p>Phone Booth</p>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div style="display: flex; flex-direction: column; gap:10px;">
+    <div class="field-inputs">
+      <mat-label>Small</mat-label>
+      <input   type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="phoneBoothNumber">
+    </div>
+  </div>
+</mat-expansion-panel>
 <!------------- Training Room ------ -->
               <mat-expansion-panel  class="field-card">
                 <mat-expansion-panel-header>

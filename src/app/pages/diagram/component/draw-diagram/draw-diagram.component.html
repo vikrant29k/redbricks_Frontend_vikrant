@@ -22,6 +22,17 @@
   <button (click)="saveDiagram()">SAve Diagram</button>
   <button (click)="loadDiagram()"> Load Diagram</button>
 <button (click)="checkDrawnSeat()">Go to draw </button>
+<div>
+  <label for="scaleXInput">ScaleX:</label>
+  <input type="number" id="scaleXInput" [(ngModel)]="scaleX" step="0.1" (change)="changeScale()">
+</div>
+<div>
+  <label for="scaleYInput">ScaleY:</label>
+  <input type="number" id="scaleYInput" [(ngModel)]="scaleY" step="0.1" (change)="changeScale()">
+</div>
+<button (click)="loadDiagram()">Load Diagram</button>
+<p>ScaleX: {{ scaleX }}</p>
+<p>ScaleY: {{ scaleY }}</p>
 
 
 </div>

@@ -4,21 +4,21 @@
   </div>
   <div [style.display]="menuState == 'hidden'? 'none':'block'"  id="overlay" ></div>
 
-  <div class="menu" >
+  <!-- <div class="menu" >
       <button  class="menu-toggle" (click)="toggleMenu()"   type="button"  mat-fab  color="primary" >
         <mat-icon >person</mat-icon>
       </button>
      <div [@menuAnimation]="menuState" class="menu-items">
-      <!-- Add your menu items here -->
+       Add your menu items here
       <div class="menu-item" *ngFor="let el of userList">
         <span  (click)="openChartDialog('1000ms', '1300ms',el._id)">
         {{el.firstName}} {{el.lastName}}
         </span>
       </div>
 
-      <!-- Add more menu items as needed -->
+      Add more menu items as needed
     </div>
-  </div>
+  </div> -->
 
   <div class="main-content">
     <div mat-card class="card-container">

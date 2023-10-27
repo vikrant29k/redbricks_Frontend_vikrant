@@ -26,7 +26,7 @@ export class AuthLoginComponent implements OnInit{
     }
 
     loginForm = new FormGroup({
-        'userName': new FormControl('vkalbhor85@gmail.com', [Validators.required, Validators.email]),
+        'userName': new FormControl('vikrant@mobicloud.co.in', [Validators.required, Validators.email]),
         'password': new FormControl('admin', Validators.required)
     });
 

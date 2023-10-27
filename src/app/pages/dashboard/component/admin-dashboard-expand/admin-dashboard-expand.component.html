@@ -31,7 +31,7 @@
             <span class="sub-icon" [ngClass]="floor.isHovered ? 'totalPs-icon': ''"> Total Proposal- <br>{{ floor.floorData.totalProposals }}</span>
             <span class="sub-icon" [ngClass]="floor.isHovered ? 'selectedSeat-icon': ''">Locked Seat- <br>{{ floor.floorData.selectedNoOfSeats }}</span>
             <span class="sub-icon" [ngClass]="floor.isHovered ? 'rackRate-icon': ''">Rack Rate- <br> Rs.{{ floor.floorData.rackRate }}</span>
-            <span class="sub-icon" [ngClass]="floor.isHovered ? 'final-icon': ''">Final Proposal- <br>{{ floor.floorData.totalProposals }}</span>
+            <span class="sub-icon" [ngClass]="floor.isHovered ? 'final-icon': ''">Final Proposal- <br>{{ floor.floorData.finalizedProposal }}</span>
             <span class="sub-icon" [ngClass]="floor.isHovered ? 'booking-icon': ''">Total Price- <br>Rs.{{ floor.floorData.bookingPriceUptilNow }}</span>
           </div>
         <!-- </div> -->

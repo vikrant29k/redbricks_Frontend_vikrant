@@ -5,7 +5,7 @@ import { AuthenticationService } from 'src/app/service/authentication/authentica
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import Swal from 'sweetalert2';
 import { LocationService } from 'src/app/service/location/location.service';
-
+// import { MultipleOfFiveDirective } from './inputValidator.directive';
 @Component({
   selector: 'new-proposal-requirement-info',
   templateUrl: './requirement-info.component.html',
@@ -43,7 +43,7 @@ id:any;
     workstation5x5: new FormControl(),
     cubicalCount: new FormControl(),
     cabinRegular: new FormControl(),
-    cabinMedium: new FormControl(),
+    // cabinMedium: new FormControl(),
     cabinLarge: new FormControl(),
     cabinMD: new FormControl(),
     meeting4P: new FormControl(),
@@ -63,8 +63,8 @@ id:any;
     receptionLarge: new FormControl(),
     storeRoomNumber: new FormControl(),
     phoneBoothNumber: new FormControl(),
-    nicheSeat2Pax: new FormControl(),
-    nicheSeat4Pax: new FormControl(),
+    // nicheSeat2Pax: new FormControl(),
+    // nicheSeat4Pax: new FormControl(),
     cafeteriaNumber: new FormControl(),
     server1Rack: new FormControl(),
     server2Rack: new FormControl(),
@@ -86,7 +86,8 @@ id:any;
     private route: ActivatedRoute,
     private proposalService: ProposalService,
     private authService: AuthenticationService,
-    private locationService:LocationService
+    private locationService:LocationService,
+    // private multipleOf5Directive:MultipleOfFiveDirective
   ) {}
 
   ngOnInit(): void {
@@ -174,11 +175,23 @@ totalWorkstation(){
 
 }
 
-
+hint5x2:any;
+hint3x2:any
   watchFormValue = () => {
     this.requirementInfoForm.valueChanges.subscribe(() => {
       let value = this.requirementInfoForm.value;
-
+if(value.workstation5x2 % 4 !== 0){
+this.hint5x2='Multiple of 4 should be entered'
+this.requirementInfoForm.value.workstation5x2=''
+}else{
+  this.hint5x2=''
+}
+if(value.workstation3x2 % 4 !== 0){
+  this.hint3x2='Multiple of 4 should be entered'
+  this.requirementInfoForm.value.workstation3x2=''
+  }else{
+    this.hint3x2=''
+  }
       this.totalSelectedWorkstation =
   //  (value.workstation2x1 * 0.60) +
     (value.workstation3x2 * 0.75) +
@@ -188,41 +201,47 @@ totalWorkstation(){
     // (value.workstation4x4 * 1.25) +
     (value.workstation5x4 * 1.50) +
     (value.workstation5x5 * 1.75) +
-    (value.cubicalCount * 3.75) +
-    (value.cabinRegular * 4.50) +
-    (value.cabinMedium * 5.00) +
-    (value.cabinLarge * 6.50) +
-    (value.cabinMD * 7.50) +
-    (value.meeting6P * 6.50)+
-    (value.meeting8P * 12.00) +
-    (value.meeting10P * 14.00) +
-    (value.meeting4P * 4.50) +
-    (value.meeting16P * 25.00) +
-    (value.meeting12P * 17.00) +
-    (value.board20P * 30.00) +
-    (value.board24P * 34.00) +
-    (value.collab4P * 4.75) +
-    (value.collab6P * 6.50) +
-    (value.collab8P * 9.25) +
-    (value.dryPantryNumber * 4.50) +
-    (value.receptionSmall * 5.00) +
-    (value.receptionMedium * 6.50)  +
-    (value.receptionLarge * 7.50) +
-    (value.storeRoomNumber * 4.50) +
-    (value.phoneBoothNumber * 1.25) +
-    (value.nicheSeat2Pax * 1.25) +
-    (value.nicheSeat4Pax * 1.75) +
-    (value.cafeteriaNumber * 1.2) +
-    (value.server1Rack * 4.50) +
-    (value.server2Rack * 7.00) +
-    (value.server3Rack * 9.00) +
-    (value.server4Rack * 10.50) +
-    (value.prayerRoomNumber * 4.50) +
-    (value.wellnessRoomNumber * 4.50)  +
+    // (value.cubicalCount * 3.75) +
+    (value.cubicalCount * 4.00) +
+    (value.cabinRegular * 4.00) +
+    // (value.cabinMedium * 5.00) +
+    // (value.cabinLarge * 6.50) +
+    (value.cabinLarge * 6.00) +
+    // (value.cabinMD * 7.50) +
+    (value.cabinMD * 12.00) +
+    (value.meeting6P * 6.00)+
+    (value.meeting8P * 8.00) +
+    (value.meeting10P * 12.00) +
+    (value.meeting4P * 4.00) +
+    (value.meeting16P * 18.00) +
+    (value.meeting12P * 15.00) +
+    (value.board20P * 24.00) +
+    (value.board24P * 32.00) +
+    (value.collab4P * 4.00) +
+    (value.collab6P * 6.00) +
+    (value.collab8P * 8.00) +
+    (value.dryPantryNumber * 4.00) +
+    (value.receptionSmall * 6.00) +
+    (value.receptionMedium * 8.00)  +
+    (value.receptionLarge * 10.00) +
+    (value.storeRoomNumber * 4.00) +
+    (value.phoneBoothNumber * 2.00) +
+    // (value.nicheSeat2Pax * 1.25) +
+    // (value.nicheSeat4Pax * 1.75) +
+    (value.cafeteriaNumber * 4.00) +
+    (value.server1Rack * 4.00) +
+    (value.server2Rack * 4.00) +
+    (value.server3Rack * 6.00) +
+    (value.server4Rack * 8.00) +
+    (value.prayerRoomNumber * 4.00) +
+    (value.wellnessRoomNumber * 4.00)  +
     value.trainingRoomNumber +
     value.gameRoomNumber;
-    this.billableSeats  = Number((this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1)).toFixed(2));
-    this.areaOfCoreSelectedSeat = (this.billableSeats*19.00).toFixed(2);
+    this.billableSeats=this.totalSelectedWorkstation
+    // this.billableSeats  = Number((this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1)).toFixed(2));
+     let adding10perc = Number((this.totalSelectedWorkstation + (this.totalSelectedWorkstation*0.1)).toFixed(2));
+
+    this.areaOfCoreSelectedSeat = (adding10perc*19.00).toFixed(2);
     this.areaOfUsableSelectedSeat = (this.areaOfCoreSelectedSeat *1.85).toFixed(2);
 
     // let circulation = totalNoOfSeats*0.1;
@@ -230,4 +249,12 @@ totalWorkstation(){
     });
   };
 
+  validateInput(event:any) {
+    const inputValue = event.target.value;
+    console.log(event)
+    if (inputValue % 4 !== 0) {
+      event.target.value = '';
+    }else{
+    }
+  }
 }
