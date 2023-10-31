@@ -370,7 +370,7 @@ console.log(e)
       roomsDataObject: RoomData = roomsData;
 
       seprateData(){
-        console.log(this.content)
+        // console.log(this.content)
         const contentArray = this.content.split(','); // Split the string into an array
         contentArray.forEach((item:any) => {
           const keyValue = item.trim().split('=');
@@ -382,7 +382,7 @@ console.log(e)
         });
 
         // Now you have separated content as an object with individual properties
-        console.log("YEP",this.sepratedContent);
+        // console.log("YEP",this.sepratedContent);
 
 
         const commonObjectsWithCounts = [];
@@ -408,7 +408,7 @@ console.log(e)
         }
 
         // Now you have an array commonObjectsWithCounts containing common objects
-        console.log(commonObjectsWithCounts);
+        // console.log(commonObjectsWithCounts);
         this.assignRoomsToSeats(commonObjectsWithCounts)
           }
           assignRoomsToSeats(commonObjectsWithCounts: any[]) {

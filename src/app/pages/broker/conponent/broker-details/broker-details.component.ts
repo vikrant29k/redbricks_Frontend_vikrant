@@ -66,12 +66,12 @@ export class BrokerDetailsComponent implements OnInit , AfterViewInit{
       this.getPtoposalCountAsPerLocation(this.brokerId)
       this.getTotalProposalCountOfBroker(this.brokerId)
       this.getTotalBrokerProposal(this.brokerId);
-      
+
       this.getPreposalDetails(this.brokerId)
-    } 
+    }
     this.displayedColumnsConflict = [ 'salesPerson','_id', 'resolve','count'];
 
-   
+
   }
 
   tableDataSource(data: any) {
@@ -88,7 +88,7 @@ export class BrokerDetailsComponent implements OnInit , AfterViewInit{
 
 getTotalProposalCountOfBroker = (id:string) =>{
   this.brokerService.getProposalCount(id).subscribe((res:any)=>{
-  console.log(res)
+  // console.log(res)
   this.brokerDetails = res
   });
 }
@@ -100,17 +100,17 @@ getTotalBrokerProposal = (id:string) =>{
   }
   this.brokerService.getBrokerProposalAvg(id,data).subscribe((res:any)=>{
     this.monthlyPropCount = res
-    console.log(res)
+    // console.log(res)
   });
 }
 
 getPtoposalCountAsPerLocation = (id:string) =>{
     this.brokerService.getProposalCountAsPerLocation(id).subscribe((res:any)=>{
-      console.log(res);
+      // console.log(res);
       this.totalPreposalAsPerLocation = res
     google.charts.load('current', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(this.drawChart);
-    
+
     });
 }
 

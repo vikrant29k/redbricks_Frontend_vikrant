@@ -104,7 +104,7 @@ export class SeatDrawComponent implements OnInit {
         };
         this.proposalData.push(resObject);
     }
-    console.log(this.proposalData)
+    // console.log(this.proposalData)
 
   }
 
@@ -287,7 +287,7 @@ export class SeatDrawComponent implements OnInit {
   // this.drawImages(commonObjectsWithCounts)
     }
     assignRoomsToSeats(commonObjectsWithCounts: any[]) {
-      console.log(commonObjectsWithCounts)
+      // console.log(commonObjectsWithCounts)
       const availableValues = commonObjectsWithCounts.map((item) => item.title);
 
 // Filter the imageOptions array to include only options with values in availableValues
@@ -330,7 +330,7 @@ this.imageOptions = Object.keys(this.roomsDataObject)
 
 loadImage() {
   const image = new Image();
-  console.log(this.getImagePath(),"YOOOOOOOOOOOOOo")
+  // console.log(this.getImagePath(),"YOOOOOOOOOOOOOo")
   image.src = this.getImagePath().imge;
   image.width =this.getImagePath().width;
   image.height=this.getImagePath().height;
@@ -475,7 +475,7 @@ drawBorder() {
     const y = Math.round(polygonPoints[i+1])
     const x1 = x+10
     const y1 =  y+10
-    console.log(x,y,x1,y1)
+    // console.log(x,y,x1,y1)
     const circle = new Konva.Circle({
       x,
       y,

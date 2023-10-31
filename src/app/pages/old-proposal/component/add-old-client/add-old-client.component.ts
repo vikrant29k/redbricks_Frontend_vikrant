@@ -88,7 +88,7 @@ onSubmit(){
      status:'Completed and Locked',
      locationId:this.locationId
   })
-  console.log(this.clientForm.value)
+  // console.log(this.clientForm.value)
   this.proposalService.addOldClient(this.clientForm.value).subscribe(res=>{
     this.router.navigate(['/admin', 'old-proposal', 'old-client-list']);
   })
@@ -142,12 +142,12 @@ getFloorList(location: string) {
 }
 showContainer:boolean=false
 getLocationIdFromFloor(id:string){
-  console.log(id,"I am lcoation id")
+  // console.log(id,"I am lcoation id")
   this.locationId=id;
   this.locationService.getImageById(id).subscribe(
     (imageUrl) => {
       this.imageUrl = environment.baseUrl+'images/' + imageUrl;
-      console.log(this.imageUrl);
+      // console.log(this.imageUrl);
       const imageObj = new Image();
   imageObj.onload = () => {
     this.initializeKonva(imageObj);
@@ -157,11 +157,11 @@ getLocationIdFromFloor(id:string){
     this.locationService.getBorderData(id).subscribe((res:any)=>{
       // console.log(res);
       if(res.Message==='No data'){
-        console.log("NO DATAA")
+        // console.log("NO DATAA")
       }else{
         this.seatWidth=res.layoutArray[0].seatWidth;
         this.seatHeight=res.layoutArray[0].seatHeight;
-        console.log("HY DATA ")
+        // console.log("HY DATA ")
         this.totalNumber=res.totalNoOfWorkstation
         res.layoutArray[0].layoutBorder.forEach((item:any) => {
           const {_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition } = item;
@@ -368,7 +368,7 @@ backgroundImage!: Konva.Image;
       shape: this.shape,
     };
     this.getAllPoints.push(rect)
-    console.log(this.getAllPoints);
+    // console.log(this.getAllPoints);
     this.isDrawingEnabled=!this.isDrawingEnabled
   }
 
@@ -405,7 +405,7 @@ backgroundImage!: Konva.Image;
     if (!this.stage || !this.layer) return;
     if (this.drawingEnabled === true) {
       let remainingSeats = this.totalNumebrOfSeat
-      console.log(remainingSeats)
+      // console.log(remainingSeats)
       for (const point of this.getAllPoints) {
 
         const minX = point.startX;

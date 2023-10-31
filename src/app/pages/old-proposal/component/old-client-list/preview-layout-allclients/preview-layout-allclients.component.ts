@@ -137,7 +137,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
   drawTHeSeat(){
     // let dataOfDrawingSeats = this.proposalData.
     this.proposalData.forEach(dataOfSeats=>{
-   console.log(dataOfSeats,"HRLOO")
+  //  console.log(dataOfSeats,"HRLOO")
       for (const seat of dataOfSeats.seatsData) {
 
         this.drawSeatsBetweenPoints(seat.start, seat.end,seat.seatPosition,dataOfSeats.seatSize, dataOfSeats.color, seat.first,dataOfSeats.clientName,dataOfSeats.totalNumberOfSeats);

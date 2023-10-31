@@ -67,11 +67,15 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
       this.locationService.getBorderData(this.id).subscribe((res:any)=>{
         // console.log(res);
         if(res.Message==='No data'){
-          console.log("NO DATAA")
+          // console.log("NO DATAA")
         }else{
+          this.seatHeight=res.layoutArray[0].seatHeight;
+          this.seatWidth=res.layoutArray[0].seatWidth;
           res.layoutArray[0].layoutBorder.forEach((item:any) => {
-            const {_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight } = item;
-            this.getAllPoints.push({_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight });
+            //debugger
+
+            const {_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull } = item;
+            this.getAllPoints.push({_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull });
 
           });
 this.displayRectangles()
@@ -94,7 +98,7 @@ this.displayRectangles()
         this.layer.add(transformNew);
         transformNew.nodes([rect])
           this.transformer=transformNew
-          console.log("FIRST BEFORE",rect)
+          // console.log("FIRST BEFORE",rect)
         rect.on('transformend', () => {
           // if (this.selectedShape) {
             // console.log('RECT NAME',rect.attrs())
@@ -116,7 +120,7 @@ this.displayRectangles()
                 endY: updatedY + updatedHeight,
               };
 
-              console.log("AFTER UPDATE", this.getAllPoints[indexToUpdate]);
+              // console.log("AFTER UPDATE", this.getAllPoints[indexToUpdate]);
             }
 
         });
@@ -255,16 +259,22 @@ this.displayRectangles()
     this.drawTHeSeat()
   }
   updateStoredValues(){
+    let data = {
+      LayoutData:{layoutBorder:this.getAllPoints,
+        seatHeight:this.seatHeight,
+        seatWidth:this.seatWidth,
 
+      }
+         }
 
-  // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
+  this.locationService.addLayoutData(this.id,data).subscribe(res=>{
       // console.log(res);
       this.proposalService.lockProposal(this.proposalId, { lockProposal:true })
             .subscribe((res:any) => {
-              console.log(res,"Locked Proposal")
+              // console.log(res,"Locked Proposal")
             });
       this.router.navigate(['/admin','location','location-list'])
-    // })
+    })
   }
 
 
@@ -324,7 +334,7 @@ this.displayRectangles()
       this.isLockDrawing = false;
 
     }
-    console.log(this.lockedshape,"SHAPE OF LOCKED")
+    // console.log(this.lockedshape,"SHAPE OF LOCKED")
   }
 
 }

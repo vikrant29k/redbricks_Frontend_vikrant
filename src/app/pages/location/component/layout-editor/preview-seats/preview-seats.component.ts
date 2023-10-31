@@ -53,12 +53,12 @@ seatWidth!: number;
        this.locationService.getBorderData(this.id).subscribe((res:any)=>{
          // console.log(res);
          if(res.Message==='No data'){
-           console.log("NO DATAA")
+          //  console.log("NO DATAA")
          }else
          {
            this.seatWidth=res.layoutArray[0].seatWidth;
            this.seatHeight=res.layoutArray[0].seatHeight;
-           console.log("NO DATAA")
+          //  console.log("NO DATAA")
            this.totalNumber=res.totalNoOfWorkstation
            res.layoutArray[0].layoutBorder.forEach((item:any) => {
              const {_id, startX, startY, endX, endY, shape,seatHeight,seatWidth,rectWidth,rectHeight,seatPosition,isFull } = item;
@@ -89,7 +89,7 @@ seatWidth!: number;
                this.seatLayer.add(transformNew);
                transformNew.nodes([rect])
                  this.transformer=transformNew
-                 console.log("FIRST BEFORE",rect)
+                //  console.log("FIRST BEFORE",rect)
                rect.on('transformend', () => {
                  // if (this.selectedShape) {
                    // console.log('RECT NAME',rect.attrs())
@@ -111,7 +111,7 @@ seatWidth!: number;
                        endY: updatedY + updatedHeight,
                      };
 
-                     console.log("AFTER UPDATE", this.getAllPoints[indexToUpdate]);
+                    //  console.log("AFTER UPDATE", this.getAllPoints[indexToUpdate]);
                    }
 
                });
@@ -220,11 +220,11 @@ seatWidth!: number;
           const minY = point.startY;
           const maxX = point.endX;
           const maxY = point.endY;
-          console.log("name of rect",point._id,
-          // "\n minX=",point.startX,
-          // "\n maxX=>",point.endX,
-          "\n width of rect=>", point.endX-point.startX);
-console.log("MAX Columns can be added==>",Math.round((maxX-minX)/this.seatWidth))
+//           console.log("name of rect",point._id,
+//           // "\n minX=",point.startX,
+//           // "\n maxX=>",point.endX,
+//           "\n width of rect=>", point.endX-point.startX);
+// console.log("MAX Columns can be added==>",Math.round((maxX-minX)/this.seatWidth))
 const availableWidth = maxX - minX;
 const availableHeight = maxY - minY;
 const maxHorizontalRectangles = Math.floor(availableWidth / this.seatWidth);

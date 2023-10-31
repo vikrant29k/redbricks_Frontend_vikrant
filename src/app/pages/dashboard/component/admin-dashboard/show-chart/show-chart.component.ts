@@ -42,7 +42,7 @@ export class ShowChartComponent implements OnInit,AfterViewInit {
   fetchData(){
     this.dashboardService.getSaleData(this.id).subscribe({
       next:(res:any)=>{
-        console.log(res)
+        // console.log(res)
         this.chartdata = res;
         this.drawChart()
       },
@@ -85,7 +85,7 @@ export class ShowChartComponent implements OnInit,AfterViewInit {
     chart.draw(data, options);
 
     var totalCount = this.calculateTotalCount(this.chartdata);
-    console.log('Total Count:', totalCount);
+    // console.log('Total Count:', totalCount);
     this.totalCount = this.calculateTotalCount(this.chartdata);
 
   }
@@ -126,7 +126,7 @@ export class ShowChartComponent implements OnInit,AfterViewInit {
 
     };
 
-    console.log(this.pieChart)
+    // console.log(this.pieChart)
   if(this.pieChart){
 
     const chart = new google.visualization.PieChart(

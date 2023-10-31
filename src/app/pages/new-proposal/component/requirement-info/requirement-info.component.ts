@@ -95,18 +95,18 @@ id:any;
     (window as any).scrollTo(top);
 
     this.totalWorkStationBalance = this.proposalService.AvailableNoOfSeats;
-    console.log(this.totalWorkStationBalance)
+    // console.log(this.totalWorkStationBalance)
      this.totalAvailableWorkstation = this.locationService.totalWorkstation - this.locationService.selectedSeats;
-     console.log(this.totalAvailableWorkstation)
+    //  console.log(this.totalAvailableWorkstation)
 // const numberOfseats =localStorage.getItem('selectedSeat');
 // this.totalAvailableWorkstation=this.proposalService.AvailableNoOfSeats - Number(numberOfseats) ;
 
     this.proposalId = this.getProposaId();
     this.proposalService.getProposalById(this.proposalId).subscribe((res:any)=>{
-       console.log(res)
+      //  console.log(res)
 
       this.requirementInfoForm.patchValue(res[0]);
-      console.log( this.requirementInfoForm.value,"gt the data")
+      // console.log( this.requirementInfoForm.value,"gt the data")
     })
     this.watchFormValue();
   }
@@ -251,7 +251,7 @@ if(value.workstation3x2 % 4 !== 0){
 
   validateInput(event:any) {
     const inputValue = event.target.value;
-    console.log(event)
+    // console.log(event)
     if (inputValue % 4 !== 0) {
       event.target.value = '';
     }else{

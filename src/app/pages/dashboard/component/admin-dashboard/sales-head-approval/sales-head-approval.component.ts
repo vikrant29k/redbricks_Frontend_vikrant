@@ -44,7 +44,7 @@ getData(){
 clientPrice:any;
 System_value:any
   approveProposal(id:string) {
-    console.log('data:',this.clientPrice)
+    // console.log('data:',this.clientPrice)
     Swal.fire({
       title: 'Approve Proposal',
       text: `Are you sure you want to Finalize this proposal at Rs.${this.finalPrice}?`,
@@ -89,7 +89,7 @@ System_value:any
     if (confirmation.isConfirmed) {
 
       this.proposalService.declineProposal(this.id,confirmation.value).subscribe(res=>{
-        console.log(res)
+        // console.log(res)
         this.dialogRef.close();
       })
     }

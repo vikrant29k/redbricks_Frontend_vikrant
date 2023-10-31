@@ -31,7 +31,7 @@ export class NewProposalProposalPreviewComponent implements OnInit {
       this.fileExistenceService.checkFileExists(this.pdfUrl).subscribe({
 
         next: (result: any) => {
-            console.log(this.pdfUrl,result);
+            // console.log(this.pdfUrl,result);
             // The file exists, you can render the PDF viewer here
           },
          error: (error:any) => {
@@ -46,20 +46,20 @@ export class NewProposalProposalPreviewComponent implements OnInit {
     }
 
     pageInitialized = (e: any) => {
-      console.log(e)
+      // console.log(e)
         // this.isPdfLoaded = false;
     }
 
     pageRendered = (e: any) => {
-        console.log('page-rendered', e);
+        // console.log('page-rendered', e);
     }
 
     onProgress = (e: PDFProgressData) => {
-        console.log(e);
+        // console.log(e);
     }
 
     loadComplete = (e: any) => {
-        console.log(e);
+        // console.log(e);/
         this.isPdfLoaded = true
     }
 }

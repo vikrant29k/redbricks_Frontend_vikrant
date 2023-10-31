@@ -177,7 +177,7 @@ allData:any
         this.allData=result;
         this.rentCamArray=result.rentSheet;
 
-        console.log("asdfsadsdaa",result);
+        // console.log("asdfsadsdaa",result);
         this.locationForm.patchValue({
           location: result.location,
           selectedNoOfSeats:result.selectedNoOfSeats||0,
@@ -278,7 +278,7 @@ allData:any
     const ctrlValue:any = this.date.value ;
     ctrlValue.year(normalizedYear.year());
     this.date.setValue(ctrlValue);
-  console.log(this.locationForm)
+  // console.log(this.locationForm)
   this.rentSheet[index].patchValue({year:ctrlValue});
     dp.close()
   }
@@ -305,7 +305,7 @@ allData:any
       }
       this.myFiles.push(e.target.files[i]);
     }
-    console.log(this.myFiles)
+    // console.log(this.myF/iles)
   }
   deleteImageFromList = (index:number) =>{
       this.myFiles.splice(index,1)
@@ -320,7 +320,7 @@ allData:any
         imgPath:path
       }
       this.loactionService.deleteSelectedImage(data,this.locationId).pipe(take(1)).subscribe((res:any)=>{
-        console.log(res)
+        // console.log(res)
         this.allData.centerImage.splice(index,1)
       })
     }

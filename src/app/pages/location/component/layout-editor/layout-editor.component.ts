@@ -307,9 +307,9 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
   updatedWidth!:number;
   updatedHeight!:number
   handleMouseDown(e: Konva.KonvaEventObject<MouseEvent>): void {
-    console.log(this.isDrawingEnabled,'BEFORE IF')
+    // console.log(this.isDrawingEnabled,'BEFORE IF')
     if (this.isDrawingEnabled) {
-      console.log(this.isDrawingEnabled,"AFTER IF")
+      // console.log(this.isDrawingEnabled,"AFTER IF")
         this.timesofRectDrawn++;
         const pos: any = this.stage.getPointerPosition();
         this.startPoint = pos;
@@ -334,14 +334,14 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
             });
             this.layer.add(transformNewShape);
             transformNewShape.nodes([this.shape]);
-            this.shape.on('click', () => {
-              let transformNewShape = new Konva.Transformer({
-                ignoreStroke:true,
-                name:'shapeTransformer'
-              });
-              this.layer.add(transformNewShape);
-              transformNewShape.nodes([this.shape]);
-            })
+            // this.shape.on('click', () => {
+            //   let transformNewShape = new Konva.Transformer({
+            //     ignoreStroke:true,
+            //     name:'shapeTransformer'
+            //   });
+            //   this.layer.add(transformNewShape);
+            //   transformNewShape.nodes([this.shape]);
+            // })
 
               this.shape.on('transformend', () => {
                 // Get the updated properties from the transformed shape
@@ -356,6 +356,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
               x: this.shape.x() + 20,
               y: this.shape.y() - 10,
               width: 10,
+              draggable:true,
               height: 10,
               fill: 'grey'
           });
@@ -374,9 +375,6 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
           let seatpostio: boolean = true;
           let rect:any;
           updateButton.on('click', () => {
-
-          transformNewShape.destroy()
-
                rect = {
                   _id: Date.now(),
                   startX: this.updatedX,
@@ -390,15 +388,14 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
               };
 
               this.drawRectangles(rect);
+              transformNewShape.nodes([])
               // this.seatsDrawn=true
               // this.getAllPoints.push(rect);
               // this.isDrawingEnabled = !this.isDrawingEnabled;
-              seatPositionCircle.show();
-
           });
           updateButton.on('dblclick',()=>{
             this.removeSeats()
-
+            transformNewShape.nodes([this.shape])
           })
             let pushButton =new  Konva.Rect({
               x: this.shape.x()- 10,
@@ -406,12 +403,13 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
               width: 10,
               height: 10,
               cornerRadius:10,
+              draggable:true,
               fill: 'orange'
             })
             this.layer.add(pushButton);
             pushButton.on('mouseenter',()=>{
-              tooltip.x(pushButton.x()-10);
-              tooltip.y(pushButton.y()-10);
+              tooltip.x(pushButton.x()-20);
+              tooltip.y(pushButton.y()+30);
               tooltip.text('Final This Border')
               tooltip.show()
             })
@@ -419,6 +417,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
               tooltip.hide()
             })
             pushButton.on('click',()=>{
+
               this.getAllPoints.push(rect);
     // Set isDrawingEnabled to true to enable drawing of new rectangles
     this.isDrawingEnabled = true;
@@ -428,6 +427,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
     pushButton.destroy();
     seatPositionCircle.destroy();
     updateButton.destroy();
+    transformNewShape.destroy()
 
     // Find and destroy any Transformers with the name 'shapeTransformer'
     let transformers = this.layer.find('.shapeTransformer');
@@ -441,6 +441,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
 
             //seatPosition will change the vertical horizontal printing of rect
             const seatPositionCircle = new Konva.Circle({
+              draggable:true,
                 x: pos.x, // Adjust the position as needed
                 y: pos.y - 10, // Adjust the position as needed
                 radius: 5, // Adjust the radius as needed
@@ -489,10 +490,10 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
 }
 
 drawingEnabled:boolean=true
-totalNumebr:number=40
+totalNumebr:number=100
 
 drawRectangles(array:any) {
-  console.log(array,"DATAAA")
+  // console.log(array,"DATAAA")
   let count = 0;
   if (!this.stage) return;
   if (this.drawingEnabled === true) {
@@ -503,11 +504,11 @@ drawRectangles(array:any) {
       const minY = array.startY;
       const maxX = array.endX;
       const maxY = array.endY;
-      console.log("name of rect",array._id,
+      // console.log("name of rect",array._id,
       // "\n minX=",array.startX,
       // "\n maxX=>",array.endX,
-      "\n width of rect=>", array.endX-array.startX);
-      console.log("MAX Columns can be added==>",Math.round((maxX-minX)/this.seatWidth))
+      // "\n width of rect=>", array.endX-array.startX);
+      // console.log("MAX Columns can be added==>",Math.round((maxX-minX)/this.seatWidth))
       const availableWidth = maxX - minX;
       const availableHeight = maxY - minY;
       const maxHorizontalRectangles = Math.floor(availableWidth / this.seatWidth);
@@ -539,10 +540,10 @@ drawRectangles(array:any) {
         }
 
       }
-      this.totalNumebr = remainingSeats;
+      // this.totalNumebr = remainingSeats;
 
     }
-
+    // console.log(this.totalNumebr)
     // Trigger rendering
     this.layer.batchDraw();
   }
@@ -586,8 +587,8 @@ drawRectangles(array:any) {
 seatArray:any[]=[]
 drawSeatAndGetHW() {
   this.seatShape = new Konva.Rect({
-    x:0,
-    y:0,
+    x: this.customWidth / 2,
+    y: this.customHeight / 2,
     width: this.seatWidth,
     height: this.seatHeight,
     fill: 'red',
@@ -596,65 +597,61 @@ drawSeatAndGetHW() {
   });
 
   this.layer.add(this.seatShape);
-  this.stage.draw();
-  this.seatShape.on('mousedown', () => {
-    let transformNewShape = new Konva.Transformer();
-    this.layer.add(transformNewShape);
-    transformNewShape.nodes([this.seatShape]);
-    this.seatShape.on('transformend', () => {
-      // Get the updated properties from the transformed shape
 
-      this.seatWidth = this.seatShape.width() * this.seatShape.scaleX();
-      this.seatHeight = this.seatShape.height() * this.seatShape.scaleY();
-      this.layer.batchDraw();
-      this.updateInputFields();
-    });
+  // Create a Transformer
+  this.transformer = new Konva.Transformer();
+  this.layer.add(this.transformer);
+
+  // Bind the Transformer to the seat shape
+  this.transformer.nodes([this.seatShape]);
+let width,height;
+  this.seatShape.on('transform', () => {
+    // Get the updated properties from the transformed shape
+    width = this.seatShape.width() * this.seatShape.scaleX();
+    height= this.seatShape.height() * this.seatShape.scaleY();
+    this.updateInputFields(width,height);
+    // this.layer.batchDraw();
+
   });
-  this.seatShape.on('click', () => {
-    if (this.transformer.getNode() === this.seatShape) {
-      this.transformer.detach();
-    } else {
-      this.transformer.attachTo(this.seatShape);
-    }
-    this.layer.batchDraw();
-  });
+
+  this.layer.draw();
 }
 
-updateWidth() {
-  if (this.seatShape) {
-    const newWidth = parseFloat(this.seatWidth.toString());
-    this.seatShape.width(newWidth);
-    this.layer.batchDraw();
-  }
-}
-updateHeight() {
-  if (this.seatShape) {
-    const newHeight = parseFloat(this.seatHeight.toString());
-    this.seatShape.height(newHeight);
-    this.layer.batchDraw();
-  }
-}
-updateInputFields() {
-const widthInput = document.getElementById('widthInput') as HTMLInputElement | null;
-const heightInput = document.getElementById('heightInput') as HTMLInputElement | null;
-
-if (widthInput) {
-  widthInput.value = this.seatWidth.toString();
+// Function to update the shape from input fields
+updateShapeFromInput() {
+  let width = this.seatWidth* this.seatShape.scaleX()
+  let height = this.seatHeight * this.seatShape.scaleY();
+  this.seatShape.width(width);
+  this.seatShape.height(height);
+  this.transformer.forceUpdate(); // Update the Transformer
+  this.layer.batchDraw();
 }
 
-if (heightInput) {
-  heightInput.value = this.seatHeight.toString();
-}
+// Function to update the input fields from the shape
+updateInputFields(width:any, height:any) {
+  // console.log(width,height)
+  this.seatWidth =Number(width.toFixed(2))
+  this.seatHeight =Number(height.toFixed(2))
 }
 
+updateSeatsSize() {
+  // console.log(this.seatWidth,this.seatHeight)
+  this.transformer.destroy()
+  this.seatShape.destroy()
+  // const height=this.seatShape.height()
+  // const width=this.seatShape.width();
+  // console.log(height,width)
+  // this.seatHeight= height.floor(2);
+  // this.seatWidth =width.floor(2) ;
 
+}
 //finals all layout and save the data..
   addLayout(){
     let data = {
         LayoutData:{layoutBorder:this.getAllPoints,
           seatHeight:this.seatHeight,
           seatWidth:this.seatWidth,
-          // pillarData:this.pillarData
+
         }
            }
 
@@ -700,12 +697,13 @@ if (heightInput) {
        name: 'seat-rectangle',
      });
      this.layer.add(rect);
-
+    //  this.layer.draw()
    }
    removeSeats(){
     let allShapes=this.layer.find('.seat-rectangle');
     allShapes.forEach(seat=>{
       seat.destroy()
+
     })
     this.layer.batchDraw()
    }
@@ -786,248 +784,238 @@ if (heightInput) {
 //   }
 
   //seatArray:any[]=[]
-  // updateSeatsSize() {
-  //   console.log("WIDTH==>",this.seatShape.width(),"\nHEIGHT==>",this.seatShape.height())
-  //   const height=this.seatShape.height()
-  //   const width=this.seatShape.width();
-  //   this.seatHeight= height.floor(2);
-  //   this.seatWidth =width.floor(2) ;
-  //   for (const point of this.getAllPoints) {
-  //     point.seatHeight = this.seatHeight;
-  //     point.seatWidth = this.seatWidth;
-  //   }
-  // }
 
 
 
-    drawOutsideBorder(){
-      // Draw a borders of different things..
-      this.router.navigate(['/admin','location','draw-border',this.id])
-    }
+
+    // drawOutsideBorder(){
+    //   // Draw a borders of different things..
+    //   this.router.navigate(['/admin','location','draw-border',this.id])
+    // }
 
     //draw the exrta things like pillars and gaps in workstation
-    pillarGapLayer!:Konva.Layer
-        startDrawingPillar() {
-          this.stage.on('mousedown', this.handleMouseDownForPillar.bind(this));
-          this.stage.on('mousemove', this.handleMouseMoveForPillar.bind(this));
-          this.stage.on('mouseup', this.handleMouseUpForPillar.bind(this));
-        }
-    pillarRect!:Konva.Rect;
-    isDrawingEnabledForPillar=false
-    isDrawingForPillar: boolean = false;
-    updatedXForPillar:any;
-    updatedYForPillar:any;
-    updatedWidthForPillar:any;
-    updatedHeightForPillar:any
-    toggleDrawingPillar(): void {
-      this.isDrawingEnabledForPillar = !this.isDrawingEnabledForPillar;
-      this.pillarGapLayer=new Konva.Layer({
-        name:'pillarGapLayer',
-      })
-      this.layer.listening(false)
-      this.stage.add(this.pillarGapLayer)
-      this.startDrawingPillar();
-      if (!this.isDrawingEnabledForPillar) {
-        this.isDrawingForPillar = false; // Stop ongoing drawing if disabled
-      }
-    }
-        handleMouseDownForPillar(e: Konva.KonvaEventObject<MouseEvent>): void {
-          this.letSeatMove = true;
-          if (this.isDrawingEnabledForPillar) {
-            this.timesofRectDrawn++;
-            const pos: any = this.stage.getPointerPosition();
-            this.startPoint = pos;
-            this.isDrawingForPillar= true;
+//     pillarGapLayer!:Konva.Layer
+//         startDrawingPillar() {
+//           this.stage.on('mousedown', this.handleMouseDownForPillar.bind(this));
+//           this.stage.on('mousemove', this.handleMouseMoveForPillar.bind(this));
+//           this.stage.on('mouseup', this.handleMouseUpForPillar.bind(this));
+//         }
+//     pillarRect!:Konva.Rect;
+//     isDrawingEnabledForPillar=false
+//     isDrawingForPillar: boolean = false;
+//     updatedXForPillar:any;
+//     updatedYForPillar:any;
+//     updatedWidthForPillar:any;
+//     updatedHeightForPillar:any
+//     toggleDrawingPillar(): void {
+//       this.isDrawingEnabledForPillar = !this.isDrawingEnabledForPillar;
+//       this.pillarGapLayer=new Konva.Layer({
+//         name:'pillarGapLayer',
+//       })
+//       this.layer.listening(false)
+//       this.stage.add(this.pillarGapLayer)
+//       this.startDrawingPillar();
+//       if (!this.isDrawingEnabledForPillar) {
+//         this.isDrawingForPillar = false; // Stop ongoing drawing if disabled
+//       }
+//     }
+//         handleMouseDownForPillar(e: Konva.KonvaEventObject<MouseEvent>): void {
+//           this.letSeatMove = true;
+//           if (this.isDrawingEnabledForPillar) {
+//             this.timesofRectDrawn++;
+//             const pos: any = this.stage.getPointerPosition();
+//             this.startPoint = pos;
+//             this.isDrawingForPillar= true;
 
-            this.pillarRect = new Konva.Rect({
-              x: pos.x,
-              y: pos.y,
-              width: 0,
-              height: 0,
-              fill: 'green',
-              opacity: 0.5,
-              stroke: '#000000',
-              strokeWidth: 0.8,
-            });
-
-
-            this.pillarGapLayer.add(this.pillarRect);
-            this.pillarGapLayer.batchDraw();
-
-            this.pillarRect.on('mousedown', () => {
-              let transformNewShape = new Konva.Transformer();
-              this.pillarGapLayer.add(transformNewShape);
-              transformNewShape.nodes([this.pillarRect]);
-              this.pillarRect.on('transformend', () => {
-                // Get the updated properties from the transformed shape
-                this.updatedXForPillar = this.pillarRect.x();
-                this.updatedYForPillar = this.pillarRect.y();
-                this.updatedWidthForPillar = this.pillarRect.width() * this.pillarRect.scaleX();
-                this.updatedHeightForPillar = this.pillarRect.height() * this.pillarRect.scaleY();
-              });
-            });
-          }
-        }
+//             this.pillarRect = new Konva.Rect({
+//               x: pos.x,
+//               y: pos.y,
+//               width: 0,
+//               height: 0,
+//               fill: 'green',
+//               opacity: 0.5,
+//               stroke: '#000000',
+//               strokeWidth: 0.8,
+//             });
 
 
-        handleMouseMoveForPillar(e: Konva.KonvaEventObject<MouseEvent>): void {
+//             this.pillarGapLayer.add(this.pillarRect);
+//             this.pillarGapLayer.batchDraw();
 
-          if (this.isDrawingEnabledForPillar && this.isDrawingForPillar) {
-            const pos: any = this.stage.getPointerPosition();
-            const width = pos.x - this.startPoint.x;
-            const height = pos.y - this.startPoint.y;
-            this.pillarRect.width(width);
-            this.pillarRect.height(height);
+//             this.pillarRect.on('mousedown', () => {
+//               let transformNewShape = new Konva.Transformer();
+//               this.pillarGapLayer.add(transformNewShape);
+//               transformNewShape.nodes([this.pillarRect]);
+//               this.pillarRect.on('transformend', () => {
+//                 // Get the updated properties from the transformed shape
+//                 this.updatedXForPillar = this.pillarRect.x();
+//                 this.updatedYForPillar = this.pillarRect.y();
+//                 this.updatedWidthForPillar = this.pillarRect.width() * this.pillarRect.scaleX();
+//                 this.updatedHeightForPillar = this.pillarRect.height() * this.pillarRect.scaleY();
+//               });
+//             });
+//           }
+//         }
 
-            this.pillarGapLayer.batchDraw();
-          }
-        }
 
-        handleMouseUpForPillar(e: Konva.KonvaEventObject<MouseEvent>): void {
-          if (this.isDrawingEnabledForPillar && this.isDrawingForPillar) {
-            this.isDrawingForPillar= false;
-            this.isDrawingEnabledForPillar=!this.isDrawingEnabledForPillar
+//         handleMouseMoveForPillar(e: Konva.KonvaEventObject<MouseEvent>): void {
 
-          }
-        }
-        pillarData:any[]=[]
-        updatePillarData(){
+//           if (this.isDrawingEnabledForPillar && this.isDrawingForPillar) {
+//             const pos: any = this.stage.getPointerPosition();
+//             const width = pos.x - this.startPoint.x;
+//             const height = pos.y - this.startPoint.y;
+//             this.pillarRect.width(width);
+//             this.pillarRect.height(height);
 
-          const pillar = {
-            _id: Date.now(),
-            startX: this.updatedXForPillar,
-            startY: this.updatedYForPillar,
-            pilarWidth: this.updatedWidthForPillar,
-            pillarRect: this.updatedHeightForPillar,
-          };
+//             this.pillarGapLayer.batchDraw();
+//           }
+//         }
 
-          // Push the new pillar into the pillarData array
-          this.pillarData.push(pillar);
+//         handleMouseUpForPillar(e: Konva.KonvaEventObject<MouseEvent>): void {
+//           if (this.isDrawingEnabledForPillar && this.isDrawingForPillar) {
+//             this.isDrawingForPillar= false;
+//             this.isDrawingEnabledForPillar=!this.isDrawingEnabledForPillar
 
-          this.isDrawingEnabledForPillar = !this.isDrawingEnabledForPillar;
-        }
-selectedPillar:any;
-transformerPilar!: Konva.Transformer;
-        showOther(){
-          this.pillarGapLayer=new Konva.Layer({
-            name:'pillarGapLayer',
-          })
-          this.layer.listening(false)
-          this.stage.add(this.pillarGapLayer)
-          this.pillarData.forEach(data=>{
-            let rect = new Konva.Rect({
-              x: data.startX,
-              y: data.startY,
-              width: data.pilarWidth,
-              height: data.pillarRect,
-              fill: 'gray',
-              opacity: 0.7,
-              stroke: 'transparent',
-              strokeWidth: 0.01,
-              shadowColor: 'black',
-        shadowBlur: 7,
-        shadowOffset: { x: 0, y: 1 },
-        shadowOpacity: 0.5,
-              name:String(data._id)
-          })
-          rect.cache()
-          rect.on('mousedown',()=>{
-            rect.clearCache()
-            let transformNew = new Konva.Transformer()
-            this.pillarGapLayer.add(transformNew);
-            transformNew.nodes([rect])
-              this.selectedPillar=rect
-              this.transformerPilar=transformNew
+//           }
+//         }
+//         pillarData:any[]=[]
+//         updatePillarData(){
 
-              //transform data capture
-            rect.on('transformend', () => {
-              // if (this.selectedShape) {
-                // console.log('RECT NAME',rect.attrs())
-                const updatedWidth = rect.width() * rect.scaleX();
-                const updatedHeight = rect.height() * rect.scaleY();
-                const updatedX = rect.x();
-                const updatedY = rect.y();
-                const indexToUpdate = this.pillarData.findIndex((point:any) => String(point._id) === rect.name());
+//           const pillar = {
+//             _id: Date.now(),
+//             startX: this.updatedXForPillar,
+//             startY: this.updatedYForPillar,
+//             pilarWidth: this.updatedWidthForPillar,
+//             pillarRect: this.updatedHeightForPillar,
+//           };
 
-                if (indexToUpdate !== -1) {
-                  // Update the object at the found index
-                  this.pillarData[indexToUpdate] = {
-                    ...this.pillarData[indexToUpdate], // Copy existing properties
-                    startX: updatedX,
-                    startY: updatedY,
-                    pilarWidth: updatedWidth,
-                    pillarRect: updatedHeight,
+//           // Push the new pillar into the pillarData array
+//           this.pillarData.push(pillar);
 
-                  };
+//           this.isDrawingEnabledForPillar = !this.isDrawingEnabledForPillar;
+//         }
+// selectedPillar:any;
+// transformerPilar!: Konva.Transformer;
+      //   showOther(){
+      //     this.pillarGapLayer=new Konva.Layer({
+      //       name:'pillarGapLayer',
+      //     })
+      //     this.layer.listening(false)
+      //     this.stage.add(this.pillarGapLayer)
+      //     this.pillarData.forEach(data=>{
+      //       let rect = new Konva.Rect({
+      //         x: data.startX,
+      //         y: data.startY,
+      //         width: data.pilarWidth,
+      //         height: data.pillarRect,
+      //         fill: 'gray',
+      //         opacity: 0.7,
+      //         stroke: 'transparent',
+      //         strokeWidth: 0.01,
+      //         shadowColor: 'black',
+      //   shadowBlur: 7,
+      //   shadowOffset: { x: 0, y: 1 },
+      //   shadowOpacity: 0.5,
+      //         name:String(data._id)
+      //     })
+      //     rect.cache()
+      //     rect.on('mousedown',()=>{
+      //       rect.clearCache()
+      //       let transformNew = new Konva.Transformer()
+      //       this.pillarGapLayer.add(transformNew);
+      //       transformNew.nodes([rect])
+      //         this.selectedPillar=rect
+      //         this.transformerPilar=transformNew
 
-                  // console.log("AFTER UPDATE", this.pillarData[indexToUpdate]);
-                }
+      //         //transform data capture
+      //       rect.on('transformend', () => {
+      //         // if (this.selectedShape) {
+      //           // console.log('RECT NAME',rect.attrs())
+      //           const updatedWidth = rect.width() * rect.scaleX();
+      //           const updatedHeight = rect.height() * rect.scaleY();
+      //           const updatedX = rect.x();
+      //           const updatedY = rect.y();
+      //           const indexToUpdate = this.pillarData.findIndex((point:any) => String(point._id) === rect.name());
 
-            });
-            let tooltip = new Konva.Text({
-              text: '',
-              fontFamily: 'Calibri',
-              fontSize: 12,
-              padding: 5,
-              textFill: 'white',
-              fill: 'black',
-              alpha: 0.75,
-              visible: false,
-            });
+      //           if (indexToUpdate !== -1) {
+      //             // Update the object at the found index
+      //             this.pillarData[indexToUpdate] = {
+      //               ...this.pillarData[indexToUpdate], // Copy existing properties
+      //               startX: updatedX,
+      //               startY: updatedY,
+      //               pilarWidth: updatedWidth,
+      //               pillarRect: updatedHeight,
 
-            this.pillarGapLayer.add(tooltip);
+      //             };
 
-            let deletePillar =new Konva.Rect({
-              x:rect.x()-10,
-              y:rect.y()-10,
-              width:10,
-              height:10,
-              fill:'red',
-              opacity:1
-            })
-            this.pillarGapLayer.add(deletePillar)
-            deletePillar.on('mousemove',()=>{
-              var mousePos:any = this.stage.getPointerPosition();
-              tooltip.position({
-                x: mousePos.x + 5,
-                y: mousePos.y + 5,
-              });
-              tooltip.text('Delete Pillar');
-              tooltip.show();
-            })
-            deletePillar.on('mouseout',()=> {
-              tooltip.hide();
-            });
-            deletePillar.on('click',()=>{
-              this.deleteSelectedPillar()
-              deletePillar.destroy();
-             tooltip.destroy();
-            })
-          })
+      //             // console.log("AFTER UPDATE", this.pillarData[indexToUpdate]);
+      //           }
 
-          this.pillarGapLayer.add(rect)
-        })
-       this.pillarGapLayer.batchDraw()
-        }
+      //       });
+      //       let tooltip = new Konva.Text({
+      //         text: '',
+      //         fontFamily: 'Calibri',
+      //         fontSize: 12,
+      //         padding: 5,
+      //         textFill: 'white',
+      //         fill: 'black',
+      //         alpha: 0.75,
+      //         visible: false,
+      //       });
 
-        deleteSelectedPillar(): void {
-          if (this.selectedPillar) {
-            // Find the index of the selected rectangle in this.pillarData
-            const indexToDelete = this.pillarData.findIndex((rect) => {
-              return rect.startX === this.selectedPillar.x() && rect.startY === this.selectedPillar.y();
-            });
+      //       this.pillarGapLayer.add(tooltip);
 
-            if (indexToDelete !== -1) {
-              // Remove the selected rectangle from this.pillarData
-              this.pillarData.splice(indexToDelete, 1);
+      //       let deletePillar =new Konva.Rect({
+      //         x:rect.x()-10,
+      //         y:rect.y()-10,
+      //         width:10,
+      //         height:10,
+      //         fill:'red',
+      //         opacity:1
+      //       })
+      //       this.pillarGapLayer.add(deletePillar)
+      //       deletePillar.on('mousemove',()=>{
+      //         var mousePos:any = this.stage.getPointerPosition();
+      //         tooltip.position({
+      //           x: mousePos.x + 5,
+      //           y: mousePos.y + 5,
+      //         });
+      //         tooltip.text('Delete Pillar');
+      //         tooltip.show();
+      //       })
+      //       deletePillar.on('mouseout',()=> {
+      //         tooltip.hide();
+      //       });
+      //       deletePillar.on('click',()=>{
+      //         this.deleteSelectedPillar()
+      //         deletePillar.destroy();
+      //        tooltip.destroy();
+      //       })
+      //     })
 
-              // Destroy the selected shape (rectangle) and transformer
-              this.selectedPillar.destroy();
-              this.transformerPilar.destroy();
+      //     this.pillarGapLayer.add(rect)
+      //   })
+      //  this.pillarGapLayer.batchDraw()
+      //   }
 
-              // Clear the selection
-              this.selectedPillar = null;
-            }
-          }
-        }
+      //   deleteSelectedPillar(): void {
+      //     if (this.selectedPillar) {
+      //       // Find the index of the selected rectangle in this.pillarData
+      //       const indexToDelete = this.pillarData.findIndex((rect) => {
+      //         return rect.startX === this.selectedPillar.x() && rect.startY === this.selectedPillar.y();
+      //       });
+
+      //       if (indexToDelete !== -1) {
+      //         // Remove the selected rectangle from this.pillarData
+      //         this.pillarData.splice(indexToDelete, 1);
+
+      //         // Destroy the selected shape (rectangle) and transformer
+      //         this.selectedPillar.destroy();
+      //         this.transformerPilar.destroy();
+
+      //         // Clear the selection
+      //         this.selectedPillar = null;
+      //       }
+      //     }
+      //   }
 }

@@ -15,7 +15,8 @@
     cursor: pointer;
     background-color: rgba(195, 52, 59, 0.8352941176);
     color: white;
-    overflow: hidden;
+    // overflow: hidden;
+    overflow: auto;
     padding-inline: 1rem;
     width: 80vw;
     height: 70vh;
@@ -85,11 +86,13 @@
   width: inherit;
   display: flex;
   flex-wrap: wrap;
+  gap: 6rem;
   justify-content: space-evenly;
   // overflow: hidden;
   .center-card{
 
     color:#c3343a;
+    text-align: center;
     // border-radius:50%;
     // border-bottom: 100px solid #e8e3e4;
     // border-left: 25px solid transparent;
@@ -108,7 +111,7 @@
   .center-card {
     /* Your center card styles here */
     cursor: pointer;
-    margin: 60px 10px;;
+    // margin: 60px 10px;;
   }
   .sub {
 

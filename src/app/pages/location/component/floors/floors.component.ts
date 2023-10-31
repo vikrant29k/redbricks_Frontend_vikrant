@@ -24,7 +24,7 @@ export class FloorsComponent implements OnInit {
   }
 
   getFloor = (floorName: string) => {
-    console.log("Center Name in floors", floorName)
+    // console.log("Center Name in floors", floorName)
       this.locationService.getFloorsInLocation(floorName).subscribe({
           next: (result: any) => {
               this.floors = [...result];

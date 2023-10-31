@@ -38,10 +38,10 @@ imageData:any=[]
     this.changeImageAuto();
 
   }
-  
+
   getImagesOfGallary = (id:string) =>{
    this.locationService.getAllImageOfCenter(id).pipe(take(1)).subscribe((res:any)=>{
-    console.log(res,"--------------->")
+    // console.log(res,"--------------->")
     this.images = res
    })
   }

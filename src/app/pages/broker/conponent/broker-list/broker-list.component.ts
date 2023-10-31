@@ -97,9 +97,9 @@ export class BrokerBrokerListComponent implements OnInit{
 
     sendMailOfBrokerReport = () =>{
         this.brokerService.getMailReportOfBroker().pipe(take(1)).subscribe((res:any)=>{
-          console.log("===========>",res)
+          // console.log("===========>",res)
         })
     }
 
-    
+
 }

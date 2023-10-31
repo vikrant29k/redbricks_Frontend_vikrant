@@ -109,7 +109,7 @@ profitBeforeTaxPercent:any;
     // console.log("Hello-===> Data",this.data.formdata,'Editmode=====>',this.data.editMode);
     if(this.data.editMode===true){
      this.patchWhenUpdate()
-      console.log(this.rackForm.value);
+      // console.log(this.rackForm.value);
     }else{
       this.getcostfromService();
     }

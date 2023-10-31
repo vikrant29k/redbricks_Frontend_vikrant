@@ -250,7 +250,7 @@ areaOptions:any[] = [
       this.layer.draw()
       // Push the new rectangle into the getAllPoints array
       this.getAllPoints.push(rect);
-      console.log(this.getAllPoints);
+      // console.log(this.getAllPoints);
       // this.shape.destroy()
       this.isDrawingEnabled = !this.isDrawingEnabled;
     }
@@ -260,7 +260,7 @@ areaOptions:any[] = [
       let data = {
           LayoutData:{layoutBorder:this.getAllPoints}
              }
-console.log(data)
+// console.log(data)
       // this.locationService.addLayoutData(this.id,data).subscribe(res=>{
       //   console.log(res);
         // this.router.navigate(['/admin','location','location-list'])

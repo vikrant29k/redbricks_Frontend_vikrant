@@ -74,7 +74,7 @@ selectedShape: any | null = null;
 
     // Calculate horizontal dashed line spacing
     const horizontalSpacing = stageHeight / (horizontalLinesCount + 1);
-    console.log(horizontalSpacing)
+    // console.log(horizontalSpacing)
     // Create horizontal dashed lines
     for (let i = 1; i <= horizontalLinesCount; i++) {
 
@@ -90,7 +90,7 @@ selectedShape: any | null = null;
 
     // Calculate vertical dashed line spacing
     const verticalSpacing = stageWidth / (verticalLinesCount + 1);
-    console.log(verticalSpacing)
+    // console.log(verticalSpacing)
     // Create vertical dashed lines
     for (let i = 1; i <= verticalLinesCount; i++) {
       const dashLine = new Konva.Line({
@@ -322,9 +322,9 @@ this.enableZoom()
           diagramName: confirmation.value,
           data: diagramState
         };
-        console.log(this.serializeData);
+        // console.log(this.serializeData);
         this.diagramService.saveDiagram(this.serializeData).subscribe(res=>{
-          console.log(res)
+          // console.log(res)
         })
       }
     });
@@ -372,7 +372,7 @@ this.enableZoom()
         // newShape.y(newShape.y() - rect.y());
         // console.log(newShape.x(), newShape.y());
         group.add(newShape);
-        console.log(newShape)
+        // console.log(newShape)
       });
 
       group.draggable(true);
@@ -381,7 +381,7 @@ this.enableZoom()
       // Set the group's position to match the rect's position
       group.x(rect.x());
       group.y(rect.y());
-      console.log(group,rect)
+      // console.log(group,rect)
       this.newLayer.add(group);
       this.newLayer.draw();
     });
