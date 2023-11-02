@@ -164,14 +164,12 @@ today:any;
 yesterDay:any;
 dayBeforeYesterday:any;
   ngOnInit(): void {
-    this.dashboardService.getRecentProposal().subscribe((res) => {
-      // console.log('recent', res);
-    });
-    this.getUserListArray()
-    this.getConflict();
+    // this.getUserListArray()
+
     //  this.resolveConflict('RBOHYSA26121133')
     if (this.title === 'sales head') {
       // console.log(this.title);
+      this.getConflict();
       this.shownotification = true;
       this.displayedColumnsRecent = [
         'salesPerson',
@@ -186,7 +184,7 @@ dayBeforeYesterday:any;
       this.displayedColumnsRecent = ['salesPerson', '_id', 'view', 'lock'];
       // console.log(this.title,"admin")
     }
-    this.totalUserNo();
+    // this.totalUserNo();
     this.getDashoboardData();
   }
   // total number of users

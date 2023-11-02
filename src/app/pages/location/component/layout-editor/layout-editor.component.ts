@@ -48,11 +48,11 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
     this.id = this.route.snapshot.params['Id'];
     this.proposalService.getProposalByLocationId(this.id).subscribe((res:any)=>{
       // console.log(res)
-      if(res.message=='no data'){
-        // console.log("NOTHING")
+      if(res.Message=="No Data"){
+        console.log('No Client Available')
       }else{
         this.extractProposalData(res);
-        // console.log(this.proposalData)
+        // console.log(this.proposalData)s
       }
 
 
@@ -113,7 +113,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
             });
 
             this.layer.add(rect);
-
+            rect.cache()
             rect.on('mousedown',()=>{
               let transformNew = new Konva.Transformer()
             this.layer.add(transformNew);
@@ -425,6 +425,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
     // Destroy the current shape, pushButton, seatPositionCircle, and other related elements
     this.shape.destroy();
     pushButton.destroy();
+    tooltip.hide()
     seatPositionCircle.destroy();
     updateButton.destroy();
     transformNewShape.destroy()
@@ -1018,4 +1019,7 @@ updateSeatsSize() {
       //       }
       //     }
       //   }
+      goToDrawSeat(){
+        this.router.navigate(['/','admin','location','preview-seats',this.id]);
+      }
 }

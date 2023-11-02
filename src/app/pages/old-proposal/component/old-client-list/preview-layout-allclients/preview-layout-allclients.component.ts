@@ -31,8 +31,13 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
     this.id = this.route.snapshot.params['Id'];
     this.proposalService.getProposalByLocationId(this.id).subscribe((res:any)=>{
       // console.log(res)
-      this.extractProposalData(res);
-      // console.log(this.proposalData)
+      if(res.Message=="No Data"){
+        console.log('No Client Available')
+      }else{
+        this.extractProposalData(res);
+        // console.log(this.proposalData)s
+      }
+
 
     })
   }

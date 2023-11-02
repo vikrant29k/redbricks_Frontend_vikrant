@@ -136,6 +136,8 @@ seatWidth!: number;
    enableZoom(): void {
     const scaleBy = 1.1; // Adjust the scale factor as needed
     this.stage.on('wheel', (e:any) => {
+
+      // this.backgroundLayer.cache()
       e.evt.preventDefault();
 
       const oldScale = this.stage.scaleX();
@@ -158,6 +160,8 @@ seatWidth!: number;
       };
       this.stage.position(newPos);
       this.stage.batchDraw();
+      // this.seatLayer.clearCache();
+      // this.backgroundLayer.clearCache\.()
     });
   }
   resetZoomAndPosition(): void {

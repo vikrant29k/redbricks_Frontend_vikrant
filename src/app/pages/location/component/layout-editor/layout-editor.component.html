@@ -28,6 +28,7 @@
   <label><b>Height:</b></label>
   <input type="number" id="heightInput" [(ngModel)]=" seatHeight" (input)="updateShapeFromInput()" [readOnly]="true">
   <button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button>
+<button mat-raised-button (click)="goToDrawSeat()">Check Seats</button>
 </div>
 
 

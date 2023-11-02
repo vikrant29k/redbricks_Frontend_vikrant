@@ -244,17 +244,7 @@ deleteProposal(id:any){
       );
   };
 
-  viewLayoutOnSales = (Id:string)=>{
-    return this.http
-      .get(this.baseUrl + 'viewLayoutSales/' + Id)
-      .pipe(
-        this.toster.observe({
-          success: 'Layout View',
-          loading: 'Loading...',
-          error: ({ error }) => `${error.Message}`,
-        })
-      );
-  }
+
 
   saveImage(Id:string,data:any): Observable<any>{
     let httpOptions = this.headerService.updateHeader();
