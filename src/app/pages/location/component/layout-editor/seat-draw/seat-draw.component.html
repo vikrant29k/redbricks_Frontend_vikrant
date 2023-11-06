@@ -2,10 +2,10 @@
 <div class="canvas-container">
   <div id="container"></div>
 <div style="display: flex;flex-direction: column;">
-  <button mat-raised-button (click)="gotoDrawImage()">Go To Draw Iamge</button>
+  <!-- <button mat-raised-button (click)="gotoDrawImage()">Go To Draw Iamge</button> -->
   <button mat-raised-button (click)="resetZoomAndPosition()" color="primary"><mat-icon>restart_alt</mat-icon></button>
-  <button  mat-raised-button (click)="removeImage()">Remove Image</button>
-  <button  mat-raised-button (click)="reAddImage()">Add Image</button>
+  <!-- <button  mat-raised-button (click)="removeImage()">Remove Image</button>
+  <button  mat-raised-button (click)="reAddImage()">Add Image</button> -->
 
   <!-- <button mat-raised-button (click)="seprateData()">Cabin</button> -->
   <textarea type="text" cols="25" rows="15" value="{{content}}"></textarea>
@@ -26,8 +26,8 @@
     <mat-option *ngFor="let image of imageOptions" [value]="image.value">{{ image.label }}</mat-option>
   </mat-select>
   <button  mat-raised-button (click)="loadImage()">Draw Image</button>
-  <button mat-raised-button (click)="drawBorder()" >draw border outline</button>
-  <button mat-raised-button (click)="showOther()" >Show Pillars</button>
+  <!-- <button mat-raised-button (click)="drawBorder()" >draw border outline</button> -->
+  <!-- <button mat-raised-button (click)="showOther()" >Show Pillars</button> -->
 </div>
 </div>
 

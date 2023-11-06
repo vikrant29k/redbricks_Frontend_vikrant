@@ -182,10 +182,6 @@ seatWidth!: number;
        height: this.customHeight,
      });
 
-    //  this.layer = new Konva.Layer({
-    //    name: 'firstLayer',
-    //  });
-    //  this.stage.add(this.layer);
      this.backgroundLayer = new Konva.Layer({
       name: 'backgroundLayer',
       listening:false
@@ -224,11 +220,6 @@ seatWidth!: number;
           const minY = point.startY;
           const maxX = point.endX;
           const maxY = point.endY;
-//           console.log("name of rect",point._id,
-//           // "\n minX=",point.startX,
-//           // "\n maxX=>",point.endX,
-//           "\n width of rect=>", point.endX-point.startX);
-// console.log("MAX Columns can be added==>",Math.round((maxX-minX)/this.seatWidth))
 const availableWidth = maxX - minX;
 const availableHeight = maxY - minY;
 const maxHorizontalRectangles = Math.floor(availableWidth / this.seatWidth);
