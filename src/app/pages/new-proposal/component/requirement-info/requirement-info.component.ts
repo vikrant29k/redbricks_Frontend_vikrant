@@ -213,8 +213,8 @@ if(value.workstation3x2 % 4 !== 0){
     (value.meeting8P * 8.00) +
     (value.meeting10P * 12.00) +
     (value.meeting4P * 4.00) +
-    (value.meeting16P * 18.00) +
-    (value.meeting12P * 15.00) +
+    (value.meeting16P * 16.00) +
+    (value.meeting12P * 12.00) +
     (value.board20P * 24.00) +
     (value.board24P * 32.00) +
     (value.collab4P * 4.00) +

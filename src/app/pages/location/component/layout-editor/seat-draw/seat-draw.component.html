@@ -9,8 +9,8 @@
 
   <!-- <button mat-raised-button (click)="seprateData()">Cabin</button> -->
   <textarea type="text" cols="25" rows="15" value="{{content}}"></textarea>
-  <ng-container *ngFor="let content of showDataInHml">
-    <p style="margin: 2px;">{{content.title}}  =  {{content.count}}</p>
+  <ng-container *ngFor="let content of roomDetails">
+    <p style="margin: 2px; display: flex;">{{content.title}}  =  {{content.count}} &nbsp; <span style="min-width: 1rem;min-height: 1rem; border-radius: 50%;"  [style.background-color]="content.color"></span></p>
   </ng-container>
   <!-- <mat-form-field>
     <mat-label>Select a Room</mat-label>

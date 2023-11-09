@@ -203,7 +203,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
             const flowOfData = this.flowOfDrawingSeats;
             if (x < maxX && x > minX && y > minY && y < maxY) {
               const polygon = new Konva.Line({
-                points: this.getAllPoints,
+                points: [point],
                 fill: 'transparent',
                 stroke: 'black',
                 strokeWidth:0.3,
