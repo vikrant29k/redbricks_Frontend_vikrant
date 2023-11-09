@@ -209,21 +209,26 @@ seatWidth!: number;
      drawingEnabled: boolean = true;
      lastCoordinate:any[]=[]
      drawnSeats:any[]=[]
+     loading = false;
      drawRectangles() {
+     this.loading=true;
       let count = 0;
-      if (!this.stage || !this.backgroundLayer || !this.seatLayer) return;
+      if (!this.stage || !this.backgroundLayer || !this.seatLayer) {
+        this.loading = false;
+        return;
+      }
       if (this.drawingEnabled === true) {
         let remainingSeats = this.totalNumber;
-
+      setTimeout(() => {
         for (const point of this.getAllPoints) {
           const minX = point.startX;
           const minY = point.startY;
           const maxX = point.endX;
           const maxY = point.endY;
-const availableWidth = maxX - minX;
-const availableHeight = maxY - minY;
-const maxHorizontalRectangles = Math.floor(availableWidth / this.seatWidth);
-const maxVerticalRectangles = Math.floor(availableHeight / this.seatHeight);
+          const availableWidth = maxX - minX;
+          const availableHeight = maxY - minY;
+          const maxHorizontalRectangles = Math.floor(availableWidth / this.seatWidth);
+          const maxVerticalRectangles = Math.floor(availableHeight / this.seatHeight);
 
           const polygon = new Konva.Line({
             points: this.getAllPoints,
@@ -253,14 +258,20 @@ const maxVerticalRectangles = Math.floor(availableHeight / this.seatHeight);
           this.totalNumber = remainingSeats;
           if (remainingSeats === 0) {
             this.drawingEnabled = false;
+            this.loading = false;
             break;
           }
         }
+      },1000);
 
-        // Trigger rendering
-        this.seatLayer.batchDraw();
-      }
-    }
+       // Trigger rendering
+      this.seatLayer.batchDraw();
+  }
+}
+
+
+
+
 
 
      drawSeatRectangle(x:number, y:number,height:number,width:number) {

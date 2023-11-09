@@ -1,12 +1,9 @@
-//SEAT DRAW DESIGN CHA CODE NOVember 2
 import { Component, OnInit } from '@angular/core';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import { LocationService } from 'src/app/service/location/location.service';
-import { ActivatedRoute,Route,Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { BorderDataService } from '../../../module/service/border-data.service';
 import Konva from 'konva';
-import * as imageSize from '../seat-draw/imageFile.json'
 import * as roomsData from '../seat-draw/roomCountsData.json'
 export interface RoomData {
   [key: string]: {
@@ -16,13 +13,7 @@ export interface RoomData {
     height:number;
   };
 }
-export interface ImageData{
-  [key: string]: {
-    path:string,
-    width: number;
-    height: number;
-  };
-}
+
 @Component({
   selector: 'app-seat-draw',
   templateUrl: './seat-draw.component.html',
@@ -30,7 +21,6 @@ export interface ImageData{
 })
 export class SeatDrawComponent implements OnInit {
   roomsDataObject: RoomData = roomsData;
-  imageSizeData: ImageData = imageSize;
   imageOptions = Object.keys(this.roomsDataObject).map((key) => ({
     label: key,
     value: key,
@@ -44,8 +34,6 @@ export class SeatDrawComponent implements OnInit {
   constructor( private route: ActivatedRoute,
                private locationService: LocationService,
                private proposalService: ProposalService,
-               private router:Router,
-               private borderDataService:BorderDataService
              ) {}
   id!: string;
   imageUrl:any;
@@ -67,8 +55,8 @@ export class SeatDrawComponent implements OnInit {
         this.initializeKonva(imageObj);
         this.enableZoom();
 
-        this.drawTHeSeat()
-        this.seprateData()
+        this.drawTheSeat()
+        // this.seprateData()
       };
       imageObj.src = this.imageUrl;
         },
@@ -76,18 +64,9 @@ export class SeatDrawComponent implements OnInit {
           console.error('Error loading image data:', error);
         }
       );
-      // this.locationService.getBorderData(res[0].locationId).subscribe((res:any)=>{
-      //     res.layoutArray[0].pillarData.forEach((item:any) => {
-      //       const {_id, startX, startY, pillarRect,pilarWidth } = item;
-      //       this.pillarData.push({_id, startX, startY,pillarRect,pilarWidth });
-
-      //     });
-      // })
-
     })
   }
   private extractProposalData(res: any): void {
-
       if (res.seatsData && res.seatsData.length > 0 && res.seatSize) {
         this.seatHeight=res.seatSize[0].height;
         this.seatWidth=res.seatSize[0].width;
@@ -104,7 +83,6 @@ export class SeatDrawComponent implements OnInit {
         this.proposalData.push(resObject);
     }
     // console.log(this.proposalData)
-
   }
 
   backgroundImage!: Konva.Image;
@@ -147,13 +125,9 @@ export class SeatDrawComponent implements OnInit {
         x: (pointer.x - this.stage.x()) / oldScale,
         y: (pointer.y - this.stage.y()) / oldScale,
       };
-
       const direction = e.evt.deltaY > 0 ? -1 : 1; // Adjust the direction for standard zoom behavior
-
       const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-
       this.stage.scale({ x: newScale, y: newScale });
-
       const newPos = {
         x: pointer.x - mousePointTo.x * newScale,
         y: pointer.y - mousePointTo.y * newScale,
@@ -174,273 +148,312 @@ export class SeatDrawComponent implements OnInit {
   }
   startingPointOfSeatX!:number;
   startingPointOfSeatY!:number;
-  drawTHeSeat() {
-    this.proposalData.forEach(dataOfSeats => {
-      // Sort seatsData based on X position in ascending order
-      // dataOfSeats.seatsData.sort((a:any, b:any) => a.start.y - b.start.y);
-   // Draw the seats
-      dataOfSeats.seatsData.forEach((seat:any) => {
-        const seatRect = new Konva.Rect({
-          x: seat.start.x,
-          y: seat.start.y,
-          width: dataOfSeats.seatSize[0].width,
-          height: dataOfSeats.seatSize[0].height,
-          fill: 'blue',
-          opacity: 0.4,
-          name:'seat-rectangle'
-        });
-        this.newLayerForMovingObjects.add(seatRect);
-        // lighterFactor += 0.015;
-      });
+  //drawing the seats of selected proposal REQUIRED
 
-    });
-
-    this.layer.draw();
-  }
-
-  sepratedContent:any[]=[]
-  selectedRoom:any[]=[];
-  showDataInHml:any[]=[]
-  // roomTitles:any
+  showDataInHml:any
+    roomDetails:any[]=[]
+    sepratedContent:any[]=[]
 
     seprateData(){
-  const contentArray = this.content.split(','); // Split the string into an array
-  contentArray.forEach((item:any) => {
-    const keyValue = item.trim().split('=');
-    if (keyValue.length === 2) {
-      const key = keyValue[0].trim();
-      const value = parseInt(keyValue[1].trim()); // Assuming the values are integers
-      this.sepratedContent[key] = value;
-    }
-  });
-  const commonObjectsWithCounts = [];
-
-  for (const key in this.sepratedContent) {
-    if (this.sepratedContent.hasOwnProperty(key)) {
-
-      if (this.roomsDataObject[key]) {
-        const count = this.sepratedContent[key];
-        const jsonData = this.roomsDataObject[key];
-        const commonObject = {
-          title: key,
-          count: jsonData.count * count,
-          selectedCount:count,
-          color: jsonData.color,
-          width:jsonData.width,
-          height:jsonData.height
-        };
-        commonObjectsWithCounts.push(commonObject);
-      }
-    }
-  }
-  this.showDataInHml=commonObjectsWithCounts
-  commonObjectsWithCounts.sort((a, b) => b.count - a.count);
-
-  this.assignRoomsToSeats(commonObjectsWithCounts)
-
-    }
-    // assignRoomsToSeats(commonObjectsWithCounts: any[]) {
-    //   console.log(commonObjectsWithCounts )
-    //   const seatRectangles = this.layer.find('.seat-rectangle');
-    //   let currentSeatIndex = 0;
-    //   commonObjectsWithCounts.forEach((room: any) => {
-    //     const roomSeats:any = [];
-    //     const group = new Konva.Group({ draggable: true });
-    //     for (let i = 0; i < room.count; i++) {
-    //       const seat: any = seatRectangles[currentSeatIndex];
-    //       if (seat) {
-    //         roomSeats.push(seat);
-    //         seat.fill(room.color);
-    //       } else {
-    //         break;
-    //       }
-    //       currentSeatIndex++;
-    //     }
-    //   });
-
-    //   this.layer.batchDraw();
-    // }
-
-    assignRoomsToSeats(commonObjectsWithCounts: any[]) {
-      const seatRectangles: any = this.newLayerForMovingObjects.find('.seat-rectangle');
-      let currentSeatIndex = 0;
-
-      const seatGroups: any = [];
-
-      commonObjectsWithCounts.forEach((room: any) => {
-        const roomSeats:any = [];
-
-        // Use the selectedCount for the number of seats in the room
-        for (let i = 0; i < room.selectedCount; i++) {
-          const seat = seatRectangles[currentSeatIndex];
-
-          if (seat) {
-            // Set the seat dimensions as multiples of the seat's width and height
-            seat.width(room.width * this.seatWidth); // seatWidth is the width of a single seat
-            seat.height(room.height * this.seatHeight); // seatHeight is the height of a single seat
-
-            // Maintain the previous seat's position
-            seat.x(seat.x());
-            seat.y(seat.y());
-
-            // Check for collisions with other seats in the same room and adjust if needed
-            let positionAdjusted = false;
-
-            while (!positionAdjusted) {
-              // Calculate a random offset within the room's dimensions
-              const xOffset = seat.x();
-              const yOffset = seat.y();
-
-              // Adjust the seat's position based on the offset
-              seat.x(seat.x() + xOffset);
-              seat.y(seat.y() + yOffset);
-
-              // Check for collisions with other seats in the same room
-              const collisionDetected = roomSeats.some((otherSeat:any) => {
-                const seatRect = seat.getClientRect();
-                const otherSeatRect = otherSeat.getClientRect();
-
-                // Adjust the collision logic as needed based on the shape and dimensions
-                if (
-                  seatRect.x < otherSeatRect.x + otherSeatRect.width &&
-                  seatRect.x + seatRect.width > otherSeatRect.x &&
-                  seatRect.y < otherSeatRect.y + otherSeatRect.height &&
-                  seatRect.y + seatRect.height > otherSeatRect.y
-                ) {
-                  return true; // Collision detected
-                }
-
-                return false;
-              });
-
-              if (!collisionDetected) {
-                positionAdjusted = true;
-              }
-            }
-
-            seat.fill(room.color);
-            seat.stroke('black')
-            seat.strokeWidth(0.5)
-            roomSeats.push(seat);
-          } else {
-            break;
-          }
-
-          currentSeatIndex++;
-        }
-
-        if (roomSeats.length > 0) {
-          const seatGroup = new Konva.Group({
-            draggable: true,
-          });
-
-          roomSeats.forEach((seat:any) => {
-            seat.on('dblclick', () => {
-
-              seat.draggable(true);
-            });
-            seat.on('wheel',()=>{
-              let transformer = new Konva.Transformer({
-                nodes:[seat],
-                draggable:true
-              })
-              this.newLayerForMovingObjects.add(transformer)
-            })
-            seatGroup.add(seat);
-          });
-
-          seatGroups.push(seatGroup);
+      const contentArray = this.content.split(','); // Split the string into an array
+      contentArray.forEach((item:any) => {
+        const keyValue = item.trim().split('=');
+        if (keyValue.length === 2) {
+          const key = keyValue[0].trim();
+          const value = parseInt(keyValue[1].trim()); // Assuming the values are integers
+          this.sepratedContent[key] = value;
         }
       });
+      // const commonObjectsWithCounts = [];
+      for (const key in this.sepratedContent) {
+        if (this.sepratedContent.hasOwnProperty(key)) {
+          // Check if the key exists in the JSON data
+          if (this.roomsDataObject[key]) {
+            const count = this.sepratedContent[key];
+            const jsonData = this.roomsDataObject[key];
+            const commonObject = {
+              title: key,
+              count: jsonData.count * count,
+              selectedCount:count,
+              dimensions:{width:jsonData.width*this.seatWidth,height:jsonData.height * this.seatHeight},
+              color: jsonData.color,
+              drawn:false
+            };
+            this.roomDetails.push(commonObject);
+            this.roomDetails.sort((a:any,b:any)=>b.count - a.count)
+          }
+        }
+      }
+      // console.log(this.roomDetails)
+      }
 
-      // Clear the existing seats
-      this.newLayerForMovingObjects.removeChildren();
+      //seat draw
+      drawTheSeat() {
+        this.proposalData.forEach(dataOfSeats => {
+          // Sort seatsData based on X position in ascending order
+          dataOfSeats.seatsData.sort((a: any, b: any) => a.start.x - b.start.x);
+          dataOfSeats.seatsData.forEach((seat: any) => {
+            // Find the corresponding room data
+            // const roomData = this.roomDetails.find(room => room.title === seat.roomName);
 
-      // Add the new seat groups
-      this.newLayerForMovingObjects.add(...seatGroups);
-      this.newLayerForMovingObjects.batchDraw();
+            // if (roomData) {
+              const seatRect = new Konva.Rect({
+                x: seat.start.x,
+                y: seat.start.y,
+                width: dataOfSeats.seatSize[0].width,
+                height: dataOfSeats.seatSize[0].height,
+                fill:'blue', // Use the room's color
+                opacity: 0.4,
+                draggable: true,
+                name: 'seat-rectangle'
+              });
+
+              this.layer.add(seatRect);
+            // }
+          });
+        });
+
+        this.layer.draw();
+        this.drawBorder();
+        this.seprateData()
+      }
+
+      //border draw
+//       drawBorder() {
+//         const seatRectangles = this.layer.find('.seat-rectangle');
+//         if (seatRectangles.length === 0) {
+//           return;
+//         }
+// //gap
+
+
+//         let minX = seatRectangles[0].x();
+//         let minY = seatRectangles[0].y();
+//         let maxX = seatRectangles[0].x() + seatRectangles[0].width();
+//         let maxY = seatRectangles[0].y() + seatRectangles[0].height();
+//         seatRectangles.forEach((seat: any) => {
+//           const seatX = seat.x();
+//           const seatY = seat.y();
+//           const seatWidth = seat.width();
+//           const seatHeight = seat.height();
+
+//           minX = Math.min(minX, seatX);
+//           minY = Math.min(minY, seatY);
+//           maxX = Math.max(maxX, seatX + seatWidth);
+//           maxY = Math.max(maxY, seatY + seatHeight);
+//         });
+
+//         const width = maxX - minX;
+//         const height = maxY - minY;
+
+//         const borderRect = new Konva.Rect({
+//           x: minX,
+//           y: minY,
+//           width: width,
+//           height: height,
+//           stroke: 'red',
+//           strokeWidth: 0.8,
+//           name:'border-rectangle'
+//         });
+//         let transformer = new Konva.Transformer({
+//           nodes:[borderRect]
+//         })
+//         this.layer.add(borderRect,transformer);
+//         this.layer.batchDraw();
+
+//       }
+drawBorder() {
+  const threshold = 2; // Set the threshold value
+
+  const seatRectangles = this.layer.find('.seat-rectangle');
+  if (seatRectangles.length === 0) {
+    return;
+  }
+
+  let minX = seatRectangles[0].x();
+  let minY = seatRectangles[0].y();
+  let maxX = seatRectangles[0].x() + seatRectangles[0].width();
+  let maxY = seatRectangles[0].y() + seatRectangles[0].height();
+
+  let availableSpace = [];
+
+  let currentX = minX;
+  let currentY = minY;
+
+  seatRectangles.forEach((seat) => {
+    const seatX = seat.x();
+    const seatY = seat.y();
+    const seatWidth = seat.width();
+    const seatHeight = seat.height();
+
+    minX = Math.min(minX, seatX);
+    minY = Math.min(minY, seatY);
+    maxX = Math.max(maxX, seatX + seatWidth);
+    maxY = Math.max(maxY, seatY + seatHeight);
+
+    // Calculate the gap between the current seat and the next seat
+    const gap = seatX - currentX;
+
+    if (gap >= threshold) {
+      // There is enough space (threshold) between seats
+      availableSpace.push({
+        x: currentX,
+        y: currentY,
+        width: gap,
+        height: maxY - minY,
+      });
     }
 
-
-
- transformer: Konva.Transformer | any;
- transformerActive = false;
-
-loadImage() {
-  const image = new Image();
-  // console.log(this.getImagePath(),"YOOOOOOOOOOOOOo")
-  image.src = this.getImagePath().imge;
-  image.width =this.getImagePath().width;
-  image.height=this.getImagePath().height;
-  image.onload = () => {
-    const konvaImage = new Konva.Image({
-      x: this.startingPointOfSeatX,
-      y: this.startingPointOfSeatY,
-      image: image,
-      width: image.width,
-      height: image.height,
-      draggable: true
-    });
-
-    const layer = new Konva.Layer();
-    layer.add(konvaImage);
-
-    this.stage.add(layer);
-
-    layer.draw();
-
-    layer.on('dblclick', () => {
-      if (this.transformerActive) {
-        if (this.transformer) {
-          this.transformer.destroy();
-          this.transformer = null;
-        }
-      } else {
-        this.transformer = new Konva.Transformer();
-        this.transformer.nodes([konvaImage])
-        layer.add(this.transformer);
-
-        layer.batchDraw();
-      }
-      this.transformerActive = !this.transformerActive;
-    });
-  };
-}
-drawImages(commonObjectsWithCounts:any[]) {
-  // const layer = new Konva.Layer(); // Create a new layer for the images
-
-  // Loop through the array of image data
-  commonObjectsWithCounts.forEach((imageData) => {
-    const image = new Image();
-    image.src = imageData.path;
-
-    // Create a Konva.Image for each image
-    const konvaImage = new Konva.Image({
-      x: this.startingPointOfSeatX, // Set the x position
-      y: this.startingPointOfSeatY, // Set the y position
-      image: image,
-      width: imageData.width,
-      height: imageData.height,
-      draggable: true,
-    });
-
-    // Add the Konva.Image to the layer
-   this.layer.add(konvaImage);
+    // Update the current position for the next iteration
+    currentX = seatX + seatWidth;
+    if (currentX > maxX) {
+      currentX = minX;
+      currentY += seatHeight;
+    }
   });
 
-  // Add the layer to the stage and draw it
-  this.layer.draw();
+  // Calculate and add the remaining space on the right side
+  if (currentX < maxX) {
+    availableSpace.push({
+      x: currentX,
+      y: currentY,
+      width: maxX - currentX,
+      height: maxY - minY,
+    });
+  }
+
+  const width = maxX - minX;
+  const height = maxY - minY;
+  const borderRect = new Konva.Rect({
+    x: minX,
+    y: minY,
+    width: width,
+    height: height,
+    stroke: 'red',
+    strokeWidth: 0.8,
+    name: 'border-rectangle',
+  });
+  console.log('Before transform - Width:', borderRect.width(), 'Height:', borderRect.height(),'x:', borderRect.x(),'y:', borderRect.y());
+
+  let transformer = new Konva.Transformer({
+    nodes: [borderRect],
+  });
+  borderRect.on('transformend', () => {
+    const newWidth = borderRect.width() * borderRect.scaleX();
+    const newHeight = borderRect.height() * borderRect.scaleY();
+    console.log('After transform - Width:', newWidth, 'Height:', newHeight,'x:', borderRect.x(),'y:', borderRect.y());
+    this.layer.batchDraw(); // Redraw the layer
+  });
+  this.layer.add(borderRect, transformer);
+  // Add gaps as rectangles (for debugging or custom purposes)
+  availableSpace.forEach((space) => {
+    const gapRect = new Konva.Rect({
+      x: space.x,
+      y: space.y,
+      width: space.width,
+      height: space.height,
+      fill: 'green',
+      opacity:0.8,
+      stroke: 'black',
+      strokeWidth: 0.5,
+    });
+    this.layer.add(gapRect);
+  });
+
+  this.layer.batchDraw();
 }
 
-    imgWidth!:number;
-    imgHeight!:number;
-    getImagePath(): any {
-      let data={
-        imge:this.imageSizeData[this.selectedImage].path,
-        width:this.imageSizeData[this.selectedImage].width*this.imgWidth,
-        height:this.imageSizeData[this.selectedImage].height*this.imgHeight
+
+      drawPassage(x:number,y:number,width:number,height:number){
+        let rect=new Konva.Rect({
+          x:x,
+          y:y,
+          width:width,
+          height:height,
+          fill:'red',
+          opacity:0.8,
+          stroke:'black',
+          strokeWidth:0.5
+        })
+        this.layer.add(rect)
       }
-      return data;
-    }
+      clearAndRedrawSeats() {
+        // Clear existing seats from the layer
+        const seatRectangles = this.layer.find('.seat-rectangle');
+        seatRectangles.forEach((seat: any) => {
+          seat.destroy();
+        });
+        const borderRect = this.layer.find('.border-rectangle')[0];
+        if (!borderRect) {
+          return; // No border found, can't place seats
+        }
+        const borderX = borderRect.x();
+        const borderY = borderRect.y();
+        const borderWidth = borderRect.width();
+        const borderHeight = borderRect.height();
+
+        let borderMinX = borderX;
+        let borderMaxX = borderX + borderWidth;
+        let borderMinY = borderY;
+        let borderMaxY = borderY + borderHeight;
+
+        // Keep track of the current X and Y positions for adding seats
+        let currentX = borderMinX;
+        let currentY = borderMinY;
+
+        // Redraw seats inside the border based on the room details
+        this.roomDetails.forEach((roomDetail) => {
+          console.log(roomDetail, "HI");
+
+          // Create each room rects as per roomDetails
+          for (let i = 0; i < roomDetail.selectedCount; i++) {
+            // Calculate the new X and Y positions for the current seat
+            let newX = currentX;
+            let newY = currentY;
+
+            // Check if the new seat will cross the borderMaxX
+            if (newX + roomDetail.dimensions.width >= borderMaxX) {
+              // Move to the next row
+             newX= currentX = borderMinX;
+              newY = currentY += roomDetail.dimensions.height;
+            }
+
+            // Check if the new seat will go outside the borderMaxY
+            // if (newY + roomDetail.dimensions.height >= borderMaxY) {
+            //   // You may want to handle this case, e.g., show a message or stop adding seats
+            //   return;
+            // }
+
+            // Create the rectangle and add it to the layer
+            let rect = new Konva.Rect({
+              x: newX,
+              y: newY,
+              width: roomDetail.dimensions.width,
+              height: roomDetail.dimensions.height,
+              fill: roomDetail.color,
+              draggable: true,
+              opacity: 0.5,
+              stroke:'black',
+              strokeWidth:0.8
+            });
+            rect.on('dragstart',()=>{
+              rect.moveTo(this.newLayerForMovingObjects)
+            })
+            rect.on('dragend',()=>{
+              rect.moveTo(this.layer)
+            })
+            this.layer.add(rect);
+
+            // Update the currentX for the next seat
+            currentX = newX + roomDetail.dimensions.width;
+          }
+
+        });
+
+        this.layer.draw();
+      }
+
+
+
 
 }
