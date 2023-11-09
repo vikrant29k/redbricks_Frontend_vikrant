@@ -148,11 +148,13 @@ export class SeatDrawComponent implements OnInit {
   }
   startingPointOfSeatX!:number;
   startingPointOfSeatY!:number;
-  //drawing the seats of selected proposal REQUIRED
 
-  showDataInHml:any
-    roomDetails:any[]=[]
-    sepratedContent:any[]=[]
+  roomDetails:any[]=[]
+  sepratedContent:any[]=[]
+  selectedRoom:any[]=[];
+  showDataInHml:any[]=[]
+  // roomTitles:any
+
     seprateData(){
       const contentArray = this.content.split(','); // Split the string into an array
       contentArray.forEach((item:any) => {

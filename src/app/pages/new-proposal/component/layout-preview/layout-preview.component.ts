@@ -42,13 +42,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
     ngAfterViewInit(): void {
 
       }
-      // onRadioButtonChange(event:any) {
-      //   console.log("onRadioButtonChange()");
-      //   console.log("event.source=" + event.source.id);
-      //   console.log("event.value=" + event.value);
-      //   this.flowOfDrawingSeats = event.value
-      //   // this.getDrawingMode()
-      // }
+
     constructor(
         public dialogRef: MatDialogRef<NewProposalLayoutPreviewComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -118,7 +112,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               imageObj.onload = () => {
                 this.initializeKonva(imageObj);
                 this.enableZoom();
-                this.drawTheBlankSeat()
+                this.drawTheSeat()
                 this.transformer = new Konva.Transformer(); // Initialize transformer
                 this.layer.add(this.transformer);
                 for (const shape of layoutArray[0].layoutBorder) {
@@ -147,7 +141,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               imageObj.onload = () => {
                 this.initializeKonva(imageObj);
                 this.enableZoom();
-                this.drawTheBlankSeat()
+                this.drawTheSeat()
                 this.transformer = new Konva.Transformer(); // Initialize transformer
                 this.layer.add(this.transformer);
                 for (const shape of layoutArray[0].layoutBorder) {
@@ -257,7 +251,6 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
         }
       }
 
-
       drawSeatRectangle(x:number, y:number,height:number,width:number) {
         const rect = new Konva.Rect({
           x: x,
@@ -271,9 +264,8 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
           name: 'seat-rectangle',
         });
         this.layer.add(rect);
-        // rect.cache() //for code optimization
+        rect.cache() //for code optimization
       }
-
       saveImage(){
         const image=this.stage.toDataURL()
         let data={
@@ -290,28 +282,36 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
             })
       }
 
-      drawTheBlankSeat(){
-         this.proposalData.forEach(dataOfSeats=>{
-          for (const seat of dataOfSeats.seatsData) {
-           this.drawSeatsBetweenPoints(seat.start, seat.end);
-          }
-        })
+
+
+
+      drawTheSeat() {
+        this.proposalData.forEach(dataOfSeats => {
+
+          dataOfSeats.seatsData.forEach((seat: any) => {
+
+              const seatRect = new Konva.Rect({
+                x: seat.start.x,
+                y: seat.start.y,
+                width: dataOfSeats.seatSize[0].width,
+                height: dataOfSeats.seatSize[0].height,
+                fill:'white', // Use the room's color
+                opacity: 1,
+
+              });
+
+              this.layer.add(seatRect);
+            // }
+          });
+        });
+
+        this.layer.batchDraw();
+
 
       }
-      drawSeatsBetweenPoints(start:any, end:any) {
 
-        const startX = Math.min(start.x, end.x);
-        const startY = Math.min(start.y, end.y);
-        const endX = Math.max(start.x, end.x);
-        const endY = Math.max(start.y, end.y);
-        const seatSizeWidth = this.seatWidth; // Extract width from seatSize
-        const seatSizeHeight = this.seatHeight; // Extract height from seatSize
-        for (let x = startX; x < endX; x += seatSizeWidth) {
-          for (let y = startY; y < endY; y += seatSizeHeight) {
-            this.drawBlankSeatRect(x, y,seatSizeHeight,seatSizeWidth);
-          }
-        }
-      }
+
+
       enableZoom(): void {
         const scaleBy = 1.1; // Adjust the scale factor as needed
         this.stage.on('wheel', (e) => {
@@ -348,90 +348,8 @@ console.log(e)
         this.stage.position(initialPosition);
         this.stage.batchDraw();
       }
-      drawBlankSeatRect(x:any, y:any, height:number, width:number) {
-        // console.log(x,y)
 
-        const rect = new Konva.Rect({
-          x: x,
-          y: y,
-          width: width,
-          height: height,
-          fill: 'white',
-          opacity: 1,
-          name: 'blank-rectangle',
-        });
-        this.layer.add(rect);
 
-      }
       content:any;
 
-  sepratedContent:any[]=[]
-      roomsDataObject: RoomData = roomsData;
-
-      seprateData(){
-        // console.log(this.content)
-        const contentArray = this.content.split(','); // Split the string into an array
-        contentArray.forEach((item:any) => {
-          const keyValue = item.trim().split('=');
-          if (keyValue.length === 2) {
-            const key = keyValue[0].trim();
-            const value = parseInt(keyValue[1].trim()); // Assuming the values are integers
-            this.sepratedContent[key] = value;
-          }
-        });
-
-        // Now you have separated content as an object with individual properties
-        // console.log("YEP",this.sepratedContent);
-
-
-        const commonObjectsWithCounts = [];
-
-        for (const key in this.sepratedContent) {
-          if (this.sepratedContent.hasOwnProperty(key)) {
-            // Check if the key exists in the JSON data
-            if (this.roomsDataObject[key]) {
-              const count = this.sepratedContent[key];
-              const jsonData = this.roomsDataObject[key];
-
-              // Create a new object with the multiplied count and color
-              const commonObject = {
-                title: key,
-                count: jsonData.count * count,
-                color: jsonData.color,
-              };
-
-              // Add the common object to the array
-              commonObjectsWithCounts.push(commonObject);
-            }
-          }
-        }
-
-        // Now you have an array commonObjectsWithCounts containing common objects
-        // console.log(commonObjectsWithCounts);
-        this.assignRoomsToSeats(commonObjectsWithCounts)
-          }
-          assignRoomsToSeats(commonObjectsWithCounts: any[]) {
-            // Find all seat rectangles in the layer
-            const seatRectangles = this.layer.find('.seat-rectangle');
-
-            let currentSeatIndex = 0;
-
-            commonObjectsWithCounts.forEach((room: any) => {
-              const roomSeats = [];
-              for (let i = 0; i < room.count; i++) {
-                const seat: any = seatRectangles[currentSeatIndex];
-                if (seat) {
-                  roomSeats.push(seat);
-                  seat.fill(room.color); // Assign the room's color to the seat
-                } else {
-                  break; // No more seats available for this room
-                }
-                currentSeatIndex++;
-              }
-              // You can do something with roomSeats (e.g., save them in a data structure)
-            });
-
-            // Redraw the layer to apply the changes to seat colors
-            this.layer.batchDraw();
-          }
 }

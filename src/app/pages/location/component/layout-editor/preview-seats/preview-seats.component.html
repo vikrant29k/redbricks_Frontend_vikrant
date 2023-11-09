@@ -5,7 +5,14 @@
   </div>
 <div class="sub-container">
   <label>Seats to be Selected: {{totalNumber}}</label>
-  <button mat-raised-button color="primary" (click)="drawRectangles()">Select Seats</button>
+
+  <div *ngIf="loading" class="loader-container">
+    <div class="loader"></div>
+</div>
+
+<button mat-raised-button color="primary" (click)="drawRectangles()">Draw Rectangles</button>
+
+
   <button mat-raised-button (click)="resetZoomAndPosition()"> Reset </button>
   <button  mat-raised-button (click)="addLayout()">Final</button>
   <button  mat-raised-button (click)="removeImage()">Remove Image</button>
