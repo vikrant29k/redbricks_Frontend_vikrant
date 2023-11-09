@@ -207,7 +207,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
             const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
 
             const flowOfData = this.flowOfDrawingSeats;
-            if (x < maxX && x > minX && y > minY && y < maxY) {
+            // if (x < maxX && x > minX && y > minY && y < maxY) {
               const polygon = new Konva.Line({
                 points: [point],
                 fill: 'transparent',
@@ -216,16 +216,15 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               });
               this.layer.add(polygon);
             if (flowOfData == true) {
-              const columns:number = Math.min(Math.ceil(remainingSeats / maxVerticalRectangles), maxHorizontalRectangles);
-              const seatWidth:number = point.seatPosition ? this.seatWidth : this.seatHeight; // Check seatPosition
-                const seatHeight:number = point.seatPosition ? this.seatHeight :this.seatWidth;
-              for (let column:number = 0; column < columns; column++) {
-                for (let y:number = minY; y < maxY-10  ; y += seatHeight) {
+              const columns = Math.min(Math.ceil(remainingSeats / maxVerticalRectangles), maxHorizontalRectangles);
+            const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight; // Check seatPosition
+                const seatHeight = point.seatPosition ? this.seatHeight :this.seatWidth;
+              for (let column = 0; column < columns; column++) {
+                for (let y = minY; y < maxY-10  ; y += seatHeight) {
                   const x = minX + column * seatWidth;
                   if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width:seatWidth, height: seatHeight }, polygon.getClientRect())) {
                     this.drawSeatRectangle(x, y,seatHeight,seatWidth);
                     this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + seatWidth, y: y + seatHeight },workStatkionID: point._id,seatPosition:point.seatPosition });
-
                     remainingSeats--;
                     count++;
                   }
@@ -238,7 +237,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight; // Check seatPosition
               const seatHeight = point.seatPosition ? this.seatHeight :this.seatWidth;
               for (let row = 0; row < rows; row++) {
-                for (let x = minX; x < maxX - 10; x += seatWidth) {
+                for (let x = minX; x < maxX-10; x += seatWidth) {
                   const y = minY + row * seatHeight;
 
                   if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: seatWidth, height: seatHeight }, polygon.getClientRect())) {
@@ -254,7 +253,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
             }
             this.totalNumber=remainingSeats;
           this.layer.batchDraw();
-        }
+        // }
         }
       }
 

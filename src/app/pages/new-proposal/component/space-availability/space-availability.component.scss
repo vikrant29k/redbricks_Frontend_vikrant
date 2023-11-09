@@ -197,6 +197,9 @@
           }
         }
         .extra-proposal-date-field{
+          .date{
+            width: 22rem;
+          }
           width: 22rem;
           @include for-mobile() {
             width: 19rem;
