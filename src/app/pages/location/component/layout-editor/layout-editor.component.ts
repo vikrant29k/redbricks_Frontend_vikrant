@@ -113,6 +113,19 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
             });
 
             this.layer.add(rect);
+            let sequenceNoToolTip = new Konva.Text({
+              x:rect.x()+(rect.width()/2),
+              y:rect.y()+ (rect.height()/2),
+              text: shape.sequenceNo,
+              fontFamily: 'Calibri',
+              fontSize: 10,
+              padding: 5,
+              textFill: 'white',
+              fill: 'black',
+              alpha: 0.75,
+              visible: true,
+            })
+            this.layer.add(sequenceNoToolTip)
             rect.cache()
             rect.on('mousedown',()=>{
               let transformNew = new Konva.Transformer()
@@ -195,6 +208,18 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
                 this.getAllPoints[indexToUpdate].sequenceNo = Number(this.getSequenceNo());
               }else{
                 console.log("HYYY AVAILABLE")
+                let editSequenceButton=new Konva.Rect({
+                  x:rect.x()+10,
+                  y:rect.y()-15,
+                  width:10,
+                  height:10,
+                  fill:'blue'
+                })
+                this.layer.add(editSequenceButton);
+                this.layer.draw()
+                editSequenceButton.on('click',()=>{
+                  this.updateSeqNumber(indexToUpdate);
+                })
               }
             });
 
@@ -749,4 +774,20 @@ getSequenceNo(){
 
 }
 
+updateSeqNumber(indexToUpdate:any) {
+  // Find the object in getAllPoints array based on the index
+  const pointToUpdate = this.getAllPoints[indexToUpdate];
+
+  // Prompt the user to enter a new sequence number
+  const newSequenceNumber = prompt("Enter new sequence number:", pointToUpdate.sequenceNo);
+
+  // Check if the user entered a new sequence number and it's different from the current one
+  if (newSequenceNumber !== null && newSequenceNumber !== pointToUpdate.sequenceNo) {
+    // Update the sequence number in the object
+    pointToUpdate.sequenceNo = Number(newSequenceNumber);
+
+    // You can also update the UI or perform any other necessary actions here
+    console.log("Updated sequence number:", pointToUpdate.sequenceNo);
+  }
+}
 }
