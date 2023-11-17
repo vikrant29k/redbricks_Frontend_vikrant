@@ -1,3 +1,4 @@
+// Almost working code for drawing rooms
 import { Component, OnInit, Inject,AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { ProposalService } from "src/app/service/proposal/proposal.service";
@@ -9,6 +10,9 @@ export interface RoomData {
   [key: string]: {
     count: number;
     color: string;
+    width:number;
+    height:number;
+    priority:number
   };
 }
 export interface DialogData {
@@ -39,6 +43,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
   seatWidth!: number;
   seatHeight!: number;
   setButtonDisable: boolean= false;
+  content:any;
     ngAfterViewInit(): void {
 
       }
@@ -66,7 +71,6 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
         this.content=this.data.content;
         this.proposalService.generateLayout(this.data.proposalId).subscribe((res:any)=>{
               this.getImageAndInitialize(res.locationId,res.layoutArray)
-
         })
 
     }
@@ -96,26 +100,25 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
       getImageAndInitialize(locationId:any,layoutArray:any){
         this.seatWidth=layoutArray[0].seatWidth;
         this.seatHeight=layoutArray[0].seatHeight;
-        layoutArray[0].layoutBorder.forEach((item:any) => {
-          const {_id, startX, startY, endX, endY,seatHeight,seatWidth,rectWidth,rectHeight,seatPosition,isFull } = item;
-          this.getAllPoints.push({_id, startX, startY, endX, endY,seatHeight,seatWidth,rectWidth,rectHeight,seatPosition,isFull });
-});
         this.locationService.getImageById(locationId).subscribe(
             (imageUrl) => {
               this.imageUrl = environment.baseUrl+'images/' + imageUrl;
               this.proposalService.getProposalByLocationId(locationId).subscribe(
                 (result:any)=>{
                   if(result.Message=='No Data'){
-                    // console.log("Ny tyt data ky")
                          //   console.log(this.imageUrl);
               const imageObj = new Image();
               imageObj.onload = () => {
                 this.initializeKonva(imageObj);
                 this.enableZoom();
-                this.drawTheSeat()
+                this.drawTheSeat();
+                this.seprateData()
                 this.transformer = new Konva.Transformer(); // Initialize transformer
                 this.layer.add(this.transformer);
-                for (const shape of layoutArray[0].layoutBorder) {
+                let layourData=layoutArray[0].layoutBorder
+                layourData.sort((a:any,b:any)=>a.sequenceNo-b.sequenceNo)
+                for (const shape of layourData) {
+                  if (shape.hasOwnProperty('sequenceNo')) {
                   // this.seatSizeHeight=shape.seatHeight;
                   // this.seatSizeWidth=shape.seatWidth
                   // const shape  = layoutBorderObj.attrs
@@ -127,10 +130,13 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                     fill: 'transparent',
                     opacity: 0.05,
                   });
-                  rect.on('click', (e) => {
-                    this.drawSeatsInRectangle(shape, e.evt.offsetX, e.evt.offsetY);
-                  });
+                  // rect.on('click', (e) => {
+                    // this.drawSeatsInRectangle(shape, e.evt.offsetX, e.evt.offsetY);
+
+                  // });
                   this.layer.add(rect);
+                  this.drawRoomsInRectangle(shape)
+                }
               }
               };
               imageObj.src = this.imageUrl;
@@ -141,10 +147,14 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               imageObj.onload = () => {
                 this.initializeKonva(imageObj);
                 this.enableZoom();
-                this.drawTheSeat()
+                this.seprateData();
+                this.drawTheSeat();
                 this.transformer = new Konva.Transformer(); // Initialize transformer
                 this.layer.add(this.transformer);
-                for (const shape of layoutArray[0].layoutBorder) {
+                let layourData=layoutArray[0].layoutBorder
+                layourData.sort((a:any,b:any)=>a.sequenceNo-b.sequenceNo)
+                for (const shape of layourData) {
+                  if (shape.hasOwnProperty('sequenceNo')) {
                   const rect = new Konva.Rect({
                     x: shape.startX,
                     y: shape.startY,
@@ -153,11 +163,14 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                     fill: 'transparent',
                     opacity: 0.05,
                   });
-                  rect.on('click', (e) => {
+                  // rect.on('click', (e) => {\
                     // console.log(e,"RUNNINNG")
-                    this.drawSeatsInRectangle(shape, e.evt.offsetX, e.evt.offsetY);
-                  });
+                    // this.drawSeatsInRectangle(shape, e.evt.offsetX, e.evt.offsetY);
+
+                  // });
                     this.layer.add(rect);
+                    this.drawRoomsInRectangle(shape)
+                }
             }
               };
               imageObj.src = this.imageUrl;
@@ -179,93 +192,6 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
       changeTheFlow(){
         this.flowOfDrawingSeats=!this.flowOfDrawingSeats
       }
-      drawSeatsInRectangle(point: any, clickX: number, clickY: number) {
-        // console.log(point,"YUPP")
-        let count = 0;
-          const x = clickX; // X coordinate of the click
-          const y = clickY; // Y coordinate of the click
-        if (!this.stage || !this.layer) return;
-        if (this.drawingEnabled === true) {
-          let remainingSeats = this.totalNumber;
-            const minX = point.startX;
-            const minY = point.startY;
-            const maxX = point.endX;
-            const maxY = point.endY;
-
-
-            const availableWidth = maxX - minX;
-            const availableHeight = maxY - minY;
-            const maxHorizontalRectangles = Math.round(availableWidth / this.seatWidth);
-            const maxVerticalRectangles = Math.round(availableHeight / this.seatHeight);
-
-            const maxRectangles = maxHorizontalRectangles * maxVerticalRectangles;
-
-            const flowOfData = this.flowOfDrawingSeats;
-            // if (x < maxX && x > minX && y > minY && y < maxY) {
-              const polygon = new Konva.Line({
-                points: [point],
-                fill: 'transparent',
-                stroke: 'black',
-                strokeWidth:0.3,
-              });
-              this.layer.add(polygon);
-            if (flowOfData == true) {
-              const columns = Math.min(Math.ceil(remainingSeats / maxVerticalRectangles), maxHorizontalRectangles);
-            const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight; // Check seatPosition
-                const seatHeight = point.seatPosition ? this.seatHeight :this.seatWidth;
-              for (let column = 0; column < columns; column++) {
-                for (let y = minY; y < maxY-10  ; y += seatHeight) {
-                  const x = minX + column * seatWidth;
-                  if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width:seatWidth, height: seatHeight }, polygon.getClientRect())) {
-                    this.drawSeatRectangle(x, y,seatHeight,seatWidth);
-                    this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + seatWidth, y: y + seatHeight },workStatkionID: point._id,seatPosition:point.seatPosition });
-                    remainingSeats--;
-                    count++;
-                  }
-                }
-              }
-            }
-            else {
-
-              const rows = Math.min(Math.ceil(remainingSeats / maxHorizontalRectangles), maxVerticalRectangles);
-              const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight; // Check seatPosition
-              const seatHeight = point.seatPosition ? this.seatHeight :this.seatWidth;
-              for (let row = 0; row < rows; row++) {
-                for (let x = minX; x < maxX-10; x += seatWidth) {
-                  const y = minY + row * seatHeight;
-
-                  if (remainingSeats > 0 && Konva.Util.haveIntersection({ x, y, width: seatWidth, height: seatHeight }, polygon.getClientRect())) {
-                    this.drawSeatRectangle(x, y,seatHeight,seatWidth);
-                    this.drawnSeats.push({ start: { x: x, y: y }, end: { x: x + seatWidth, y: y + seatHeight },workStatkionID: point._id,seatPosition:point.seatPosition });
-
-                    remainingSeats--;
-                    count++;
-
-                  }
-                }
-              }
-            }
-            this.totalNumber=remainingSeats;
-          this.layer.batchDraw();
-        // }
-        }
-      }
-
-      drawSeatRectangle(x:number, y:number,height:number,width:number) {
-        const rect = new Konva.Rect({
-          x: x,
-          y: y,
-          width: width,
-          height: height,
-          fill: 'blue',
-          opacity: 0.3,
-          stroke: 'red',
-          strokeWidth: 0.4,
-          name: 'seat-rectangle',
-        });
-        this.layer.add(rect);
-        rect.cache() //for code optimization
-      }
       saveImage(){
         const image=this.stage.toDataURL()
         let data={
@@ -281,15 +207,51 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
               // console.log(res)
             })
       }
-
-
-
-
+//read the content
+roomDetails:any[]=[]
+  sepratedContent:any[]=[]
+  selectedRoom:any[]=[];
+  showDataInHml:any[]=[]
+  // roomTitles:any
+  roomsDataObject: RoomData = roomsData;
+    seprateData(){
+      const contentArray = this.content.split(','); // Split the string into an array
+      contentArray.forEach((item:any) => {
+        const keyValue = item.trim().split('=');
+        if (keyValue.length === 2) {
+          const key = keyValue[0].trim();
+          const value = parseInt(keyValue[1].trim()); // Assuming the values are integers
+          this.sepratedContent[key] = value;
+        }
+      });
+      // const commonObjectsWithCounts = [];
+      for (const key in this.sepratedContent) {
+        if (this.sepratedContent.hasOwnProperty(key)) {
+          // Check if the key exists in the JSON data
+          if (this.roomsDataObject[key]) {
+            const count = this.sepratedContent[key];
+            const jsonData = this.roomsDataObject[key];
+            const commonObject = {
+              title: key,
+              count: jsonData.count,
+              selectedCount:count,
+              dimensions:{width:jsonData.width,height:jsonData.height},
+              color: jsonData.color,
+              drawn:false,
+              priority:jsonData.priority
+            };
+            this.roomDetails.push(commonObject);
+            // this.roomDetails.sort((a:any,b:any)=>b.count - a.count)
+            this.roomDetails.sort((a, b) => b.priority - a.priority);
+          }
+        }
+      }
+      console.log(this.roomDetails,"HIII")
+      }
+//blank seats are drawn at selected clients
       drawTheSeat() {
         this.proposalData.forEach(dataOfSeats => {
-
           dataOfSeats.seatsData.forEach((seat: any) => {
-
               const seatRect = new Konva.Rect({
                 x: seat.start.x,
                 y: seat.start.y,
@@ -297,26 +259,19 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
                 height: dataOfSeats.seatSize[0].height,
                 fill:'white', // Use the room's color
                 opacity: 1,
-
               });
-
               this.layer.add(seatRect);
             // }
           });
         });
 
         this.layer.batchDraw();
-
-
       }
-
-
 
       enableZoom(): void {
         const scaleBy = 1.1; // Adjust the scale factor as needed
         this.stage.on('wheel', (e) => {
           e.evt.preventDefault();
-console.log(e)
           const oldScale = this.stage.scaleX();
           const pointer: any = this.stage.getPointerPosition();
 
@@ -348,8 +303,129 @@ console.log(e)
         this.stage.position(initialPosition);
         this.stage.batchDraw();
       }
+      drawnRooms: any[] = [];
+      drawRoomsInRectangle(point: any) {
+        let remainingRooms = this.totalNumber;
+
+        let startX = point.startX;  // Use startX from the point object
+        let startY = point.startY;  // Use startY from the point object
+
+        if (!this.stage || !this.layer) return;
+
+        if (this.drawingEnabled === true) {
+            // Calculate the maximum number of rooms that can fit horizontally and vertically
+            const availableWidth = point.endX - point.startX;
+            const availableHeight = point.endY - point.startY;
+            const maxHorizontalRooms = Math.floor(availableWidth / this.seatWidth);
+            const maxVerticalRooms = Math.floor(availableHeight / this.seatHeight);
+            const maxRectangles = maxHorizontalRooms * maxVerticalRooms;
+
+            for (const room of this.roomDetails) {
+                if (remainingRooms > 0) {
+                  const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight;
+                  const seatHeight = point.seatPosition ? this.seatHeight :this.seatWidth;
+                    const roomWidth = room.dimensions.width * seatWidth;
+                    const roomHeight = room.dimensions.height * seatHeight;
+                    const totalRoomCount = room.count * room.selectedCount;
+                    const roomsToDraw = room.selectedCount;
+
+                    // Check the flowOfData to determine the drawing direction
+                    if (this.flowOfDrawingSeats === true) {
+                        for (let i = 0; i < roomsToDraw; i++) {
+                            if (startX + roomWidth <= point.endX && startY + roomHeight <= point.endY+2) {
+                                this.drawRoomRectangle(startX, startY, roomWidth, roomHeight, room.color);
+
+                                // Subtract the drawn count from the selectedCount
+                                room.selectedCount--;
+
+                                // Remove the room from roomDetails if all instances are drawn
+                                // if (room.selectedCount === 0) {
+                                //     const roomIndex = this.roomDetails.indexOf(room);
+                                //     // this.roomDetails.splice(roomIndex, 1);
+                                // }
+
+                                startX += roomWidth;
+                                remainingRooms-=room.count;
+
+                                // Add room-specific information to the drawnRooms array only if the room is successfully drawn
+                                this.drawnRooms.push({
+                                    title: room.title,
+                                    dimensions: room.dimensions,
+                                    color: room.color,
+                                    priority: room.priority,
+                                });
+
+                                if (startX + roomWidth >= point.endX + 1) {
+                                  console.log('StartX==>',startX,"+Room Width===>",roomWidth);
+                                    startX = point.startX;
+                                    startY += roomHeight; // Assuming you want to start a new row
+                                }else  if(startX+roomWidth< point.endX && room.selectedCount==0){
+                                  startX = point.startX;
+                                  startY += roomHeight;
+                                }
 
 
-      content:any;
+                            }
+                        }
+                        // console.log(this.roomDetails)
+                    }
+                    // else if (this.flowOfDrawingSeats === false) {
+                    //     for (let i = 0; i < roomsToDraw; i++) {
+                    //         if (startY + roomHeight <= point.endY && startX + roomWidth <= point.endX) {
+                    //             this.drawRoomRectangle(startX, startY, roomWidth, roomHeight, room.color);
+
+                    //             // Subtract the drawn count from the selectedCount
+                    //             room.selectedCount--;
+
+                    //             // Remove the room from roomDetails if all instances are drawn
+                    //             if (room.selectedCount === 0) {
+                    //                 const roomIndex = this.roomDetails.indexOf(room);
+                    //                 this.roomDetails.splice(roomIndex, 1);
+                    //             }
+
+                    //             startY += roomHeight;
+                    //             remainingRooms-=room.count;
+
+                    //             // Add room-specific information to the drawnRooms array only if the room is successfully drawn
+                    //             this.drawnRooms.push({
+                    //                 title: room.title,
+                    //                 dimensions: room.dimensions,
+                    //                 color: room.color,
+                    //                 priority: room.priority,
+                    //             });
+
+                    //             if (startY + roomHeight > point.endY + 1) {
+                    //                 startY = point.startY;
+                    //                 startX += roomWidth; // Assuming you want to start a new row
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                }
+            }
+
+            this.totalNumber = remainingRooms;
+            // console.log(this.drawnRooms);s
+            this.layer.batchDraw();
+        }
+    }
+
+      drawRoomRectangle(x: number, y: number, width: number, height: number, fill: string) {
+        const rect = new Konva.Rect({
+          x: x,
+          y: y,
+          width: width,
+          height: height,
+          fill: fill,
+          opacity: 0.3,
+          stroke: 'black',  // You can customize the stroke color
+          strokeWidth: 0.5, // You can customize the stroke width
+          name: 'room-rectangle',
+          draggable:true
+        });
+
+        this.layer.add(rect);
+      }
+
 
 }

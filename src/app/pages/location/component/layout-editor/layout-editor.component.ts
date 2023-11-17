@@ -90,8 +90,8 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
           res.layoutArray[0].layoutBorder.forEach((item:any) => {
             //debugger
 
-            const {_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull } = item;
-            this.getAllPoints.push({_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull });
+            const {_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull,sequenceNo } = item;
+            this.getAllPoints.push({_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull,sequenceNo });
 
           });
 
@@ -181,6 +181,24 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
 
           })
             })
+            rect.on('contextmenu', (e: any) => {
+              e.evt.preventDefault();
+
+              // Find the index of the object in getAllPoints array
+              const indexToUpdate = this.getAllPoints.findIndex((point: any) => String(point._id) === rect.name());
+              console.log("CALLED CONTEXT", indexToUpdate);
+
+              // Check if the object at the found index has the property sequenceNo
+              if (!this.getAllPoints[indexToUpdate].hasOwnProperty('sequenceNo') || !this.getAllPoints[indexToUpdate].sequenceNo) {
+                console.log("NYYYYY AVAILABLE")
+                // If it doesn't have sequenceNo, add an object with sequenceNo set to the value returned by getSequenceNo
+                this.getAllPoints[indexToUpdate].sequenceNo = Number(this.getSequenceNo());
+              }else{
+                console.log("HYYY AVAILABLE")
+              }
+            });
+
+
           }
 
       }
@@ -385,6 +403,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
                   rectHeight: this.updatedHeight,
                   isFull: false,
                   seatPosition: seatpostio
+
               };
 
               this.drawRectangles(rect);
@@ -417,7 +436,8 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
               tooltip.hide()
             })
             pushButton.on('click',()=>{
-
+              rect={...rect,
+                sequenceNo:Number(this.getSequenceNo())}
               this.getAllPoints.push(rect);
     // Set isDrawingEnabled to true to enable drawing of new rectangles
     this.isDrawingEnabled = true;
@@ -713,4 +733,20 @@ updateSeatsSize() {
       goToDrawSeat(){
         this.router.navigate(['/','admin','location','preview-seats',this.id]);
       }
+
+getSequenceNo(){
+
+  let sequenceNo;
+  let number;
+
+  do {
+    number = prompt("Please enter sequence number:");
+  } while (number == null || number.trim() === ""); // Keep prompting until a non-empty input is provided
+
+  sequenceNo = number;
+
+   return sequenceNo;
+
+}
+
 }
