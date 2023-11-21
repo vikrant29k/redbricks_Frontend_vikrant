@@ -43,149 +43,58 @@ export class LockLayoutEditorComponent implements OnInit, AfterViewInit {
   drawnSeats:any[]=[];
   ngOnInit(): void {
     this.proposalId = this.route.snapshot.params['proposalId'];
-
   }
   ngAfterViewInit(): void {
     this.proposalService.getProposalById(this.proposalId).subscribe((res:any)=>{
-      // console.log(res)
       this.id=res[0].locationId
       this.drawnSeats=res[0].seatsData
-  //  this.drawnSeats=res[0].seatsData
-  this.seatSizeHeight=res[0].seatSize[0].height;
-  this.seatSizeWidth=res[0].seatSize[0].width;
+      this.seatSizeHeight=res[0].seatSize[0].height;
+      this.seatSizeWidth=res[0].seatSize[0].width;
     this.locationService.getImageById(this.id).subscribe(
       (imageUrl) => {
         this.imageUrl = environment.baseUrl+'images/' + imageUrl;
-        // console.log(this.imageUrl);
         const imageObj = new Image();
-    imageObj.onload = () => {
+         imageObj.onload = () => {
       this.initializeKonva(imageObj);
-      this.enableZoom(); // Add this line to enable zoom
-      // this.enablePanning(); // Add this line to enable panning
-      this.transformer = new Konva.Transformer(); // Initialize transformer
-      this.layer.add(this.transformer);
+      this.enableZoom();
       this.locationService.getBorderData(this.id).subscribe((res:any)=>{
-        // console.log(res);
         if(res.Message==='No data'){
           // console.log("NO DATAA")
         }else{
           this.seatHeight=res.layoutArray[0].seatHeight;
           this.seatWidth=res.layoutArray[0].seatWidth;
-          res.layoutArray[0].layoutBorder.forEach((item:any) => {
-            //debugger
 
-            const {_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull } = item;
-            this.getAllPoints.push({_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull });
+          for (const shape of res.layoutArray[0].layoutBorder) {
+            this.getAllPoints.push(shape)
 
-          });
-this.displayRectangles()
-      for (const shape of res.layoutArray[0].layoutBorder) {
-
-       const rect = new Konva.Rect({
-          x: shape.startX,
-          y: shape.startY,
-          width: shape.rectWidth,
-          height: shape.rectHeight,
-          fill: 'blue',
-          opacity: 0.3,
-          name:shape._id,
-          draggable: false,
-        });
-        this.layer.add(rect);
-
-        rect.on('mousedown',()=>{
-          let transformNew = new Konva.Transformer()
-        this.layer.add(transformNew);
-        transformNew.nodes([rect])
-          this.transformer=transformNew
-          // console.log("FIRST BEFORE",rect)
-        rect.on('transformend', () => {
-          // if (this.selectedShape) {
-            // console.log('RECT NAME',rect.attrs())
-            const updatedWidth = rect.width() * rect.scaleX();
-            const updatedHeight = rect.height() * rect.scaleY();
-            const updatedX = rect.x();
-            const updatedY = rect.y();
-            const indexToUpdate = this.getAllPoints.findIndex((point) => point._id === rect.name());
-
-            if (indexToUpdate !== -1) {
-              // Update the object at the found index
-              this.getAllPoints[indexToUpdate] = {
-                ...this.getAllPoints[indexToUpdate], // Copy existing properties
-                startX: updatedX,
-                startY: updatedY,
-                rectWidth: updatedWidth,
-                rectHeight: updatedHeight,
-                endX: updatedX + updatedWidth,
-                endY: updatedY + updatedHeight,
-              };
-
-              // console.log("AFTER UPDATE", this.getAllPoints[indexToUpdate]);
-            }
-
-        });
-        })
-}
+            if (shape.hasOwnProperty('sequenceNo')) {
+            const rect = new Konva.Rect({
+              x: shape.startX,
+              y: shape.startY,
+              width: shape.rectWidth,
+              height: shape.rectHeight,
+              fill: 'blue',
+              opacity: 0.2,
+            });
+              this.layer.add(rect);
+              this.layer.draw()
+          }
+      }
+      console.log(this.getAllPoints)
         }
-
+        this.drawSelectedRoom()
       })
-    };
 
+    };
     imageObj.src = this.imageUrl;
       },
       error => {
         console.error('Error loading image data:', error);
-        // Handle the error as needed
       }
     );
-
   })
   }
-  drawTHeSeat(){
-    for (const seat of this.drawnSeats) {
-      this.drawSeatsBetweenPoints(seat.start, seat.end,seat.seatPosition);
-    }
-  }
-  drawSeatsBetweenPoints(start:any, end:any,seatPosition:any) {
-    const startX = Math.min(start.x, end.x);
-    const startY = Math.min(start.y, end.y);
-    const endX = Math.max(start.x, end.x);
-    const endY = Math.max(start.y, end.y);
-    const seatSizeWidth = this.seatSizeWidth; // Extract width from seatSize
-    const seatSizeHeight = this.seatSizeHeight; // Extract height from seatSize
-    if(seatPosition==false){
-      for (let x = startX; x < endX; x += seatSizeHeight) {
-        for (let y = startY; y < endY; y += seatSizeWidth) {
-          this.drawSeatRectangle(x, y,seatSizeHeight,seatSizeWidth);
-        }
-      }
-    }else{
-      for (let x = startX; x < endX; x += seatSizeWidth) {
-        for (let y = startY; y < endY; y += seatSizeHeight) {
-          this.drawSeatRectangle(x, y,seatSizeWidth,seatSizeHeight);
-        }
-      }
-    }
-    // for (let x = startX; x < endX; x += this.seatSizeWidth) {
-    //   for (let y = startY; y < endY; y += this.seatSizeHeight) {
-    //     this.drawSeatRectangle(x, y);
-    //   }
-    // }
-  }
-  drawSeatRectangle(x:any, y:any,width:any,height:any) {
-    const rect = new Konva.Rect({
-      x: x,
-      y: y,
-      width: width,
-      height:height,
-      fill: 'red',
-      opacity: 0.5,
-      stroke: 'red',
-      strokeWidth: 0.4,
-      name: 'seat-rectangle',
-    });
-    this.layer.add(rect);
-  }
+
   backgroundImage!: Konva.Image;
   initializeKonva(imageObj: HTMLImageElement): void {
     this.stage = new Konva.Stage({
@@ -206,6 +115,7 @@ this.displayRectangles()
     });
 
     this.layer.add(this.backgroundImage);
+    this.backgroundImage.moveToBottom()
     this.layer.draw();
   }
 
@@ -246,95 +156,57 @@ this.displayRectangles()
     this.stage.batchDraw();
   }
 
-  transformer!: Konva.Transformer;
-
-  seatDrawing: boolean = false;
-  isSeatDrawingEnabled = false;
-
-
-
-
-
-  displayRectangles() {
-    this.drawTHeSeat()
-  }
   updateStoredValues(){
     let data = {
       LayoutData:{layoutBorder:this.getAllPoints,
         seatHeight:this.seatHeight,
         seatWidth:this.seatWidth,
-
       }
-         }
+     }
 
   this.locationService.addLayoutData(this.id,data).subscribe(res=>{
-      // console.log(res);
       this.proposalService.lockProposal(this.proposalId, { lockProposal:true })
             .subscribe((res:any) => {
-              // console.log(res,"Locked Proposal")
             });
       this.router.navigate(['/admin','location','location-list'])
     })
+  console.log(data)
   }
 
+//draw the room that  are been selected
+drawSelectedRoom() {
+  this.drawnSeats.forEach(point=>{
+    let rect = new Konva.Rect({
+      x:point.x,
+      y: point.y,
+      width: point.width,
+      height: point.height,
+      fill:point.color,
+      opacity:0.5,
+      draggable:true
 
-    //creating locked seats.....
-  isDrawingLockEnabled = false;
-  isLockDrawing=true
-  lockedshape!: Konva.Rect;
-  lockstartPoint!:{ x: number; y: number };
-  toggleLockDrawing(): void {
-    this.isDrawingLockEnabled = !this.isDrawingLockEnabled;
-    this.startDrawingLOCKRect();
-    if (!this.isDrawingLockEnabled) {
-      this.isLockDrawing = false; // Stop ongoing drawing if disabled
+    })
+
+    const matchingPointIndex = this.getAllPoints.findIndex(p => p.sequenceNo == point.rectSequence);
+
+    if (matchingPointIndex !== -1) {
+      console.log('SequenceNo:', point.rectSequence);
+      console.log('Details before update:', this.getAllPoints[matchingPointIndex]);
+
+      // Update isFull to true
+      this.getAllPoints[matchingPointIndex].isFull = true;
+
+      console.log('Details after update:', this.getAllPoints[matchingPointIndex]);
+    } else {
+      console.log('SequenceNo not found:', point.rectSequence);
     }
-  }
-  startDrawingLOCKRect() {
-    this.stage.on('mousedown', this.handleMouseLOCKDown.bind(this));
-    this.stage.on('mousemove', this.handleMouseLOCKMove.bind(this));
-    this.stage.on('mouseup', this.handleMouseLOCKUp.bind(this));
-  }
-    handleMouseLOCKDown(e: Konva.KonvaEventObject<MouseEvent>): void {
-    if (this.isDrawingLockEnabled) {
-      const pos: any = this.stage.getPointerPosition();
-      this.lockstartPoint = pos;
-      this.isLockDrawing = true;
 
-      this.lockedshape = new Konva.Rect({
-        x: pos.x,
-        y: pos.y,
-        width: 0,
-        height: 0,
-        fill: 'red',
-        opacity: 0.3,
-        stroke: '#000000',
-        strokeWidth: 0.8,
-        name: 'locked-layer',
-      });
+    this.layer.add(rect);
+    rect.moveToTop()
+    this.layer.draw()
+  })
+  // this.layer.batchDraw()
 
-      this.layer.add(this.lockedshape)
-    }
-  }
-
-  handleMouseLOCKMove(e: Konva.KonvaEventObject<MouseEvent>): void {
-    if (this.isDrawingLockEnabled && this.isLockDrawing) {
-      const pos: any = this.stage.getPointerPosition();
-      const width = pos.x - this.lockstartPoint.x;
-      const height = pos.y - this.lockstartPoint.y;
-      this.lockedshape.width(width);
-      this.lockedshape.height(height);
-
-      this.layer.batchDraw();
-    }
-  }
-
-  handleMouseLOCKUp(e: Konva.KonvaEventObject<MouseEvent>): void {
-    if (this.isDrawingLockEnabled && this.isLockDrawing) {
-      this.isLockDrawing = false;
-
-    }
-    // console.log(this.lockedshape,"SHAPE OF LOCKED")
-  }
+}
 
 }

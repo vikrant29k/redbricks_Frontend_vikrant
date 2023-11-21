@@ -96,14 +96,14 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
           });
 
             for (const shape of res.layoutArray[0].layoutBorder) {
-           if(shape.isFull===false){
+          //  if(shape.isFull===false){
             const rect = new Konva.Rect({
               x: shape.startX,
               y: shape.startY,
               width: shape.rectWidth,
               height: shape.rectHeight,
-              fill: '#488bcf',
-              opacity: 0.8,
+              fill: shape.isFull?'red':'blue',
+              opacity: 0.6,
                 draggable: false,
                 name:String(shape._id),
                 shadowColor: 'black',
@@ -224,7 +224,7 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
             });
 
 
-          }
+          // }
 
       }
       }
