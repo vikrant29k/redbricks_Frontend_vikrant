@@ -29,7 +29,7 @@ export class OldProposalTableComponent implements OnInit {
     'status',
     'esclateToCloser',
     'action',
-    // 'update'
+    'draw'
   ];
   dataSource!: MatTableDataSource<OldProposalData>;
 
@@ -75,6 +75,7 @@ export class OldProposalTableComponent implements OnInit {
   changeButtonLabel(status: any) {
     if (['In-Progress', 'Conflict', 'Conflict Resolved'].includes(status)) {
       return 'Continue';
+
     } else {
       return 'View Details';
     }
@@ -115,6 +116,9 @@ export class OldProposalTableComponent implements OnInit {
 
   };
 
+  designClient = (Id: string) => {
+    this.router.navigate(['/sales','location','designSeat',Id])
+  }
 
 
 }
