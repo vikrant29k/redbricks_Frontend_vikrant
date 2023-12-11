@@ -4,7 +4,9 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authentication/authentication.service';
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
 import { LocationService } from 'src/app/service/location/location.service';
+import { LayoutPreviewDemoComponent } from '../layout-preview-demo/layout-preview-demo.component';
 // import { MultipleOfFiveDirective } from './inputValidator.directive';
 @Component({
   selector: 'new-proposal-requirement-info',
@@ -28,7 +30,7 @@ export class NewProposalRequirementInfoComponent implements OnInit {
 
   valueToBeDivided:any;
   valueOfDinominator:any=1152;
-id:any;
+   id:any;
   requirementInfoForm:any = new FormGroup({
     areaOfCoreSelectedSeat:new FormControl(),
     areaOfUsableSelectedSeat:new FormControl(),
@@ -87,6 +89,7 @@ id:any;
     private proposalService: ProposalService,
     private authService: AuthenticationService,
     private locationService:LocationService,
+    private dialog:MatDialog,
     // private multipleOf5Directive:MultipleOfFiveDirective
   ) {}
 
@@ -120,6 +123,7 @@ id:any;
       totalNumberOfSeats:totalSeat
     });
     let contentt =  document.getElementById('datadiv')?.textContent;
+
     this.requirementInfoForm.patchValue({
       content:contentt
     });
@@ -171,9 +175,6 @@ id:any;
     return this.route.snapshot.params['proposalId'];
   };
 
-totalWorkstation(){
-
-}
 
 hint5x2:any;
 hint3x2:any
@@ -257,4 +258,20 @@ if(value.workstation3x2 % 4 !== 0){
     }else{
     }
   }
+  content:any;
+  genrateLayout = () => {
+   this.content= document.getElementById('datadiv')?.textContent;
+   if(this.content){
+    const dialogRef = this.dialog.open(LayoutPreviewDemoComponent, {
+      width: '1500px',
+      height: '800px',
+      panelClass: 'my-preview-class',
+      data: { locationId: this.locationService.locationId, proposalId: this.proposalId, totalNoOfSeat:this.totalSelectedWorkstation, content:this.content },
+    });
+   }else{
+    alert("Please select seats first")
+   }
+
+
+  };
 }

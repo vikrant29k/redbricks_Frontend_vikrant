@@ -1,0 +1,43 @@
+
+<div class="canvas-container">
+  <!-- <div class="inner_div">
+  <label>Seats to be Selected: {{totalNumber}}/{{displayTotal}} </label>
+   <button class="download_btn" (click)="redrawTheRoom()">shuffle</button>
+  <button class="download_btn"   (click)="saveImage()">Final Layout</button>
+  </div> -->
+<!--
+    <button (click)="switchContainer('left')" class="arrow-button-left"> <mat-icon>arrow_circle_left</mat-icon> </button>
+    <div id="container1" [ngClass]="{ 'hidden': activeContainer !== 1 }"></div>
+    <div id="container2" [ngClass]="{ 'hidden': activeContainer !== 2 }"></div>
+    <div id="container3" [ngClass]="{ 'hidden': activeContainer !== 3 }"></div>
+    <div id="container4" [ngClass]="{ 'hidden': activeContainer !== 4 }"></div>
+    <div id="container5" [ngClass]="{ 'hidden': activeContainer !== 5 }"></div>
+    <div id="container6" [ngClass]="{ 'hidden': activeContainer !== 6 }"></div>
+  <button (click)="switchContainer('right')" class="arrow-button-right"><mat-icon>arrow_circle_right</mat-icon></button> -->
+<!-- Inside the template -->
+<div *ngIf="loading" class="loader-container">
+  <div class="loader"></div>
+</div>
+<div id="menu">
+  <div>
+    <button id="view-button">View</button
+    ><button id="save-button">Save</button>
+  </div>
+</div>
+<div class="konva-grid">
+  <!-- <div [ngClass]="expandedContainer===1?'showButtons':'hideButtons'"> -->
+    <!-- <label>Seats to be Selected: {{totalNumber}}/{{displayTotal}} </label> -->
+    <!-- <button class="download_btn">Edit</button> -->
+    <!-- <button class="download_btn">Reset Layout</button>
+    <button class="download_btn">Hide Name</button>
+    <button class="download_btn">Final Layout</button> -->
+  <!-- </div> -->
+  <div id="container1" class="konva-container" >
+  </div>
+  <div id="container2" class="konva-container" ></div>
+  <div id="container3" class="konva-container" ></div>
+  <div id="container4" class="konva-container" ></div>
+</div>
+
+
+</div>

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NewProposalClientInfoComponent } from '../../component/client-info/client-info.component';
-import { ConflictComponent } from '../../component/conflict/conflict.component';
 import { NewProposalProposalPreviewComponent } from '../../component/proposal-preview/proposal-preview.component';
 import { NewProposalRequirementInfoComponent } from '../../component/requirement-info/requirement-info.component';
 import { NewProposalSpaceAvailabilityComponent } from '../../component/space-availability/space-availability.component';
@@ -20,17 +19,17 @@ const routes: Routes = [
       },
       {
         path: 'client-info/:proposalId',
-        canActivate: [NewProposalAdminChildRouteGuard],
+        // canActivate: [NewProposalAdminChildRouteGuard],
         component: NewProposalClientInfoComponent,
       },
       {
         path: 'requirement-info/:proposalId',
-        canActivate: [NewProposalAdminChildRouteGuard],
+        // canActivate: [NewProposalAdminChildRouteGuard],
         component: NewProposalRequirementInfoComponent,
       },
       {
         path: 'space-availability/:proposalId',
-        canActivate: [NewProposalAdminChildRouteGuard],
+        // canActivate: [NewProposalAdminChildRouteGuard],
         component: NewProposalSpaceAvailabilityComponent,
       },
       // {

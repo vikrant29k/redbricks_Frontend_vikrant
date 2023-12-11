@@ -1,0 +1,18 @@
+.main-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .stageCanvas{
+    border: black 2px solid;
+  }
+    .download_btn {
+    background: #C3343A;
+    color: white;
+    font-weight: 600;
+    height: 31px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+}

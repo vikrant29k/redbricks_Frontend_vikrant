@@ -1,5 +1,5 @@
 // Almost working code for drawing rooms
-import { Component, OnInit, Inject,AfterViewInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { ProposalService } from "src/app/service/proposal/proposal.service";
 import { LocationService } from "src/app/service/location/location.service";
@@ -27,9 +27,8 @@ export interface DialogData {
     templateUrl: './layout-preview.component.html',
     styleUrls: ['./layout-preview.component.scss']
 })
-export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit {
+export class NewProposalLayoutPreviewComponent implements OnInit {
     id!: string;
-    flowOfDrawingSeats:boolean=true;
     imageUrl:any;
     stage!: Konva.Stage;
     layer!: Konva.Layer;
@@ -42,12 +41,7 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
     totalNumber!:number;
   seatWidth!: number;
   seatHeight!: number;
-  setButtonDisable: boolean= false;
   content:any;
-    ngAfterViewInit(): void {
-
-      }
-
     constructor(
         public dialogRef: MatDialogRef<NewProposalLayoutPreviewComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -66,8 +60,14 @@ export class NewProposalLayoutPreviewComponent implements OnInit, AfterViewInit 
       }
       }
     }
+    minThreshold:any;
+    maxThreshold:any;
     ngOnInit(): void {
         this.totalNumber=this.data.totalNoOfSeat;
+        this.displayTotal=this.totalNumber;
+        this.minThreshold=this.displayTotal-(5/100) *this.displayTotal
+        this.maxThreshold=this.displayTotal-(10/100) *this.displayTotal
+        console.log(this.minThreshold,this.maxThreshold)
         this.content=this.data.content;
         this.proposalService.generateLayout(this.data.proposalId).subscribe((res:any)=>{
               this.getImageAndInitialize(res.locationId,res.layoutArray)
@@ -111,9 +111,14 @@ layoutData:any[]=[]
               imageObj.onload = () => {
                 this.initializeKonva(imageObj);
                 this.enableZoom();
-                this.drawTheSeat();
                 this.seprateData()
                 this.layoutData=layoutArray[0].layoutBorder
+                layoutArray[0].pillarsData.forEach((item:any)=>{
+                  const {x,y,height,width } = item;
+                  this.pillarRectData.push({x,y,height,width});
+
+                })
+                this.drawRectOFPillars()
                 this.layoutData.sort((a:any,b:any)=>a.sequenceNo-b.sequenceNo)
                 this.drawRoomsInRectangle()
               };
@@ -126,8 +131,13 @@ layoutData:any[]=[]
                 this.initializeKonva(imageObj);
                 this.enableZoom();
                 this.seprateData();
-                this.drawTheSeat();
                this.layoutData=layoutArray[0].layoutBorder
+               layoutArray[0].pillarsData.forEach((item:any)=>{
+                const {x,y,height,width } = item;
+                this.pillarRectData.push({x,y,height,width});
+
+              })
+              this.drawRectOFPillars()
                 this.layoutData.sort((a:any,b:any)=>a.sequenceNo-b.sequenceNo)
                 this.drawRoomsInRectangle()
               };
@@ -143,11 +153,7 @@ layoutData:any[]=[]
       }
       //drawSeats
       drawingEnabled: boolean = true;
-      lastCoordinate:any[]=[]
-      // drawnSeats:any[]=[]
-      changeTheFlow(){
-        this.flowOfDrawingSeats=!this.flowOfDrawingSeats
-      }
+
       saveImage(){
         const image=this.stage.toDataURL()
         let data={
@@ -167,9 +173,17 @@ layoutData:any[]=[]
 //read the content
   roomDetails:any[]=[]
   sepratedContent:any[]=[]
-  selectedRoom:any[]=[];
-  showDataInHml:any[]=[]
   roomsDataObject: RoomData = roomsData;
+  workstation4x2:any;
+  rooms2x2:any
+  rooms2x3:any
+  remainRoom:any
+  rooms3x2:any
+  tempWorkstation4x2:any;
+  tempRooms2x2:any
+  tempRooms2x3:any
+  tempRemainRoom:any
+  tempRooms3x2:any
     seprateData(){
       const contentArray = this.content.split(','); // Split the string into an array
       contentArray.forEach((item:any) => {
@@ -199,32 +213,24 @@ layoutData:any[]=[]
             this.roomDetails.push(commonObject);
             // this.roomDetails.sort((a:any,b:any)=>b.count - a.count)
             this.roomDetails.sort((a, b) => a.priority - b.priority);
+           this.workstation4x2 = this.roomDetails.filter(room => room.title === 'Workstation4x2');
+           let tempworkstartion=this.workstation4x2
+           this.tempWorkstation4x2=tempworkstartion
+            this.rooms2x2= this.roomDetails.filter(room => room.dimensions.width === 2 && room.dimensions.height===2);
+            this.tempRooms2x2=this.rooms2x2
+            this.rooms2x3= this.roomDetails.filter(room => room.dimensions.width === 2 && room.dimensions.height===3);
+            this.tempRooms2x3=this.rooms2x3
+            // this.rooms2x2.sort((a:any,b:any)=>a.dimensions.height-b.dimensions.height)
+            this.remainRoom = this.roomDetails.filter(room => room.dimensions.width >= 3 && room.dimensions.height>=3);
+            this.tempRemainRoom=this.remainRoom
+            this.rooms3x2= this.roomDetails.filter(room => room.dimensions.width === 3 && room.dimensions.height===2);
+            this.tempRooms3x2=this.rooms3x2
           }
         }
       }
       // console.log(this.roomDetails,"HIII")
       }
-//blank seats are drawn at selected clients
-      drawTheSeat() {
-        this.displayTotal=this.totalNumber
-        this.proposalData.forEach(dataOfSeats => {
-          dataOfSeats.seatsData.forEach((seat: any) => {
-              const seatRect = new Konva.Rect({
-                x: seat.x,
-                y: seat.y,
-                width: seat.width,
-                height: seat.height,
-                fill:'white', // Use the room's color
-                opacity: 1,
-              });
-              this.layer.add(seatRect);
-              seatRect.cache()
-            // }
-          });
-        });
 
-        this.layer.batchDraw();
-      }
 //for zooming
       enableZoom(): void {
         const scaleBy = 1.1; // Adjust the scale factor as needed
@@ -265,295 +271,526 @@ layoutData:any[]=[]
       displayTotal!:number;
 
       drawRoomsInRectangle() {
-        let remainingRooms = this.totalNumber;
-        let creatTotalOfRoom=0;
-        let roomCanBeUsed:any[]=[]
-      for(  let point of this.layoutData){
-        if(point.isFull==false){
+        let entryPoint = 'down';
+        entryPoint = 'right';
 
+        let roomCanBeUsed: any[] = [];
+        let creatTotalOfRoom = 0;
 
-          if (!this.stage || !this.layer) return;
-          if (this.drawingEnabled === true) {
-            let seatWidth1 = point.seatPosition ? this.seatWidth : this.seatHeight;
-            let seatHeight1 = point.seatPosition ? this.seatHeight : this.seatWidth;
-            const availableWidth = point.endX - point.startX;
-            const availableHeight = point.endY - point.startY;
-            const maxHorizontalRooms = Math.floor(availableWidth / seatWidth1);
-            const maxVerticalRooms = Math.floor(availableHeight /seatHeight1);
-            const maxRectangles = maxHorizontalRooms * maxVerticalRooms;
-            // console.log(maxRectangles,"==",maxVerticalRooms,"X",maxHorizontalRooms)
+        for (let point of this.layoutData) {
+            if (!point.isFull) {
+                if (!this.stage || !this.layer) return;
 
-            creatTotalOfRoom+=maxRectangles
+                if (this.drawingEnabled === true) {
+                    roomCanBeUsed.push(point);
+                    creatTotalOfRoom++;
 
-            if(creatTotalOfRoom>=this.displayTotal){
-              roomCanBeUsed.push(point)
-              break
-            }else{
-              point.isFull=true
-              roomCanBeUsed.push(point)
+                    if (creatTotalOfRoom >= this.displayTotal) {
+                        break;
+                    }
+                }
+            } else {
+                let rect = new Konva.Rect({
+                    x: point.startX,
+                    y: point.startY,
+                    width: point.rectWidth,
+                    height: point.rectHeight,
+                    fill: 'white',
+                });
+                this.layer.add(rect);
             }
-          }
-
-        }else{
-          let rect=new Konva.Rect({
-            x:point.startX,
-            y:point.startY,
-            width:point.rectWidth,
-            height:point.rectHeight,
-            fill:"white",
-          })
-          this.layer.add(rect)
         }
-      }
-        roomCanBeUsed.forEach(point=>{
-          // console.log(point)
-          let startX = point.startX;
-          let startY = point.startY;
-          let prevRoom = null;
-          let saveRooms=null
-            // Sort the rooms by count in descending order
-            this.roomDetails.sort((a, b) => b.count - a.count);
 
-            for (const room of this.roomDetails) {
-              if (remainingRooms > 0) {
-                const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight;
-                const seatHeight = point.seatPosition ? this.seatHeight : this.seatWidth;
-                const availableWidth = point.endX - point.startX;
-                const availableHeight = point.endY - point.startY;
-                // Adjust room dimensions based on seat position
-                let roomWidth = point.seatPosition ? room.dimensions.width * seatWidth : room.dimensions.height * seatWidth;
-                let roomHeight = point.seatPosition ? room.dimensions.height * seatHeight : room.dimensions.width * seatHeight;
-                let firstHalf;
-                let secondHalf=null;
-                  const roomsToDraw = room.selectedCount;
+        roomCanBeUsed.forEach((point) => {
+            const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight;
+            const seatHeight = point.seatPosition ? this.seatHeight : this.seatWidth;
+            if (point.entryPoint == 'down') {
+                point.endY -= seatHeight;
+                this.setUpRoom(point, point.entryPoint);
+            } else if (point.entryPoint == 'right') {
+                point.endX -= seatWidth;
+                this.setUpRoom(point, point.entryPoint);
+            } else if (point.entryPoint == 'up') {
+                // point.startX+=seatWidth
+                this.setUpRoom(point, point.entryPoint);
+            } else if (point.entryPoint == 'left') {
+                point.startX += seatWidth;
+                this.setUpRoom(point, point.entryPoint);
+            }
+        });
+    }
+      tempRoomStore:any=null
+     setUpRoom(point: any, entryPoint: any) {
+if(this.shuffle==true){
+  this.workstation4x2=this.tempWorkstation4x2
+  this.rooms2x2=this.tempRooms2x2
+ this.rooms2x3=this.tempRooms2x3
+ this.remainRoom=this.tempRemainRoom
+  this.rooms3x2=this.tempRooms3x2
+  console.log(this.workstation4x2[0].selectedCount,this.tempWorkstation4x2[0].selectedCount)
+}
+    let startX = point.startX;
+    let startY = point.startY;
+    let endX = point.endX;
+    let endY = point.endY;
+    let roomColumnSwitch = 0;
+    let workstationColumnSwitch = 0;
+    let workstationRowSwitch = 0;
 
-                  for (let i = 0; i < roomsToDraw; i++) {
-                    // Check if drawing the room would extend beyond endY, skip to the next room
-                    if (startY + roomHeight > point.endY + 1) {
-                      continue;
-                    }
-                    if(room.dimensions.width==2 && roomWidth<=(availableWidth/2)){
-                      continue
+    const seatWidth = point.seatPosition ? this.seatWidth : this.seatHeight;
+    const seatHeight = point.seatPosition ? this.seatHeight : this.seatWidth;
 
-                    }else if(room.title!=="Workstation4x2" && room.dimensions.width==2){
-                      // startX=point.startX
-                      // startY+=roomHeight
-                    }
-                    // Check if the current room is the same as the previously drawn room and seatPosition is true
-                    if ( prevRoom && prevRoom.title === room.title && room.title !== 'Workstation4x2' && room.title !== 'Workstation3x2' && room.title !== 'Workstation5x2' && !point.seatPosition) {
-                      // If x and y coordinates match, switch to the next column
-                      if (prevRoom.x === room.x && prevRoom.y === room.y) {
-                        startX += roomWidth;
+    // Check if startX is greater than point.startX
 
-                        // Check if switching to the next column extends beyond endX
-                        if (startX + roomWidth >= point.endX + 1) {
-                          // Skip to the next room if it extends beyond endX
-                          startX = point.startX;
-                          startY += roomHeight;
-                        }
-                      } else {
-                        // If x and y coordinates don't match, stay in the same row and adjust startX
-                        startX = prevRoom.x + prevRoom.dimensions.width;
-                        if (startX + roomWidth > point.endX) {
-                          // If the room would extend beyond endX, switch to the next row
-                          startX = point.startX;
-                          startY += roomHeight;
-                        }
+        const drawRoom2x2 = () => {
+          if (this.rooms2x2.length > 0) {
+              if (this.rooms2x2.length > 2) {
+                  let halfRoomSize = Math.ceil(this.rooms2x2.length / 2); // Fix to calculate halfRoomSize correctly
+
+                  // Split the array into chunks of size halfRoomSize
+                  const roomChunks = [];
+                  for (let i = 0; i < this.rooms2x2.length; i += halfRoomSize) {
+                      roomChunks.push(this.rooms2x2.slice(i, i + halfRoomSize));
+                  }
+
+                  // Draw rooms for each chunk
+                  for (const chunk of roomChunks) {
+                    this.layer.draw()
+                    // debugger
+                      drawRooms(chunk);
+
+                  }
+              } else {
+                this.layer.draw()
+                // debugger
+                  // Draw rooms normally if the length is 4 or less
+                  drawRooms(this.rooms2x2);
+              }
+          }
+      };
+
+      const drawRooms = (rooms:any) => {
+        for (const room2x2 of rooms) {
+          let roomToDraw = room2x2.selectedCount;
+          let roomWidth = room2x2.dimensions.width * seatWidth;
+          let roomHeight = room2x2.dimensions.height * seatHeight;
+        //   if (this.drawnRooms.includes(room2x2)) {
+        //     continue;
+        // }
+          for (let i = 0; i < roomToDraw; i++) {
+            if (startX > point.endX) {
+              // Move to the next point
+              return;
+          }
+              // Check for pillar collisions
+              for (const pillar of this.pillarRectData) {
+                  if (
+                      startX + 1 < pillar.x + pillar.width &&
+                      startX + roomWidth > pillar.x + 2 &&
+                      startY + 1 < pillar.y + pillar.height &&
+                      startY + roomHeight > pillar.y + 1
+                  ) {
+                      // Adjust startY to avoid pillars
+                      startY = pillar.y + pillar.height;
+
+                      // Handle room placement when reaching the endY
+                      if (startY >= point.endY - 1) {
+                          startY = point.startY;
+                          roomColumnSwitch++;
+
+                          // Adjust startX for the next column
+                          if (roomColumnSwitch % 2 === 0) {
+                              startX += roomWidth;
+                          } else {
+                              startX += roomWidth + seatWidth;
+                          }
                       }
+                  }
+              }
+              if (startY + roomHeight > point.endY +1) {
+                startY = point.startY;
+                roomColumnSwitch++;
+
+                // Adjust startX for the next column
+                if (roomColumnSwitch % 2 === 0) {
+                    startX += roomWidth;
+                } else {
+                    startX += roomWidth + seatWidth;
+                }
+
+
+            }
+            room2x2.selectedCount--
+              // Draw the room
+              this.drawRoomRectangle(
+                  startX,
+                  startY,
+                  roomWidth,
+                  roomHeight,
+                  room2x2.color,
+                  room2x2.title
+              );
+
+
+              // Update coordinates for the next iteration
+              startY += roomHeight;
+
+              // Handle room placement when reaching the endY
+
+          }
+           // After successfully drawing the room, add it to the drawnRooms array
+        // this.drawnRooms.push(room2x2);
+      }
+
+
+      };
+
+
+
+        const drawWorkstation4x2 = () => {
+
+          let workstationToDraw =0
+            if (this.workstation4x2.length > 0) {
+
+                for (const workstationRoom of this.workstation4x2) {
+                 workstationToDraw= workstationRoom.selectedCount;
+              //    if (this.drawnRooms.includes(workstationRoom)) {
+              //     continue;
+              // }
+                    for (let i = 0; i < workstationToDraw; i++) {
+                      if (startX > point.endX) {
+                        // Move to the next point
+                        return;
                     }
+                        // Check for pillar collisions
+                        for (const pillar of this.pillarRectData) {
+                            if (
+                                startX + 1 < pillar.x + pillar.width &&
+                                startX + seatWidth > pillar.x + 2 &&
+                                startY + 1 < pillar.y + pillar.height &&
+                                startY + seatHeight > pillar.y + 1
+                            ) {
+                                // Adjust startY to avoid pillars
+                                startY = pillar.y + pillar.height;
 
-                    if (startX + roomWidth <= point.endX && startY + roomHeight <= point.endY + 1) {
-                      if (prevRoom && prevRoom.title == room.title && room.title !== 'Workstation4x2'&& room.title !== 'Cubical') {
-                        // console.log("prevRoom.title === room.title", prevRoom.title, room.title);
+                                // Handle workstation placement when reaching the endY
+                                if (startY >= point.endY - 1) {
+                                    startY = point.startY;
+                                    roomColumnSwitch++;
 
-                        startX = point.startX;
-                        // startY+=roomHeight
+                                    // Adjust startX for the next column
+                                    if (roomColumnSwitch % 2 === 0) {
+
+                                        startX += seatWidth+seatWidth ;
+                                    } else {
+                                    //  if(roomColumnSwitch<1){
+                                    //   startX += seatWidth + seatWidth+seatWidth ;
+                                    //   roomColumnSwitch+2
+                                    //  }else{
+                                      startX += seatWidth + seatWidth +seatWidth;
+                                    //  }
+
+                                    }
+                                }
+                            }
+                        }
+                        workstationRoom.selectedCount--
+                        // Draw the workstation
+                        this.drawRoomRectangle(
+                            startX,
+                            startY,
+                            seatWidth,
+                            seatHeight,
+                            workstationRoom.color,
+                            workstationRoom.title
+                        );
+                        workstationRowSwitch++
+                        // Update coordinates for the next iteration
+                        if(workstationRowSwitch<2){
+                          startX+=seatWidth
+
+                        }else{
+                          startX-=seatWidth
+                          startY += seatHeight;
+                          workstationRowSwitch=0
+                        }
+
+
+                        // Handle workstation placement when reaching the endY
+                        if (startY  > point.endY - 1) {
+                            startY = point.startY;
+                            roomColumnSwitch++;
+
+                            // Adjust startX for the next column
+                            if (roomColumnSwitch % 2 === 0) {
+
+                              startX += seatWidth+seatWidth ;
+                          } else {
+                          //  if(roomColumnSwitch<1){
+                            startX += seatWidth + seatWidth+seatWidth ;
+                            // roomColumnSwitch+2
+                          //  }
+                          //  else{
+                          //   startX += seatWidth + seatWidth ;
+                          //  }
+
+                          }
+                        }
+                    }
+                    // this.drawnRooms.push(workstationRoom);
+                }
+            }
+             // Clear the content of the workstation4x2 array
+        // this.workstation4x2 = [];
+        };
+        const drawRoom2x3 = () => {
+          if (this.rooms2x3.length > 0) {
+              for (const room2x3 of this.rooms2x3) {
+                  let roomToDraw = room2x3.selectedCount;
+                  let roomWidth = room2x3.dimensions.width * seatWidth;
+                  let roomHeight = room2x3.dimensions.height * seatHeight;
+                //   if (this.drawnRooms.includes(room2x3)) {
+                //     continue;
+                // }
+                  for (let i = 0; i < roomToDraw; i++) {
+                    if (startX > point.endX) {
+                      // Move to the next point
+                      return;
+                  }
+                      // Check for pillar collisions
+                      for (const pillar of this.pillarRectData) {
+                        if (
+                          startX + 1 < pillar.x + pillar.width &&
+                          startX + roomWidth > pillar.x + 2 &&
+                          startY + 1 < pillar.y + pillar.height &&
+                          startY + roomHeight > pillar.y + 1
+                      ) {
+                              // Adjust startY to avoid pillars
+                              startY = pillar.y + pillar.height;
+
+                              // Handle room placement when reaching the endY
+                              if (startY >= point.endY +1) {
+                                  startY = point.startY;
+                                  roomColumnSwitch++;
+
+                                  // Adjust startX for the next column
+                                  if (roomColumnSwitch % 2 === 0) {
+                                      startX += roomWidth;
+                                  } else {
+                                      startX += roomWidth + seatWidth;
+                                  }
+                              }
+                          }
+                      }
+                      if (startY + roomHeight > point.endY +1) {
+                        // this.layer.draw()
+                        // debugger
+                          startY = point.startY;
+                          roomColumnSwitch++;
+
+                          // Adjust startX for the next column
+                          if (roomColumnSwitch % 2 === 0) {
+                              startX += roomWidth;
+                          } else {
+                              startX += roomWidth + seatWidth;
+                          }
+
 
                       }
                       // Draw the room
-                      this.drawRoomRectangle(startX, startY, roomWidth, roomHeight, room.color, room.title);
-                      saveRooms = {
-                        title: room.title,
-                        x: startX,
-                        y: startY,
-                        dimensions: room.dimensions,
-                        width:roomWidth,
-                        height:roomHeight,
-                        color: room.color,
-                        priority: room.priority,
-                        rectSequence:point.sequenceNo
-                      };
-                      // Update counts and positions
-                      room.selectedCount--;
-                      startX += roomWidth;
-                      remainingRooms -= room.count;
+                      room2x3.selectedCount--
+                      this.drawRoomRectangle(
+                          startX,
+                          startY,
+                          roomWidth,
+                          roomHeight,
+                          room2x3.color,
+                          room2x3.title
+                      );
 
-                      // Save the current room as the previously drawn room
-                      prevRoom = {
-                        title: room.title,
-                        x: startX,
-                        y: startY,
-                        dimensions: room.dimensions,
-                        width:roomWidth,
-                        height:roomHeight,
-                        color: room.color,
-                        priority: room.priority,
-                        rectSequence:point.sequenceNo
-                      };
-                      room.drawn=true
-                      this.drawnRooms.push(saveRooms);
-                      // Check if there is remaining space and color it differently (e.g., red)
 
-                      if (startX + roomWidth > point.endX + 1) {
-                        startX = point.startX;
-                        startY += roomHeight
-                      } else if (startX + roomWidth < point.endX && room.selectedCount === 0) {
-                        startX = point.startX;
-                        startY += roomHeight;
-                      }
-
-                  }else if(roomWidth>availableWidth && room.dimensions.width>3){
-                    firstHalf=availableWidth
-                    secondHalf=roomWidth-firstHalf
-
-                    if (prevRoom && prevRoom.title === room.title && room.title !== 'Workstation4x2' && prevRoom.x == startX) {
-                      // console.log("prevRoom.title === room.title", prevRoom.title, room.title);
-                      startX = point.startX;
-                      startY+=roomHeight
-
-                    }
-                    this.drawRoomRectangle(startX, startY, firstHalf?firstHalf:roomWidth, roomHeight, room.color, room.title);
-                    saveRooms = {
-                      title: room.title,
-                      x: startX,
-                      y: startY,
-                      dimensions: room.dimensions,
-                      width:roomWidth,
-                      height:roomHeight,
-                      color: room.color,
-                      priority: room.priority,
-                      rectSequence:point.sequenceNo
-                    };
-                    // Update counts and positions
-                    room.selectedCount--;
-                    startX += roomWidth;
-                    remainingRooms -= room.count;
-
-                    // Save the current room as the previously drawn room
-                    prevRoom = {
-                      title: room.title,
-                      x: startX,
-                      y: startY,
-                      dimensions: room.dimensions,
-                      width:roomWidth,
-                      height:roomHeight,
-                      color: room.color,
-                      priority: room.priority,
-                      rectSequence:point.sequenceNo
-                    };
-                    room.drawn=true
-                    this.drawnRooms.push(saveRooms);
-                    // Check if there is remaining space and color it differently (e.g., red)
-                    if(secondHalf){
-                      startX = point.startX; // Reset startX to the beginning
-                      startY += roomHeight; // Move to the next row
-                      if(startY + roomHeight < point.endY){
-                        this.drawRoomRectangle(startX, startY, secondHalf, roomHeight, room.color, secondHalf?'':room.title);
-                        secondHalf=null
-                      }else{
-                        secondHalf=null
-                      }
-
-                    }
-                    if (startX + roomWidth > point.endX + 1) {
-                      startX = point.startX;
-                      startY += roomHeight
-                    } else if (startX + roomWidth < point.endX && room.selectedCount === 0) {
-                      startX = point.startX;
+                      // Update coordinates for the next iteration
                       startY += roomHeight;
-                    }
 
-                  }else if(roomWidth>availableWidth && room.dimensions.width>3){
-                    firstHalf=availableWidth
-                    secondHalf=roomWidth-firstHalf
-
-                    if (prevRoom && prevRoom.title === room.title && room.title !== 'Workstation4x2' && prevRoom.x == startX) {
-                      // console.log("prevRoom.title === room.title", prevRoom.title, room.title);
-                      startX = point.startX;
-                      startY+=roomHeight
-
-                    }
-                    this.drawRoomRectangle(startX, startY, firstHalf?firstHalf:roomWidth, roomHeight, room.color, room.title);
-                    saveRooms = {
-                      title: room.title,
-                      x: startX,
-                      y: startY,
-                      dimensions: room.dimensions,
-                      width:roomWidth,
-                      height:roomHeight,
-                      color: room.color,
-                      priority: room.priority,
-                      rectSequence:point.sequenceNo
-                    };
-                    // Update counts and positions
-                    room.selectedCount--;
-                    startX += roomWidth;
-                    remainingRooms -= room.count;
-
-                    // Save the current room as the previously drawn room
-                    prevRoom = {
-                      title: room.title,
-                      x: startX,
-                      y: startY,
-                      dimensions: room.dimensions,
-                      width:roomWidth,
-                      height:roomHeight,
-                      color: room.color,
-                      priority: room.priority,
-                      rectSequence:point.sequenceNo
-                    };
-                    room.drawn=true
-                    this.drawnRooms.push(saveRooms);
-                    // Check if there is remaining space and color it differently (e.g., red)
-                    if(secondHalf){
-                      startX = point.startX; // Reset startX to the beginning
-                      startY += roomHeight; // Move to the next row
-                      if(startY + roomHeight < point.endY){
-                        this.drawRoomRectangle(startX, startY, secondHalf, roomHeight, room.color, secondHalf?'':room.title);
-                        secondHalf=null
-                      }else{
-                        secondHalf=null
-                      }
-
-                    }
-                    if (startX + roomWidth > point.endX + 1) {
-                      startX = point.startX;
-                      startY += roomHeight
-                    } else if (startX + roomWidth < point.endX && room.selectedCount === 0) {
-                      startX = point.startX;
-                      startY += roomHeight;
-                    }
+                      // Handle room placement when reaching the endY
 
                   }
-
-
-                }
+                  // this.drawnRooms.push(room2x3);
               }
-            }
+          }
+        };
+        const drawRoom3x2 = () => {
+          if (this.rooms3x2.length > 0) {
+              for (const room2x3 of this.rooms3x2) {
+              //   if (this.drawnRooms.includes(room2x3)) {
+              //     continue;
+              // }
+                  let roomToDraw = room2x3.selectedCount;
+                  let roomWidth = room2x3.dimensions.width * seatWidth;
+                  let roomHeight = room2x3.dimensions.height * seatHeight;
 
-            this.totalNumber = remainingRooms;
-            this.layer.batchDraw();
-        })
+                  for (let i = 0; i < roomToDraw; i++) {
+                    if (startX > point.endX) {
+                      // Move to the next point
+                      return;
+                  }
+                      // Check for pillar collisions
+                      for (const pillar of this.pillarRectData) {
+                        if (
+                          startX + 1 < pillar.x + pillar.width &&
+                          startX + roomWidth > pillar.x + 2 &&
+                          startY + 1 < pillar.y + pillar.height &&
+                          startY + roomHeight > pillar.y + 1
+                      ) {
+                              // Adjust startY to avoid pillars
+                              startY = pillar.y + pillar.height;
 
-        // roomCanBeUsed.sort((a:any,b:any)=>b.sequenceNo-a.sequenceNo)
+                              // Handle room placement when reaching the endY
+                              if (startY >= point.endY +1) {
+                                  startY = point.startY;
+                                  roomColumnSwitch++;
+
+                                  // Adjust startX for the next column
+                                  if (roomColumnSwitch % 2 === 0) {
+                                      startX += roomWidth;
+                                  } else {
+                                      startX += roomWidth + seatWidth;
+                                  }
+                              }
+                          }
+                      }
+                      if (startY + roomHeight > point.endY +1) {
+                        // this.layer.draw()
+                        // debugger
+                          startY = point.startY;
+                          roomColumnSwitch++;
+
+                          // Adjust startX for the next column
+                          if (roomColumnSwitch % 2 === 0) {
+                              startX += roomWidth;
+                          } else {
+                              startX += roomWidth + seatWidth;
+                          }
 
 
+                      }
+                      room2x3.selectedCount--
+                      // Draw the room
+                      this.drawRoomRectangle(
+                          startX,
+                          startY,
+                          roomWidth,
+                          roomHeight,
+                          room2x3.color,
+                          room2x3.title
+                      );
 
 
+                      // Update coordinates for the next iteration
+                      startY += roomHeight;
+
+                      // Handle room placement when reaching the endY
+
+                  }
+                  // this.drawnRooms.push(room2x3);
+              }
+          }
+        };
+     // Helper function to draw remaining rooms
+     const drawRemainingRooms = () => {
+      this.remainRoom.sort((a:any,b:any)=>a.dimensions.width-b.dimensions.width)
+      for (const rooms of this.remainRoom) {
+          let roomToDraw = rooms.selectedCount;
+          let roomWidth = rooms.dimensions.width * seatWidth;
+          let roomHeight = rooms.dimensions.height * seatHeight;
+        //   if (this.drawnRooms.includes(rooms)) {
+        //     continue;
+        // }
+          for (let i = 0; i < roomToDraw; i++) {
+            if (startX > point.endX) {
+              // Move to the next point
+              return;
+          }
+              // Check for pillar collisions
+              for (const pillar of this.pillarRectData) {
+                if (
+                  startX + 1 < pillar.x + pillar.width &&
+                  startX + roomWidth > pillar.x + 2 &&
+                  startY + 1 < pillar.y + pillar.height &&
+                  startY + roomHeight > pillar.y + 1
+              ) {
+                      // Adjust startY to avoid pillars
+                      startY = pillar.y + pillar.height;
+
+                      // Handle room placement when reaching the endY
+                      if (startY >= point.endY +1) {
+                          startY = point.startY;
+                          roomColumnSwitch++;
+
+                          // Adjust startX for the next column
+                          if (roomColumnSwitch % 2 === 0) {
+                              startX += roomWidth;
+                          } else {
+                              startX += roomWidth + seatWidth;
+                          }
+                      }
+                  }
+              }
+  // Handle room placement when reaching the endY
+  if (startY + roomHeight > point.endY - 1) {
+    startY = point.startY;
+    roomColumnSwitch++;
+
+    // Adjust startX for the next column
+    if (roomColumnSwitch % 2 === 0) {
+        startX += roomWidth;
+    } else {
+        startX += roomWidth + seatWidth;
+    }
+} rooms.selectedCount--
+              // Draw the remaining room
+              this.drawRoomRectangle(
+                  startX,
+                  startY,
+                  roomWidth,
+                  roomHeight,
+                  rooms.color,
+                  rooms.title
+              );
+
+              // Update coordinates for the next iteration
+              startY += roomHeight;
+
+
+          }
+          // this.drawnRooms.push(rooms);
       }
+  };
+
+  const functionsArray = [drawWorkstation4x2,drawRoom2x2,drawRoom2x3,drawRoom3x2,drawRemainingRooms];
+
+  // Function to shuffle the array
+  const shuffleArray=(array:any)=> {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  // Shuffle the array
+  shuffleArray(functionsArray);
+
+  // Call each function in the shuffled order
+  // console.log(functionsArray)
+  functionsArray.forEach((func:any )=> func());
+
+};
 
 
-      drawRoomRectangle(x: number, y: number, width: number, height: number, fill: string,title:string) {
+
+
+      //draws  the room
+      drawRoomRectangle(x: number, y: number, width: number, height: number, fill: string, title: string) {
         const rect = new Konva.Rect({
           x: x,
           y: y,
@@ -561,31 +798,37 @@ layoutData:any[]=[]
           height: height,
           fill: fill,
           opacity: 0.3,
-          stroke: 'black',  // You can customize the stroke color
-          strokeWidth: 0.5, // You can customize the stroke width
+          stroke: 'black',
+          strokeWidth: 0.5,
+          id: 'rect1',
           name: `room-rectangle-${title}`,
-          draggable:true
+          draggable: true,
         });
 
-        this.layer.add(rect);
-        if(title!=='Workstation4x2'){
-          let titleOfRoom = new Konva.Text({
-            x:x,
-            y:y,
-            height:height,
-            text: `${title}`,
-            fontSize: 6,
-            width:width,
-            align : "center",
-            verticalAlign:"middle",
-            fontFamily:'Courier New',
-            name:'room-names',
-            wrap:`${title}`
-          })
-          this.layer.add(titleOfRoom)
-        }
 
+          this.layer.add(rect);
+
+          if (title !== 'Workstation4x2' && title !== 'Workstation3x2' && title !== 'Workstation5x2') {
+            let titleOfRoom = new Konva.Text({
+              x: x,
+              y: y,
+              height: height,
+              text: `${title}`,
+              fontSize: 6,
+              width: width,
+              align: 'center',
+              verticalAlign: 'middle',
+              fontFamily: 'Courier New',
+              id:'titles',
+              name: 'room-names',
+              wrap: `${title}`,
+            });
+
+            this.layer.add(titleOfRoom);
+          }
+        this.layer.batchDraw();
       }
+
 
     hideName(){
       let roomNames=this.layer.find('.room-names');
@@ -598,4 +841,48 @@ layoutData:any[]=[]
 
       })
     }
+    layerForPillar!:Konva.Layer;
+pillarRectData:any[]=[]
+
+
+drawRectOFPillars(){
+  this.layerForPillar=new Konva.Layer()
+  this.stage.add(this.layerForPillar)
+  this.pillarRectData.forEach(pilar=>{
+    let rect=new Konva.Rect({
+      x:pilar.x,
+      y:pilar.y,
+      width:pilar.width,
+      height:pilar.height,
+      fill:'transparent',
+      stroke:'black',
+      strokeWidth:0.5,
+      draggable:true
+    })
+    this.layerForPillar.add(rect)
+  })
+
+  this.layerForPillar.batchDraw()
+}
+shuffle:boolean=false;
+redrawTheRoom(){
+  this.shuffle=!this.shuffle
+
+var childToRemove = this.layer.find('#rect1');
+var childToRemove2 = this.layer.find('#titles');
+if (childToRemove) {
+  childToRemove.forEach(room=>{
+    room.destroy()
+  })
+  childToRemove2.forEach(room=>{
+    room.destroy()
+  })
+  // childToRemove.remove();
+  this.layer.draw(); // Redraw the layer after removing the child
+}
+  // this.layer.removeChildren()
+  this.drawRoomsInRectangle()
+
+}
+
 }

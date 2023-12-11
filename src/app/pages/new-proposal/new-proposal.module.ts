@@ -9,9 +9,10 @@ import { NewProposalRoutingModule } from "./module/routing/new-proposal-routing.
 import { NewProposalComponent } from "./new-proposal.component";
 import { PdfViewerModule } from "ng2-pdf-viewer";
 import { NewProposalLayoutPreviewComponent } from "./component/layout-preview/layout-preview.component";
-import { ConflictComponent } from "./component/conflict/conflict.component";
 import { NewProposalProposalPreviewComponent } from "./component/proposal-preview/proposal-preview.component";
 import { NewProposalAdminChildRouteGuard } from "./module/service/new-proposal-admin-child-route-guard/new-proposal-admin-route-guard.guard";
+import { LayoutPreviewDemoComponent } from './component/layout-preview-demo/layout-preview-demo.component';
+import { ViewLayoutPreviewComponent } from './component/layout-preview-demo/view-layout-preview/view-layout-preview.component';
 
 
 @NgModule({
@@ -21,8 +22,9 @@ import { NewProposalAdminChildRouteGuard } from "./module/service/new-proposal-a
         NewProposalRequirementInfoComponent,
         NewProposalSpaceAvailabilityComponent,
         NewProposalLayoutPreviewComponent,
-        ConflictComponent,
-        NewProposalProposalPreviewComponent
+        NewProposalProposalPreviewComponent,
+        LayoutPreviewDemoComponent,
+        ViewLayoutPreviewComponent
 
     ],
     imports: [

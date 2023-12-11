@@ -90,8 +90,8 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
           res.layoutArray[0].layoutBorder.forEach((item:any) => {
             //debugger
 
-            const {_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull,sequenceNo } = item;
-            this.getAllPoints.push({_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull,sequenceNo });
+            const {_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull,sequenceNo,entryPoint } = item;
+            this.getAllPoints.push({_id, startX, startY, endX, endY, shape,rectWidth,rectHeight,seatPosition,isFull,sequenceNo,entryPoint });
 
           });
 
@@ -227,6 +227,11 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
           // }
 
       }
+      res.layoutArray[0].pillarsData.forEach((item:any)=>{
+        const {x,y,height,width } = item;
+        this.pillarRectData.push({x,y,height,width});
+
+      })
       }
 
       })
@@ -377,14 +382,6 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
             });
             this.layer.add(transformNewShape);
             transformNewShape.nodes([this.shape]);
-            // this.shape.on('click', () => {
-            //   let transformNewShape = new Konva.Transformer({
-            //     ignoreStroke:true,
-            //     name:'shapeTransformer'
-            //   });
-            //   this.layer.add(transformNewShape);
-            //   transformNewShape.nodes([this.shape]);
-            // })
 
               this.shape.on('transformend', () => {
                 // Get the updated properties from the transformed shape
@@ -527,16 +524,12 @@ export class LayoutEditorComponent implements OnInit, AfterViewInit {
             //added all shapes in the layer
             this.layer.add(seatPositionCircle, tooltip);
 
-        // }else{
-        //   console.log('HAVE SHAPE')
-        // }
-
         this.layer.batchDraw();
     }
 }
 
 drawingEnabled:boolean=true
-totalNumebr:number=100
+totalNumebr:number=1000
 
 drawRectangles(array:any) {
   // console.log(array,"DATAAA")
@@ -628,8 +621,6 @@ drawRectangles(array:any) {
   seatDrawing: boolean = false;
   isSeatDrawingEnabled = false;
 
-
-
 seatArray:any[]=[]
 drawSeatAndGetHW() {
   this.seatShape = new Konva.Rect({
@@ -680,21 +671,16 @@ updateInputFields(width:any, height:any) {
   this.seatHeight =Number(height.toFixed(2))
 }
 
+
 updateSeatsSize() {
-  // console.log(this.seatWidth,this.seatHeight)
   this.transformer.destroy()
   this.seatShape.destroy()
-  // const height=this.seatShape.height()
-  // const width=this.seatShape.width();
-  // console.log(height,width)
-  // this.seatHeight= height.floor(2);
-  // this.seatWidth =width.floor(2) ;
-
 }
 //finals all layout and save the data..
   addLayout(){
     let data = {
         LayoutData:{layoutBorder:this.getAllPoints,
+          pillarsData:this.pillarRectData,
           seatHeight:this.seatHeight,
           seatWidth:this.seatWidth,
 
@@ -790,4 +776,67 @@ updateSeqNumber(indexToUpdate:any) {
     console.log("Updated sequence number:", pointToUpdate.sequenceNo);
   }
 }
+layerForPillar!:Konva.Layer;
+pillarRectData:any[]=[]
+drawPillar(){
+  this.layer.listening(false)
+  this.layerForPillar =new Konva.Layer
+  this.stage.add(this.layerForPillar)
+  let pillarRect= new Konva.Rect({
+      x:this.customWidth/2,
+      y:this.customHeight/2,
+      width:this.seatWidth,
+      height:this.seatHeight,
+      fill:'green',
+      opacity:0.8,
+      draggable:true
+
+  })
+  this.layerForPillar.add(pillarRect);
+  let trasnformForPillar = new Konva.Transformer({
+    nodes:[pillarRect]
+  })
+  let width=pillarRect.width();
+  let height=pillarRect.height()
+  this.layerForPillar.add(trasnformForPillar)
+  pillarRect.on('transformend', () => {
+    // Get the updated properties from the transformed shape
+
+   width = pillarRect.width() * pillarRect.scaleX();
+    height = pillarRect.height() * pillarRect.scaleY();
+
+  });
+  pillarRect.on('dblclick',()=>{
+      this.savePillar(pillarRect.x(),pillarRect.y(),width,height)
+      pillarRect.destroy()
+      trasnformForPillar.destroy()
+  })
+
+
+  this.layerForPillar.draw()
+
+}
+savePillar(x:number,y:number,width:number,height:number){
+  let data={
+      x,y,width,height
+  }
+  this.pillarRectData.push(data)
+  console.log(this.pillarRectData)
+}
+drawRectOFPillars(){
+  this.layerForPillar=new Konva.Layer
+  this.stage.add(this.layerForPillar)
+  this.pillarRectData.forEach(pilar=>{
+    let rect=new Konva.Rect({
+      x:pilar.x,
+      y:pilar.y,
+      width:pilar.width,
+      height:pilar.height,
+      fill:'green',
+    })
+    this.layerForPillar.add(rect)
+  })
+  this.layerForPillar.batchDraw()
+}
+
 }
