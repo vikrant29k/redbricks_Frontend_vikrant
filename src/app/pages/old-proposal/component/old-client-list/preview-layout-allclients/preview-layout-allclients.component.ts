@@ -19,7 +19,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
 
   imageName!: string;
   points: number[] = [];
-  constructor(private router: Router,
+  constructor(
                private route: ActivatedRoute,
                private locationService: LocationService,
                private proposalService: ProposalService
@@ -47,10 +47,7 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
         const proposalObject = {
             clientName:proposal.clientName,
             totalNumberOfSeats:proposal.totalNumberOfSeats,
-            seatsData: proposal.seatsData.map((seat:any, index:any) => ({
-                ...seat,
-                first: index === 0, // Set "first" to true for the first object, false for others
-            })),
+            seatsData:   proposal.seatsData,
             seatSize: proposal.seatSize,
             color: proposal.color,
         };
@@ -142,72 +139,31 @@ export class PreviewLayoutAllclientsComponent implements OnInit, AfterViewInit {
   drawTHeSeat(){
     // let dataOfDrawingSeats = this.proposalData.
     this.proposalData.forEach(dataOfSeats=>{
-  //  console.log(dataOfSeats,"HRLOO")
-      for (const seat of dataOfSeats.seatsData) {
-
-        this.drawSeatsBetweenPoints(seat.start, seat.end,seat.seatPosition,dataOfSeats.seatSize, dataOfSeats.color, seat.first,dataOfSeats.clientName,dataOfSeats.totalNumberOfSeats);
-      }
+        this.drawSelectedRoom(dataOfSeats.seatsData,dataOfSeats.color,dataOfSeats.clientName)
     })
 
   }
-  drawSeatsBetweenPoints(start:any, end:any,seatPosition:any,seatSize:any,color:any, index:any, clientName:string,totalNumberOfSeats:number) {
-    const startX = Math.min(start.x, end.x);
-    const startY = Math.min(start.y, end.y);
-    const endX = Math.max(start.x, end.x);
-    const endY = Math.max(start.y, end.y);
-    const seatSizeWidth = seatSize[0].width; // Extract width from seatSize
-    const seatSizeHeight = seatSize[0].height; // Extract height from seatSize
-    if(seatPosition==false){
-      for (let x = startX; x < endX; x += seatSizeHeight) {
-        for (let y = startY; y < endY; y += seatSizeWidth) {
-          this.drawSeatRectangle(x, y,color,seatSizeWidth,seatSizeHeight,index,clientName,totalNumberOfSeats);
-        }
-      }
-    }else{
-      for (let x = startX; x < endX; x += seatSizeWidth) {
-        for (let y = startY; y < endY; y += seatSizeHeight) {
-          this.drawSeatRectangle(x, y,color,seatSizeHeight,seatSizeWidth,index,clientName,totalNumberOfSeats);
-        }
-      }
-    }
+  drawSelectedRoom(drawnSeats:any[],color:any,clientName:any) {
+    drawnSeats.forEach(point=>{
+      let rect = new Konva.Rect({
+        x:point.x,
+        y: point.y,
+        width: point.width,
+        height: point.height,
+        fill:color,
+        opacity:0.5,
+        draggable:true
 
-  }
-
-  drawSeatRectangle(x:any, y:any, fill:string, height:number, width:number, index:any, clientName:string,totalNumberOfSeats:number) {
-
-    const rect = new Konva.Rect({
-      x: x,
-      y: y,
-      width: width,
-      height: height,
-      fill: fill,
-      opacity: 0.5,
-      name: 'seat-rectangle',
-    });
-    this.layer.add(rect);
-if(index==true){
-  const text = new Konva.Text({
-    x: x - width / 2,
-    y: y + height / 2,
-    text: clientName,
-    fontSize: 16,
-    fill: 'black',
-    align: 'center',
-});
-const totalSeatsText = new Konva.Text({
-  x: x,
-  y: y + height + 10, // Adjust the y value as needed
-  text: `Total Seats: ${totalNumberOfSeats}`,
-  fontSize: 14,
-  fill: 'black',
-  align: 'center',
-});
-totalSeatsText.offsetX(totalSeatsText.width() / 2);
-this.layer.add(totalSeatsText);
-text.offsetX(text.width() / 2);
-text.offsetY(text.height() / 2);
-this.layer.add(text);
-}
+      })
+      this.layer.add(rect);
+    
+      rect.moveToTop()
+      this.layer.draw()
+    })
+    // let clientNameTitle = new Konva.Text({
+    //   x:drawnSeats[0].point.x+10,
+    //   y:drawnSeats[0].point.y+20,
+    // })
 
   }
 }
