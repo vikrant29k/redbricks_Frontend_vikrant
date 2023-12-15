@@ -178,6 +178,7 @@ export class NewProposalRequirementInfoComponent implements OnInit {
 
 hint5x2:any;
 hint3x2:any
+hint4x2:any
   watchFormValue = () => {
     this.requirementInfoForm.valueChanges.subscribe(() => {
       let value = this.requirementInfoForm.value;
@@ -193,6 +194,12 @@ if(value.workstation3x2 % 4 !== 0){
   }else{
     this.hint3x2=''
   }
+  if(value.workstation4x2 % 2 !== 0){
+    this.hint4x2='Multiple of 2 should be entered'
+    this.requirementInfoForm.value.workstation4x2=''
+    }else{
+      this.hint4x2=''
+    }
       this.totalSelectedWorkstation =
   //  (value.workstation2x1 * 0.60) +
     (value.workstation3x2 * 0.75) +
@@ -255,9 +262,11 @@ if(value.workstation3x2 % 4 !== 0){
     // console.log(event)
     if (inputValue % 4 !== 0) {
       event.target.value = '';
-    }else{
-    }
+    } else if (inputValue % 2 !== 0) {
+      event.target.value = '';
   }
+}
+
   content:any;
   genrateLayout = () => {
    this.content= document.getElementById('datadiv')?.textContent;

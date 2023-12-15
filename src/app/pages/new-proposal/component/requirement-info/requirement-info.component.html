@@ -35,7 +35,11 @@
                             </div>
                             <div class="field-inputs">
                               <mat-label>4x2</mat-label>
-                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation4x2">
+                              <div style="display: flex;flex-direction: column;    align-items: flex-end;">
+
+                              <input type="number" min="0" oninput="this.value = Math.round(Math.abs(this.value))" formControlName="workstation4x2" (change)="validateInput($event)">
+                              <mat-hint>{{hint4x2}}</mat-hint>
+                            </div>
                             </div>
                             <div class="field-inputs">
                               <mat-label>5x2</mat-label>
