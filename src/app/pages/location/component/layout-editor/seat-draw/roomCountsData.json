@@ -34,7 +34,7 @@
  "Large Reception": {"count": 10, "color": "black","width":5,"height":2,"priority":5},
  "MD Cabin": {"count": 12, "color": "brown","width":3,"height":4,"priority":6},
  "10P Meeting": {"count": 12, "color": "lime","width":3,"height":4,"priority":6},
- "12P Meeting": {"count": 12, "color": "gray","width":3,"height":4,"priority":6},
+ "12P Meeting": {"count": 15, "color": "gray","width":3,"height":5,"priority":7},
  "16P Meeting": {"count": 16, "color": "yellow","width":3,"height":6,"priority":7},
  "20P Board Room": {"count": 24, "color": "orange","width":3,"height":8,"priority":8},
  "24P Board Room": {"count": 32, "color": "pink","width":4,"height":8,"priority":9}

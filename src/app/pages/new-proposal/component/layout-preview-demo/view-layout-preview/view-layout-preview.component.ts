@@ -1,8 +1,10 @@
 import { Component, OnInit,Inject,ViewChild,ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import Konva from 'konva';
 export interface DialogData {
- currentShape:any
+ currentShape:any,
+ proposalId:any
 }
 @Component({
   selector: 'app-view-layout-preview',
@@ -14,6 +16,7 @@ export class ViewLayoutPreviewComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ViewLayoutPreviewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private proposalService:ProposalService
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +29,7 @@ export class ViewLayoutPreviewComponent implements OnInit {
   ngAfterViewInit(): void {
     if (this.data.currentShape) {
       this.stage = this.data.currentShape;
+
       this.drawStageContent();
     }
   }
@@ -52,7 +56,9 @@ export class ViewLayoutPreviewComponent implements OnInit {
         shapes.forEach((shape) => {
           const clonedShape = shape.clone();
           clonedShape.draggable(true);
-
+          if (!(clonedShape instanceof Konva.Image)) {
+              clonedShape.name('Rects')
+          }
           // Add click event listener to each shape
           clonedShape.on('click', () => {
             if (!(clonedShape instanceof Konva.Image)) {
@@ -148,5 +154,19 @@ export class ViewLayoutPreviewComponent implements OnInit {
       }
 
     })
+  }
+  saveImage(){
+    const image=this.stage.toDataURL()
+    const seatData:any=this.stage.find('.Rects')
+    debugger
+    let data={
+      image:String(image),
+      // drawnSeats:this.drawnSeats,
+      drawnSeats:seatData
+    }
+    this.proposalService.saveImage(this.data.proposalId,data).subscribe(res=>{
+      this.dialogRef.close(true)
+          // console.log(res)
+        })
   }
 }

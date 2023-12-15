@@ -122,7 +122,7 @@ switchContainer(direction: 'left' | 'right'): void {
             const dialogRef = this.dialog.open(ViewLayoutPreviewComponent, {
               width: '1500px',
               height: '800px',
-              data: { currentShape:this.currentShape },
+              data: { currentShape:this.currentShape,proposalId:this.data.proposalId },
             })
             dialogRef.afterClosed().subscribe(()=>{this.openOneTime=0})
             this.openOneTime++
@@ -364,7 +364,7 @@ switchContainer(direction: 'left' | 'right'): void {
       if (roomWidth > maxRoomWidthInColumn) {
 
         maxRoomWidthInColumn = roomWidth;
-        debugger
+        // debugger\.
       }
       if(room.title!='Workstation4x2' && room.title!='Phone Booth'){
       for (let i = 0; i < roomToDraw; i++) {
@@ -373,7 +373,8 @@ switchContainer(direction: 'left' | 'right'): void {
           return;
         }
         // Check for pillar collisions
-        // if(room.dimensions.width<=3 && room.dimensions.height<=3){
+                // if(room.dimensions.width<=3 && room.dimensions.height<=3){
+                  debugger
           for (const pillar of this.pillarRectData) {
             if (
               startX + 1 < pillar.x + pillar.width &&
@@ -385,34 +386,55 @@ switchContainer(direction: 'left' | 'right'): void {
               startY = pillar.y + pillar.height;
 
               // Handle room placement when reaching the endY
-              if (startY >= point.endY + 1) {
-                startY = point.startY;
-                roomColumnSwitch++;
+              // if (startY >= point.endY + 1) {
+              //   startY = point.startY;
+              //   roomColumnSwitch++;
 
-                // Adjust startX for the next column
-                if (roomColumnSwitch % 2 === 0) {
-                  startX += maxRoomWidthInColumn;
-                } else {
-                  startX += maxRoomWidthInColumn + seatWidth;
-                }
-                // maxRoomWidthInColumn=0
-              }
+              //   // Adjust startX for the next column
+              //   if (roomColumnSwitch % 2 === 0) {
+              //     startX += maxRoomWidthInColumn;
+              //   } else {
+              //     this.drawRoomRectangle(
+              //       startX+maxRoomWidthInColumn,
+              //       point.startY,  // Start from the beginning of the designated space
+              //       seatWidth,
+              //       point.endY - point.startY,  // Height spans from startY to endY
+              //       'green',  // Color of the passage
+              //       'Passage',  // Title or identifier for the passage
+              //       layer
+              //     );
+
+              //     startX += maxRoomWidthInColumn + seatWidth;
+              //   }
+              //   // maxRoomWidthInColumn=0
+              // }
             }
           }
-        // }else{
-        //   debugger
         // }
 
-
         // Handle room placement when reaching the endY
-        if (startY + roomHeight > point.endY +1) {
+        if (startY+roomHeight >=point.endY+1) {
+
           startY = point.startY;
           roomColumnSwitch++;
+          // layer.draw()
+          // debugger
+          //   maxRoomWidthInColumn = room.dimensions.width * seatWidth;
 
           // Adjust startX for the next column
           if (roomColumnSwitch % 2 === 0) {
             startX += maxRoomWidthInColumn;
           } else {
+            this.drawRoomRectangle(
+              startX+maxRoomWidthInColumn,
+              point.startY,  // Start from the beginning of the designated space
+              seatWidth,
+              point.endY - point.startY,  // Height spans from startY to endY
+              'green',  // Color of the passage
+              'Passage',  // Title or identifier for the passage
+              layer
+            );
+
             startX += maxRoomWidthInColumn + seatWidth;
           }
           // maxRoomWidthInColumn = 0;
@@ -450,17 +472,17 @@ switchContainer(direction: 'left' | 'right'): void {
                        // Adjust startY to avoid pillars
                        startY = pillar.y + pillar.height;
                        // Handle workstation placement when reaching the endY
-                       if (startY >= point.endY - 1) {
-                           startY = point.startY;
-                          //  workstationSwitch++;
-                           // Adjust startX for the next column
-                           if (workstationSwitch % 2 === 0) {
-                               startX += seatWidth+seatWidth +seatWidth ;
-                           } else {
-                             startX +=  seatWidth+seatWidth ;
-                           }
-                          //  seatWidth=0
-                       }
+                      //  if (startY >= point.endY - 1) {
+                      //      startY = point.startY;
+                      //     //  workstationSwitch++;
+                      //      // Adjust startX for the next column
+                      //      if (workstationSwitch % 2 === 0) {
+                      //          startX += seatWidth+seatWidth +seatWidth ;
+                      //      } else {
+                      //        startX +=  seatWidth+seatWidth ;
+                      //      }
+                      //     //  seatWidth=0
+                      //  }
                    }
                }
                  // Handle workstation placement when reaching the endY
@@ -468,10 +490,19 @@ switchContainer(direction: 'left' | 'right'): void {
                    startY = point.startY;
                    workstationSwitch++;
                    if (workstationSwitch % 2 === 0) {
-
-                     startX += seatWidth+seatWidth+seatWidth  ;
+                    this.drawRoomRectangle(
+                      startX+maxRoomWidthInColumn,
+                      point.startY,  // Start from the beginning of the designated space
+                      seatWidth,
+                      point.endY - point.startY,  // Height spans from startY to endY
+                      'green',  // Color of the passage
+                      'Passage',  // Title or identifier for the passage
+                      layer
+                    );
+                     startX += seatWidth+seatWidth+maxRoomWidthInColumn  ;
                  } else {
                  //  if(roomColumnSwitch<1){
+
                    startX += seatWidth+seatWidth ;
                  }
                 //  maxRoomWidthInColumn=0
@@ -617,5 +648,6 @@ switchContainer(direction: 'left' | 'right'): void {
         this.fitStageToContainer(stage, containerId);
       }
     }
+
 }
 

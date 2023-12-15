@@ -22,7 +22,7 @@
    -->
 <div class="main">
   <div class="canvas-container">
-    <div id="container"></div>
+    <div class="stageCanvas" #stageCanvas></div>
   </div>
 <div class="sub-container">
   <!-- <button mat-raised-button (click)="toggleDrawing()" color="primary">{{isDrawingEnabled?'Stop':'Start'}} Drawing Border</button> -->
@@ -34,9 +34,10 @@
   </div>
 <!-- <button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button> -->
 <button mat-raised-button (click)="resetZoomAndPosition()" color="primary">Reset Zoom and Position</button>
+<button mat-raised-button (click)="resetThePoint()" color="primary">Point Resize</button>
 <!-- <button mat-raised-button (click)='addLayout()' color="primary">Final the layout</button> -->
 <!-- <button mat-raised-button (click)="displayRectangles()" color="primary">Display Seats</button> -->
-<button mat-raised-button (click)="updateStoredValues()" color="primary">Update Rectangels</button>
+<!-- <button mat-raised-button (click)="updateStoredValues()" color="primary">Update Rectangels</button> -->
 </div>
 </div>
 

@@ -120,11 +120,11 @@ export class ProposalService {
   getProposalByLocationId(Id:any){
     let httpOptions = this.headerService.updateHeader();
     return this.http.get(this.baseUrl+'getLayoutDataOfSameLocation/'+Id,httpOptions).pipe(
-      this.toster.observe({
-        success: 'Location Layout Loaded Successfully',
-        loading: 'Loading Location...',
-        error: ({ error }) => `${error.Message}`,
-      })
+      // this.toster.observe({
+      //   success: 'Location Layout Loaded Successfully',
+      //   loading: 'Loading Location...',
+      //   error: ({ error }) => `${error.Message}`,
+      // })
     );
   }
   addOldClient(data:any){
