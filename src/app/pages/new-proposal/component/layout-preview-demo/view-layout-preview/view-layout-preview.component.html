@@ -1,10 +1,24 @@
 <div class="main-container">
-  <div>
-    <button class="download_btn" (click)="resetZoomAndPosition()">Reset Layout</button>
-  <button class="download_btn" (click)="hideName()">Hide Name</button>
+  <div class="btn">
+    <button type="button" mat-raised-button color="primary" (click)="resetZoomAndPosition()">Reset Layout</button>
+  <button type="button" mat-raised-button color="primary"(click)="hideName()">Hide Name</button>
   <button class="download_btn" (click)="saveImage()">Save Layout</button>
   </div>
-
+<div class="container">
   <div class="stageCanvas" #stageCanvas></div>
+
+  <div class="content">
+    <ng-container *ngFor="let content of roomDetails">
+      <p style="margin: 2px; display: flex;">{{content.title}}  =  {{content.selectedCount}} &nbsp; <span class="circle-color"  [style.background-color]="content.color"></span></p>
+    </ng-container>
+    <p>Total Count:{{totalNumber}}</p>
+    <div class="chart">
+      <div #pieChart class="pichart"></div>
+    </div>
+
+  </div>
 </div>
+
+</div>
+
 

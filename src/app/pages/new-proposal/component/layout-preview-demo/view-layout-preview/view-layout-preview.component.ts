@@ -1,18 +1,42 @@
+import { count } from 'rxjs';
+import * as roomsData from '../../../../location/component/layout-editor/seat-draw/roomCountsData.json';
 import { Component, OnInit,Inject,ViewChild,ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { ProposalService } from 'src/app/service/proposal/proposal.service';
 import Konva from 'konva';
+declare var google: any;
+export interface RoomData {
+  [key: string]: {
+    count: number;
+    color: string;
+    width:number;
+    height:number;
+    priority:number
+  };
+}
 export interface DialogData {
  currentShape:any,
- proposalId:any
+ proposalId:any;
+ totalNumber:number,
+ content:any;
 }
+
 @Component({
   selector: 'app-view-layout-preview',
   templateUrl: './view-layout-preview.component.html',
   styleUrls: ['./view-layout-preview.component.scss']
 })
 export class ViewLayoutPreviewComponent implements OnInit {
-
+  roomDetails:any[]=[];
+  content:any;
+  roomsDataObject: RoomData = roomsData;
+  totalNumber!:number;
+  displayTotal!:number;
+  chartdata: any[]=[];
+  totalCount: number = 0;
+  id:any;
+  dataChart:any;
+  @ViewChild('pieChart') pieChart!:  | ElementRef;
   constructor(
     public dialogRef: MatDialogRef<ViewLayoutPreviewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -21,6 +45,11 @@ export class ViewLayoutPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data.currentShape)
+    this.totalNumber=this.data.totalNumber;
+    this.content=this.data.content
+    this.seprateData();
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(() => this.drawPieChart());
   }
   @ViewChild('stageCanvas', { static: true }) stageCanvas!: ElementRef<HTMLCanvasElement>;
   stage!:Konva.Stage
@@ -32,7 +61,9 @@ export class ViewLayoutPreviewComponent implements OnInit {
 
       this.drawStageContent();
     }
+
   }
+
   private drawStageContent() {
     const layers = this.stage?.children;
     const canvas:any = this.stageCanvas.nativeElement;
@@ -155,18 +186,65 @@ export class ViewLayoutPreviewComponent implements OnInit {
 
     })
   }
-  saveImage(){
-    const image=this.stage.toDataURL()
-    const seatData:any=this.stage.find('.Rects')
-    debugger
-    let data={
-      image:String(image),
-      // drawnSeats:this.drawnSeats,
-      drawnSeats:seatData
+  seprateData(): void {
+    const contentArray = this.content.split(','); // Split the string into an array
+    contentArray.forEach((item: any) => {
+      const keyValue = item.trim().split('=');
+      if (keyValue.length === 2) {
+        const key = keyValue[0].trim();
+        const value = parseInt(keyValue[1].trim()); // Assuming the values are integers
+        this.chartdata[key] = value;
+      }
+    });
+
+    for (const key in this.chartdata) {
+      if (this.chartdata.hasOwnProperty(key)) {
+        if (this.roomsDataObject[key]) {
+          const count = this.chartdata[key];
+          const jsonData = this.roomsDataObject[key];
+          const commonObject = {
+            title: key,
+            count: jsonData.count,
+            selectedCount: count,
+            dimensions: { width: jsonData.width, height: jsonData.height },
+            color: jsonData.color,
+            drawn: false,
+            priority: jsonData.priority
+          };
+          this.roomDetails.push(commonObject);
+          this.roomDetails.sort((a: any, b: any) => b.selectedCount - a.selectedCount);
+        }
+      }
     }
-    this.proposalService.saveImage(this.data.proposalId,data).subscribe(res=>{
-      this.dialogRef.close(true)
-          // console.log(res)
-        })
   }
+  drawPieChart(): void {
+    const data = google.visualization.arrayToDataTable([
+      ['Type', 'Count'],
+      ...this.roomDetails.map(room => [room.title, room.selectedCount*room.count])
+    ]);
+
+    const colors = this.roomDetails.map(room => room.color);
+
+    const options: any = {
+      title: 'Chart',
+      pieHole: 0.4, // Set the size of the center hole for the donut chart
+      titleTextStyle: {
+        color: 'black',
+        fontSize: 22,
+        bold: true,
+      },
+      colors: colors,
+      legend: {
+        position: 'top',
+        textStyle: {
+          color: 'black',
+          fontSize: 18,
+        },
+      },
+    };
+
+    const chart = new google.visualization.PieChart(this.pieChart.nativeElement);
+    chart.draw(data, options);
+  }
+
 }
