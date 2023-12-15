@@ -186,6 +186,20 @@ export class ViewLayoutPreviewComponent implements OnInit {
 
     })
   }
+  saveImage(){
+    const image=this.stage.toDataURL()
+    const seatData:any=this.stage.find('.Rects')
+    debugger
+    let data={
+      image:String(image),
+      // drawnSeats:this.drawnSeats,
+      drawnSeats:seatData
+    }
+    this.proposalService.saveImage(this.data.proposalId,data).subscribe(res=>{
+      this.dialogRef.close(true)
+          // console.log(res)
+        })
+  }
   seprateData(): void {
     const contentArray = this.content.split(','); // Split the string into an array
     contentArray.forEach((item: any) => {
