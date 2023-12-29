@@ -16,7 +16,7 @@
 "Prayer/Pooja Room": {"count": 4, "color": "magenta","width":2,"height":2,"priority":32},
 "Phone Booth": {"count": 2, "color": "brown","width":1,"height":2,"priority":1},
 "Regular Cabin": {"count": 4, "color": "magenta","width":2,"height":2,"priority":2},
-"Large Cabin": {"count": 6, "color": "red","width":2,"height":3,"priority":2},
+"Large Cabin": {"count": 6, "color": "red","width":3,"height":2,"priority":2},
 "Cubical": {"count": 4, "color": "cyan","width":2,"height":2,"priority":2},
 "4P Collab Area": {"count": 4, "color": "gray","width":2,"height":2,"priority":2},
 "4P Meeting": {"count": 4, "color": "violet","width":2,"height":2,"priority":2},

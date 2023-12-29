@@ -86,17 +86,18 @@ export class ViewLayoutPreviewComponent implements OnInit {
 
         shapes.forEach((shape) => {
           const clonedShape = shape.clone();
-          clonedShape.draggable(true);
+
           if (!(clonedShape instanceof Konva.Image)) {
+            clonedShape.draggable(true);
               clonedShape.name('Rects')
           }
           // Add click event listener to each shape
           clonedShape.on('click', () => {
             if (!(clonedShape instanceof Konva.Image)) {
               // Add click event listener to each shape
-              clonedShape.on('click', () => {
-                this.handleShapeClick(clonedShape);
-              });
+              // clonedShape.on('click', () => {
+              //   this.handleShapeClick(clonedShape);
+              // });
             }
 
           });
@@ -115,18 +116,18 @@ export class ViewLayoutPreviewComponent implements OnInit {
   }
   private selectedShape: Konva.Shape | null = null;
 
-  handleShapeClick(shape: Konva.Shape): void {
-    shape.stroke('black');
-    shape.strokeWidth(2)
-    if (!this.selectedShape) {
-      // If no shape is selected, store the clicked shape as the selected shape
-      this.selectedShape = shape;
-    } else {
-      // If a shape is already selected, swap their positions
-      this.swapShapePositions(this.selectedShape, shape);
-      this.selectedShape = null; // Reset selected shape
-    }
-  }
+  // handleShapeClick(shape: Konva.Shape): void {
+  //   // shape.stroke('black');/
+  //   shape.strokeWidth(2)
+  //   if (!this.selectedShape) {
+  //     // If no shape is selected, store the clicked shape as the selected shape
+  //     this.selectedShape = shape;
+  //   } else {
+  //     // If a shape is already selected, swap their positions
+  //     // this.swapShapePositions(this.selectedShape, shape);
+  //     this.selectedShape = null; // Reset selected shape
+  //   }
+  // }
   private swapShapePositions(shape1: Konva.Shape, shape2: Konva.Shape): void {
     const shape1Position = shape1.position();
     const shape2Position = shape2.position();
@@ -186,6 +187,20 @@ export class ViewLayoutPreviewComponent implements OnInit {
 
     })
   }
+  saveImage(){
+    const image=this.stage.toDataURL()
+    const seatData:any=this.stage.find('.Rects')
+    debugger
+    let data={
+      image:String(image),
+      // drawnSeats:this.drawnSeats,
+      drawnSeats:seatData
+    }
+    this.proposalService.saveImage(this.data.proposalId,data).subscribe(res=>{
+      this.dialogRef.close(true)
+          // console.log(res)
+        })
+  }
   seprateData(): void {
     const contentArray = this.content.split(','); // Split the string into an array
     contentArray.forEach((item: any) => {
@@ -226,21 +241,15 @@ export class ViewLayoutPreviewComponent implements OnInit {
     const colors = this.roomDetails.map(room => room.color);
 
     const options: any = {
-      title: 'Chart',
-      pieHole: 0.4, // Set the size of the center hole for the donut chart
+      title: 'Room Space',
+      pieHole: 0.3, // Set the size of the center hole for the donut chart
       titleTextStyle: {
         color: 'black',
-        fontSize: 22,
-        bold: true,
+        fontSize: 16,
+        bold: false,
       },
       colors: colors,
-      legend: {
-        position: 'top',
-        textStyle: {
-          color: 'black',
-          fontSize: 18,
-        },
-      },
+      legend:'none'
     };
 
     const chart = new google.visualization.PieChart(this.pieChart.nativeElement);

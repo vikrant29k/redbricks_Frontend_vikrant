@@ -15,7 +15,7 @@
     <div id="container6" [ngClass]="{ 'hidden': activeContainer !== 6 }"></div>
   <button (click)="switchContainer('right')" class="arrow-button-right"><mat-icon>arrow_circle_right</mat-icon></button> -->
 <!-- Inside the template -->
-<div *ngIf="loading" class="loader-container">
+<!-- <div *ngIf="loading" class="loader-container">
   <div class="loader"></div>
 </div>
 <div id="menu">
@@ -24,7 +24,7 @@
     ><button id="save-button">Save</button>
   </div>
 </div>
-<div class="konva-grid">
+<div class="konva-grid"> -->
   <!-- <div [ngClass]="expandedContainer===1?'showButtons':'hideButtons'"> -->
     <!-- <label>Seats to be Selected: {{totalNumber}}/{{displayTotal}} </label> -->
     <!-- <button class="download_btn">Edit</button> -->
@@ -32,12 +32,27 @@
     <button class="download_btn">Hide Name</button>
     <button class="download_btn">Final Layout</button> -->
   <!-- </div> -->
-  <div id="container1" class="konva-container" >
+  <div id="container1" class="konva-container">
   </div>
-  <div id="container2" class="konva-container" ></div>
+  <div class="content">
+    <ng-container *ngFor="let content of roomDetails; let i = index">
+      <p style="margin: 2px; display: flex;">
+        {{content.title}} =
+        <input style="width: 1rem;" type="text" [(ngModel)]="content.selectedCount"  (ngModelChange)="updateRoomDetails(content.title,content.selectedCount)"/>
+        &nbsp;<span class="circle-color" [style.background-color]="content.color"></span>
+      </p>
+    </ng-container>
+    <!-- <p>Total Count:{{totalNumber}}</p> -->
+    <div class="chart">
+      <div #pieChart class="pichart"></div>
+    </div>
+  </div>
+
+
+  <!-- <div id="container2" class="konva-container" ></div>
   <div id="container3" class="konva-container" ></div>
-  <div id="container4" class="konva-container" ></div>
+  <div id="container4" class="konva-container" ></div> -->
 </div>
 
 
-</div>
+<!-- </div> -->
