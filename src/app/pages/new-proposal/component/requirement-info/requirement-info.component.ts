@@ -272,7 +272,7 @@ if(value.workstation3x2 % 4 !== 0){
    this.content= document.getElementById('datadiv')?.textContent;
    if(this.content){
     const dialogRef = this.dialog.open(LayoutPreviewDemoComponent, {
-      width: '1500px',
+      width: '1200px',
       height: '800px',
       panelClass: 'my-preview-class',
       data: { locationId: this.locationService.locationId, proposalId: this.proposalId, totalNoOfSeat:this.totalSelectedWorkstation, content:this.content },

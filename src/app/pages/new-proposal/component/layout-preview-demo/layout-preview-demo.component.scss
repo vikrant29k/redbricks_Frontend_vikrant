@@ -3,129 +3,150 @@
   // overflow: hidden;
   // width: 1500px;
   // height: 800px;
-  // display: flex;
+  display: flex;
   // flex-direction: row;
-  #menu {
-    display: none;
-    position: absolute;
-    width: 60px;
-    background-color: white;
-    box-shadow: 0 0 5px grey;
-    border-radius: 3px;
-  }
+  // #menu {
+  //   display: none;
+  //   position: absolute;
+  //   width: 60px;
+  //   background-color: white;
+  //   box-shadow: 0 0 5px grey;
+  //   border-radius: 3px;
+  // }
 
-  #menu button {
-    width: 100%;
-    background-color: white;
-    border: none;
-    margin: 0;
-    padding: 10px;
-  }
+  // #menu button {
+  //   width: 100%;
+  //   background-color: white;
+  //   border: none;
+  //   margin: 0;
+  //   padding: 10px;
+  // }
 
-  #menu button:hover {
-    background-color: lightgray;
-  }
-  .loader-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-  }
+  // #menu button:hover {
+  //   background-color: lightgray;
+  // }
+  // .loader-container {
+  //   position: fixed;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  //   z-index: 9999;
+  // }
 
-  .loader {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #3498db;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-  }
+  // .loader {
+  //   border: 8px solid #f3f3f3;
+  //   border-top: 8px solid #3498db;
+  //   border-radius: 50%;
+  //   width: 50px;
+  //   height: 50px;
+  //   animation: spin 1s linear infinite;
+  // }
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  .konva-grid {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
+  // @keyframes spin {
+  //   0% { transform: rotate(0deg); }
+  //   100% { transform: rotate(360deg); }
+  // }
+  // .konva-grid {
+  //   display: flex;
+  //   justify-content: center;
+  //   flex-wrap: wrap;
+  //   gap: 20px;
+  // }
 
   .konva-container {
     overflow: auto;
-    width: 33rem;
-    height: 25rem;
+    width: 80vw;
+    height: 90vh;
     border: 5px solid #ccc;
-    transition: all 1s;
-    cursor: pointer;
+    // transition: all 1s;
+    // cursor: pointer;
 
-    &.expanded {
-      width: 100vw;
-      height: 100vh;
-    }
+    // &.expanded {
+    //   width: 100vw;
+    //   height: 100vh;
+    // }
 
 
   }
-  .showButtons {
-    position: fixed;
-    top: 10px;
-    z-index: 2;
+  .content{
     display: flex;
     flex-direction: column;
-    padding: 10px; /* Adjust the padding as needed */
-    .download_btn {
-      background: #C3343A;
-      color: white;
-      font-weight: 600;
-      height: 31px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-
-      }
-  }
-  .hideButtons{
-    display: none;
-  }
-  .arrow-button-left {
-    font-size: 24px; /* Adjust the font size as needed */
-    margin: 10px;
-
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    mat-icon{
-      height: 2rem;
-      width: 2rem;
-      font-size: 2rem;
+    .circle-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-block;
     }
-  }
-  .arrow-button-right {
-    font-size: 24px; /* Adjust the font size as needed */
-    margin: 10px;
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    mat-icon{
-      height: 2rem;
-      width: 2rem;
-      font-size: 2rem;
+
+  .chart{
+    width: 15rem;
+    height: 15rem;
+
+    .pichart{
+      width: 400px;
+      height: 300px;
+
     }
   }
 }
+  // .showButtons {
+  //   position: fixed;
+  //   top: 10px;
+  //   z-index: 2;
+  //   display: flex;
+  //   flex-direction: column;
+  //   padding: 10px; /* Adjust the padding as needed */
+  //   .download_btn {
+  //     background: #C3343A;
+  //     color: white;
+  //     font-weight: 600;
+  //     height: 31px;
+  //     border: none;
+  //     border-radius: 5px;
+  //     cursor: pointer;
 
-  .main{
-    display: flex;
-    button{
-      margin: 10px;
-    }
-  }
+  //     }
+  // }
+  // .hideButtons{
+  //   display: none;
+  // }
+  // .arrow-button-left {
+  //   font-size: 24px; /* Adjust the font size as needed */
+  //   margin: 10px;
+
+  //   cursor: pointer;
+  //   border: none;
+  //   background-color: transparent;
+  //   mat-icon{
+  //     height: 2rem;
+  //     width: 2rem;
+  //     font-size: 2rem;
+  //   }
+  // }
+  // .arrow-button-right {
+  //   font-size: 24px; /* Adjust the font size as needed */
+  //   margin: 10px;
+  //   cursor: pointer;
+  //   border: none;
+  //   background-color: transparent;
+  //   mat-icon{
+  //     height: 2rem;
+  //     width: 2rem;
+  //     font-size: 2rem;
+  //   }
+  // }
+}
+
+  // .main{
+  //   display: flex;
+  //   button{
+  //     margin: 10px;
+  //   }
+  // }
 
 
-  .hidden {
-    display: none;
-  }
+  // .hidden {
+  //   display: none;
+  // }
 
 
