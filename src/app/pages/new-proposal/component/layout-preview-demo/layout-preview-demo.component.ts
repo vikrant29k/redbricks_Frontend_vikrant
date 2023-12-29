@@ -122,7 +122,7 @@ switchContainer(direction: 'left' | 'right'): void {
             const dialogRef = this.dialog.open(ViewLayoutPreviewComponent, {
               width: '1500px',
               height: '800px',
-              data: { currentShape:this.currentShape,proposalId:this.data.proposalId },
+              data: { currentShape:this.currentShape,proposalId:this.data.proposalId,content:this.content,totalNumber:this.totalNumber },
             })
             dialogRef.afterClosed().subscribe(()=>{this.openOneTime=0})
             this.openOneTime++
