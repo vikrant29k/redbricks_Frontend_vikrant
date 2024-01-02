@@ -5,6 +5,7 @@ import { ProposalService } from "src/app/service/proposal/proposal.service";
 import { LocationService } from "src/app/service/location/location.service";
 import Konva from "konva";
 import { environment } from "src/environments/environment";
+
 import * as roomsData from '../../../location/component/layout-editor/seat-draw/roomCountsData.json'
 export interface RoomData {
   [key: string]: {

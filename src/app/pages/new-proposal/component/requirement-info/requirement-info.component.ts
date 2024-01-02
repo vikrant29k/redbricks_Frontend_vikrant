@@ -260,9 +260,9 @@ if(value.workstation3x2 % 4 !== 0){
   validateInput(event:any) {
     const inputValue = event.target.value;
     // console.log(event)
-    if (inputValue % 4 !== 0) {
+    if (inputValue % 2 !== 0) {
       event.target.value = '';
-    } else if (inputValue % 2 !== 0) {
+    } else if (inputValue % 4 !== 0) {
       event.target.value = '';
   }
 }
