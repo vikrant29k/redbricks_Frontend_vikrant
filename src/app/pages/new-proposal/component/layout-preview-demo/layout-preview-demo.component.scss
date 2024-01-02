@@ -1,71 +1,13 @@
 
 .canvas-container{
-  // overflow: hidden;
-  // width: 1500px;
-  // height: 800px;
+
   display: flex;
-  // flex-direction: row;
-  // #menu {
-  //   display: none;
-  //   position: absolute;
-  //   width: 60px;
-  //   background-color: white;
-  //   box-shadow: 0 0 5px grey;
-  //   border-radius: 3px;
-  // }
-
-  // #menu button {
-  //   width: 100%;
-  //   background-color: white;
-  //   border: none;
-  //   margin: 0;
-  //   padding: 10px;
-  // }
-
-  // #menu button:hover {
-  //   background-color: lightgray;
-  // }
-  // .loader-container {
-  //   position: fixed;
-  //   top: 50%;
-  //   left: 50%;
-  //   transform: translate(-50%, -50%);
-  //   z-index: 9999;
-  // }
-
-  // .loader {
-  //   border: 8px solid #f3f3f3;
-  //   border-top: 8px solid #3498db;
-  //   border-radius: 50%;
-  //   width: 50px;
-  //   height: 50px;
-  //   animation: spin 1s linear infinite;
-  // }
-
-  // @keyframes spin {
-  //   0% { transform: rotate(0deg); }
-  //   100% { transform: rotate(360deg); }
-  // }
-  // .konva-grid {
-  //   display: flex;
-  //   justify-content: center;
-  //   flex-wrap: wrap;
-  //   gap: 20px;
-  // }
 
   .konva-container {
-    overflow: auto;
-    width: 80vw;
-    height: 90vh;
-    border: 5px solid #ccc;
-    // transition: all 1s;
-    // cursor: pointer;
-
-    // &.expanded {
-    //   width: 100vw;
-    //   height: 100vh;
-    // }
-
+    // overflow: auto;
+    // width: 80vw;
+    // height: 90vh;
+    border: 2px solid #ccc;
 
   }
   .content{

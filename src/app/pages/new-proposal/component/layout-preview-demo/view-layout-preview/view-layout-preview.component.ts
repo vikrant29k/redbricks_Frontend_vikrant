@@ -58,10 +58,8 @@ export class ViewLayoutPreviewComponent implements OnInit {
   ngAfterViewInit(): void {
     if (this.data.currentShape) {
       this.stage = this.data.currentShape;
-
       this.drawStageContent();
     }
-
   }
 
   private drawStageContent() {
@@ -109,7 +107,6 @@ export class ViewLayoutPreviewComponent implements OnInit {
         newStage.add(newLayer);
       }
     });
-
     newStage.draw();
     this.enableZoom(newStage)
     this.stage=newStage

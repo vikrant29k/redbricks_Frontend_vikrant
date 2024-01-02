@@ -76,21 +76,21 @@ export class NewProposalSpaceAvailabilityComponent implements OnInit {
 
   }
 content:any;
-  // openDialog = () => {
-  //   const dialogRef = this.dialog.open(NewProposalLayoutPreviewComponent, {
-  //     width: '1080px',
-  //     height: '734px',
-  //     panelClass: 'my-panel-class',
-  //     data: { locationId: this.locationId, proposalId: this.proposalId, totalNoOfSeat:this.totalNumberofSeat, content:this.content },
-  //   });
+  openDialog = () => {
+    const dialogRef = this.dialog.open(NewProposalLayoutPreviewComponent, {
+      width: '1080px',
+      height: '734px',
+      panelClass: 'my-panel-class',
+      data: { locationId: this.locationId, proposalId: this.proposalId, totalNoOfSeat:this.totalNumberofSeat, content:this.content },
+    });
 
-  //   dialogRef.afterClosed().subscribe((result: any) => {
-  //     if(result === true){
-  //       this.setButtonDisable= true
-  //     }
-  //   });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if(result === true){
+        this.setButtonDisable= true
+      }
+    });
 
-  // };
+  };
 
   generateProposal = () => {
     let serviced = this.isServiced ? 'yes' : 'no';

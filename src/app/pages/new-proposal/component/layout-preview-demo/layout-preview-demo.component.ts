@@ -1,4 +1,3 @@
-// Almost working code for drawing rooms
 import { Component, OnInit, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { ProposalService } from "src/app/service/proposal/proposal.service";
@@ -610,4 +609,3 @@ constructor(
       }
     }
 }
-
