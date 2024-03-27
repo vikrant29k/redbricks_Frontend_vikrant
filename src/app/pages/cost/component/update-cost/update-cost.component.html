@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="main-content">
+        <div class="title"><h1>Update Cost for Serviced Office</h1>    <button mat-raised-button color="primary" (click)="enableEdit()">{{editMode?'Lock':'Edit'}}</button></div>
+        <form [formGroup]="costForm" (ngSubmit)="onSubmit()">
+            <section>
+              <mat-form-field appearance="outline">
+                <mat-label>Cost of Electricity</mat-label>
+                <input type="number" matInput formControlName="costOfElectricity" autocomplete="off" [readonly]="editMode?'false':'true'" >
+            </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Cost of OPS</mat-label>
+                    <input type="number" matInput formControlName="costOfOPS" autocomplete="off" [readonly]="editMode?'false':'true'">
+                </mat-form-field>
+            </section>
+            <section>
+              <mat-form-field appearance="outline">
+                <mat-label>Cost of Standard Interiors</mat-label>
+                <input type="number" matInput formControlName="costStandardInteriors" autocomplete="off" [readonly]="editMode?'false':'true'" >
+            </mat-form-field>
+            </section>
+            <div class="form-action">
+                <button type="button" mat-raised-button color="primary" >Cancel</button>
+                <button type="submit" mat-raised-button color="primary">Update Cost</button>
+            </div>
+        </form>
+    </div>
+</div>

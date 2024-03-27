@@ -1,0 +1,43 @@
+<!--
+<div class="main">
+    <div class="canvas-container">
+      <div id="container" [ngClass]="isDrawingEnabled || isSeatDrawingEnabled ?'contain':'changeContain'"></div>
+    </div>
+  <div style="display: flex;
+  flex-direction: column;">
+  <button (click)="toggleDrawing()">{{isDrawingEnabled?'Stop':'Start'}} Drawing Rectangle</button>
+  <button (click)="toggleLockDrawing()"> DRAW LOCKD SEAT</button>
+
+  <button (click)='addRectDataInArray()'>Update Border</button>
+  <!-- <button (click)="drawSeatAndGetHW()">{{isSeatDrawingEnabled?'Stop':'Start'}} Drawing Seat</button> -->
+  <!-- <label>Width={{seatWidth}}</label>
+  <label>Height={{seatHeight}} </label> -->
+  <!-- <button (click)='updateSeatsSize()'>Update Seat</button>
+  <button (click)="resetZoomAndPosition()">Reset Zoom and Position</button>
+  <button (click)="addLayout()">Final Layout</button>
+  <button (click)="displayRectangles()">Display Rectangles</button>
+  <button (click)="updateStoredValues()">Update Rectangels</button>
+  </div>
+  </div>
+   -->
+<div class="main">
+  <div class="canvas-container">
+    <div class="stageCanvas" #stageCanvas></div>
+  </div>
+<div class="sub-container">
+  <!-- <button mat-raised-button (click)="toggleDrawing()" color="primary">{{isDrawingEnabled?'Stop':'Start'}} Drawing Border</button> -->
+  <!-- <button mat-raised-button (click)='addRectDataInArray()' color="primary">Update Border</button> -->
+  <!-- <button mat-raised-button (click)="drawSeatAndGetHW()" color="primary">{{isSeatDrawingEnabled?'Stop':'Start'}} Drawing Seat</button> -->
+  <div class="label">
+    <!-- <mat-card><p><b>Width : {{seatWidth}}</b></p></mat-card>
+    <mat-card><p><b>Height : {{seatHeight}}</b></p></mat-card> -->
+  </div>
+<!-- <button mat-raised-button (click)='updateSeatsSize()' color="primary">Update Seat</button> -->
+<button mat-raised-button (click)="resetZoomAndPosition()" color="primary">Reset Zoom and Position</button>
+<button mat-raised-button (click)="resetThePoint()" color="primary">Point Resize</button>
+<!-- <button mat-raised-button (click)='addLayout()' color="primary">Final the layout</button> -->
+<!-- <button mat-raised-button (click)="displayRectangles()" color="primary">Display Seats</button> -->
+<!-- <button mat-raised-button (click)="updateStoredValues()" color="primary">Update Rectangels</button> -->
+</div>
+</div>
+

@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="id">
+    <div class="card">
+      <p>ID:</p>
+      <p>{{ proposalId || "lask2342kfjalsdf94312" }}</p>
+    </div>
+  </div>
+  <div class="main-content">
+    <form [formGroup]="clientInfoForm" (ngSubmit)="onSubmit()">
+      <!-- Location -->
+      <mat-form-field appearance="fill">
+        <mat-label>Location</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="location"
+          autocomplete="off"
+          [readonly]="true"
+        />
+        <mat-error>Location is required</mat-error>
+      </mat-form-field>
+      <!-- Center -->
+      <mat-form-field appearance="fill">
+        <mat-label>Center</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="center"
+          autocomplete="off"
+          [readonly]="true"
+        />
+        <mat-error>Center is required</mat-error>
+      </mat-form-field>
+       <!-- Floor -->
+      <mat-form-field appearance="fill">
+        <mat-label>Floor</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="floor"
+          autocomplete="off"
+          [readonly]="true"
+        />
+        <mat-error>Floor is required</mat-error>
+      </mat-form-field>
+      <!-- Broker Type -->
+      <mat-form-field appearance="fill">
+        <mat-label>Broker Type</mat-label>
+        <mat-select formControlName="brokerType">
+          <ng-container *ngFor="let brokers of brokerTypeList">
+            <mat-option [value]="brokers">{{ brokers }}</mat-option>
+          </ng-container>
+          <mat-option value="direct">Direct</mat-option>
+        </mat-select>
+        <mat-error>Broker Type is required</mat-error>
+      </mat-form-field>
+      <!-- Broker Category -->
+      <ng-container *ngIf="clientInfoForm.get('brokerCategory')">
+        <mat-form-field appearance="fill">
+          <mat-label>Broker Category</mat-label>
+          <mat-select formControlName="brokerCategory">
+            <ng-container>
+              <ng-container *ngFor="let category of brokeCategoryList">
+                <mat-option [value]="category">{{ category }}</mat-option>
+              </ng-container>
+              <mat-option value="other" [disabled]="true">Infrom Admin if not listed</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error>Broker Category is required</mat-error>
+        </mat-form-field>
+      </ng-container>
+
+      <!-- Client Name -->
+      <ng-container *ngIf="clientInfoForm.get('clientName')">
+        <mat-form-field appearance="fill">
+          <mat-label>Client Name</mat-label>
+          <input type="text" matInput formControlName="clientName" autocomplete="off"/>
+          <mat-error>Client Name is required</mat-error>
+        </mat-form-field>
+      </ng-container>
+
+
+      <div class="form-action">
+        <button type="submit" mat-raised-button color="primary">
+          Save & Next <mat-icon>play_arrow</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

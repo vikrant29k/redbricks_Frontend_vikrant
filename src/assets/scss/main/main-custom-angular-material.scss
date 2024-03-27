@@ -1,0 +1,32 @@
+@import "../new-proposal/client-info/custom-angular-material.scss";
+@import "../new-proposal/requirement-info/custom-angular-material.scss";
+
+@import "../new-proposal/conflict/conflict-angular-material.scss";
+
+@import "../new-proposal/space-availability/custom-angular-material.scss";
+
+
+new-proposal-client-info {
+    @include custom_client-info_angular-material();
+}
+
+new-proposal-requirement-info{
+    @include custom_requirement-info_angular-material();
+}
+
+
+new-proposal-conflict{
+    @include custom-conflict-info_angular-material();
+}
+
+new-proposal-space-availability{
+    @include custom_space-availability_angular-material();
+}
+.mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content{
+    font-size: 0.9rem;
+    background-color: rgba(240, 248, 255, 0);
+}
+.sales-proposal .mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content{
+  font-size: 0.9rem;
+  background-color: rgb(195 52 58);
+}

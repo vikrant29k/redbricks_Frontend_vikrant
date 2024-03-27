@@ -1,0 +1,39 @@
+<div style="display: flex; align-items: center;">
+  <div id="container">
+
+  </div>
+  <div style="display: flex;flex-direction: column;">
+<div>
+  <button mat-button (click)="resetZoomAndPosition()">RESET</button>
+</div>
+  <button mat-raise-button (click)="createSquare()">Square</button>
+  <button (click)="createCircle()">Circle</button>
+  <button (click)="createLPolygon()">Polygon</button>
+  <button (click)="createSeat()">Seat</button>
+  <div class="shape-list">
+    <h3>Shapes</h3>
+    <ul>
+      <li *ngFor="let shape of shapes">
+        <div class="shape-color" [style.background-color]="shape.shape.fill()" (click)="changeColor(shape.shape)">{{ shape.name }}</div>
+
+      </li>
+    </ul>
+  </div>
+  <button (click)="saveDiagram()">SAve Diagram</button>
+  <button (click)="loadDiagram()"> Load Diagram</button>
+<button (click)="checkDrawnSeat()">Go to draw </button>
+<div>
+  <label for="scaleXInput">ScaleX:</label>
+  <input type="number" id="scaleXInput" [(ngModel)]="scaleX" step="0.1" (change)="changeScale()">
+</div>
+<div>
+  <label for="scaleYInput">ScaleY:</label>
+  <input type="number" id="scaleYInput" [(ngModel)]="scaleY" step="0.1" (change)="changeScale()">
+</div>
+<button (click)="loadDiagram()">Load Diagram</button>
+<p>ScaleX: {{ scaleX }}</p>
+<p>ScaleY: {{ scaleY }}</p>
+
+
+</div>
+</div>

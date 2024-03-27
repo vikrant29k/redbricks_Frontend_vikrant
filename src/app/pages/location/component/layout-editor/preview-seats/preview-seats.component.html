@@ -1,0 +1,19 @@
+
+<div class="main">
+  <div class="canvas-container">
+    <div id="container"></div>
+  </div>
+<div class="sub-container">
+  <h2 *ngIf="seatCounted>0"> Seat Counted :{{seatCounted}} </h2>
+  <label>Seats to be Selected: {{totalNumber}}</label>
+
+  <!-- <div *ngIf="loading" class="loader-container">
+    <div class="loader"></div>
+</div> -->
+
+  <button mat-raised-button color="primary" (click)="drawRectangles()">Draw Rectangles</button>
+  <button mat-raised-button (click)="resetZoomAndPosition()"> Reset </button>
+  <button mat-raised-button (click)="addLayout()">Final</button>
+  <button mat-raised-button (click)="removeImage()">Remove Image</button>
+</div>
+</div>

@@ -1,0 +1,133 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+@mixin flex_center_center {
+  display: flex;
+  font-size: 1.1rem;
+  justify-content: center;
+  align-items: center;
+}
+@mixin inputs {
+  text-align: center;
+  box-sizing: border-box;
+  border: none;
+  background-color: #c3343a;
+}
+// div {
+//   text-align: center;
+//   font-size: 1.1rem;
+// }
+.container {
+  @include flex_center_center();
+  background-image: url("../../../../../assets/images/dashboard/dashboard-background.png");
+  background-size: cover;
+  min-height: 100vh;
+  font-size: 1.1rem;
+
+  .main-content {
+    @include flex_center_center();
+    gap: 1rem;
+    font-size: 1.1rem;
+    .card {
+      @include flex_center_center();
+      width: 38rem;
+      height: 28rem;
+      font-size: 1.1rem;
+      background-color: rgba(255, 255, 255, 0.674);
+      border-radius: 2.5rem;
+      // border: 1px solid #707070;
+      border: none;
+      flex-direction: column;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+      @include for-mobile(){
+        width:19rem;
+        height:32rem;
+      }
+      .uid {
+        @include inputs();
+        width: 25rem;
+        font-size: 1.3rem;
+        border-radius: 4rem;
+        padding-block: 1rem;
+        margin-block: 1rem 3rem;
+        color: #c4c4c4;
+        @include for-mobile(){
+          width: 18rem;
+      }
+    }
+      // .yesno {
+      //   @include inputs();
+      //   width: 4.5rem;
+      //   font-size: 1.1rem;
+      //   border-radius: 0.5rem;
+      //   padding: 5px 10px;
+      //   margin: 10px 10px;
+      //   color: #ffffff;
+      // }
+      // .otp1 {
+      //   @include inputs();
+      //   width: 50%;
+      //   border-radius: 1rem;
+      //   padding: 12px 20px;
+      //   margin: 8px 10px;
+      //   color: #c4c4c4;
+      // }
+      .form{
+        display: flex;
+        gap:2rem;
+        @include for-mobile(){
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+      .otp {
+        width: 15.8rem;
+        background-color: #c3343a;
+        color: #ffffff;
+        box-sizing: border-box;
+        border: none;
+        text-align: center;
+        margin-block: 0rem 0.5rem;
+        line-height: 36px;
+        // padding: 0 2rem;
+        border-radius: 0.3rem;
+        font-size: 1.1rem;
+        font-weight: 400;
+        @include for-desktop() {
+          font-size: 1rem;
+        }
+      }
+      .otp::placeholder {
+        color: #ffffff;
+        font-size: 1.1rem;
+      }
+      .otpdiv {
+        width: 16rem;
+        text-align: center;
+      }
+      .otpbuttons {
+        width: 28rem;
+      }
+      .offer {
+        @include inputs();
+        // border-radius:1rem;
+        width: 15rem;
+        // padding: 12px 20px;
+        // margin: 2rem 1rem;
+        font-size: 1.1rem;
+        color: #ffffff;
+        @include for-desktop() {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+

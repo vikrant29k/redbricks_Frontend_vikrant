@@ -1,0 +1,95 @@
+
+.canvas-container{
+
+  display: flex;
+  justify-content: center;
+
+  .konva-container {
+    // overflow: auto;
+    // width: 80vw;
+    // height: 90vh;
+    border: 2px solid #ccc;
+
+  }
+  .content{
+    display: flex;
+    flex-direction: column;
+    .circle-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+  .chart{
+    width: 15rem;
+    height: 15rem;
+
+    .pichart{
+      width: 400px;
+      height: 300px;
+
+    }
+  }
+}
+  // .showButtons {
+  //   position: fixed;
+  //   top: 10px;
+  //   z-index: 2;
+  //   display: flex;
+  //   flex-direction: column;
+  //   padding: 10px; /* Adjust the padding as needed */
+  //   .download_btn {
+  //     background: #C3343A;
+  //     color: white;
+  //     font-weight: 600;
+  //     height: 31px;
+  //     border: none;
+  //     border-radius: 5px;
+  //     cursor: pointer;
+
+  //     }
+  // }
+  // .hideButtons{
+  //   display: none;
+  // }
+  // .arrow-button-left {
+  //   font-size: 24px; /* Adjust the font size as needed */
+  //   margin: 10px;
+
+  //   cursor: pointer;
+  //   border: none;
+  //   background-color: transparent;
+  //   mat-icon{
+  //     height: 2rem;
+  //     width: 2rem;
+  //     font-size: 2rem;
+  //   }
+  // }
+  // .arrow-button-right {
+  //   font-size: 24px; /* Adjust the font size as needed */
+  //   margin: 10px;
+  //   cursor: pointer;
+  //   border: none;
+  //   background-color: transparent;
+  //   mat-icon{
+  //     height: 2rem;
+  //     width: 2rem;
+  //     font-size: 2rem;
+  //   }
+  // }
+}
+
+  // .main{
+  //   display: flex;
+  //   button{
+  //     margin: 10px;
+  //   }
+  // }
+
+
+  // .hidden {
+  //   display: none;
+  // }
+
+

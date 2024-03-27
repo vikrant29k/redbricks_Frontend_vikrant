@@ -1,0 +1,64 @@
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+
+.container {
+
+    position: relative;
+
+    .icon {
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 100%;
+        background-color: #C3343A;
+        color: #fff;
+        font-size: 1.1rem;
+        z-index: 1;
+        cursor: pointer;
+        @include for-mobile(){
+          margin-top: -9.5px;
+        }
+    }
+
+    .sub-icon {
+        position: absolute;
+        left: 0rem;
+        top: 0rem;
+        padding: 1rem;
+        background-color: #C3343A;
+        border-radius: 100%;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: -1;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+
+        &.home-icon {
+            left: -6rem;
+            top: -1.5rem;
+        }
+
+        &.person-icon{
+            left: -5rem;
+            top: 2.7rem;
+        }
+
+        &.log-icon{
+            left: -1.5rem;
+            top: 5.5rem;
+        }
+
+        &.logout-icon{
+            left: 2.8rem;
+            top: 5.5rem;
+        }
+    }
+
+}

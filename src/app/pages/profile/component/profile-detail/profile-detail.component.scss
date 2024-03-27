@@ -1,0 +1,152 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+
+@mixin flex_center_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column {
+  flex-direction: column;
+}
+
+.container {
+  @include flex_center_center();
+  @include for-mobile(){
+    height: 72rem;
+  }
+  .main-content {
+    @include flex_center_center();
+    @include flex-column();
+
+    .title {
+      width: 100%;
+      font-size: 1rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1rem;
+      @include for-mobile() {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      }
+      .edit-icon {
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 1;
+        }
+        mat-icon {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    .avatar {
+      width: 10rem;
+      height: 10rem;
+      border-radius: 100%;
+      background-color: #fff;
+      padding: 3rem;
+      @include for-desktop() {
+        width: 7rem;
+        height: 7rem;
+      }
+      img {
+        width: inherit;
+        height: inherit;
+      }
+    }
+
+    .form-container {
+      @include flex_center_center();
+      width: 55rem;
+
+      padding: 3rem 1rem;
+      border-radius: 5rem;
+      background-color: #fff;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+      @include for-desktop() {
+        width: 43rem;
+        padding: 1.5rem 1rem;
+        border-radius: 4rem;
+      }
+      @include for-mobile(){
+        width: 19rem;
+        border-radius: 3rem;
+
+      }
+      form {
+        @include flex_center_center();
+        @include flex-column();
+        width: inherit;
+        @include for-mobile(){
+         overflow-y: auto;
+        }
+        .section {
+          @include flex_center_center();
+          justify-content: space-around;
+          width: inherit;
+          @include for-desktop() {
+            width: 39rem;
+          }
+          @include for-mobile() {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: inherit;
+            flex-direction: column;
+          }
+          mat-form-field {
+            width: 20rem;
+            @include for-desktop() {
+              width: 17rem;
+            }
+            mat-icon {
+              padding-inline-start: 0.5rem;
+              color: #bdbdbd;
+
+              &.active {
+                color: #757575;
+              }
+            }
+          }
+        }
+
+        .form-action {
+          @include flex_center_center();
+          width: inherit;
+          gap: 5rem;
+          @include for-mobile() {
+            gap: 1rem;
+          }
+          button {
+            width: 10rem;
+            padding: 0rem 2rem;
+            @include for-mobile(){
+              width: 8rem;
+            }
+          }
+        }
+      }
+    }
+
+    .avatar + .form-container {
+      margin-top: 2rem;
+      @include for-desktop() {
+        margin-top: 1rem;
+      }
+    }
+  }
+}

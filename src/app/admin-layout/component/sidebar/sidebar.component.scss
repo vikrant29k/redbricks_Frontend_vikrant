@@ -1,0 +1,128 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+.container {
+  height: 100%;
+  background-color: #fddede;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  .header {
+    .logo {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-block: 1rem;
+
+      img {
+        height: 2.5rem;
+      }
+    }
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      transition: all 0.3s ease-in-out;
+
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+
+        .main {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          padding-inline-start: 1rem;
+          gap: 1rem;
+
+          .title-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            mat-icon {
+              font-size: 2rem;
+              width: 2rem;
+              height: 2rem;
+              @include for-desktop() {
+                font-size: 1.8rem;
+              }
+            }
+          }
+
+          .title-text {
+            @extend .title-icon;
+            font-size: 1.1rem;
+            font-weight: 600;
+            @include for-desktop() {
+              font-size: 1rem;
+              font-weight: 500;
+            }
+          }
+        }
+
+        .expansion-icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding-inline: 1rem;
+          transition: transform 0.3s ease-in-out;
+
+          mat-icon {
+            font-size: 2rem;
+            width: 2rem;
+            height: 2rem;
+            @include for-desktop() {
+              font-size: 1.8rem;
+            }
+          }
+        }
+
+        &:hover {
+          background-color: #c3343a;
+          color: #fff;
+        }
+
+        &.active {
+          background-color: #c3343a;
+          color: #fff;
+        }
+
+        &:focus-visible {
+          outline: none;
+        }
+
+        &.expanded {
+          background-color: #c3343a;
+          color: #fff;
+
+          .expansion-icon {
+            transform: rotate(180deg);
+          }
+        }
+      }
+
+      .sub-section {
+        transition: all 0.3s ease-in-out;
+        .title {
+          .title-icon {
+            padding-inline-start: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

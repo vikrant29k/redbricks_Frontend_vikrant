@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="main-content">
+        <div class="title">
+            <h1>Broker List</h1>
+            <div class="filter">
+                <div class="example-button-container">
+                    <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon" (click)="sendMailOfBrokerReport()">
+                      <mat-icon>forward_to_inbox</mat-icon>
+                    </button>
+                  </div>
+                <mat-form-field appearance="standard">
+                    <input matInput (keyup)="applyFilter($event)" autocomplete="off" placeholder="Filter" #input>
+                </mat-form-field>
+
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+                <ng-container matColumnDef="brokerType">
+                    <th mat-header-cell *matHeaderCellDef>Broker Type </th>
+                    <td mat-cell *matCellDef="let row"> {{row.brokerType }} </td>
+                </ng-container>
+                <ng-container matColumnDef="brokerCategory">
+                    <th mat-header-cell *matHeaderCellDef>Broker Category</th>
+                    <td mat-cell *matCellDef="let row"> {{row.brokerCategory}} </td>
+                </ng-container>
+                <ng-container matColumnDef="SPOCName">
+                    <th mat-header-cell *matHeaderCellDef>SPOC Name</th>
+                    <td mat-cell *matCellDef="let row"> {{row.SPOCName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="SPOCEmail">
+                    <th mat-header-cell *matHeaderCellDef>SPOC Email </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.SPOCEmail}} </td>
+                </ng-container>
+                <ng-container matColumnDef="SPOCAprove">
+                    <th mat-header-cell *matHeaderCellDef> View </th>
+                    <td mat-cell class="edit" *matCellDef="let row" (click)="brokerDetails(row._id)">
+                        <button type="button" mat-icon-button>
+                        <mat-icon>visibility</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef> Edit </th>
+                    <td mat-cell *matCellDef="let row" class="edit" (click)="editBroker(row._id)"><button
+                            type="button" mat-icon-button>
+                            <mat-icon>edit</mat-icon>
+                        </button></td>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef> Delete </th>
+                    <td mat-cell *matCellDef="let row" class="delete" (click)="deleteBroker(row._id)"><button
+                            type="button" mat-icon-button>
+                            <mat-icon>delete</mat-icon>
+                        </button></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="8">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" aria-label="Select page of users"></mat-paginator>
+    </div>
+</div>

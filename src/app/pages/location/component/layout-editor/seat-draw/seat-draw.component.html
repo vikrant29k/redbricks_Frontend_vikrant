@@ -1,0 +1,34 @@
+
+<div class="canvas-container">
+  <div id="container"></div>
+<div style="display: flex;flex-direction: column;">
+  <!-- <button mat-raised-button (click)="gotoDrawImage()">Go To Draw Iamge</button> -->
+  <button mat-raised-button (click)="resetZoomAndPosition()" color="primary"><mat-icon>restart_alt</mat-icon></button>
+  <!-- <button  mat-raised-button (click)="removeImage()">Remove Image</button>
+  <button  mat-raised-button (click)="reAddImage()">Add Image</button> -->
+
+  <!-- <button mat-raised-button (click)="seprateData()">Cabin</button> -->
+  <textarea type="text" cols="25" rows="15" value="{{content}}"></textarea>
+  <ng-container *ngFor="let content of roomDetails">
+    <p style="margin: 2px; display: flex;">{{content.title}}  =  {{content.count}} &nbsp; <span style="min-width: 1rem;min-height: 1rem; border-radius: 50%;"  [style.background-color]="content.color"></span></p>
+  </ng-container>
+  <!-- <mat-form-field>
+    <mat-label>Select a Room</mat-label>
+    <mat-select [(ngModel)]="selectedRoom" (ngModelChange)="onAreaChange(selectedRoom)">
+      <mat-option *ngFor="let roomTitle of roomTitles" [value]="roomTitle">
+        {{ roomTitle }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+
+<!--
+  <mat-select placeholder="Select Image" [(ngModel)]="selectedImage">
+    <mat-option *ngFor="let image of imageOptions" [value]="image.value">{{ image.label }}</mat-option>
+  </mat-select> -->
+  <button mat-raised-button (click)="clearAndRedrawSeats()" >select</button>
+  <!-- <button  mat-raised-button (click)="loadImage()">Draw Image</button> -->
+  <!-- <button mat-raised-button (click)="drawBorder()" >draw border outline</button> -->
+  <!-- <button mat-raised-button (click)="showOther()" >Show Pillars</button> -->
+</div>
+</div>
+

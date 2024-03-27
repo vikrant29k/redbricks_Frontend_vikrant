@@ -1,0 +1,13 @@
+<div style="display: flex; align-items: center;">
+
+
+<div id="container"></div>
+<div>
+<button mat-raised-button (click)="resetZoomAndPosition()" color="primary"><mat-icon>restart_alt</mat-icon></button>
+<ng-container *ngFor="let data of selectedRoomData">
+  <p>
+    {{data.title}}
+  </p>
+</ng-container>
+</div>
+</div>

@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="title">
+        <p>Welcome To
+            <span>RED BOX</span>
+        </p>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-field">
+            <label>Email</label>
+            <input type="text" formControlName="userName">
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                error: userName?.errors?.['required'] && userName?.touched,
+                message: 'Username is required!'
+            }"></ng-container>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                error: userName?.errors?.['email'] && userName?.touched,
+                message: 'Please Enter a valid email!'
+            }"></ng-container>
+        </div>
+        <div class="form-field">
+            <label>Password</label>
+            <div class="input">
+                <input [type]="showPassword? 'text': 'password'" formControlName="password">
+                <mat-icon mat-icon-button (click)="showPassword = !showPassword">{{showPassword ? 'visibility': 'visibility_off'}}</mat-icon>
+            </div>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                error: password?.errors?.['required'] && password?.touched,
+                message: 'Password is required!'
+            }"></ng-container>
+        </div>
+        <div class="form-password-action">
+            <!-- <a>Forgot Password?</a> -->
+        </div>
+        <div class="form-action">
+            <button type="submit" mat-raised-button [color]="loginForm.invalid ? 'accent': 'primary'">SIGN IN</button>
+        </div>
+        <div class="terms_and_condition">
+            <p>By continuing, you agree to accept our <br> Privacy Policy & Terms of Service</p>
+        </div>
+    </form>
+</div>
+
+<ng-template #formError let-error="error" let-message="message">
+    <mat-error *ngIf="error">{{message}}</mat-error>
+</ng-template>

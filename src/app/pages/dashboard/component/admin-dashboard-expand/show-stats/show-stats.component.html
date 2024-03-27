@@ -1,0 +1,56 @@
+<div class="container">
+  <mat-card class="card">
+    <h2><mat-icon>location_city</mat-icon> {{ centerName }}</h2>
+
+    <!-- <p>Total Seat:{{totalNumber }} </p>
+    <div style="display: flex; justify-content: space-evenly;"><p style="margin: 0;">Selected Seat :{{selectedNumber}}</p><p style="margin: 0;">Remaining Seat :{{totalNumber-selectedNumber}}</p></div> -->
+  </mat-card>
+  <mat-card class="chartCard">
+    <div class="cardSection">
+      <section>
+        <p style="width: 70% !important">System Current Price:</p>
+        <p>Rs.{{ currentValue || 0 }} per seat</p>
+      </section>
+      <section>
+        <p style="width: 70% !important">Minimum Rack Value:</p>
+        <p>Rs.{{ rackValue || 0 }} per seat</p>
+        <!-- //<mat-icon>sync</mat-icon> -->
+      </section>
+      <section>
+        <p style="width: 70% !important">Total Sales Price Until Now :</p>
+        <p>Rs.{{ bookingPriceUptilNow || 0 }}</p>
+      </section>
+      <section>
+        <p style="width: 70% !important">Current Rack Rate Acheived :</p>
+        <p>Rs.{{ currentSeatPrice || 0 }} per seat</p>
+      </section>
+
+      <section>
+        <p style="width: 70% !important">Rack Rate For Future Sales :</p>
+        <p>
+          <!-- <mat-icon>{{profitLoss>0?'arrow_upward':'arrow_downward'}}</mat-icon> -->
+          Rs. {{ futureRackRate || 0 }}
+        </p>
+        <!-- <p style="width:70% !important">Profit / Loss:</p>
+    <p> <mat-icon>{{profitLoss>0?'arrow_upward':'arrow_downward'}}</mat-icon>
+      Rs. {{profitLoss || 0}}
+    </p> -->
+      </section>
+    </div>
+
+
+    <div class="chart" #chartContainer>
+      <div #pieChart style="width: 30rem; height: 25rem"></div>
+
+
+
+      <!-- <canvas baseChart
+    [type]="'pie'"
+    [datasets]="pieChartDatasets"
+    [labels]="pieChartLabels"
+    [options]="pieChartOptions"
+    [plugins]="pieChartPlugins"
+    [legend]="pieChartLegend"></canvas> -->
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,179 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+@mixin flex_center_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column {
+  flex-direction: column;
+}
+
+.container {
+  @include flex_center_center();
+  min-height: 100vh;
+  width: 100%;
+  background-image: url("../../../../../assets/images/location/location-background.png");
+  background-size: cover;
+  background-position: center;
+  background-color: #fddede;
+  overflow: auto;
+  .main-content {
+    @include flex_center_center();
+    width: inherit;
+    height: inherit;
+
+    .location-pointer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      /* width: 80rem; */
+      height: 100vh;
+      justify-content: space-evenly;
+      // margin-block-start: 2rem;
+
+      .icon {
+        display: flex;
+        justify-content: flex-start;
+        width: 25rem;
+        height: 22rem;
+        cursor: pointer;
+        align-items: center;
+        flex-direction: column;
+
+          mat-icon{
+            color: #ffffff;
+            margin-block-start: 8rem;
+            height: 2.5rem;
+            background: #c3343ae6;
+            width: 2.5rem;
+            font-size: 2.5rem;
+            border-radius: 10px;
+            padding: 3px;
+            @include for-mobile() {
+              border-radius: 12px;
+              padding: 1px;
+            }
+          }
+
+          @include for-desktop() {
+            width: 23rem;
+            height: 20rem;
+          }
+          @include for-mobile() {
+            width: 16rem;
+            height: 20rem;
+          }
+
+        svg {
+          // width: inherit;
+          // height: inherit;
+          overflow: visible;
+          @include for-mobile() {
+
+            transform: matrix(0.8, 0, 0, 0.8, 3, 22);
+          }
+        }
+
+        p {
+          color: #c3343a;
+          margin-block: -0.3rem 1rem;
+          font-size: 1.6rem;
+          font-weight: 500;
+          cursor: pointer;
+          @include for-mobile() {
+            margin-block: 0rem 0.5rem;
+            font-size: 1rem;
+          }
+        }
+        .seat-counts{
+          font-size: 1.3rem;
+          @include for-mobile() {
+            font-size: 1rem;
+          }
+        }
+      }
+      .disableicon {
+        pointer-events: none;
+        opacity: 0.5;
+        display: flex;
+        justify-content: flex-start;
+        width: 25rem;
+        height: 22rem;
+        cursor: pointer;
+        align-items: center;
+        flex-direction: column;
+
+          mat-icon{
+            color: #ffffff;
+            margin-block-start: 8rem;
+            height: 2.5rem;
+            background: #c3343ae6;
+            width: 2.5rem;
+            font-size: 2.5rem;
+            border-radius: 10px;
+            padding: 3px;
+          }
+
+          @include for-desktop() {
+            width: 25rem;
+            height: 22rem;
+          }
+          @include for-mobile() {
+            width: 16rem;
+            height: 20rem;
+          }
+
+        svg {
+          // width: inherit;
+          // height: inherit;
+          overflow: visible;
+          @include for-mobile() {
+
+            transform: matrix(0.8, 0, 0, 0.8, 3, 22);
+          }
+        }
+
+        p {
+          color: #c3343a;
+          margin-block: -0.3rem 1rem;
+          font-size: 1.6rem;
+          font-weight: 500;
+          cursor: pointer;
+          @include for-mobile() {
+            margin-block: 0rem 0.5rem;
+            font-size: 1rem;
+          }
+        }
+        .seat-counts{
+          font-size: 1.3rem;
+          @include for-mobile() {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      // .icon+.icon {
+      //     margin-inline-start: 5rem;
+      // }
+    }
+  }
+}
+
+.icon {
+  @for $i from 0 to 10 {
+    &:nth-child(#{$i}) {
+      fill: rgb(random(255), random(255), random(255));
+    }
+  }
+}

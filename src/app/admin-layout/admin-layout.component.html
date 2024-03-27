@@ -1,0 +1,15 @@
+<mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer mode="over">
+        <admin-layout-sidebar (drawerClicked)="closeDrawer()"></admin-layout-sidebar>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="container">
+            <div class="icon" (click)="drawer.toggle()" matRipple>
+                <mat-icon>menu</mat-icon>
+            </div>
+        </div>
+        <admin-layout-content class="main-content"></admin-layout-content>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+

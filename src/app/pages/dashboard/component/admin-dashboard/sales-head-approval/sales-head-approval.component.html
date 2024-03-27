@@ -1,0 +1,193 @@
+<div class="container">
+  <div class="content">
+  <div class="left-content">
+    <div class="title">
+      <h2 style="font-size: 1.8rem; color:#c3343a;"> Proposal ID : {{id}}</h2>
+    </div>
+    <!-- <mat-card class="card"> -->
+
+
+      <div *ngIf="dta" class="newSections">
+
+
+  <!-- tenure and locking section -->
+        <section>
+          <mat-form-field appearance="fill">
+            <mat-label>Tenure</mat-label>
+            <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.Tenure}}">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Lock In</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.LockIn}}">
+      </mat-form-field>
+
+        </section>
+<section>
+  <mat-form-field appearance="fill">
+    <mat-label>Deposit Term</mat-label>
+    <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.depositTerm}}">
+</mat-form-field>
+
+</section>
+  <!-- area section -->
+        <section>
+          <mat-form-field appearance="fill">
+            <mat-label>Area Of Core Selected Seat</mat-label>
+            <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.areaOfCoreSelectedSeat}} Sq.Ft.">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Area Of Usable Selected Seat</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.areaOfUsableSelectedSeat}} Sq.Ft.">
+      </mat-form-field>
+        </section>
+
+  <!-- system and client price -->
+        <section>
+        <mat-form-field appearance="fill">
+          <mat-label>System Genrated Price</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true"    value="Rs. {{ dta.previousFinalOfferAmmount | indianNumber}}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Total Number Of Seats</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.totalNumberOfSeats }}">
+    </mat-form-field>
+        </section>
+
+        <section>
+        <div class="approval-future-div">
+          <!-- ---------------client price VALUE----------- -->
+      <section>
+        <mat-form-field appearance="fill">
+          <mat-label>Client Final Offer Amount</mat-label>
+          <input type="text"  matInput autocomplete="off" [readonly]="true" value="Rs. {{ dta.clientFinalOfferAmmount | indianNumber}}">
+      </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Net Sales(After Adding Client Price)</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.updatingThePrice | indianNumber}}">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Rack Value(Updated After Client Price)</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.afterUpdate | indianNumber}}">
+    </mat-form-field>
+
+      </section>
+
+      <div class="vertical-border"></div>
+          <!-- ---------------SALES HEAD VALUE----------- -->
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Final Price</mat-label>
+          <input type="number" matInput autocomplete="off" [(ngModel)]="finalPrice" (input)="updateRackValue(dta.totalNumberOfSeats)" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Net Sales(After Adding Final Price)</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.bookingPriceUptilNow+finalPrice | indianNumber}}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Rack Value(Updated After Final Price)</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{rackValue |indianNumber}}" />
+    </mat-form-field>
+
+      </section>
+      <!-- <div class="vertical-border"></div> -->
+      <!-- ---------------FUTURE VALUE----------- -->
+      <!-- Need to decide -->
+      <!-- <section>
+        <mat-form-field appearance="fill">
+          <mat-label>Future Price Should Be</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{rackValue | indianNumber}}">
+      </mat-form-field>
+
+      </section> -->
+    </div>
+  </section>
+
+      </div>
+  </div>
+  <div class="right-content">
+    <div class="title">
+      <h2 style="color:#c3343a;">Location:{{dta.location}}, {{dta.center}}</h2>
+    </div>
+    <label>Total --</label>
+    <section>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Total Seats</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.totalNoOfWorkstation}}">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>System Rack Rate</mat-label>
+      <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.systemRackRate | indianNumber}}">
+  </mat-form-field>
+    </section>
+    <section>
+    <mat-form-field appearance="fill">
+      <mat-label>Net Sale(Overall)</mat-label>
+      <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.systemRackRate *dta.totalNoOfWorkstation | indianNumber}}">
+  </mat-form-field>
+    </section>
+    <label>Selected--</label>
+    <section>
+      <mat-form-field appearance="fill">
+        <mat-label>Sold Uptil Now</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.totalNoOfWorkstation-dta.remainingSeats }}">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Net Sale(Selected Seats)</mat-label>
+      <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.bookingPriceUptilNow | indianNumber}}">
+  </mat-form-field>
+
+      </section>
+      <section>
+        <mat-form-field appearance="fill">
+        <mat-label>Per Seat</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.bookingPriceUptilNow/(dta.totalNoOfWorkstation-dta.remainingSeats) | indianNumber}}">
+    </mat-form-field>
+  </section>
+      After Update
+      <section>
+        <mat-form-field appearance="fill">
+          <mat-label>Adding Seat</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="{{(dta.totalNoOfWorkstation-dta.remainingSeats)+dta.totalNumberOfSeats }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Net Sale(Updated Selected Seats)</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{dta.bookingPriceUptilNow+finalPrice | indianNumber}}">
+    </mat-form-field>
+
+      </section>
+      <section>
+        <mat-form-field appearance="fill">
+          <mat-label>Net Sale(Updated Selected Seats)</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{(dta.bookingPriceUptilNow+finalPrice)/((dta.totalNoOfWorkstation-dta.remainingSeats)+dta.totalNumberOfSeats) | indianNumber}}">
+      </mat-form-field>
+      </section>
+      <label>Remaining--</label>
+      <section>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Availble Seats</mat-label>
+          <input type="text" matInput autocomplete="off" [readonly]="true" value="{{dta.remainingSeats}}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>As per system price(For Future Seats)</mat-label>
+        <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{((dta.remainingSeats)* dta.systemRackRate)| indianNumber}}">
+    </mat-form-field>
+        </section>
+        <section>
+          <mat-form-field appearance="fill">
+            <mat-label>Rack Rate(For Future Seats)</mat-label>
+            <input type="text" matInput autocomplete="off" [readonly]="true" value="Rs. {{(dta.remainingSeats* dta.systemRackRate)/(dta.remainingSeats) | indianNumber}}">
+        </mat-form-field>
+        </section>
+  </div>
+</div>
+
+  <div class="form-action">
+    <button type="button" mat-raised-button  color="primary" (click)="approveProposal(id)">Approve</button>
+    <button type="button" mat-raised-button color="primary" (click)="declineProposal()">Decline</button>
+  </div>
+
+  </div>

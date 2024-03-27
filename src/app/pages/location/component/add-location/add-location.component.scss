@@ -1,0 +1,237 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+.container {
+  display: flex;
+  justify-content: center;
+  margin-block: 1rem;
+  align-items: center;
+  min-height: 100vh;
+
+  .main-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+   padding-block: 0rem 2rem;
+   padding-inline: 2rem;
+    background-color: #fff;
+    border-radius: 2rem;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+    width: 60rem;
+    @include for-desktop() {
+      width: 45rem;
+    }
+    @include for-mobile() {
+      width:17rem;
+      margin: 2rem;
+    }
+    .title {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: inherit;
+      @include for-mobile() {
+        flex-direction: column;
+
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: inherit;
+
+      .sub-section{
+        display: flex;
+        gap:2rem;
+        @include for-mobile(){
+          gap: 0rem;
+          flex-direction: column;
+        }
+      }
+      section {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: inherit;
+        @include for-mobile() {
+          flex-direction: column;
+        }
+
+        mat-form-field {
+          width: 20rem;
+          @include for-desktop() {
+            width: 18rem;
+          }
+        }
+        .center_align{
+          width: 16rem;
+        }
+        .form-field {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          mat-form-field {
+            mat-icon {
+              padding-inline-start: 1rem;
+              cursor: pointer;
+            }
+          }
+        }
+
+        button {
+          width: 20rem;
+          @include for-desktop() {
+            width: 16rem;
+          }
+          margin-bottom: 1rem;
+          .button_content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+          }
+        }
+      }
+
+      .form-action {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: inherit;
+        gap: 5rem;
+        @include for-desktop() {
+          gap: 9.5rem;
+        }
+        @include for-mobile() {
+          gap: 0.5rem;
+          display: flex;
+          flex-direction: column;
+        }
+        button {
+          width: 15rem;
+          @include for-desktop() {
+            width: 10rem;
+          }
+
+        }
+      }
+    }
+  }
+}
+
+// @mixin for-desktop {
+//   @media (max-width: 1440px) {
+//     @content;
+//   }
+// }
+
+// .container {
+//   font-size: 1.1rem;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   min-height: 100vh;
+//   background-color: #ececec;
+
+//   @include for-desktop() {
+//     font-size: 1rem;
+//   }
+
+//   .title {
+//     width: 48rem;
+//     text-align: left;
+//     color: #c3343a;
+//   }
+
+//   .card {
+//     width: 60rem;
+//     height: 35rem;
+//     display: flex;
+//     background-color: rgba(255, 255, 255, 0.656);
+//     border-radius: 2.5rem;
+//     box-shadow: 0 10px 9px rgb(0 0 0 / 19%), 0 5px 14px rgb(0 0 0 / 10%);
+//     flex-wrap: wrap;
+//     justify-content: space-around;
+//     align-content: center;
+//     align-items: center;
+
+//     @include for-desktop() {
+//       // padding: 2rem;
+//       width: 50rem;
+//       height: 30rem;
+//     }
+
+//     mat-form-field {
+//       width: 40%;
+//     }
+//   }
+
+//   .buttons {
+//     width: 100%;
+
+//     display: flex;
+
+//     flex-wrap: wrap;
+//     justify-content: space-around;
+//     align-content: center;
+//     align-items: center;
+
+//     button {
+//       background-color: #c3343a;
+//       color: white;
+//       width: 20%;
+//     }
+//   }
+// }
+
+// ::ng-deep .mat-form-field-wrapper {
+//   @include for-desktop() {
+//     padding-bottom: 0.5rem !important;
+//   }
+// }
+
+.example-month-picker .mat-calendar-period-button {
+  pointer-events: none;
+}
+
+.example-month-picker .mat-calendar-arrow {
+  display: none !important;
+}
+table {
+  border-collapse: collapse;
+  margin: 20px 30px;
+  th,
+  td {
+      text-align: left;
+      border: 2px solid #000;
+      padding: 8px 16px;
+  }
+  td mat-icon{
+    cursor: pointer;
+  }
+}
+.flexbox{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction:row;
+  img{
+    width: 100px;
+  margin: 10px;
+  text-align: center;
+  }
+}

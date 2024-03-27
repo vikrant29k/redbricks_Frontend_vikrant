@@ -1,0 +1,108 @@
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ececec;
+  width: 100%;
+  min-height: 100vh;
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @include for-mobile() {
+        font-size: 0.9rem;
+        }
+    }
+
+    .table-container {
+      @include for-mobile() {
+        width: 20rem;
+        overflow-x: scroll;
+      }
+      table {
+        color: #fff;
+        background-color: #ececec;
+        width: 60rem;
+        text-align: center;
+        @include for-mobile() {
+          width:35rem;
+        }
+        th {
+          background-color: #c3343a;
+          padding-inline: 1rem;
+          padding-block: 1rem;
+          text-align: center;
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #fff;
+        }
+
+        td {
+          padding-inline: 1rem;
+          text-align: center;
+          // background-color: #8B8C8D;
+        }
+
+        tr {
+          background-color: #8b8c8d;
+          // color: #fff;
+          td {
+            color: #fff;
+          }
+          &:has(> .white) {
+            background-color: #fff;
+            td {
+              color: black;
+            }
+          }
+          &:last-child {
+            td {
+              &:first-child {
+                border-bottom-left-radius: 1rem;
+              }
+
+              &:last-child {
+                border-bottom-right-radius: 1rem;
+              }
+            }
+          }
+        }
+      }
+    }
+    mat-paginator {
+      width: 100%;
+      background-color: #ececec;
+    }
+  }
+ }
+.displayno {
+  tr {
+    &:has(> .white) {
+      display: none;
+    }
+  }
+}
+.displayyes {
+  tr {
+    &:has(> .white) {
+      display: inherit;
+    }
+  }
+}
+.displaynon {
+  display: none;
+}

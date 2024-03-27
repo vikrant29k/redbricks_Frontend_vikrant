@@ -1,0 +1,74 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin custom_client-info_angular-material {
+  .mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+    background-color: #c3343a !important;
+  }
+  .mat-form-field-appearance-fill {
+    font-size: 1.1rem;
+
+    .mat-form-field-flex {
+      background-color: #c3343a;
+      border-radius: 0.5rem !important;
+    }
+
+    .mat-form-field-underline::before {
+      background-color: rgba(255, 255, 255, 0.42);
+    }
+
+    .mat-form-field-label {
+      span {
+        color: #fff;
+      }
+    }
+
+    .mat-select-arrow {
+      color: #fff;
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    mat-label {
+      color: #fff;
+      font-weight: 600;
+      @include for-desktop() {
+        font-weight: 500;
+      }
+    }
+
+    .mat-select-value-text {
+      color: #fff;
+    }
+
+    .mat-input-element {
+      color: #fff;
+    }
+  }
+
+  .mat-form-field {
+    &.mat-form-field-invalid {
+      .mat-form-field-label {
+        .mat-form-field-required-marker {
+          color: #fff;
+        }
+      }
+    }
+
+    .mat-select {
+      &.mat-select-invalid {
+        .mat-select-arrow {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .mat-input-element {
+    caret-color: #fff;
+  }
+}

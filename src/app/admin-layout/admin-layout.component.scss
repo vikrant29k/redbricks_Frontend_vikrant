@@ -1,0 +1,53 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+mat-drawer-container {
+  height: 100vh;
+
+  mat-drawer {
+    width: 20rem;
+    @include for-desktop() {
+      width: 18rem;
+    }
+  }
+
+  .container {
+    position: fixed;
+    top: 1rem;
+    left: 2rem;
+    z-index: 1;
+    @include for-mobile(){
+      left: 0rem;
+      top: 0.2rem;
+
+        }
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      border-radius: 100%;
+      background-color: #c3343a;
+      color: #fff;
+      font-size: 1.1rem;
+      z-index: 1;
+      cursor: pointer;
+      @include for-mobile(){
+        margin-left: 2px;
+        padding: 0.55rem;
+        height: 20px;
+        width: 20px;
+        .material-icons {
+        font-size: 21px;
+        }
+      }
+    }
+  }
+}

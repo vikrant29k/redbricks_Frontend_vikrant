@@ -1,0 +1,126 @@
+<div class="container">
+  <div class="main-content">
+    <div class="title">
+      <h1>User Profile</h1>
+      <ng-container *ngIf="!editMode">
+        <div class="edit-icon">
+          <button mat-icon-button (click)="enableEditMode()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+    <div class="avatar">
+      <img src="assets/images/profile/default-profile.svg" alt="" />
+    </div>
+    <div class="form-container">
+      <form ngform [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="section">
+          <mat-form-field appearance="outline" color="primary">
+            <mat-label>First Name</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="firstName"
+              autocomplete="off"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" color="primary">
+            <mat-label>Last Name</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="lastName"
+              autocomplete="off"
+            />
+          </mat-form-field>
+        </div>
+        <div class="section">
+          <mat-form-field appearance="outline" color="primary">
+            <mat-label>Mobile No</mat-label>
+            <input
+              type="tel"
+              maxlength="10"
+              matInput
+              formControlName="mobileNo"
+              autocomplete="off"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" color="primary">
+            <mat-label>Date Of Birth</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dateOfBirth"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="section">
+          <mat-form-field appearance="outline" color="primary">
+            <mat-label>Designation</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="designation"
+              autocomplete="off"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" color="primary">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+              <mat-option value="sales">Sales</mat-option>
+              <mat-option value="salesHead">Sales Head</mat-option>
+              <mat-option value="admin">Admin</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="section">
+          <mat-form-field appearance="outline" color="primary">
+            <mat-label>Username</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="userName"
+              autocomplete="off"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" color="primary">
+            <mat-label>Password</mat-label>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              matInput
+              formControlName="password"
+              autocomplete="off"
+            />
+            <mat-icon
+              matSuffix
+              (click)="showPassword = !showPassword"
+              [ngClass]="editMode ? 'active' : ''"
+              >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
+            >
+          </mat-form-field>
+        </div>
+        <ng-container *ngIf="editMode">
+          <div class="form-action">
+            <button
+              type="button"
+              color="primary"
+              mat-raised-button
+              (click)="disableEditMode()"
+            >
+              Cancel
+            </button>
+            <button type="submit" color="primary" mat-raised-button>
+              Save
+            </button>
+          </div>
+        </ng-container>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="main-content">
+      <div class="title">
+        <h1>Cost Sheet of Serviced Office</h1>
+        <button mat-raised-button color="primary" (click)="enableEdit()">{{editMode?'Lock':'Edit'}}</button>
+      </div>
+      <form [formGroup]="costForm" (ngSubmit)="onSubmit()">
+          <section>
+
+              <!-- <mat-form-field appearance="outline">
+                  <mat-label>Amortized Fit Out Rent for 3 years</mat-label>
+                  <input type="number" matInput formControlName="amortizedFitOutRent3Years" autocomplete="off" [readonly]="editMode?'false':'true'">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Total-1</mat-label>
+                <input type="number" matInput formControlName="total_1" autocomplete="off" [readonly]="editMode?'false':'true'">
+            </mat-form-field>
+          </section>
+          <section>
+            <mat-form-field appearance="outline">
+              <mat-label>Admin Marketing & Over Headsors</mat-label>
+              <input type="number" matInput formControlName="adminMarketing" autocomplete="off" [readonly]="editMode?'false':'true'" >
+          </mat-form-field>
+              <mat-form-field appearance="outline">
+                  <mat-label>Brokerage</mat-label>
+                  <input type="number" matInput formControlName="brokerage" autocomplete="off" [readonly]="editMode?'false':'true'">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Total-2</mat-label>
+                <input type="number" matInput formControlName="total_2" autocomplete="off" [readonly]="editMode?'false':'true'">
+            </mat-form-field>
+          </section>
+          <section>
+            <mat-form-field appearance="outline">
+              <mat-label>Profit before TAX</mat-label>
+              <input type="number" matInput formControlName="profitBeforeTax" autocomplete="off" [readonly]="editMode?'false':'true'" >
+          </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Rate of Inventory on Lease Area</mat-label>
+                <input type="number" matInput formControlName="rateOfInventoryOnLeaseArea" autocomplete="off" [readonly]="editMode?'false':'true'">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Total-3</mat-label>
+              <input type="number" matInput formControlName="total_3" autocomplete="off" [readonly]="editMode?'false':'true'">
+          </mat-form-field>
+          </section>
+          <section>
+            <mat-form-field appearance="outline">
+              <mat-label>Include Commons/Amenities</mat-label>
+              <input type="number" matInput formControlName="includeCommonsAmenities" autocomplete="off" [readonly]="editMode?'false':'true'" >
+          </mat-form-field>
+              <mat-form-field appearance="outline">
+                  <mat-label>on 80% Diversity Factor</mat-label>
+                  <input type="number" matInput formControlName="on80perDiversityFactor" autocomplete="off" [readonly]="editMode?'false':'true'">
+              </mat-form-field> -->
+              <mat-form-field appearance="outline">
+                <mat-label>Cost of Standard Interiors</mat-label>
+                <input type="number" matInput formControlName="costStandardInteriors" autocomplete="off" [readonly]="editMode?'false':'true'" >
+            </mat-form-field>
+          </section>
+          <div class="form-action">
+              <button type="button" mat-raised-button color="primary" >Cancel</button>
+              <button type="submit" mat-raised-button color="primary">Update Cost</button>
+          </div>
+      </form>
+  </div>
+</div>

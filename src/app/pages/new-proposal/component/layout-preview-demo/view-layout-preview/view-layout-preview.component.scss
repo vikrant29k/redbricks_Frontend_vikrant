@@ -1,0 +1,54 @@
+.main-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .container{
+    display:flex;
+    flex-direction: row;
+    gap:1rem;
+    margin-top:1rem;
+    // margin-inline-start: 13rem;
+    .stageCanvas{
+
+      border: black 2px solid;
+
+    }
+    .content{
+      display: flex;
+      flex-direction: column;
+      .circle-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+    .chart{
+      width: 15rem;
+      height: 15rem;
+
+      .pichart{
+        width: 400px;
+        height: 300px;
+
+      }
+    }
+  }
+  }
+
+
+.btn{
+  display: flex;
+  gap:0.5rem;
+  button {
+    font-weight: 600;
+    cursor: pointer;
+    }
+}
+
+}
+#canvas{
+  width:800px;
+  height: 734px;
+}

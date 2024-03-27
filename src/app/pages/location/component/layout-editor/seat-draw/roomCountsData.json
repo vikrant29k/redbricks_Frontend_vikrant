@@ -1,0 +1,263 @@
+{
+  "Workstation2x1": {
+    "count": 0.6,
+    "color": "#292929",
+    "width": 2,
+    "height": 2,
+    "priority": 0
+  },
+  "Workstation3x2": {
+    "count": 0.75,
+    "color": "#3d3d3d",
+    "width": 0.75,
+    "height": 1,
+    "priority": 0
+  },
+  "Workstation4x2": {
+    "count": 1,
+    "color": "gray",
+    "width": 1,
+    "height": 1,
+    "priority": 2.1
+  },
+  "Workstation4x4": {
+    "count": 0.8,
+    "color": "#575555",
+    "width": 2,
+    "height": 2,
+    "priority": 0
+  },
+  "Workstation5x2": {
+    "count": 1.25,
+    "color": "#737272",
+    "width": 2,
+    "height": 1,
+    "priority": 0
+  },
+  "Workstation5x4": {
+    "count": 1.1,
+    "color": "#8a8888",
+    "width": 2,
+    "height": 2,
+    "priority": 0
+  },
+  "Workstation5x5": {
+    "count": 1.2,
+    "color": "#545151",
+    "width": 2,
+    "height": 2,
+    "priority": 0
+  },
+  "Training Room": {
+    "count": 1,
+    "color": "red",
+    "width": 2,
+    "height": 2,
+    "priority": 36
+  },
+  "Game Room": {
+    "count": 1,
+    "color": "violet",
+    "width": 2,
+    "height": 2,
+    "priority": 37
+  },
+  "Cafeteria": {
+    "count": 1,
+    "color": "lightred",
+    "width": 2,
+    "height": 2,
+    "priority": 38
+  },
+  "Dry Pantry Room": {
+    "count": 4,
+    "color": "teal",
+    "width": 2,
+    "height": 2,
+    "priority": 22
+  },
+  "Store Room": {
+    "count": 4,
+    "color": "cyan",
+    "width": 2,
+    "height": 2,
+    "priority": 32
+  },
+  "Wellness Room": {
+    "count": 4,
+    "color": "orange",
+    "width": 2,
+    "height": 2,
+    "priority": 32
+  },
+  "Prayer/Pooja Room": {
+    "count": 4,
+    "color": "magenta",
+    "width": 2,
+    "height": 2,
+    "priority": 32
+  },
+  "Phone Booth": {
+    "count": 2,
+    "color": "brown",
+    "width": 1,
+    "height": 2,
+    "priority": 1
+  },
+  "Regular Cabin": {
+    "count": 4,
+    "color": "#faa046",
+    "width": 2,
+    "height": 2,
+    "priority": 2
+  },
+
+  "Cubical": {
+    "count": 4,
+    "color": "cyan",
+    "width": 2,
+    "height": 2,
+    "priority": 2.2
+  },
+  "4P Collab Area": {
+    "count": 4,
+    "color": "#b85f06",
+    "width": 2,
+    "height": 2,
+    "priority": 2.3
+  },
+  "4P Meeting": {
+    "count": 4,
+    "color": "#fa696e",
+    "width": 2,
+    "height": 2,
+    "priority": 2
+  },
+  "1 Rack Server": {
+    "count": 4,
+    "color": "#fa7ff8",
+    "width": 2,
+    "height": 2,
+    "priority": 8
+  },
+  "2 Rack Server": {
+    "count": 4,
+    "color": "#fa39f7",
+    "width": 2,
+    "height": 2,
+    "priority": 8
+  },
+  "Large Cabin": {
+    "count": 6,
+    "color": "#ff8000",
+    "width": 3,
+    "height": 2,
+    "priority": 3
+  },
+  "6P Meeting": {
+    "count": 6,
+    "color": "#f5363c",
+    "width": 3,
+    "height": 2,
+    "priority": 3
+  },
+  "3 Rack Server": {
+    "count": 6,
+    "color": "#de02da",
+    "width": 3,
+    "height": 2,
+    "priority": 8
+  },
+  "Small Reception": {
+    "count": 6,
+    "color": "#7ffa8a",
+    "width": 3,
+    "height": 2,
+    "priority": 8
+  },
+  "6P Collab Area": {
+    "count": 6,
+    "color": "#5c4af7",
+    "width": 3,
+    "height": 2,
+    "priority": 8
+  },
+  "MD Cabin": {
+    "count": 12,
+    "color": "#a85502",
+    "width": 3,
+    "height": 4,
+    "priority": 4
+  },
+  "10P Meeting": {
+    "count": 12,
+    "color": "#c91e21",
+    "width": 3,
+    "height": 4,
+    "priority": 4
+  },
+  "12P Meeting": {
+    "count": 15,
+    "color": "#a1050a",
+    "width": 3,
+    "height": 5,
+    "priority": 5
+  },
+  "16P Meeting": {
+    "count": 16,
+    "color": "#912024",
+    "width": 3,
+    "height": 6,
+    "priority": 6
+  },
+
+  "8P Meeting": {
+    "count": 8,
+    "color": "#fa141c",
+    "width": 4,
+    "height": 2,
+    "priority": 8
+  },
+  "4 Rack Server": {
+    "count": 8,
+    "color": "#8c038a",
+    "width": 4,
+    "height": 2,
+    "priority": 8
+  },
+  "Medium Reception": {
+    "count": 8,
+    "color": "#07eb1a",
+    "width": 4,
+    "height": 2,
+    "priority": 8
+  },
+  "8P Collab Area": {
+    "count": 8,
+    "color": "#100191",
+    "width": 4,
+    "height": 2,
+    "priority": 8
+  },
+  "20P Board Room": {
+    "count": 24,
+    "color": "#f3fc44",
+    "width": 4,
+    "height": 6,
+    "priority": 9
+  },
+  "24P Board Room": {
+    "count": 32,
+    "color": "#a7b004",
+    "width": 4,
+    "height": 8,
+    "priority": 10
+  },
+  "Large Reception": {
+    "count": 10,
+    "color": "#01820c",
+    "width": 5,
+    "height": 2,
+    "priority": 11
+  }
+}

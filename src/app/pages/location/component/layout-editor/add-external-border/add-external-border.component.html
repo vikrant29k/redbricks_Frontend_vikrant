@@ -1,0 +1,29 @@
+
+<div class="main">
+  <div class="canvas-container">
+    <div id="container"></div>
+  </div>
+<div class="sub-container">
+<div class="detail-section"  *ngFor="let data of areaOptions">
+
+    <span class="circle-color" [style.background-color]="data.color"></span><p>{{data.label}}</p>
+
+</div>
+
+  <mat-select placeholder="Select Area" [(ngModel)]="selectedArea" (ngModelChange)="onAreaChange()">
+    <mat-option *ngFor="let option of areaOptions" [value]="option.value" [ngClass]="option.color + '-option'">
+      {{ option.label }}
+    </mat-option>
+  </mat-select>
+
+
+  <button mat-raised-button (click)="toggleDrawing()" color="primary" >{{isDrawingEnabled?'Stop':'Start'}} Drawing Border</button>
+  <button mat-raised-button (click)='addRectDataInArray()' color="primary">Update Border</button>
+<br>
+  <button mat-raised-button (click)="resetZoomAndPosition()"> Reset </button>
+  <button  mat-raised-button (click)="addLayout()">Final</button>
+  <button  mat-raised-button (click)="removeImage()">Remove Image</button>
+  <button  mat-raised-button (click)="reAddImage()">Add Image</button>
+
+</div>
+</div>

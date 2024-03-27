@@ -1,0 +1,53 @@
+.contain{
+  width: 1080px;
+  height: 734px;
+  border: 1px solid black;
+}
+.changeContain{
+  width: 1080px;
+  height: 734px;
+  border: 1px solid black;
+
+    user-select: none;
+    cursor: move;
+
+}
+.main{
+  display: flex;
+
+  button{
+    margin: 10px;
+  }
+  .canvas-container{
+    margin-left: 6rem;
+    padding-top:3rem;
+
+  }
+  .sub-container{
+    display: flex;
+    flex-direction: column;
+    margin-left:6rem;
+    padding-top:3rem;
+    width:15rem;
+    align-items: center;
+  }
+  .label{
+    display: flex;
+    gap:1rem;
+
+    mat-card{
+      margin-block: 0.5rem;
+      width: 9rem;
+      padding: 0;
+      padding-block: 1rem 1rem;
+    }
+    p{
+      margin-left: 10px;
+    }
+  }
+}
+
+
+.stageCanvas{
+  border: black 2px solid;
+}

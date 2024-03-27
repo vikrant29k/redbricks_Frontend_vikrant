@@ -1,0 +1,308 @@
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <img src="assets/images/auth/logo.png" alt="">
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="section">
+            <div class="title" routerLink="/admin/admin-dashboard" routerLinkActive="active" (click)="expandAccording()">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">dashboard</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>Dashboard</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="title" routerLink="/admin/profile/" routerLinkActive="active" (click)="expandAccording()">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">person</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>Profile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="section">
+          <div class="title" routerLink="/admin/diagram/" routerLinkActive="active" (click)="expandAccording()">
+              <div class="main">
+                  <div class="title-icon">
+                      <mat-icon fontSet="material-icons-round">person</mat-icon>
+                  </div>
+                  <div class="title-text">
+                      <p>Add Diagram</p>
+                  </div>
+              </div>
+          </div>
+      </div> -->
+        <div class="section" *ngIf="user!=='sales head'">
+            <div class="title" [ngClass]="userExpanded ? 'expanded': ''" (click)="expandAccording('user')">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">people</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>User</p>
+                    </div>
+                </div>
+                <div class="expansion-icon">
+                    <mat-icon>expand_more</mat-icon>
+                </div>
+            </div>
+            <ng-container *ngIf="userExpanded">
+                <div class="sub-section">
+                    <div class="title" routerLink="/admin/users/user-list" routerLinkActive="active" (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">view_list</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>User List</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title" routerLink="/admin/users/add-users" routerLinkActive="active"
+                        (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">person_add</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Add User</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="section"  *ngIf="user!=='sales head'">
+            <div class="title" [ngClass]="brokerExpand ? 'expanded': ''" (click)="expandAccording('broker')">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">people</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>Broker</p>
+                    </div>
+                </div>
+                <div class="expansion-icon">
+                    <mat-icon>expand_more</mat-icon>
+                </div>
+            </div>
+            <ng-container *ngIf="brokerExpand">
+                <div class="sub-section">
+                    <div class="title" routerLink="/admin/broker/broker-list" routerLinkActive="active" (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">view_list</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Broker List</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title" routerLink="/admin/broker/add-broker" routerLinkActive="active"
+                        (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">person_add</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Add Broker</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <!-- <div class="section">
+          <div class="title"  routerLink="/admin/cost/" routerLinkActive="active" (click)="expandAccording()">
+              <div class="main">
+                  <div class="title-icon">
+                      <mat-icon fontSet="material-icons-round">attach_money</mat-icon>
+                  </div>
+                  <div class="title-text">
+                      <p>Cost Sheet</p>
+                  </div>
+              </div>
+          </div>
+      </div> -->
+      <!-- <div class="section">
+        <div class="title" [ngClass]="calculation ? 'expanded': ''" (click)="expandAccording('calculation')">
+            <div class="main">
+                <div class="title-icon">
+                    <mat-icon fontSet="material-icons-round">attach_money</mat-icon>
+                </div>
+                <div class="title-text">
+                    <p>Calculations</p>
+                </div>
+            </div>
+            <div class="expansion-icon">
+                <mat-icon>expand_more</mat-icon>
+            </div>
+        </div>
+        <ng-container *ngIf="calculation">
+            <div class="sub-section">
+                <div class="title" routerLink="/admin/cost/" routerLinkActive="active" (click)="expandAccording('calculation')">
+                    <div class="main">
+                        <div class="title-icon">
+                            <mat-icon fontSet="material-icons-round">view_list</mat-icon>
+                        </div>
+                        <div class="title-text">
+                            <p>Cost Sheet List</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="title" routerLink="/admin/cost/" routerLinkActive="active"
+                    (click)="expandAccording()">
+                    <div class="main">
+                        <div class="title-icon">
+                            <mat-icon fontSet="material-icons-round">person_add</mat-icon>
+                        </div>
+                        <div class="title-text">
+                            <p>Edit Parameters</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div> -->
+        <div class="section"  *ngIf="user!=='sales head'">
+            <div class="title" [ngClass]="locationExpanded ? 'expanded': ''" (click)="expandAccording('location')">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">location_on</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>Location</p>
+                    </div>
+                </div>
+                <div class="expansion-icon">
+                    <mat-icon>expand_more</mat-icon>
+                </div>
+            </div>
+            <ng-container *ngIf="locationExpanded">
+                <div class="sub-section">
+                    <div class="title" routerLink="/admin/location/location-list" routerLinkActive="active" (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">map</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Location List</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title" routerLink="/admin/location/add-location" routerLinkActive="active"
+                        (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">add_location_alt</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Add Location</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="section"  *ngIf="user!=='sales head'">
+            <div class="title" [ngClass]="clientExpand? 'expanded': ''" (click)="expandAccording('client')">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">groups_3</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>Clients</p>
+                    </div>
+                </div>
+                <div class="expansion-icon">
+                    <mat-icon>expand_more</mat-icon>
+                </div>
+            </div>
+            <ng-container *ngIf="clientExpand">
+                <div class="sub-section">
+                    <div class="title" routerLink="/admin/old-proposal/old-client-list" routerLinkActive="active" (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">map</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Client List</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title" routerLink="/admin/old-proposal/add-old-client" routerLinkActive="active"
+                        (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">add_location_alt</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Add Old Client</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="section">
+            <div class="title" [ngClass]="logExpanded ? 'expanded': ''" (click)="expandAccording('log')">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">content_paste</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>Log</p>
+                    </div>
+                </div>
+                <div class="expansion-icon">
+                    <mat-icon>expand_more</mat-icon>
+                </div>
+            </div>
+            <ng-container *ngIf="logExpanded">
+                <div class="sub-section">
+                    <div class="title" routerLink="/admin/log/proposal-log" routerLinkActive="active" (click)="expandAccording()">
+                        <div class="main">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">receipt_long</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Proposal</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title" (click)="expandAccording() ">
+                        <div class="main" (click)="generateWeeklyRpeort()">
+                            <div class="title-icon">
+                                <mat-icon fontSet="material-icons-round">pending_actions</mat-icon>
+                            </div>
+                            <div class="title-text">
+                                <p>Weekly Report</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="section">
+            <div class="title"  (click)="logOut()" (click)="expandAccording()">
+                <div class="main">
+                    <div class="title-icon">
+                        <mat-icon fontSet="material-icons-round">logout</mat-icon>
+                    </div>
+                    <div class="title-text">
+                        <p>Logout</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

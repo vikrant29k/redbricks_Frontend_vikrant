@@ -1,0 +1,20 @@
+
+<div class="canvas-container" >
+    <div class="inner_div">
+
+    <label>Seats to be Selected: {{totalNumber}}/{{displayTotal}} </label>
+    <div>
+        <!-- <button class="download_btn" (click)="drawRectangles()">Select Seats</button> -->
+    </div>
+    <button class="download_btn" (click)="redrawTheRoom()">shuffle</button>
+    <button class="download_btn" (click)="resetZoomAndPosition()">Reset Layout</button>
+    <button class="download_btn" (click)="hideName()">Hide Name</button>
+    <!-- <button class="download_btn" (click)="changeTheFlow()">{{flowOfDrawingSeats?'Vertical':'Horizontal'}}</button> -->
+    <button class="download_btn"   (click)="saveImage()">Final Layout</button>
+
+    </div>
+    <!-- <div #captureContainer> -->
+        <div id="container"></div>
+    <!-- </div> -->
+
+  </div>

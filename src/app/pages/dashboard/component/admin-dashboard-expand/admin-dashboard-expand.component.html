@@ -1,0 +1,78 @@
+<div [ngClass]="showMe?'':'card-wrapper'">
+<mat-card class="card" (click)="clickHandler()">
+  <h2><mat-icon>my_location</mat-icon> {{ cardData }}</h2>
+  <div class="subtitle">
+    <!-- <mat-card class="subtitle_data">
+      <p> <b> Total Seats:{{ cardData.totalNoOfWorkstation }}</b></p>
+      <p> <b> Available Seats:{{ cardData.availableNoOfWorkstation }}</b></p>
+      <p> <b> Selected Seats:{{ cardData.selectedNoOfSeats }}</b></p>
+    </mat-card> -->
+  </div>
+  <div class="sub_card">
+    <ng-container *ngFor="let center of centerList">
+      <div class="center-card" (click)="getFloorData(center)">
+        <p>{{ center }}</p>
+      </div>
+    </ng-container>
+  </div>
+
+
+  <div class="floor-card" [@slideInOut]="selectedCenter === null ? 'floorout' : 'floorin'" >
+    <button mat-icon-button (click)="closeFloor()" class="floorClose">  <mat-icon>arrow_back</mat-icon> </button>
+    <h2 class="floorTitle"><mat-icon>location_city</mat-icon> {{centerName}}</h2>
+    <div class="floor-data">
+
+    <ng-container *ngFor="let floor of floorData">
+      <div class="floor-card-data-div">
+        <div class="icon" (mouseenter)="floor.isHovered=true" (mouseleave)="floor.isHovered=false" (click)="detailFloor(floor.floorName,floor.floorData)">
+          <p>{{ floor.floorName }}</p>
+          <!-- <div class="floorHoverData" [ngClass]="{'show': floor.isHovered}"> -->
+            <span class="sub-icon" [ngClass]="floor.isHovered ? 'totalWs-icon': ''">Total WS- <br> {{ floor.floorData.totalNoOfWorkstation }}</span>
+            <span class="sub-icon" [ngClass]="floor.isHovered ? 'totalPs-icon': ''"> Total Proposal- <br>{{ floor.floorData.totalProposals }}</span>
+            <span class="sub-icon" [ngClass]="floor.isHovered ? 'selectedSeat-icon': ''">Locked Seat- <br>{{ floor.floorData.selectedNoOfSeats }}</span>
+            <span class="sub-icon" [ngClass]="floor.isHovered ? 'rackRate-icon': ''">Rack Rate- <br> Rs.{{ floor.floorData.rackRate }}</span>
+            <span class="sub-icon" [ngClass]="floor.isHovered ? 'final-icon': ''">Final Proposal- <br>{{ floor.floorData.finalizedProposal }}</span>
+            <span class="sub-icon" [ngClass]="floor.isHovered ? 'booking-icon': ''">Total Price- <br>Rs.{{ floor.floorData.bookingPriceUptilNow }}</span>
+          </div>
+        <!-- </div> -->
+      </div>
+    </ng-container>
+  </div>
+  </div>
+
+  <div class="detailedFloor" [@dataInOut]="details === null ? 'out' : 'in'">
+    <button mat-icon-button (click)="closeFloordetails()" class="detailfloorClose">  <mat-icon>arrow_back</mat-icon> </button>
+    <h2 class="detailedFloor-title"><mat-icon>layers</mat-icon> {{details}}</h2>
+    <div class="detailPie">
+          <div class="cardSection">
+            <section>
+              <p style="width: 70% !important">System Current Price :</p>
+              <p>Rs.{{ currentValue || 0 }} per seat</p>
+            </section>
+            <section>
+              <p style="width: 70% !important">Minimum Rack Value :</p>
+              <p>Rs.{{ rackValue || 0 }} per seat</p>
+              <!-- //<mat-icon>sync</mat-icon> -->
+            </section>
+            <section>
+              <p style="width: 70% !important">Total Sales Price Until Now :</p>
+              <p>Rs.{{ bookingPriceUptilNow || 0 }}</p>
+            </section>
+            <section>
+              <p style="width: 70% !important">Current Rack Rate Acheived :</p>
+              <p>Rs.{{ currentSeatPrice || 0 }} per seat</p>
+            </section>
+
+
+          </div>
+
+
+          <div class="chart" #chartContainer>
+            <div #pieChart ></div>
+          </div>
+
+  </div>
+  </div>
+
+</mat-card>
+</div>

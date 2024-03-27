@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="main-content">
+    <div class="title">
+      <h1>{{editMode ? 'Edit User':'Add User'}}</h1>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input type="text" matInput formControlName="firstName" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input type="text" matInput formControlName="lastName" autocomplete="off">
+        </mat-form-field>
+      </section>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Mobile No</mat-label>
+          <input type="tel" maxlength="10" matInput formControlName="mobileNo" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateOfBirth"  autocomplete="off">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </section>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Designation</mat-label>
+          <input type="text" matInput formControlName="designation"  autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="role" autocomplete="off">
+            <mat-option value="sales">Sales</mat-option>
+            <mat-option value="sales head">Sales Head</mat-option>
+            <mat-option value="admin">Admin</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+      <section>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input type="text" matInput formControlName="userName" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="primary">
+          <mat-label>Password</mat-label>
+          <input [type]="showPassword ? 'text': 'password'" matInput formControlName="password" autocomplete="off">
+          <mat-icon matSuffix (click)="showPassword = !showPassword">{{showPassword ?
+            'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-form-field>
+      </section>
+      <ng-container *ngIf="userForm.get('salesHead')">
+        <section>
+          <mat-form-field appearance="outline">
+            <mat-label>Sales Head</mat-label>
+            <mat-select formControlName="salesHead" autocomplete="off">
+              <ng-container *ngFor="let salesHead of salesHeads">
+                <mat-option [value]="salesHead._id">{{salesHead.firstName + ' ' + salesHead.lastName}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </section>
+      </ng-container>
+      <div class="form-action">
+        <ng-container *ngIf="!editMode; else cancelEditModeBtn">
+          <button type="reset" color="primary" mat-raised-button>Cancel</button>
+        </ng-container>
+        <ng-template #cancelEditModeBtn>
+          <button type="button" (click)="cancelEditMode()" color="primary" mat-raised-button>Cancel</button>
+        </ng-template>
+        <button type="submit" color="primary" mat-raised-button>Save</button>
+      </div>
+    </form>
+  </div>
+</div>

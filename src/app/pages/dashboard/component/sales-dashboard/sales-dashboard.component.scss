@@ -1,0 +1,94 @@
+@mixin for-desktop {
+  @media (max-width: 1440px) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
+@mixin flex_center_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  @include flex_center_center();
+  background-image: url("../../../../../assets/images/dashboard/dashboard-background.png");
+  background-size: cover;
+  min-height: 100vh;
+
+  .main-content {
+    @include flex_center_center();
+    gap: 1rem;
+    @include for-mobile() {
+     flex-direction: column;
+    }
+
+    .card {
+      @include flex_center_center();
+      width: 20rem;
+      height: 20rem;
+      @include for-desktop() {
+        width: 17rem;
+        height: 17rem;
+      }
+      @include for-mobile(){
+        width: 10rem;
+        height: 10rem;
+      }
+      img {
+        width: inherit;
+        object-fit: cover;
+        @include for-desktop() {
+          width: 16rem;
+        }
+        @include for-mobile() {
+          width: 10rem;
+        }
+      }
+
+      &.sphere {
+        @include flex_center_center();
+        font-size: 4rem;
+        text-align: center;
+        color: #ffffff;
+        border-radius: 100%;
+        cursor: pointer;
+        @include for-desktop() {
+          font-size: 3rem;
+        }
+        @include for-mobile() {
+          font-size: 1.3rem;
+        }
+        &.old-proposal {
+          background-color: #8b8c8d;
+        }
+
+        &.new-proposal {
+          background-color: #c3343a;
+        }
+      }
+    }
+  }
+}
+
+// @media (max-width: 475px) {
+//   .container {
+//     .main-content {
+//       flex-wrap: wrap;
+
+//       .card {
+//         width: 13rem;
+//         height: 13rem;
+
+//         &.sphere {
+//           font-size: 2.5rem;
+
+//         }
+//       }
+//     }
+//   }
+// }

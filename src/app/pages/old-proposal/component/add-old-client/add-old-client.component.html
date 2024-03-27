@@ -1,0 +1,137 @@
+<div class="main">
+    <div class="sub-container">
+      <div class="title">
+        <h1>Add Client Data</h1>
+      </div>
+      <form [formGroup]="clientForm" class="form-group">
+        <section>
+          <!-- Location list  -->
+          <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="location">
+              <ng-container *ngFor="let location of locationList">
+                <mat-option [value]="location">{{ location }}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>Location is required</mat-error>
+          </mat-form-field>
+          <!-- Center list -->
+          <mat-form-field appearance="outline">
+            <mat-label>Center</mat-label>
+            <mat-select formControlName="center">
+              <ng-container *ngFor="let center of centerList">
+                <mat-option [value]="center">{{ center }}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>Center is required</mat-error>
+          </mat-form-field>
+          <!-- Floor list -->
+          <mat-form-field appearance="outline">
+            <mat-label>Floor</mat-label>
+            <mat-select formControlName="floor">
+              <ng-container *ngFor="let floor of floorList">
+                <mat-option [value]="floor.center" (onSelectionChange)="getLocationIdFromFloor(floor._id)" >{{ floor.center }}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>Floor is required</mat-error>
+          </mat-form-field>
+        </section>
+        <ng-container *ngIf="showContainer">
+        <section>
+          <mat-form-field appearance="outline">
+            <mat-label>Client Name</mat-label>
+            <input type="text" matInput formControlName="clientName" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Finalized Price</mat-label>
+            <input type="number" matInput formControlName="finalOfferAmmount" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Salesperson Name</mat-label>
+            <mat-select formControlName="salesPerson">
+              <ng-container *ngFor="let person of salesPersons">
+                <mat-option [value]="person.firstName+' '+person.lastName">{{ person.firstName +' '+ person.lastName }}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>Sales Person is required</mat-error>
+          </mat-form-field>
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Salesperson Name</mat-label>
+            <input type="text" matInput formControlName="salesPerson" />
+          </mat-form-field> -->
+        </section>
+        <section>
+          <mat-form-field appearance="outline">
+            <mat-label>Tenure</mat-label>
+            <input type="text" matInput formControlName="Tenure" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>LockIn</mat-label>
+            <input type="text" matInput formControlName="LockIn" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Depoist Term</mat-label>
+            <input type="text" matInput formControlName="depoistTerm" />
+          </mat-form-field>
+        </section>
+
+        <section>
+          <mat-form-field appearance="outline">
+            <mat-label>Notice Period</mat-label>
+            <input type="text" matInput formControlName="noticePeriod" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Rent Commencement Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="rentCommencmentDate"  autocomplete="off">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Non Standard Requirement(if any)</mat-label>
+            <input type="text" matInput formControlName="NonStandardRequirement" />
+          </mat-form-field>
+        </section>
+        <section>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Serviced or Non-serviced</mat-label>
+            <mat-select formControlName="Serviced">
+                <mat-option value="serviced">Serviced</mat-option>
+              <mat-option value="Non serviced">Non serviced</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Total Workstations</mat-label>
+            <input type="number" matInput formControlName="totalNumberOfSeats" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Color</mat-label>
+            <input type="text" matInput formControlName="color" />
+          </mat-form-field>
+        </section>
+        <div class="controllers">
+          <label>Seats to be Selected: {{totalNumebrOfSeat}}</label>
+          <button mat-raised-button type="button" (click)="changeTheFlow()">{{flowOfDrawingSeats?'Vertical':'Horizontal'}}</button>
+          <button mat-raised-button type="button"  color="primary" (click)="drawRectangles()">Draw Seats</button>
+          <button mat-raised-button type="button" (click)="resetSeat()">Reset Seats</button>
+          <!-- <div class="label">
+            <mat-card><p><b>Width : {{seatWidth}}</b></p></mat-card>
+            <mat-card><p><b>Height : {{seatHeight}}</b></p></mat-card>
+          </div> -->
+        <!-- <button mat-raised-button type="button" (click)="resetZoomAndPosition()" color="primary">Reset Zoom and Position</button> -->
+      </div>
+        <!-- <button mat-raised-button (click)='addLayout()' color="primary">Final the layout</button> -->
+        <div class="canvas-container">
+          <div id="container" [ngClass]="isDrawingEnabled  ?'contain':'changeContain'"></div>
+        </div>
+
+  </ng-container>
+
+        <div class="form-action">
+          <button type="reset" mat-raised-button color="primary">Reset</button>
+          <button type="submit" mat-raised-button color="primary" (click)="onSubmit()">Save
+          </button>
+        </div>
+    </form>
+    </div>
